@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Roboto font  */
+/* 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css'; */
+
+:root {
+  --sider-bg: #3730a3;
+  --sider-text-color: #fff;
+  --sider-item-selected: #0d0d0d25;
+
+  --white: #fff;
+
+  --play-bg: #3830a368;
+}
+

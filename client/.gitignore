@@ -1,0 +1,15 @@
+# .env
+.env
+
+# .env.local
+.env.local
+
+# node modules
+node_modules
+
+
+# build files
+build/
+
+# .DS_Store
+.DS_Store

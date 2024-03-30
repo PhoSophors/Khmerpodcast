@@ -1,0 +1,15 @@
+{
+  "siderMenu": {
+    "home": "ទំព័រដើម",
+    "search": "ស្វែងរក",
+    "favorith": "ចូលចិត្ត",
+    "create" : "បង្កើត",
+    "setting": "ការកំណត់",
+    "profile": "គណនី"
+  },
+
+  "profile" : {
+    "title": "គណនី",
+    "editProfileTitle": "កំណត់គណនី"
+  }
+}

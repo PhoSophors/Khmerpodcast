@@ -1,0 +1,16 @@
+
+{
+  "siderMenu": {
+    "home": "Home",
+    "search": "Search",
+    "favorith": "Favorith",
+    "create" : "Create",
+    "setting": "Setting",
+    "profile": "Profile"
+  },
+  
+  "profile" : {
+    "title": "Profile",
+    "editProfileTitle": "Edit Profile"
+  }
+}

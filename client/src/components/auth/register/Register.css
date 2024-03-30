@@ -1,0 +1,19 @@
+
+
+.register-form {
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+@media (max-width: 520px) {
+  .register-form {
+    overflow: auto;
+  }
+
+  .card {
+    height: 100vh;
+  }
+  
+}

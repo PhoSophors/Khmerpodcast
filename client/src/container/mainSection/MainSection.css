@@ -1,0 +1,32 @@
+body {
+  overflow: hidden;
+}
+
+.content-card {
+  background-color: #f8fafc;
+  min-height: calc(100vh - 150px);
+  height: calc(100vh - 90px);
+  padding: 2px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+   box-shadow: 0 4px 7.9px #b2bec333, 0 20px 37.6px #b2bec31a;
+  overflow-y: auto; 
+}
+
+.content-containers{
+  background-color: var(--sider-bg);
+  padding: 10px;
+}
+
+/* set mobile screen pasdding 0 for content container */
+
+@media screen and (max-width: 768px) {
+  .content-containers {
+    padding: 0;
+    height: 100vh;
+  }
+  .content-card {
+    border-radius: 0;
+    height: calc(100vh - 70px);
+  }
+}

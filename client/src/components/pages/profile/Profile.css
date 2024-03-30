@@ -1,0 +1,22 @@
+.profile-container {
+  justify-content: center;
+  height: auto;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: rgb(237, 124, 107);
+  border-color: green;
+  color: green;
+  transition: background-color 0.3s; /* Add transition for smooth effect */
+}
+

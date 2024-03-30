@@ -1,0 +1,38 @@
+.title {
+  color: #333333; 
+  font-size: 30px; 
+  font-weight: bold; 
+}
+
+.input-field {
+  border-radius: 18px;
+  border: 1px solid #0e7490;
+  padding: 13px;
+  width: 100%;
+  box-sizing: border-box; 
+  background-color: #fff; /* Set background color to white */
+}
+.input-field:focus {
+  border-color: #0e7490;
+}
+
+
+.submit-button, .google-button {
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  border-radius: 18px;
+  width: 100%;
+  height: 50px; 
+  line-height: 40px; 
+  text-align: center; 
+}
+
+
+.google-button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  margin-top: 16px;
+}
+
