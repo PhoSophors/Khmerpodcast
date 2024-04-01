@@ -77,11 +77,19 @@ const Login = ({ visible, onCancel }) => {
           layout="vertical"
           className="w-80"
         >
-          <Form.Item label="Email" name="email">
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
+          >
             <Input className="input-field" placeholder="Enter your email" />
           </Form.Item>
 
-          <Form.Item label="Password" name="password">
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
             <Input.Password
               className="input-field"
               placeholder="Enter your password"
@@ -99,7 +107,7 @@ const Login = ({ visible, onCancel }) => {
           <Form.Item>
             <Button
               style={{
-                backgroundColor: "#ea580c",
+                backgroundColor: "#3730a3",
                 color: "#ffffff",
               }}
               type="default"

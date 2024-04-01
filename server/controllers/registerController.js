@@ -8,11 +8,18 @@ const registerController = {};
 
 registerController.register = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
 
     // Check if all required fields are provided
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !confirmPassword) {
       return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Add more specific checks for username length
+    if (username.length < 3 || username.length > 20) {
+      return res
+        .status(400)
+        .json({ error: "Username must be between 3 and 20 characters long" });
     }
 
     // Add additional checks for password length and match
@@ -30,21 +37,21 @@ registerController.register = async (req, res, next) => {
         .json({ error: "Password must contain both text and numbers" });
     }
 
-    // Add more specific checks for username length
-    if (username.length < 3 || username.length > 20) {
-      return res
-        .status(400)
-        .json({ error: "Username must be between 3 and 20 characters long" });
+    // Check if password and confirm password match
+    if (password !== confirmPassword) {
+      return res.status(400).json({ error: "Passwords do not match" });
     }
 
     // Check if the email is already registered
     let existingUser = await User.findOne({ email });
-
+    
     if (existingUser) {
       // If user exists and is verified, return error
       if (existingUser.emailVerified) {
         return res.status(400).json({
-          error: + email + "This email already registered. Please login to the account." ,
+          error:
+            +email +
+            "This email already registered. Please login to the account.",
         });
       }
       // If user exists but not verified, allow registration
@@ -74,9 +81,10 @@ registerController.register = async (req, res, next) => {
 
     res.status(200).json({
       message:
-        "Registration successful. Please check your email " + email + " to activate your account",
+        "Registration successful. Please check your email " +
+        email +
+        " to activate your account",
       id: savedUser._id, // Add this line
-
     });
   } catch (err) {
     console.error("Error registering user:", err);

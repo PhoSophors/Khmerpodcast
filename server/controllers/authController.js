@@ -6,8 +6,8 @@ const authController = {
   googleAuth: passport.authenticate("google", { scope: ["profile", "email"] }),
 
   googleAuthCallback: passport.authenticate("google", {
-    successRedirect: '/', // Redirect to the home page after successful authentication
-    failureRedirect: '/login', // Redirect to the login page if authentication fails
+    successRedirect: '/', 
+    failureRedirect: '/login', 
   }),
 
   logout: function (req, res) {

@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  // userId: {
-  //   type: Schema.Types.ObjectId,
-  //   required: true,
-  //   unique: true,
-  // },
   email: {
     type: String,
     required: true,
@@ -21,6 +16,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  // profileImage: {
+  //   type: String,
+  // },
   emailVerified: {
     type: Boolean,
     default: false,

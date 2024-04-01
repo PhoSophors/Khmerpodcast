@@ -65,6 +65,11 @@ const SideMenu = ({ onSelectMenuItem }) => {
     onSelectMenuItem(menuItem.key);
   };
 
+  const handleAppClick = () => {
+    // refresh page
+    window.location.reload();
+  };
+
   const iconMapping = {
     "/": { selected: <HomeFilled />, default: <HomeOutlined /> },
     "/search": { selected: <SearchOutlined />, default: <SearchOutlined /> },
@@ -94,8 +99,11 @@ const SideMenu = ({ onSelectMenuItem }) => {
         selectedKeys={[selectedMenuItem]}
         onClick={handleMenuItemClick}
       >
-        <div className="flex items-center p-4">
-          <img src={logo} alt="Logo" className="logo mr-2" />
+        <div
+          onClick={handleAppClick}
+          className="flex items-center p-4 cursor-pointer"
+        >
+          <img src={logo} alt="" className="logo-app mr-2" />
           <div className="flex flex-col">
             <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
               Khmer

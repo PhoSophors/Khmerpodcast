@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Card, Form, Input, Button, Alert, message } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import "../login/Login.css";
+import logo from "../../assets/logo.jpg";
 
 const ForgotPassword = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -63,18 +64,29 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-sky-200 dark:bg-neutral-800">
-      <Card title="Forgot Password" style={{ width: "40%" }}>
+    <div className="flex justify-center items-center h-screen bg-slate-100">
+      <Card title="Forgot Password" className="card">
         <Form layout="vertical">
           {currentStep === 1 && (
             <>
+              <div className="flex justify-center items-center text-center mb-4">
+                <img src={logo} alt="logo" className="logo" />
+              </div>
+
               <p className="text-center mb-4">
                 Please enter the email associated with your account to receive a
                 password reset OTP.
               </p>
-              <Form.Item>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
+              >
                 <Input
                   type="email"
+                  className="input-field"
                   placeholder="Enter your email to reset your password"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -86,9 +98,11 @@ const ForgotPassword = () => {
               </div>
 
               <Button
-                type="primary"
+                className="mt-5"
+                type="dashed"
                 onClick={handleForgotPassword}
                 loading={loading}
+                style={{ float: "right" }}
               >
                 Send OTP
               </Button>
@@ -97,21 +111,37 @@ const ForgotPassword = () => {
 
           {currentStep === 2 && (
             <>
+              <div className="flex justify-center items-center text-center mb-4">
+                <img src={logo} alt="logo" className="logo" />
+              </div>
+
               <p className="text-center mb-4">
                 Please enter the OTP sent to your email to verify your identity.
               </p>
-              <Form.Item>
+              <Form.Item
+                label="OTP"
+                name="otp"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input OTP we sent to your email account!",
+                  },
+                ]}
+              >
                 <Input
                   placeholder="Enter OTP sent to your email"
+                  className="input-field"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                 />
               </Form.Item>
               {error && <Alert message={error} type="error" />}
               <Button
-                type="primary"
+                className="mt-5"
+                type="dashed"
                 onClick={handleVerifyOTP}
                 loading={loading}
+                style={{ float: "right" }}
               >
                 Verify OTP
               </Button>
@@ -120,12 +150,25 @@ const ForgotPassword = () => {
 
           {currentStep === 3 && (
             <>
+              <div className="flex justify-center items-center text-center mb-4">
+                <img src={logo} alt="logo" className="logo" />
+              </div>
               <p className="text-center mb-4">
                 Please enter your new password below. Make sure it's strong and
                 secure.
               </p>
-              <Form.Item>
+              <Form.Item
+                label="New Password"
+                name="newPassword"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your new password!",
+                  },
+                ]}
+              >
                 <Input.Password
+                  className="input-field"
                   placeholder="Enter new password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -133,9 +176,11 @@ const ForgotPassword = () => {
               </Form.Item>
               {error && <Alert message={error} type="error" />}
               <Button
-                type="primary"
+                className="mt-5"
+                type="dashed"
                 onClick={handleResetPassword}
                 loading={loading}
+                style={{ float: "right" }}
               >
                 Reset Password
               </Button>

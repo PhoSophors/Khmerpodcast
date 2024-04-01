@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Card, message, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -21,6 +21,7 @@ const Register = () => {
         values
       );
       setIsLoading(true);
+
       if (response.status === 200) {
         // Save the id to cookies
         Cookies.set("id", response.data.id);
@@ -29,7 +30,7 @@ const Register = () => {
         message.success(
           "Registration successful. Please check your email for the OTP to activate your account."
         );
-      
+
         // After successful registration, navigate to OTP verification page
         navigate("/otp", { state: { email: values.email } });
       } else {
@@ -60,38 +61,79 @@ const Register = () => {
             onFinish={onFinish}
             layout="vertical"
           >
-            <Form.Item label="Username *" name="username">
+            <Form.Item
+              label="Username *"
+              name="username"
+              rules={[
+                { required: true, message: "Please input your username!" },
+              ]}
+            >
               <Input
                 className="input-field"
                 placeholder="Enter your username"
               />
             </Form.Item>
 
-            <Form.Item label="Email *" name="email">
+            <Form.Item
+              label="Email *"
+              name="email"
+              rules={[{ required: true, message: "Please input your email!" }]}
+            >
               <Input className="input-field" placeholder="Enter your email" />
             </Form.Item>
 
-            <Form.Item label="Password *" name="password">
+            <Form.Item
+              label="Password *"
+              name="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            >
               <Input.Password
                 className="input-field"
                 placeholder="Create password"
               />
             </Form.Item>
 
-            <Form.Item>
-            <Button
-              style={{
-                backgroundColor: "#ea580c",
-                color: "#ffffff",
-              }}
-              type="default"
-              className="submit-button"
-              htmlType="submit"
-              disabled={isLoading}
+            <Form.Item
+              label="Confirm Password *"
+              name="confirmPassword"
+              rules={[
+                { required: true, message: "Please confirm your password!" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(
+                        "Password not match!"
+                      )
+                    );
+                  },
+                }),
+              ]}
             >
-              {isLoading ? <Spin /> : "Register"}
-            </Button>
-          </Form.Item>
+              <Input.Password
+                className="input-field"
+                placeholder="Confirm password"
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                style={{
+                  backgroundColor: "#3730a3",
+                  color: "#ffffff",
+                }}
+                type="default"
+                className="submit-button"
+                htmlType="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? <Spin /> : "Register"}
+              </Button>
+            </Form.Item>
 
             <h1 className="text-center mb-4">OR</h1>
 

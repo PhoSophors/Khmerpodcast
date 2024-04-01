@@ -14,12 +14,12 @@ exports.getUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  const { id } = req.params; // Change this line
+  const { id } = req.params; 
   const updateFields = req.body;
   
   try {
     const updatedUser = await User.findByIdAndUpdate(
-      id, // Change this line
+      id, 
       updateFields,
       { new: true }
     );
