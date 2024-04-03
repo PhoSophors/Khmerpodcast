@@ -6,6 +6,7 @@ import Setting from "../../components/pages/setting/Setting";
 import Profile from "../../components/pages/profile/Profile";
 import Search from "../../components/pages/search/Search";
 import Create from "../../components/pages/create/Create";
+import Dashboard from "../../components/pages/admin/dashboard/Dashboard";
 
 const RightSection = ({ selectedMenuItem }) => {
   let content = "";
@@ -31,6 +32,9 @@ const RightSection = ({ selectedMenuItem }) => {
     case "/setting":
       content = <Setting />;
       break;
+    case "/dashboard":
+        content = <Dashboard />;
+        break;
     default:
       content = "No Content";
   }

@@ -1,23 +1,22 @@
 // middleware/createDefaultAdminMiddleware.js
 
-const User = require('../models/userModel');
-const bcrypt = require('bcrypt');
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 async function createDefaultAdmin() {
-  const adminExists = await User.findOne({ role: 'admin' });
+  const adminExists = await User.findOne({ role: "admin" });
 
   if (!adminExists) {
-    const hashedPassword = await bcrypt.hash('defaultAdminPassword', 10);
+    const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
     const admin = new User({
-      username: 'admins',
-      email: 'admins@example.com',
+      username: "admin",
+      email: "khmerpodcast209@gmail.com",
       password: hashedPassword,
-      role: 'admin',
-      emailVerified: true
+      role: "admin",
+      emailVerified: true,
     });
 
     await admin.save();
-    console.log('Default admin account created');
   }
 }
 

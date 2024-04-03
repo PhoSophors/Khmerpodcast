@@ -17,6 +17,8 @@ import {
   HeartFilled,
   PlusCircleOutlined,
   PlusCircleFilled,
+  DashboardOutlined,
+  DashboardFilled,
 } from "@ant-design/icons";
 
 const SideMenu = ({ onSelectMenuItem }) => {
@@ -66,7 +68,6 @@ const SideMenu = ({ onSelectMenuItem }) => {
   };
 
   const handleAppClick = () => {
-    // refresh page
     window.location.reload();
   };
 
@@ -80,6 +81,10 @@ const SideMenu = ({ onSelectMenuItem }) => {
     },
     "/setting": { selected: <SettingFilled />, default: <SettingOutlined /> },
     "/profile": { selected: <UserOutlined />, default: <UserOutlined /> },
+    "/dashboard": {
+      selected: <DashboardFilled />,
+      default: <DashboardOutlined />,
+    },
   };
 
   const getIcon = (key) => {
@@ -104,14 +109,14 @@ const SideMenu = ({ onSelectMenuItem }) => {
           className="flex items-center p-4 cursor-pointer"
         >
           <img src={logo} alt="" className="logo-app mr-2" />
-          <div className="flex flex-col">
+          {/* <div className="flex flex-col">
             <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
               Khmer
             </span>
             <span className="uppercase tracking-wide text-sm text-slate-300 font-semibold">
               Podcast
             </span>
-          </div>
+          </div> */}
         </div>
 
         <Menu.Item key="/" icon={getIcon("/")}>
@@ -136,6 +141,16 @@ const SideMenu = ({ onSelectMenuItem }) => {
                 {t("siderMenu.create")}
               </span>
             </Menu.Item>
+
+            {user.role === "admin" && (
+              <Menu.Item key="/dashboard" icon={getIcon("/dashboard")}>
+                <span
+                  onClick={() => handleMenuItemClick({ key: "/dashboard" })}
+                >
+                  {t("siderMenu.dashboard")}
+                </span>
+              </Menu.Item>
+            )}
           </>
         )}
         {/* Move Profile and Setting items to the bottom */}

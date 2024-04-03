@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 
 exports.getUser = async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
   try {
     const user = await User.findById(id);
     if (!user) {
@@ -13,16 +13,23 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
-  const { id } = req.params; 
-  const updateFields = req.body;
-  
+exports.getAllUsers = async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      id, 
-      updateFields,
-      { new: true }
-    );
+    const userCount = await User.countDocuments();
+    res.status(200).json({ user: userCount }); // Send the user count in the response
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  const { id } = req.params;
+  const updateFields = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
+      new: true,
+    });
     if (!updatedUser) {
       return res.status(404).json({ error: "User not found" });
     }

@@ -1,6 +1,8 @@
 // App.js
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 import MainSection from "../container/mainSection/MainSection";
 import Favorith from "../components/pages/favorite/Favorith";
 import Search from "../components/pages/search/Search";
@@ -13,26 +15,27 @@ import Otp from "../components/auth/otp/Otp";
 import ForgotPassword from "../components/auth/forgotPassword/ForgotPassword";
 import PrivateRoute from "./PrivateRoute";
 import GuestRoute from "./GuestRoute";
-import Cookies from "js-cookie";
+import Dashboard from "../components/pages/admin/dashboard/Dashboard";
+
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [authToken, setAuthToken] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+
 
   useEffect(() => {
-    // Check if the user is logged in using cookies
     const authToken = Cookies.get("authToken");
-    setAuthToken(authToken);
+    if (authToken) {
+      const decodedToken = jwtDecode(authToken);
+      setUserRole(decodedToken.role);
+    }
 
-    // Simulate a loading delay
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 200);
 
     return () => clearTimeout(timeout);
   }, []);
-  
-
 
   return (
     <Router>
@@ -42,18 +45,77 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainSection />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/dashboard" element={userRole === 'admin' ? <Dashboard /> : <Login />} />
 
           {/* GuestRoute */}
-          <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-          <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-          <Route path="/otp" element={<GuestRoute><Otp /></GuestRoute>} />
-          <Route path="/forgotPassword" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
+                <Login />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <GuestRoute>
+                <Register />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/otp"
+            element={
+              <GuestRoute>
+                <Otp />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/forgotPassword"
+            element={
+              <GuestRoute>
+                <ForgotPassword />
+              </GuestRoute>
+            }
+          />
 
           {/* PrivateRoute */}
-          <Route path="/favorite" element={<PrivateRoute><Favorith /></PrivateRoute>} />
-          <Route path="/setting" element={<PrivateRoute><Setting /></PrivateRoute>} />
-          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route
+            path="/favorite"
+            element={
+              <PrivateRoute>
+                <Favorith />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/setting"
+            element={
+              <PrivateRoute>
+                <Setting />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
 
+          {/* <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          /> */}
+        
         </Routes>
       )}
     </Router>
