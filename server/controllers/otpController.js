@@ -125,6 +125,13 @@ otpController.verifyOTP = async (req, res) => {
       return res.status(500).json({ error: "Error saving user" });
     }
 
+    // Set the JWT token in an HTTPOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
+
     // If the OTPs match and the OTP has not expired, the verification is successful
     return res.status(200).json({
       message: "OTP verified successfully",

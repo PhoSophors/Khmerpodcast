@@ -35,15 +35,14 @@ loginController.login = async (req, res, next) => {
     const payload = {
       id: user._id,
       email: user.email,
+      username: user.username,
       role: user.role,
     };
 
     // Generate a token
-    const token = jwt.sign(
-      { id: user._id, username: user.username },
-      process.env.JWT_SECRET,
-      { expiresIn: "30d" }
-    );
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
 
     // Save the token to the database
     user.authToken = token;
@@ -53,6 +52,7 @@ loginController.login = async (req, res, next) => {
     res.json({
       message: "Login successful",
       authToken: token,
+      id: user._id,
     });
   } catch (err) {
     console.error("Error logging in:", err);

@@ -1,8 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
-const mongoose = require("mongoose");
 const otpController = require("./otpController");
-const jwt = require("jsonwebtoken");
 
 const registerController = {};
 
@@ -44,7 +42,7 @@ registerController.register = async (req, res, next) => {
 
     // Check if the email is already registered
     let existingUser = await User.findOne({ email });
-    
+
     if (existingUser) {
       // If user exists and is verified, return error
       if (existingUser.emailVerified) {
@@ -84,7 +82,7 @@ registerController.register = async (req, res, next) => {
         "Registration successful. Please check your email " +
         email +
         " to activate your account",
-      id: savedUser._id, // Add this line
+      id: savedUser._id,
     });
   } catch (err) {
     console.error("Error registering user:", err);

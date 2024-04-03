@@ -28,6 +28,7 @@ const Header = ({ handleCollapse, menuOpen }) => {
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     const id = Cookies.get("id");
+    
     if (authToken && id) {
       axios
         .get(`/auths/user-data/${id}`, {
@@ -83,8 +84,9 @@ const Header = ({ handleCollapse, menuOpen }) => {
     // Clear user data and cookies
     setUser(null);
     setIsLoggedIn(false);
+
     Cookies.remove("authToken");
-    Cookies.remove("userId");
+    Cookies.remove("id");
 
     // Close the logout confirmation modal
     setLogoutModalVisible(false);

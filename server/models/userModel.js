@@ -16,15 +16,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  // profileImage: {
-  //   type: String,
-  // },
   emailVerified: {
     type: Boolean,
     default: false,
   },
   emailVerificationToken: String,
-  authToken: String, // Add a field to store the authentication token
+  authToken: String, 
   createdAt: {
     type: Date,
     default: Date.now,

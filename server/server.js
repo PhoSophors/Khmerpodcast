@@ -9,6 +9,7 @@ const passport = require("./config/passport-setup");
 const authRoutes = require("./routes/authRoutes");
 const fileUploadRoutes = require("./routes/fileUploadRoutes");
 const authenticateToken = require("./middleware/authenticateToken");
+const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
 
 const crypto = require("crypto");
 const googleRoutes = require("./routes/googleRoutes");
@@ -29,7 +30,6 @@ app.use(
     credentials: true,
   })
 );
-
 
 // Set up middleware
 app.use(bodyParser.json());
@@ -58,6 +58,11 @@ app.use(cookieParser());
 // Connect to database
 connectDB();
 
+// Create default admin account
+createDefaultAdmin().then(() => {
+  console.log("Default admin account checked/created");
+});
+
 // Mount routes
 app.use("/auth", googleRoutes); // google auth routes
 app.use("/api/upload", fileUploadRoutes); // Mount fileUploadRoutes at /api/upload endpoint
@@ -69,12 +74,6 @@ app.use("/auths", authRoutes);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
-});
-
-// Log all requests
-app.use((req, res, next) => {
-  console.log(req.method, req.url);
-  next();
 });
 
 module.exports = {

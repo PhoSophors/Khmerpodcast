@@ -6,8 +6,9 @@ const registerController = require("../controllers/registerController");
 const loginController = require("../controllers/loginController");
 const forgotPasswordController = require("../controllers/forgotPasswordController");
 const { verifyOTP } = require("../controllers/otpController");
-const verifyToken = require("../middleware/authenticateToken");
 const userController = require("../controllers/userController");
+const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
+const verifyToken = require("../middleware/authenticateToken");
 
 // Define routes for user registration and login
 router.post("/register", registerController.register);
@@ -21,9 +22,23 @@ router.post("/forgot-password", forgotPasswordController.forgotPassword);
 router.post("/reset-pass-verify-otp", forgotPasswordController.resetVerifyOTP);
 router.post("/reset-password", forgotPasswordController.resetPassword);
 
-
-router.get("/user-data/:id", verifyToken, userController.getUser);
-router.put("/user/:id",verifyToken, userController.updateUser);
-router.delete("/user/:id",verifyToken, userController.deleteUser);
+router.get(
+  "/user-data/:id",
+  verifyToken,
+  checkRoleMiddleware(['user', 'admin']),
+  userController.getUser
+);
+router.put(
+  "/user/:id",
+  verifyToken,
+  checkRoleMiddleware("user"),
+  userController.updateUser
+);
+router.delete(
+  "/user/:id",
+  verifyToken,
+  checkRoleMiddleware("admin"),
+  userController.deleteUser
+);
 
 module.exports = router;

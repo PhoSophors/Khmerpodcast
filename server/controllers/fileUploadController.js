@@ -25,8 +25,6 @@ const uploadFile = async (req, res) => {
     const compressedAudioSize = audioFile[0].buffer
       ? audioFile[0].buffer.length
       : 0;
-      
-
     // Create a single document for both audio and image
     const file = new File({
       title: title,

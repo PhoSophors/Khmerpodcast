@@ -29,7 +29,8 @@ const Create = () => {
   // Function to fetch files from the backend
   const fetchFiles = async () => {
     try {
-      const response = await axios.get("http://localhost:8085/api/upload"); // Assuming your backend endpoint is /api/upload
+      // const response = await axios.get("http://localhost:8085/api/upload");
+      const response = await axios.get("http://localhost:8085/api/upload");
       setFiles(response.data);
     } catch (error) {
       setError("Error fetching files. Please try again later.");
@@ -114,7 +115,7 @@ const Create = () => {
 
   // Function to handleChange thumnail
   const handleChange = ({ fileList: newFileList }) => {
-    console.log("New File List:", newFileList);
+    // console.log("New File List:", newFileList);
     // Update the imageFileList with the new file list
     setImageFileList(newFileList);
   };
@@ -145,90 +146,101 @@ const Create = () => {
   };
 
   return (
-    <div className="mx-auto  flex p-10  ">
-      <div className="w-full ">
+    <div className="mx-auto flex xl:p-8   ">
+      <div className="w-full p-2">
         <div className="uppercase tracking-wide text-xl text-indigo-500 font-semibold">
           Upload audio or video
         </div>
         <div className="tracking-wide text-sm text-gray-500">
           Create an audio or video episode in a few simple steps.
         </div>
-        <div className="mt-5 font-semibold text-gray-500">
-          Supported file types:
-        </div>
-        <div className="text-gray-500">
-          Audio files: aac, mp3, m4a, wav, or mpg
-        </div>
 
         <div className="upload-section mt-5">
-          {/* upload audio */}
-          <Card title="Upload Audio " className=" create-card">
-            {fileList.length > 0 ? (
-              <div className="audio-preview">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <audio controls>
-                      <source
-                        src={URL.createObjectURL(fileList[0].originFileObj)}
-                        type="audio/mpeg"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </div>
-                  <div className="flex items-center">
-                    <Button
-                      className="replace-button ml-2"
-                      icon={<CloseOutlined />}
-                      onClick={handleChangeAudio}
-                    ></Button>
-                  </div>
-                </div>
-                <p className="file-name mt-5 ml-2">{fileList[0].name}</p>
+          <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5">
+            {/* set two colum */}
+            <div className="w-full sm:w-1/2">
+              <div className="mt-5 font-semibold text-gray-500">
+                Supported file types:
               </div>
-            ) : (
-              <div className="upload-container">
-                <Upload
-                  listType="picture-card"
-                  customRequest={() => {}}
-                  fileList={fileList}
-                  onChange={handleFileChange}
-                  accept=".aac, .mp3, .m4a, .wav, .mpg"
-                  showUploadList={false}
-                >
-                  <div>{"+ Upload"}</div>
-                </Upload>
+              <div className="text-gray-500">
+                Audio files: aac, mp3, m4a, wav, or mpg
               </div>
-            )}
-          </Card>
+              {/* upload audio */}
+              <Card title="Upload Audio " className="mt-5">
+                {fileList.length > 0 ? (
+                  <div className="audio-preview">
+                    <div className="flex items-center">
+                      <div className="flex items-center">
+                        <audio controls>
+                          <source
+                            src={URL.createObjectURL(fileList[0].originFileObj)}
+                            type="audio/mpeg"
+                          />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </div>
+                      <div className="flex items-center">
+                        <Button
+                          className="replace-button ml-2"
+                          icon={<CloseOutlined />}
+                          onClick={handleChangeAudio}
+                        ></Button>
+                      </div>
+                    </div>
+                    <p className="file-name mt-5 ml-2">{fileList[0].name}</p>
+                  </div>
+                ) : (
+                  <div className="upload-container">
+                    <Upload
+                      listType="picture-card"
+                      customRequest={() => {}}
+                      fileList={fileList}
+                      onChange={handleFileChange}
+                      accept=".aac, .mp3, .m4a, .wav, .mpg"
+                      showUploadList={false}
+                    >
+                      <div>{"+ Upload"}</div>
+                    </Upload>
+                  </div>
+                )}
+              </Card>
+            </div>
 
-          {/* upload  thumbnail */}
-          <div className="mt-5 font-semibold text-gray-500">
-            Supported file types:
+            {/* upload  thumbnail */}
+            <div className="w-full sm:w-1/2 ">
+              <div className="mt-5 font-semibold text-gray-500">
+                Supported file types:
+              </div>
+              <div className="text-gray-500">
+                Audio files: jpeg, jpg, png and web formats
+              </div>
+              <Card title="Upload Thumbnail" className="mt-5">
+                <ImgCrop rotate>
+                  <Upload
+                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                    listType="picture-card"
+                    imageFileList={imageFileList}
+                    onChange={handleChange}
+                    onPreview={handlePreview}
+                  >
+                    {imageFileList.length === 0 && "+ Upload"}
+                  </Upload>
+                </ImgCrop>
+                <Modal
+                  open={previewOpen}
+                  title={previewTitle}
+                  footer={null}
+                  onCancel={handleCancel}
+                >
+                  <img
+                    alt="example"
+                    style={{ width: "100%" }}
+                    src={previewImage}
+                  />
+                </Modal>
+              </Card>
+            </div>
           </div>
-          <div className="text-gray-500">
-            Audio files: jpeg, jpg, png and web formats
-          </div>
-          <Card title="Upload Thumbnail" className="mt-5 create-card">
-            <ImgCrop rotate>
-              <Upload
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                listType="picture-card"
-                imageFileList={imageFileList}
-                onChange={handleChange}
-                onPreview={handlePreview}
-              >
-                {imageFileList.length === 0 && "+ Upload"}
-              </Upload>
-            </ImgCrop>
-            <Modal
-              open={previewOpen}
-              title={previewTitle}
-              footer={null}
-              onCancel={handleCancel}
-            >
-              <img alt="example" style={{ width: "100%" }} src={previewImage} />
-            </Modal>
-          </Card>
 
           {/* input form */}
           <Card title="Input Form" className="mt-5 create-card">
@@ -265,7 +277,9 @@ const Create = () => {
 
           {/* upload button */}
           <div className="mt-5 gap-5">
-            <Button className="upload-button " style={{ backgroundColor: "#ea580c", color: "#ffffff"}}
+            <Button
+              className="upload-button "
+              style={{ backgroundColor: "#ea580c", color: "#ffffff" }}
               onClick={handleUpload}
               loading={loading}
               disabled={!isUploadEnabled()}

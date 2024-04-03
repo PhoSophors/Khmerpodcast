@@ -6,12 +6,10 @@ import SigninWithGoogle from "../signinWithGoogle/SignInWithGoogle";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useLocation } from "react-router-dom";
 
 const Login = ({ visible, onCancel }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const location = useLocation();
 
   const handleCancel = () => {
     onCancel();
@@ -32,12 +30,12 @@ const Login = ({ visible, onCancel }) => {
 
       if (response.status === 200) {
         // Login successful
-        console.log(response.data);
+        // console.log(response.data);
 
         Cookies.set("authToken", response.data.authToken);
-        Cookies.set("userId", response.data.userId);
+        Cookies.set("id", response.data.id);
 
-        console.log("Login successful");
+        // console.log("Login successful");
         message.success("Login successful ");
 
         // Close the modal
