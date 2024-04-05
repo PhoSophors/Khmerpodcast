@@ -15,7 +15,7 @@
   flex-direction: column;
   font-size: 1rem;
   position: relative;
-  background-color: var(--sider-bg);
+  background-color: var(--slate-900);
   border: none;
   /* padding-top: 20px; */
   padding-bottom: 20px;
@@ -24,18 +24,18 @@
 
 .side-menu-container .ant-menu-item-selected {
   background: var(--sider-item-selected);
-  color: var(--white) !important;
+  color: var(--slate-300) !important;
   font-weight: bold;
 }
 
-.side-menu-container .ant-menu-item {
-  color: var(--white);
+.side-menu-container .ant-menu-item{
+  color: var(--slate-300);
 }
-
-.side-menu-container .ant-menu-item:hover {
-  background:  var(--sider-item-selected);
-  color: var(--white) !important;
-  font-weight: bold;
+.side-menu-container .ant-menu-item:hover{
+  color: var(--slate-300) !important;
 }
 
 
+.ant-menu-submenu-title {
+  color: var(--slate-300) !important;
+}

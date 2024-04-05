@@ -5,7 +5,7 @@
   align-items: center;
   height: 100vh;
 
-  background-color: var(--sider-bg);
+  background-color: var(--slate-900);
 }
 
 .spinner {

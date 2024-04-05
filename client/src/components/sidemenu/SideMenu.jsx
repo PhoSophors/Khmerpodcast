@@ -19,6 +19,8 @@ import {
   PlusCircleFilled,
   DashboardOutlined,
   DashboardFilled,
+  FileTextFilled,
+  FileTextOutlined
 } from "@ant-design/icons";
 
 const SideMenu = ({ onSelectMenuItem }) => {
@@ -85,6 +87,14 @@ const SideMenu = ({ onSelectMenuItem }) => {
       selected: <DashboardFilled />,
       default: <DashboardOutlined />,
     },
+    "/all-user": {
+      selected: <UserOutlined />,
+      default: <UserOutlined />,
+    },
+    "/all-user-upload": {
+      selected:  <FileTextFilled />,
+      default: < FileTextOutlined />
+    },
   };
 
   const getIcon = (key) => {
@@ -143,13 +153,40 @@ const SideMenu = ({ onSelectMenuItem }) => {
             </Menu.Item>
 
             {user.role === "admin" && (
-              <Menu.Item key="/dashboard" icon={getIcon("/dashboard")}>
-                <span
-                  onClick={() => handleMenuItemClick({ key: "/dashboard" })}
+              <>
+                <Menu.SubMenu
+                  key="sub1"
+                  icon={getIcon("/all-user")}
+                  title={t("siderMenu.admin")}
                 >
-                  {t("siderMenu.dashboard")}
-                </span>
-              </Menu.Item>
+                  <Menu.Item key="/dashboard" icon={getIcon("/dashboard")}>
+                    <span
+                      onClick={() => handleMenuItemClick({ key: "/dashboard" })}
+                    >
+                      {t("siderMenu.dashboard")}
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item key="/all-user" icon={getIcon("/all-user")}>
+                    <span
+                      onClick={() => handleMenuItemClick({ key: "/all-user" })}
+                    >
+                      {t("siderMenu.allUsers")}
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item
+                    key="/all-user-upload"
+                    icon={getIcon("/all-user-upload")}
+                  >
+                    <span
+                      onClick={() =>
+                        handleMenuItemClick({ key: "/all-user-upload" })
+                      }
+                    >
+                      {t("siderMenu.fileManager")}
+                    </span>
+                  </Menu.Item>
+                </Menu.SubMenu>
+              </>
             )}
           </>
         )}

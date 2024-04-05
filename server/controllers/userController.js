@@ -13,14 +13,24 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.getAllUsers = async (req, res) => {
+exports.getUsersCount = async (req, res) => {
   try {
     const userCount = await User.countDocuments();
-    res.status(200).json({ user: userCount }); // Send the user count in the response
+    res.status(200).json({ user: userCount }); 
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 exports.updateUser = async (req, res) => {
   const { id } = req.params;

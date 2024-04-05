@@ -17,7 +17,7 @@ const s3Client = new S3Client({
   },
 });
 
-const upload = multer({
+const upload2S3 = multer({
   storage: multerS3({
     s3: s3Client,
     bucket: process.env.AWS_BUCKET_NAME,
@@ -45,4 +45,4 @@ const handleUploadError = (err, req, res, next) => {
   res.status(500).json({ message: "Internal server error" });
 };
 
-module.exports = { upload, handleUploadError, compressImageMiddleware, compressAudioMiddleware };
+module.exports = { upload2S3, handleUploadError, compressImageMiddleware, compressAudioMiddleware };

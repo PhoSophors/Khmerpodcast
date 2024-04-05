@@ -12,10 +12,24 @@ import '@fontsource/roboto/700.css'; */
 :root {
   --sider-bg: #3730a3;
   --sider-text-color: #fff;
-  --sider-item-selected: #0d0d0d25;
+  --sider-item-selected: #4f4d4d63;
 
   --white: #fff;
 
   --play-bg: #3830a368;
+
+  --indigo-500: #6366f1;
+  --indigo-600: #4f46e5;
+  --indigo-700: #4338ca;
+  --indigo-800: #3730a3;
+
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-900: #0f172a;
+
 }
+
 

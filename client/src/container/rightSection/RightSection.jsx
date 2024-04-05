@@ -7,6 +7,8 @@ import Profile from "../../components/pages/profile/Profile";
 import Search from "../../components/pages/search/Search";
 import Create from "../../components/pages/create/Create";
 import Dashboard from "../../components/pages/admin/dashboard/Dashboard";
+import AllUser from "../../components/pages/admin/user/AllUser";
+import FileManager from "../../components/pages/admin/user/FileManager";
 
 const RightSection = ({ selectedMenuItem }) => {
   let content = "";
@@ -35,6 +37,13 @@ const RightSection = ({ selectedMenuItem }) => {
     case "/dashboard":
         content = <Dashboard />;
         break;
+    case "/all-user":
+        content = <AllUser />;
+        break;
+    case "/all-user-upload":
+        content = <FileManager />;
+        break;
+
     default:
       content = "No Content";
   }

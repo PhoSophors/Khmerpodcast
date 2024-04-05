@@ -22,6 +22,17 @@ router.post("/forgot-password", forgotPasswordController.forgotPassword);
 router.post("/reset-pass-verify-otp", forgotPasswordController.resetVerifyOTP);
 router.post("/reset-password", forgotPasswordController.resetPassword);
 
+/** user routes ====================================== */
+// update user
+router.put(
+  "/user/:id",
+  verifyToken,
+  checkRoleMiddleware("user"),
+  userController.updateUser
+);
+
+/** user and admin routes ====================================== */
+// get user data
 router.get(
   "/user-data/:id",
   verifyToken,
@@ -29,19 +40,22 @@ router.get(
   userController.getUser
 );
 
+/**  admin routes ====================================== */
+// get user count
 router.get(
   "/users",
   verifyToken,
   checkRoleMiddleware("admin"),
+  userController.getUsersCount
+);
+// get all user
+router.get(
+  "/users/all",
+  verifyToken,
+  checkRoleMiddleware("admin"),
   userController.getAllUsers
 );
-
-router.put(
-  "/user/:id",
-  verifyToken,
-  checkRoleMiddleware("user"),
-  userController.updateUser
-);
+// delete user
 router.delete(
   "/user/:id",
   verifyToken,

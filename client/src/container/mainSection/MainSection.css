@@ -14,7 +14,7 @@ body {
 }
 
 .content-containers{
-  background-color: var(--sider-bg);
+  background-color: var(--slate-900);
   padding: 10px;
 }
 

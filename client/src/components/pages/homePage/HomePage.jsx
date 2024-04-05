@@ -3,6 +3,7 @@ import { Button, Spin } from "antd";
 import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import CustomCard from "../../card/CustomCard";
 import axios from "axios";
+import Cookies from "js-cookie";
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -10,24 +11,34 @@ const HomePage = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
+  const [error, setError] = useState(false);
   const cardsPerPage = 24;
+  const authToken = Cookies.get("authToken");
+  
 
   // Function to fetch files
   const fetchFiles = async (page) => {
+    setLoading(true);
+
     try {
-      setLoading(true);
       const response = await axios.get(
-        `/api/upload?page=${page}&limit=${cardsPerPage}`
+        `/files/get-all-file?page=${page}&limit=${cardsPerPage}`,
+        {
+          headers: {
+            "auth-token": authToken,
+          },
+        }
       );
       setFiles(response.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching files:", error.message);
       setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Load initial files on component mount
   useEffect(() => {
     fetchFiles(0);
   }, []);
@@ -50,7 +61,7 @@ const HomePage = () => {
   return (
     <>
       {/* Display loading spinner if loading state is true */}
-      {loading ? (
+      {loading || error ? (
         <div className="spin-container">
           <Spin size="large" />
         </div>

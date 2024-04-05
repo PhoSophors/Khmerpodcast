@@ -66,6 +66,17 @@ const getAllFiles = async (req, res) => {
   }
 };
 
+// Function to get file count
+const getFileCount = async (req, res) => {
+  try {
+    const count = await File.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    console.error("Error getting file count:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 // Function to update a file
 const updateFile = async (req, res) => {
   try {
@@ -118,31 +129,31 @@ const deleteFile = async (req, res) => {
 // Function to get details of a file by ID
 const getFileById = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    if (!id) {
-      return res.status(400).json({ message: "Missing file ID" });
-    }
-
-    const file = await File.findById(id);
-
+    const file = await File.findById(req.params.id);
     if (!file) {
-      return res.status(404).json({ message: "File not found" });
+      return res.status(404).json({ message: 'File not found' });
     }
-
-    res.json({ file });
+    res.json(file);
   } catch (error) {
-    console.error("Error getting file:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: error.message });
   }
 };
 
-module.exports = { uploadFile, updateFile, deleteFile, getFileById };
+exports.getFileCount = async (req, res) => {
+  try {
+    const count = await File.countDocuments();
+    res.json({ fileCount: count });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-module.exports = {
+module.exports = { 
   uploadFile,
   getAllFiles,
-  updateFile,
-  deleteFile,
-  getFileById,
-};
+   updateFile, 
+   deleteFile, 
+   getFileById,
+   getFileCount
+  };
+

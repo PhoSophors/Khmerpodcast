@@ -22,20 +22,9 @@ const Create = () => {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    fetchFiles();
-    // handleNotification("success", "Component mounted successfully.");
+    handleNotification("success", "Component mounted successfully.");
   }, []);
 
-  // Function to fetch files from the backend
-  const fetchFiles = async () => {
-    try {
-      // const response = await axios.get("http://localhost:8085/api/upload");
-      const response = await axios.get("http://localhost:8085/api/upload");
-      setFiles(response.data);
-    } catch (error) {
-      setError("Error fetching files. Please try again later.");
-    }
-  };
 
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
@@ -54,7 +43,7 @@ const Create = () => {
       formData.append("title", title); // Append title and description to the formData
       formData.append("description", description);
       formData.append("imageFile", imageFileList[0].originFileObj); // Append the image file
-      await axios.post("/api/upload", formData, {
+      await axios.post("/files/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       handleSuccessUpload();
@@ -93,7 +82,7 @@ const Create = () => {
   const handleSuccessUpload = () => {
     handleNotification("success", "Files uploaded successfully");
 
-    fetchFiles(); // Refresh files
+    // fetchFiles(); // Refresh files
     resetFormFields(); // Clear form fields
     setImageFileList([]); // clear image from fields
   };

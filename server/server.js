@@ -65,7 +65,7 @@ createDefaultAdmin().then(() => {
 
 // Mount routes
 app.use("/auth", googleRoutes); // google auth routes
-app.use("/api/upload", fileUploadRoutes); // Mount fileUploadRoutes at /api/upload endpoint
+app.use("/files", fileUploadRoutes); // Mount fileUploadRoutes at /api/upload endpoint
 app.use("/api", googleRoutes); // Mount userRoutes at /api/user endpoint
 // login and register routes
 app.use("/auths", authRoutes);

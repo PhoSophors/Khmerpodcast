@@ -16,6 +16,9 @@ import ForgotPassword from "../components/auth/forgotPassword/ForgotPassword";
 import PrivateRoute from "./PrivateRoute";
 import GuestRoute from "./GuestRoute";
 import Dashboard from "../components/pages/admin/dashboard/Dashboard";
+import AllUser from "../components/pages/admin/user/AllUser";
+import FileManager from "../components/pages/admin/user/FileManager";
+import ViewDetailPodcast from "../components/pages/viewDetailPodcast/ViewDetailPodcast";
 
 
 const App = () => {
@@ -45,7 +48,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainSection />} />
           <Route path="/search" element={<Search />} />
+            
+            {/* AdminRoute */}  
           <Route path="/dashboard" element={userRole === 'admin' ? <Dashboard /> : <Login />} />
+          <Route path="/all-user" element={userRole === 'admin' ? <AllUser /> : <Login />} />
+          <Route path="/all-user-upload" element={userRole === 'admin' ? <FileManager /> : <Login />} />
+          <Route path="/view-detail-podcast/:id" element={userRole === 'admin' ? <ViewDetailPodcast /> : (userRole === 'user' ? <ViewDetailPodcast /> : <Login />)} />
 
           {/* GuestRoute */}
           <Route
@@ -106,15 +114,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
-          {/* <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          /> */}
         
         </Routes>
       )}
