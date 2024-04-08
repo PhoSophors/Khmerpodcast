@@ -1,0 +1,30 @@
+/* .footer-container {
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  bottom: 10px;
+  width: calc(100% - 220px);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+} */
+
+
+.footer-container {
+  width: 100%;
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  bottom: 10px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+}
+
+/* Other styles for the child elements */

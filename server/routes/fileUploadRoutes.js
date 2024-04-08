@@ -3,9 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const fileUploadController = require("../controllers/fileUploadController");
-const {
-  upload2S3,
-} = require("../middleware/fileUploadMiddleware");
+const { upload2S3 } = require("../middleware/fileUploadMiddleware");
 const compressImageMiddleware = require("../middleware/compressImageMiddleware");
 const compressAudioMiddleware = require("../middleware/compressAudioMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
@@ -14,17 +12,17 @@ const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 // POST route to handle file uploads
 router.post(
   "/upload",
+  verifyToken,
+  checkRoleMiddleware(["admin", "user"]),
   upload2S3,
   compressImageMiddleware,
   compressAudioMiddleware,
-  fileUploadController.uploadFile
+  fileUploadController.uploadPodcast
 );
 
 // GET route to retrieve all files
-router.get("/get-all-file", 
-verifyToken,
-checkRoleMiddleware(["admin", "user"]),
-fileUploadController.getAllFiles);
+router.get("/get-all-file", fileUploadController.getAllFiles);
+router.get("/get-file-by-user/:id", fileUploadController.getFilesByUserId);
 
 // GET route to handle file count
 router.get(
@@ -35,12 +33,7 @@ router.get(
 );
 
 // GET route to retrieve details of a file by ID
-router.get(
-  "/get-file/:id",
-  verifyToken,
-  checkRoleMiddleware(["admin", "user"]),
-  fileUploadController.getFileById
-);
+router.get("/get-file/:id", fileUploadController.getFileById);
 
 // PUT route to update a file by ID
 router.put(

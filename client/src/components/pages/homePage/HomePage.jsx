@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, Spin } from "antd";
+import { Button, Spin, Card } from "antd";
 import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import CustomCard from "../../card/CustomCard";
 import axios from "axios";
-import Cookies from "js-cookie";
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -13,8 +12,6 @@ const HomePage = () => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 24;
-  const authToken = Cookies.get("authToken");
-  
 
   // Function to fetch files
   const fetchFiles = async (page) => {
@@ -22,12 +19,7 @@ const HomePage = () => {
 
     try {
       const response = await axios.get(
-        `/files/get-all-file?page=${page}&limit=${cardsPerPage}`,
-        {
-          headers: {
-            "auth-token": authToken,
-          },
-        }
+        `/files/get-all-file?page=${page}&limit=${cardsPerPage}`
       );
       setFiles(response.data);
       setLoading(false);
@@ -59,7 +51,7 @@ const HomePage = () => {
   };
 
   return (
-    <>
+    <div className="xl:p-5 p-0 ">
       {/* Display loading spinner if loading state is true */}
       {loading || error ? (
         <div className="spin-container">
@@ -107,7 +99,7 @@ const HomePage = () => {
           <div className="p-5"></div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

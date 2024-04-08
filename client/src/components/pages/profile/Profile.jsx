@@ -51,9 +51,9 @@ const Profile = ({ user }) => {
   };
 
   return (
-    <div className="profile-container" style={{}}>
+    <div className="profile-container p-5 ">
       <Card
-        style={{ border: "none" }}
+        style={{ border: "none", height: `calc(100vh - 90px)` }}
         title={
           <span>
             <UserOutlined style={{ marginRight: "8px" }} />
@@ -89,7 +89,7 @@ const Profile = ({ user }) => {
               size="large"
               onClick={handleEditProfile}
             >
-              <EditOutlined style={{ marginRight: "8px" }} />
+              {/* <EditOutlined style={{ marginRight: "8px" }} /> */}
               Edit profile
             </Button>
             <p className="hidden">User Token: </p>

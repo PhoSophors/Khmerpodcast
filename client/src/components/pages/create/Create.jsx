@@ -4,6 +4,7 @@ import "./create.css";
 import { CloseOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import ImgCrop from "antd-img-crop";
+import Cookies from "js-cookie";
 
 // =======================================================================
 const Create = () => {
@@ -20,11 +21,12 @@ const Create = () => {
   // Form state
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const authToken = Cookies.get("authToken");
+  const id = Cookies.get("id");
 
   useEffect(() => {
     handleNotification("success", "Component mounted successfully.");
   }, []);
-
 
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
@@ -43,8 +45,12 @@ const Create = () => {
       formData.append("title", title); // Append title and description to the formData
       formData.append("description", description);
       formData.append("imageFile", imageFileList[0].originFileObj); // Append the image file
-      await axios.post("/files/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await axios.post(`/files/upload?id=${id}`, formData, {
+        // Include the user's ID as a query parameter
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "auth-token": authToken,
+        },
       });
       handleSuccessUpload();
     } catch (error) {
@@ -137,166 +143,183 @@ const Create = () => {
   return (
     <div className="mx-auto flex xl:p-8   ">
       <div className="w-full p-2">
-        <div className="uppercase tracking-wide text-xl text-indigo-500 font-semibold">
-          Upload audio or video
-        </div>
-        <div className="tracking-wide text-sm text-gray-500">
-          Create an audio or video episode in a few simple steps.
-        </div>
+        <Card style={{ backgroundColor: "transparent" }}>
+          <div className="uppercase tracking-wide text-xl text-indigo-500 font-semibold">
+            Upload Podcast
+          </div>
+          <div className="tracking-wide text-sm text-gray-500">
+            Create an Podcast episode in a few simple steps.
+          </div>
 
-        <div className="upload-section mt-5">
-          <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5">
-            {/* set two colum */}
-            <div className="w-full sm:w-1/2">
-              <div className="mt-5 font-semibold text-gray-500">
-                Supported file types:
-              </div>
-              <div className="text-gray-500">
-                Audio files: aac, mp3, m4a, wav, or mpg
-              </div>
-              {/* upload audio */}
-              <Card title="Upload Audio " className="mt-5">
-                {fileList.length > 0 ? (
-                  <div className="audio-preview">
-                    <div className="flex items-center">
+          <div className="upload-section mt-5">
+            <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5">
+              {/* set two colum */}
+              <div className="w-full sm:w-1/2">
+                <div className="mt-5 font-semibold text-gray-500 uppercase tracking-wide">
+                  Supported file types:
+                </div>
+                <div className="text-gray-500">
+                  Audio files: aac, mp3, m4a, wav, or mpg
+                </div>
+                {/* upload audio */}
+                <Card title="Upload Audio " className="mt-5">
+                  {fileList.length > 0 ? (
+                    <div className="audio-preview">
                       <div className="flex items-center">
-                        <audio controls>
-                          <source
-                            src={URL.createObjectURL(fileList[0].originFileObj)}
-                            type="audio/mpeg"
-                          />
-                          Your browser does not support the audio element.
-                        </audio>
+                        <div className="flex items-center">
+                          <audio controls>
+                            <source
+                              src={URL.createObjectURL(
+                                fileList[0].originFileObj
+                              )}
+                              type="audio/mpeg"
+                            />
+                            Your browser does not support the audio element.
+                          </audio>
+                        </div>
+                        <div className="flex items-center">
+                          <Button
+                            className="replace-button ml-2"
+                            icon={<CloseOutlined />}
+                            onClick={handleChangeAudio}
+                          ></Button>
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <Button
-                          className="replace-button ml-2"
-                          icon={<CloseOutlined />}
-                          onClick={handleChangeAudio}
-                        ></Button>
-                      </div>
+                      <p className="file-name mt-5 ml-2">{fileList[0].name}</p>
                     </div>
-                    <p className="file-name mt-5 ml-2">{fileList[0].name}</p>
-                  </div>
-                ) : (
-                  <div className="upload-container">
+                  ) : (
+                    <div className="upload-container">
+                      <Upload
+                        listType="picture-card"
+                        customRequest={() => {}}
+                        fileList={fileList}
+                        onChange={handleFileChange}
+                        accept=".aac, .mp3, .m4a, .wav, .mpg"
+                        showUploadList={false}
+                      >
+                        <div>{"+ Upload"}</div>
+                      </Upload>
+                    </div>
+                  )}
+                </Card>
+              </div>
+
+              {/* upload  thumbnail */}
+              <div className="w-full sm:w-1/2 ">
+                <div className="mt-5 font-semibold text-gray-500 uppercase tracking-wide">
+                  Supported file types:
+                </div>
+                <div className="text-gray-500">
+                  Audio files: jpeg, jpg, png and web formats
+                </div>
+                <Card title="Upload Thumbnail" className="mt-5">
+                  <ImgCrop>
                     <Upload
+                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
-                      customRequest={() => {}}
-                      fileList={fileList}
-                      onChange={handleFileChange}
-                      accept=".aac, .mp3, .m4a, .wav, .mpg"
-                      showUploadList={false}
+                      imageFileList={imageFileList}
+                      onChange={handleChange}
+                      onPreview={handlePreview}
                     >
-                      <div>{"+ Upload"}</div>
+                      {imageFileList.length === 0 && "+ Upload"}
                     </Upload>
-                  </div>
-                )}
-              </Card>
-            </div>
-
-            {/* upload  thumbnail */}
-            <div className="w-full sm:w-1/2 ">
-              <div className="mt-5 font-semibold text-gray-500">
-                Supported file types:
-              </div>
-              <div className="text-gray-500">
-                Audio files: jpeg, jpg, png and web formats
-              </div>
-              <Card title="Upload Thumbnail" className="mt-5">
-                <ImgCrop rotate>
-                  <Upload
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                    listType="picture-card"
-                    imageFileList={imageFileList}
-                    onChange={handleChange}
-                    onPreview={handlePreview}
+                  </ImgCrop>
+                  <Modal
+                    open={previewOpen}
+                    title={previewTitle}
+                    footer={null}
+                    onCancel={handleCancel}
                   >
-                    {imageFileList.length === 0 && "+ Upload"}
-                  </Upload>
-                </ImgCrop>
-                <Modal
-                  open={previewOpen}
-                  title={previewTitle}
-                  footer={null}
-                  onCancel={handleCancel}
+                    <img
+                      alt="example"
+                      style={{ width: "100%" }}
+                      src={previewImage}
+                    />
+                  </Modal>
+                </Card>
+              </div>
+            </div>
+
+            {/* input form */}
+            <Card title="Input Form" className="mt-5 create-card">
+              <Form variant="filled">
+                <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
+                  <div className="w-full sm:w-2/5 ">
+                    <p className="font-semibold text-gray-500 uppercase tracking-wide">
+                      Title *
+                    </p>
+                    <Input.TextArea
+                      className="mt-5"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="Input title"
+                      showCount
+                      maxLength={200}
+                      style={{ height: "200px" }}
+                    />
+                  </div>
+                  <div className="w-full sm:w-3/5">
+                    <p className="font-semibold text-gray-500 uppercase tracking-wide">
+                      Description *
+                    </p>
+                    <Input.TextArea
+                      className="mt-5"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Input description"
+                      showCount
+                      maxLength={800}
+                      style={{ height: "200px" }}
+                    />
+                  </div>
+                </div>
+                <Button
+                  onClick={handleReset}
+                  style={{ float: "right" }}
+                  className="mt-10"
+                  disabled={!title && !description}
                 >
-                  <img
-                    alt="example"
-                    style={{ width: "100%" }}
-                    src={previewImage}
-                  />
-                </Modal>
-              </Card>
+                  Reset
+                </Button>
+              </Form>
+            </Card>
+
+            {/* upload button */}
+            <div className="mt-5 gap-5">
+              <Button
+                className="upload-button "
+                style={{ backgroundColor: "#ea580c", color: "#ffffff" }}
+                onClick={handleUpload}
+                loading={loading}
+                disabled={!isUploadEnabled()}
+              >
+                <CloudUploadOutlined />
+                Upload
+              </Button>
+            </div>
+
+            {/* nofication alert */}
+            <div
+              style={{ position: "fixed", top: 15, right: 80, zIndex: 9999 }}
+            >
+              {notification && (
+                <Alert
+                  message={notification}
+                  type={
+                    notification.includes("Success")
+                      ? "success"
+                      : notification.includes("Error")
+                      ? "error"
+                      : "success"
+                  }
+                  closable
+                  onClose={() => setNotification("")} // Clear the notification on close
+                />
+              )}
+              {error && <Alert message={error} type="error" closable />}
             </div>
           </div>
-
-          {/* input form */}
-          <Card title="Input Form" className="mt-5 create-card">
-            <Form variant="filled">
-              <p>Title *</p>
-              <Input.TextArea
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Input title"
-                showCount
-                maxLength={200}
-                style={{ height: "90px" }}
-              />
-
-              <p className="mt-10">Description *</p>
-              <Input.TextArea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Input description"
-                showCount
-                maxLength={800}
-                style={{ height: "200px" }}
-              />
-              <Button
-                onClick={handleReset}
-                style={{ float: "right" }}
-                className="mt-10"
-                disabled={!title && !description}
-              >
-                Reset
-              </Button>
-            </Form>
-          </Card>
-
-          {/* upload button */}
-          <div className="mt-5 gap-5">
-            <Button
-              className="upload-button "
-              style={{ backgroundColor: "#ea580c", color: "#ffffff" }}
-              onClick={handleUpload}
-              loading={loading}
-              disabled={!isUploadEnabled()}
-            >
-              <CloudUploadOutlined />
-              Upload
-            </Button>
-          </div>
-
-          {/* nofication alert */}
-          <div style={{ position: "fixed", top: 15, right: 80, zIndex: 9999 }}>
-            {notification && (
-              <Alert
-                message={notification}
-                type={
-                  notification.includes("Success")
-                    ? "success"
-                    : notification.includes("Error")
-                    ? "error"
-                    : "success"
-                }
-                closable
-                onClose={() => setNotification("")} // Clear the notification on close
-              />
-            )}
-            {error && <Alert message={error} type="error" closable />}
-          </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

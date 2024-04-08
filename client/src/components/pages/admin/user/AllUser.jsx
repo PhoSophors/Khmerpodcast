@@ -65,7 +65,7 @@ const AllUser = () => {
 
               {allUser.map((user, index) => {
                 const menu = (
-                  <Menu style={{ width: "150px" }}>
+                  <Menu style={{ width: "200px" }}>
                     <Menu.Item key="0">Edit</Menu.Item>
                     <Menu.Item key="1">Delete</Menu.Item>
                   </Menu>

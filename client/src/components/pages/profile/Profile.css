@@ -14,9 +14,16 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  background-color: rgb(237, 124, 107);
-  border-color: green;
-  color: green;
+  background-color: var(--sider-bg);
+  border-color: var(--sider-bg);
+  color: var(--white);
   transition: background-color 0.3s; /* Add transition for smooth effect */
+}
+
+.edit-button:hover {
+ 
+  background-color: var(--slate-900) !important;
+  border-color: var(--slate-900) !important;
+  color: var(--white) !important;
 }
 

@@ -84,8 +84,8 @@ class MainSection extends Component {
                 toggleHeaderFullScreen={this.toggleHeaderFullScreen}
               />
             </div>
+            {/* <Footer /> */}
           </Content>
-          {/* <Footer /> */}
         </Layout>
       </Layout>
     );

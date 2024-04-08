@@ -34,7 +34,9 @@ const userSchema = new Schema({
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
-  }
+  },
+  files: [{ type: Schema.Types.ObjectId, ref: 'File' }],
+
 
 });
 

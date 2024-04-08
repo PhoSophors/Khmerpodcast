@@ -1,9 +1,11 @@
 // controller/fileUploadController.js
 
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
 const File = require("../models/fileUploadModel");
 
-// Function to upload a file
-const uploadFile = async (req, res) => {
+// Function to upload a file ================================================================
+const uploadPodcast = async (req, res) => {
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({ message: "No files uploaded" });
@@ -15,6 +17,8 @@ const uploadFile = async (req, res) => {
     if (!title || !description || !audioFile || !imageFile) {
       return res.status(400).json({ message: "Missing required fields" });
     }
+
+    const id = req.user.id;
 
     // Calculate the size of the compressed image
     const compressedImageSize = imageFile[0].buffer
@@ -29,6 +33,7 @@ const uploadFile = async (req, res) => {
     const file = new File({
       title: title,
       description: description,
+      user: id,
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
@@ -48,7 +53,9 @@ const uploadFile = async (req, res) => {
     // Save the file document
     await file.save();
 
-    res.status(201).json({ message: "File uploaded successfully" });
+    res
+      .status(201)
+      .json({ message: "File uploaded successfully", fileId: file._id });
   } catch (error) {
     console.error("Error uploading file:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -66,7 +73,7 @@ const getAllFiles = async (req, res) => {
   }
 };
 
-// Function to get file count
+// Function to get file count ================================================================
 const getFileCount = async (req, res) => {
   try {
     const count = await File.countDocuments();
@@ -77,7 +84,7 @@ const getFileCount = async (req, res) => {
   }
 };
 
-// Function to update a file
+// Function to update a file ================================================================
 const updateFile = async (req, res) => {
   try {
     const { id } = req.params;
@@ -104,7 +111,7 @@ const updateFile = async (req, res) => {
   }
 };
 
-// Function to delete a file
+// Function to delete a file ================================================================
 const deleteFile = async (req, res) => {
   try {
     const { id } = req.params;
@@ -126,19 +133,27 @@ const deleteFile = async (req, res) => {
   }
 };
 
-// Function to get details of a file by ID
+// Function to get details of a file by ID ================================================================
 const getFileById = async (req, res) => {
   try {
-    const file = await File.findById(req.params.id);
+    const file = await File.findById(req.params.id).populate("user");
     if (!file) {
-      return res.status(404).json({ message: 'File not found' });
+      return res.status(404).json({ message: "File not found" });
     }
+    // Fetch the user who uploaded the file
+    const user = await User.findById(file.user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     res.json(file);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+
+// Function to get file count ================================================================
 exports.getFileCount = async (req, res) => {
   try {
     const count = await File.countDocuments();
@@ -148,12 +163,35 @@ exports.getFileCount = async (req, res) => {
   }
 };
 
-module.exports = { 
-  uploadFile,
-  getAllFiles,
-   updateFile, 
-   deleteFile, 
-   getFileById,
-   getFileCount
-  };
+// Function to get files by user ID ================================================================
+const getFilesByUserId = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    // Find files uploaded by the user
+    const files = await File.find({ user: id });
+
+    // If no files found, return a message
+    if (!files || files.length === 0) {
+      return res.status(404).json({ message: "No files found for this user" });
+    }
+
+    // Return the files
+    res.json(files);
+  } catch (err) {
+    // Handle any errors
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// ================================================================
+module.exports = {
+  uploadPodcast,
+  getAllFiles,
+  updateFile,
+  deleteFile,
+  getFileById,
+  getFileCount,
+  getFilesByUserId
+};

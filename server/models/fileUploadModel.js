@@ -10,6 +10,11 @@ const fileSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  user: { // Add this line
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   audio: {
     filename: {
       type: String,
@@ -52,6 +57,8 @@ const fileSchema = new mongoose.Schema({
   }
 });
 
+// search index
+fileSchema.index({ title: 'text', description: 'text' });
 const File = mongoose.model('File', fileSchema);
 
 module.exports = File;

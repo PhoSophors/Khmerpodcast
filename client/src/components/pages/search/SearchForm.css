@@ -1,6 +1,5 @@
 .search-form {
   width: 100%;
-  height: 100%;
   display: flex;
   flex: content;
   justify-content: center;
@@ -9,16 +8,19 @@
   margin-right: 5px;
 }
 
-.search-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .search-input {
   width: 100%;
-  max-width: 700px;
+  height: 50px;
+  max-width: 400px;
   border-radius: 15px;
+  border: 0;
+  background-color: var(--slate-100);
+}
+
+.search-input:hover {
+  border: none;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+  background-color: var(--white);
 }
 
 

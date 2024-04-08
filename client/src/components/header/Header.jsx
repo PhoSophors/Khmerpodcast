@@ -7,6 +7,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import "./Header.css";
 import logo from "../assets/logo.jpg";
+
 import {
   MenuOutlined,
   MenuUnfoldOutlined,
@@ -14,7 +15,7 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 
-const Header = ({ handleCollapse, menuOpen }) => {
+const Header = ({ handleCollapse, menuOpen, results }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +29,7 @@ const Header = ({ handleCollapse, menuOpen }) => {
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     const id = Cookies.get("id");
-    
+
     if (authToken && id) {
       axios
         .get(`/auths/user-data/${id}`, {
@@ -100,6 +101,12 @@ const Header = ({ handleCollapse, menuOpen }) => {
     setLogoutModalVisible(false);
   };
 
+  const [searchResults, setSearchResults] = useState([]);
+  const handleSearchSubmit = async (results) => {
+    setSearchResults(results);
+  };
+
+
   const menu = (
     <Menu style={{ width: "250px" }} className="profile-dropdown-menu">
       <Menu.Item key="0">
@@ -128,7 +135,7 @@ const Header = ({ handleCollapse, menuOpen }) => {
         </button>
       </div>
 
-      <SearchForm />
+      <SearchForm handleSearchSubmit={handleSearchSubmit} />
 
       <div className="user-profile">
         {isLoading ? (

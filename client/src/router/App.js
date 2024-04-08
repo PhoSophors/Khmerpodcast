@@ -19,11 +19,18 @@ import Dashboard from "../components/pages/admin/dashboard/Dashboard";
 import AllUser from "../components/pages/admin/user/AllUser";
 import FileManager from "../components/pages/admin/user/FileManager";
 import ViewDetailPodcast from "../components/pages/viewDetailPodcast/ViewDetailPodcast";
-
+import Test from "../components/pages/homePage/Test";
+import Header from "../components/header/Header";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+
+
+  const handleSearchSubmit = (results) => {
+    setSearchResults(results);
+  };
 
 
   useEffect(() => {
@@ -45,15 +52,20 @@ const App = () => {
       {loading ? (
         <AppLoading />
       ) : (
+        <>
         <Routes>
+      
           <Route path="/" element={<MainSection />} />
           <Route path="/search" element={<Search />} />
-            
+          <Route path="/test" element = {<Test />} />
+          <Route path="/view-detail-podcast/:id" element={ <ViewDetailPodcast /> } />
+
+
             {/* AdminRoute */}  
           <Route path="/dashboard" element={userRole === 'admin' ? <Dashboard /> : <Login />} />
           <Route path="/all-user" element={userRole === 'admin' ? <AllUser /> : <Login />} />
           <Route path="/all-user-upload" element={userRole === 'admin' ? <FileManager /> : <Login />} />
-          <Route path="/view-detail-podcast/:id" element={userRole === 'admin' ? <ViewDetailPodcast /> : (userRole === 'user' ? <ViewDetailPodcast /> : <Login />)} />
+       
 
           {/* GuestRoute */}
           <Route
@@ -116,6 +128,7 @@ const App = () => {
           />
         
         </Routes>
+        </>
       )}
     </Router>
   );

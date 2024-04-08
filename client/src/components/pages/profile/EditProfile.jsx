@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, message } from "antd";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "../../auth/login/Login.css";
+import { Form, Input, Button, message } from "antd";
+import { LeftOutlined } from "@ant-design/icons";
 
 const EditProfile = ({ user }) => {
   const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
+  // const [email, setEmail] = useState(user.email);
 
-  const id = Cookies.get("id");
 
   useEffect(() => {
     setUsername(user.username);
@@ -18,6 +18,9 @@ const EditProfile = ({ user }) => {
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
+  // const handleEmailChange = (e) => {
+  //   setEmail(e.target.value);
+  // };
 
   const handleSubmit = async () => {
     try {
@@ -54,9 +57,20 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="" style={{ width: "40%" }}>
-      <Form layout="vertical">
-        <Form.Item label="Username">
+    <div className="">
+      <Button
+        className="back-button bg-slate-500 h- text-white mt-5"
+        type="text"
+        icon={<LeftOutlined />}
+      >
+        Back
+      </Button>
+
+    <div className="flex text-center items-center justify-center ">
+      {/* set width form 50% */}
+
+      <Form layout="vertical mt-5 text-center font-semibold w-96">
+        <Form.Item label="Username *">
           <Input
             value={username}
             onChange={handleUsernameChange}
@@ -73,10 +87,10 @@ const EditProfile = ({ user }) => {
         <Form.Item>
           <Button
             className="submit-button"
-            type="dashed"
+            type="primary"
             onClick={handleSubmit}
             style={{
-              backgroundColor: "#0e7490",
+              backgroundColor: "#3730a3",
               color: "#ffffff",
             }}
           >
@@ -84,6 +98,7 @@ const EditProfile = ({ user }) => {
           </Button>
         </Form.Item>
       </Form>
+      </div>
     </div>
   );
 };

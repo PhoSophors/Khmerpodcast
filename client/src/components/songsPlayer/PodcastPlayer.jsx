@@ -28,6 +28,12 @@ const PodcastPlayer = ({ src, isPlaying, handlePlayPause }) => {
 
   return (
     <div className="player-contrainer flex items-center justify-center space-x-4">
+
+<div className="p-3 bg-indigo-800 h-full flex justify-center items-center rounded-full">
+       sdf
+      </div>
+
+
       <audio ref={audioRef} src={src} />
       <StepBackwardFilled style={{ fontSize: "2.5rem", color: "#fff" }} />
 
@@ -43,6 +49,11 @@ const PodcastPlayer = ({ src, isPlaying, handlePlayPause }) => {
         />
       )}
       <StepForwardOutlined style={{ fontSize: "2.5rem", color: "#fff" }} />
+
+      <div className="p-3 bg-indigo-800 h-full flex justify-center items-center rounded-full">
+       sdfas
+      </div>
+
     </div>
   );
 };
