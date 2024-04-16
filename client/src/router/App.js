@@ -21,6 +21,7 @@ import FileManager from "../components/pages/admin/user/FileManager";
 import ViewDetailPodcast from "../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import Test from "../components/pages/homePage/Test";
 import Header from "../components/header/Header";
+import UserCard from "../components/card/UserCard";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -57,6 +58,7 @@ const App = () => {
       
           <Route path="/" element={<MainSection />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/usercard" element = {<UserCard />} />
           <Route path="/test" element = {<Test />} />
           <Route path="/view-detail-podcast/:id" element={ <ViewDetailPodcast /> } />
 

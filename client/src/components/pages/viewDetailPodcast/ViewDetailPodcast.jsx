@@ -10,7 +10,6 @@ const ViewDetailPodcast = () => {
   const [notification, setNotification] = useState(null);
   const [user, setUser] = useState({});
   const { id } = useParams();
-  const authToken = Cookies.get("authToken");
 
   const fetchFile = async () => {
     setLoading(true);

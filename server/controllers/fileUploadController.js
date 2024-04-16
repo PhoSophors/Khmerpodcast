@@ -3,6 +3,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const File = require("../models/fileUploadModel");
+const { deleteFileFromS3 } = require("../middleware/fileUploadMiddleware");
 
 // Function to upload a file ================================================================
 const uploadPodcast = async (req, res) => {
@@ -18,7 +19,8 @@ const uploadPodcast = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    const id = req.user.id;
+    // set user id from token
+    const userId = req.user.id;
 
     // Calculate the size of the compressed image
     const compressedImageSize = imageFile[0].buffer
@@ -33,7 +35,7 @@ const uploadPodcast = async (req, res) => {
     const file = new File({
       title: title,
       description: description,
-      user: id,
+      user: userId, // set user id
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
@@ -62,7 +64,7 @@ const uploadPodcast = async (req, res) => {
   }
 };
 
-// Function to get all files
+// Function to get all files ================================================================
 const getAllFiles = async (req, res) => {
   try {
     const files = await File.find();
@@ -115,16 +117,25 @@ const updateFile = async (req, res) => {
 const deleteFile = async (req, res) => {
   try {
     const { id } = req.params;
+    const user = req.user;
 
     if (!id) {
       return res.status(400).json({ message: "Missing file ID" });
     }
 
-    const deletedFile = await File.findByIdAndDelete(id);
+    const file = await File.findById(id);
 
-    if (!deletedFile) {
+    if (!file) {
       return res.status(404).json({ message: "File not found" });
     }
+
+    // Check if the user who uploaded the file is the same user who is trying to delete it
+    // or if the user is an admin
+    if (file.user.toString() !== user.id && user.role !== "admin") {
+      return res.status(403).json({ message: "You do not have permission to delete this file" });
+    }
+    // Remove the file from the database
+    await File.deleteOne({ _id: id });
 
     res.json({ message: "File deleted successfully" });
   } catch (error) {
@@ -132,6 +143,7 @@ const deleteFile = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 // Function to get details of a file by ID ================================================================
 const getFileById = async (req, res) => {
@@ -152,7 +164,6 @@ const getFileById = async (req, res) => {
   }
 };
 
-
 // Function to get file count ================================================================
 exports.getFileCount = async (req, res) => {
   try {
@@ -163,7 +174,7 @@ exports.getFileCount = async (req, res) => {
   }
 };
 
-// Function to get files by user ID ================================================================
+// Function to get files by user ID that user upload ================================================================
 const getFilesByUserId = async (req, res) => {
   try {
     const { id } = req.params;
@@ -193,5 +204,5 @@ module.exports = {
   deleteFile,
   getFileById,
   getFileCount,
-  getFilesByUserId
+  getFilesByUserId,
 };

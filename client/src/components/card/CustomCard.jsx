@@ -27,6 +27,10 @@ const CustomCard = ({ file }) => {
     navigate(`/view-detail-podcast/${file._id}`);
   };
 
+  if (!file) {
+    return null; 
+  }
+
   return (
     <div
       className="sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/6 w-1/2 p-2"

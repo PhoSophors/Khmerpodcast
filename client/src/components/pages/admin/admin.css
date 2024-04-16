@@ -19,7 +19,7 @@
 
 #user-table td, #user-table th {
   border: 1px solid #ddd;
-  border-top: none;
+  /* border-top: none; */
   border-left: none;
   border-right: none;
   padding: 7px;

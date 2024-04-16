@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Spin, Alert, Card, Avatar, Menu, Dropdown } from "antd";
 import { UserOutlined, MoreOutlined } from "@ant-design/icons";
+import SearchForm from "../../search/SearchForm";
 import "../admin.css";
 
 const AllUser = () => {
@@ -10,6 +11,8 @@ const AllUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const authToken = Cookies.get("authToken");
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchAllUser = async () => {
     setLoading(true);
@@ -40,9 +43,15 @@ const AllUser = () => {
     fetchAllUser();
   }, []);
 
+  const handleSearchSubmit = async (results, query) => {
+    setSearchResults(results);
+    setSearchQuery(query);
+  };
+
   return (
     <div className="p-5">
       <Card title="All Users" className="w-full">
+        <SearchForm handleSearchSubmit={handleSearchSubmit} />
         {loading ? (
           <div className="spin-container">
             <Spin size="large" />

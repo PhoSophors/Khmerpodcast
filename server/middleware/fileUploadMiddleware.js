@@ -1,10 +1,9 @@
 // middleware/fileUploadMiddleware.js
 
 
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const { Readable } = require("stream");
 const compressImageMiddleware = require("./compressImageMiddleware");
 const compressAudioMiddleware = require("./compressAudioMiddleware");
 
@@ -44,5 +43,7 @@ const handleUploadError = (err, req, res, next) => {
   console.error("Upload error:", err);
   res.status(500).json({ message: "Internal server error" });
 };
+
+
 
 module.exports = { upload2S3, handleUploadError, compressImageMiddleware, compressAudioMiddleware };

@@ -135,7 +135,7 @@ const Header = ({ handleCollapse, menuOpen, results }) => {
         </button>
       </div>
 
-      <SearchForm handleSearchSubmit={handleSearchSubmit} />
+      {/* <SearchForm handleSearchSubmit={handleSearchSubmit} /> */}
 
       <div className="user-profile">
         {isLoading ? (

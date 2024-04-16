@@ -3,11 +3,15 @@
 const express = require("express");
 const router = express.Router();
 const fileUploadController = require("../controllers/fileUploadController");
-const { upload2S3 } = require("../middleware/fileUploadMiddleware");
+const {
+  upload2S3,
+  deleteFileFromS3,
+} = require("../middleware/fileUploadMiddleware");
 const compressImageMiddleware = require("../middleware/compressImageMiddleware");
 const compressAudioMiddleware = require("../middleware/compressAudioMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
+const File = require("../models/fileUploadModel");
 
 // POST route to handle file uploads
 router.post(
