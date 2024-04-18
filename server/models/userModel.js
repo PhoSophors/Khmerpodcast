@@ -5,7 +5,7 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
-  unique: true,
+    unique: true,
   },
   username: {
     type: String,
@@ -21,7 +21,7 @@ const userSchema = new Schema({
     default: false,
   },
   emailVerificationToken: String,
-  authToken: String, 
+  authToken: String,
   createdAt: {
     type: Date,
     // default: Date.now,
@@ -35,10 +35,14 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
-  files: [{ type: Schema.Types.ObjectId, ref: 'File' }],
+  files: [{ type: Schema.Types.ObjectId, ref: "File" }],
 
-
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+    },
+  ],
 });
-
 
 module.exports = mongoose.model("User", userSchema);

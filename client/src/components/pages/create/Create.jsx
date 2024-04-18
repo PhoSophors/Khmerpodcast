@@ -8,7 +8,6 @@ import Cookies from "js-cookie";
 
 // =======================================================================
 const Create = () => {
-  const [files, setFiles] = useState([]);
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState("");

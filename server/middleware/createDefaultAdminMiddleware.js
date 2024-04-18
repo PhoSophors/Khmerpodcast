@@ -10,7 +10,7 @@ async function createDefaultAdmin() {
     const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
     const admin = new User({
       username: "admin",
-      email: "khmerpodcast209@gmail.com",
+      email: process.env.ADMIN_EMAIL,
       password: hashedPassword,
       role: "admin",
       emailVerified: true,

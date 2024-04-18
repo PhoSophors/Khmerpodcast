@@ -8,9 +8,9 @@ import EditProfile from "./EditProfile";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import CustomCard from "../../card/CustomCard";
+import UserUploadCard from "../../card/UserUploadCard";
 
-const Profile = ({ user }) => {
+const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -78,9 +78,13 @@ const Profile = ({ user }) => {
   };
 
   return (
-    <div className="profile-container p-5 ">
+    <div className="profile-container xl:p-5 ">
       <Card
-        style={{ backgroundColor: "transparent" }}
+        style={{
+          backgroundColor: "transparent",
+          cardPadding: "0",
+          border: "none",
+        }}
         title={
           <span>
             <UserOutlined style={{ marginRight: "8px" }} />
@@ -96,7 +100,6 @@ const Profile = ({ user }) => {
           <div className="profile-content">
             <Avatar
               size={140}
-              // src={userData.photoURL}
               icon={<UserOutlined />}
               style={{ marginBottom: "16px" }}
             />
@@ -137,26 +140,22 @@ const Profile = ({ user }) => {
             </Link>
           </div>
         )}
-      </Card>
-      {/* get all files in here */}
-      {isLoading || isError ? (
-        <div className="spin-container">
-          <Spin size="large" />
-        </div>
-      ) : (
-        <>
-          <div className="flex  sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
-            {userPodcasts.map((podcast, index) => (
-              <CustomCard key={index} file={podcast} />
-            ))}
+
+        {/* get all files in here */}
+        {isLoading || isError ? (
+          <div className="spin-container">
+            <Spin size="large" />
           </div>
-        </>
-      )}
-      {/* <div className="flex  sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
-          {userPodcasts.map((podcast, index) => (
-            <CustomCard key={index} file={podcast} />
-          ))}
-        </div> */}
+        ) : (
+          <>
+            <div className="mt-10 flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
+              {userPodcasts.map((podcast, index) => (
+                <UserUploadCard key={index} file={podcast} />
+              ))}
+            </div>
+          </>
+        )}
+      </Card>
     </div>
   );
 };
