@@ -3,6 +3,7 @@
 // const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const File = require("../models/fileUploadModel");
+const mongoose = require("mongoose");
 // const { deleteFileFromS3 } = require("../middleware/fileUploadMiddleware");
 
 // Function to upload a file ================================================================
@@ -133,7 +134,9 @@ const deleteFile = async (req, res) => {
     // Check if the user who uploaded the file is the same user who is trying to delete it
     // or if the user is an admin
     if (file.user.toString() !== user.id && user.role !== "admin") {
-      return res.status(403).json({ message: "You do not have permission to delete this file" });
+      return res
+        .status(403)
+        .json({ message: "You do not have permission to delete this file" });
     }
     // Remove the file from the database
     await File.deleteOne({ _id: id });
@@ -167,9 +170,9 @@ const getFileById = async (req, res) => {
 // Function to get files by user ID that user upload ================================================================
 const getFilesByUserId = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params; // ID of the user
 
-    // Find files uploaded by the user
+    // Find files id uploaded by the user
     const files = await File.find({ user: id });
 
     // If no files found, return a message
@@ -190,7 +193,10 @@ const getFilesByUserId = async (req, res) => {
 const addPodcastToPlaylist = async (req, res) => {
   try {
     const { id } = req.params; // ID of the file to add to favorites
-    const userId = req.user; // ID of the user making the request
+    const userId = req.user.id; // ID of the user making the request
+
+    console.log('id:', id); // Debugging line
+    console.log('userId:', userId); // Debugging line
 
     // Find the user by ID
     const user = await User.findById(userId);
@@ -226,6 +232,11 @@ const removePodcastFromPlaylist = async (req, res) => {
     const { id } = req.params; // ID of the file to remove from favorites
     const userId = req.user.id; // ID of the user making the request
 
+    // Check if userId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
     // Find the user by ID
     const user = await User.findById(userId);
     if (!user) {
@@ -255,7 +266,7 @@ const getPodcastPlaylist = async (req, res) => {
     const id = req.user.id; // ID of the user making the request
 
     // Find the user by ID and populate the 'favorites' field
-    const user = await User.findById(id).populate('favorites');
+    const user = await User.findById(id).populate("favorites");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

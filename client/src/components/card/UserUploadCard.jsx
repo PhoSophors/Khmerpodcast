@@ -46,7 +46,7 @@ const UserUploadCard = ({ file }) => {
       <Card
         style={{
           borderRadius: "20px",
-          border: "none",
+          // border: "none",
         }}
         bodyStyle={{ padding: 0 }}
         cover={

@@ -21,7 +21,8 @@ const AllUser = () => {
         const response = await axios.get(`/auths/users/all`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            "auth-token": authToken,
+            // "auth-token": authToken,
+            Authorization: `Bearer ${authToken}`,
           },
         });
         if (Array.isArray(response.data.users)) {

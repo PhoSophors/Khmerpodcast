@@ -7,7 +7,6 @@ import {
   PlayCircleFilled,
   MoreOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
 
 const FavoritesCard = ({ file }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,27 +32,29 @@ const FavoritesCard = ({ file }) => {
     navigate(`/view-detail-podcast/${file._id}`);
   };
 
-  const handleRemoveFromFavorites = async () => {
+  const removePodcastFromFavorites = async () => {
     const authToken = Cookies.get("authToken");
 
-    axios
-      .post(`/files/remove-favorite/${file._id}`, {
-        baseURL: process.env.REACT_APP_PROXY,
+    try {
+      let response;
+
+      response = await fetch(`/files/remove-favorite/${file._id}`, {
+        method: "POST",
+        baseUrl: process.env.REACT_APP_PROXY,
         headers: {
-          "auth-token": authToken,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
         },
-      })
-      .then((response) => {
-        message.success("Podcast removed from favorites"); // Show success message
-        window.location.reload(); // Refresh the page to reflect changes
-      })
-      .catch((error) => {
-        console.error(
-          "Error removing file from favorites:",
-          error.response?.data?.message || error.message
-        );
-        message.error("Failed to remove podcast from favorites"); // Show error message
       });
+
+      if (response.status === 200) {
+        message.success("Podcast removed from favorites");
+      } else {
+        throw new Error("Failed to remove podcast from favorites");
+      }
+    } catch (error) {
+      message.error("Error remove podcast in favorites");
+    }
   };
 
   const date = new Date(); // replace this with your date
@@ -72,7 +73,7 @@ const FavoritesCard = ({ file }) => {
       <Card
         style={{
           borderRadius: "20px",
-          border: "none",
+          // border: "none",
         }}
         bodyStyle={{ padding: 0 }}
         cover={
@@ -145,11 +146,11 @@ const FavoritesCard = ({ file }) => {
               </div>
 
               <div
-                onClick={handleRemoveFromFavorites}
+                onClick={removePodcastFromFavorites}
                 className="cursor-pointer"
               >
                 <svg
-                  className="w-4 h-4 text-gray-800 dark:text-white"
+                  className="w-4 h-4 "
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"

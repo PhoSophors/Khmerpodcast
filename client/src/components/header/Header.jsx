@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Avatar, Dropdown, Menu, Alert, Spin, message, Modal } from "antd";
 import LanguageSwitcher from "../languageSwitcher/LanguageSwitcher";
-import SearchForm from "../pages/search/SearchForm";
 import Login from "../auth/login/Login";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -35,7 +34,8 @@ const Header = ({ handleCollapse, menuOpen, results }) => {
         .get(`/auths/user-data/${id}`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            "auth-token": authToken,
+            // "auth-token": authToken,
+            Authorization: `Bearer ${authToken}`,
           },
         })
         .then((response) => {
@@ -99,11 +99,6 @@ const Header = ({ handleCollapse, menuOpen, results }) => {
   const handleCancelLogout = () => {
     // Close the logout confirmation modal
     setLogoutModalVisible(false);
-  };
-
-  const [searchResults, setSearchResults] = useState([]);
-  const handleSearchSubmit = async (results) => {
-    setSearchResults(results);
   };
 
 

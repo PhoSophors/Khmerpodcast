@@ -22,7 +22,8 @@ const Dashboard = () => {
         const response = await axios.get(`/auths/users`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            "auth-token": authToken,
+            // "auth-token": authToken,
+            Authorization: `Bearer ${authToken}`,
           },
         });
         setUserCount(response.data.user);

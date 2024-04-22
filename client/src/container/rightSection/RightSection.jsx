@@ -35,15 +35,16 @@ const RightSection = ({ selectedMenuItem }) => {
       content = <Setting />;
       break;
     case "/dashboard":
-        content = <Dashboard />;
-        break;
+      content = <Dashboard />;
+      break;
     case "/all-user":
-        content = <AllUser />;
-        break;
+      content = <AllUser />;
+      break;
     case "/all-user-upload":
-        content = <FileManager />;
-        break;
+      content = <FileManager />;
+      break;
 
+      
     default:
       content = "No Content";
   }

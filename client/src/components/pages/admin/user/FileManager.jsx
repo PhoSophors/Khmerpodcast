@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Spin, Alert, Card, Avatar, Menu, Dropdown, message, Modal } from "antd";
+import {
+  Spin,
+  Alert,
+  Card,
+  Avatar,
+  Menu,
+  Dropdown,
+  message,
+  Modal,
+} from "antd";
 import Cookies from "js-cookie";
 import { MoreOutlined, DeleteOutlined } from "@ant-design/icons";
 import SearchForm from "../../search/SearchForm";
@@ -25,7 +34,7 @@ const FileManager = () => {
       setLoading(true);
       const response = await axios.get("/files/get-all-file", {
         headers: {
-          "auth-token": authToken,
+          Authorization: `Bearer ${authToken}`,
         },
       });
       setFiles(response.data);
@@ -39,24 +48,23 @@ const FileManager = () => {
     }
   };
 
-  
   const deletePodcast = (id) => {
     Modal.confirm({
-      title: 'Are you sure you want to delete this podcast?',
+      title: "Are you sure you want to delete this podcast?",
       icon: <DeleteOutlined />,
-      content: 'This action cannot be undone.',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
       onOk() {
         deletePodcastConfirmed(id);
       },
       onCancel() {
-        console.log('Cancel');
+        console.log("Cancel");
       },
     });
   };
-  
+
   const deletePodcastConfirmed = async (id) => {
     try {
       setLoading(true);
@@ -64,20 +72,18 @@ const FileManager = () => {
         method: "DELETE",
         baseURL: process.env.REACT_APP_SERVER_URL,
         headers: {
-          "auth-token": authToken,
+          Authorization: `Bearer ${authToken}`,
         },
       });
       setNotification(response.data.message);
-      message.success('Podcast deleted successfully');
+      message.success("Podcast deleted successfully");
       fetchFiles();
     } catch (error) {
-      message.error('Error deleting file');
+      message.error("Error deleting file");
     } finally {
       setLoading(false);
     }
   };
-
-
 
   const handleSearchSubmit = async (results, query) => {
     setSearchResults(results);
@@ -113,7 +119,6 @@ const FileManager = () => {
                   <th className="text-start">Title *</th>
                   <th className="text-start">Description *</th>
                   <th className="text-start">File Types *</th>
-                  {/* <th className="text-start">Status *</th> */}
                   <th>Upload Date *</th>
                   <th>Action *</th>
                 </tr>
@@ -148,9 +153,14 @@ const FileManager = () => {
                       <td className="text-center">
                         <Dropdown
                           overlay={
-                            <Menu style={{ width: "200px" }}>
+                            <Menu style={{ width: "250px" }}>
                               <Menu.Item key="0">Edit</Menu.Item>
-                              <Menu.Item key="1" onClick={() => deletePodcast(result._id)}>Delete</Menu.Item>
+                              <Menu.Item
+                                key="1"
+                                onClick={() => deletePodcast(result._id)}
+                              >
+                                Delete
+                              </Menu.Item>
                             </Menu>
                           }
                           trigger={["hover"]}
@@ -190,9 +200,14 @@ const FileManager = () => {
                       <td className="text-center">
                         <Dropdown
                           overlay={
-                            <Menu style={{ width: "200px" }}>
+                            <Menu style={{ width: "250px" }}>
                               <Menu.Item key="0">Edit</Menu.Item>
-                              <Menu.Item key="1" onClick={() => deletePodcast(file._id)}>Delete</Menu.Item>
+                              <Menu.Item
+                                key="1"
+                                onClick={() => deletePodcast(file._id)}
+                              >
+                                Delete
+                              </Menu.Item>
                             </Menu>
                           }
                           trigger={["hover"]}
@@ -204,9 +219,7 @@ const FileManager = () => {
                   ))
                 ) : (
                   <tr>
-                    <td  className="text-center">
-                      No Podcast found..!
-                    </td>
+                    <td className="text-center">No Podcast found..!</td>
                   </tr>
                 )}
               </tbody>

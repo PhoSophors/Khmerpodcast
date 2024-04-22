@@ -48,7 +48,8 @@ const Create = () => {
         // Include the user's ID as a query parameter
         headers: {
           "Content-Type": "multipart/form-data",
-          "auth-token": authToken,
+          // "auth-token": authToken,
+          Authorization: `Bearer ${authToken}`,
         },
       });
       handleSuccessUpload();

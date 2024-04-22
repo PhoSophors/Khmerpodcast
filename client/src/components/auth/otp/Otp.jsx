@@ -74,12 +74,12 @@ const Otp = () => {
   };
 
   return (
-    <div className="flex flex-col  bg-slate-700  items-center justify-center h-screen text-center bg-white p-4">
+    <div className="flex flex-col w-full bg-slate-700  items-center justify-center h-screen text-center bg-white p-5">
       <Card
         title="Please verified OTP to complete register!"
-        style={{ width: 400, float: "left" }}
+        style={{ width: 350, float: "left" }}
       >
-        <div className="mt-10">
+      <div className="mt-10 ">
           <CheckCircleOutlined
             style={{ fontSize: "100px", color: "#06b6d4" }}
           />
@@ -90,15 +90,15 @@ const Otp = () => {
         <h1 className="mb-10 text-bold" style={{ fontWeight: "bold" }}>
           {email}
         </h1>
-        <Row gutter={16}>
+        <Row gutter={16} className="">
           {otpValues.map((value, index) => (
             <Col key={index} span={4}>
               <Input
                 ref={(input) => (inputRefs.current[index] = input)}
                 style={{
                   textAlign: "center",
-                  width: "3vw",
-                  height: "3vw",
+                  width: "3rem",
+                  height: "3rem",
                   borderRadius: "15px",
                   backgroundColor: "#f0f0f0",
                 }}

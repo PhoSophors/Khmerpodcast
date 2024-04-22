@@ -4,6 +4,7 @@ import { Modal } from "antd";
 import { CheckOutlined } from "@ant-design/icons"; // Import icons as needed
 import "./LanguageSwitcher.css"; // Import CSS for styling
 import { Card } from "antd";
+import Cookies from "js-cookie";
 
 const LanguageSwitcher = () => {
   const { t, i18n } = useTranslation();
@@ -12,7 +13,7 @@ const LanguageSwitcher = () => {
 
   const handleLanguageChange = (languageCode) => {
     i18n.changeLanguage(languageCode);
-    localStorage.setItem("language", languageCode); // Store the selected language preference in local storage
+    Cookies.set("language", languageCode);
     setSelectedLanguage(languageCode); // Update selected language
     setModalVisible(false); // Close the language selection modal
   };

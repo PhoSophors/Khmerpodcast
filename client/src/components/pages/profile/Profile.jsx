@@ -30,7 +30,8 @@ const Profile = () => {
         .get(`/auths/user-data/${id}`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            "auth-token": authToken,
+            // "auth-token": authToken,
+            Authorization: `Bearer ${authToken}`,
           },
         })
         .then((response) => {

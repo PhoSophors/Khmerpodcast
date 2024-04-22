@@ -4,32 +4,36 @@ import App from "./router/App";
 import "./index.css"; // Import the Tailwind CSS styles
 import { initReactI18next } from "react-i18next";
 import i18next from "i18next";
-import { AudioContext } from "./context/AudioContext";
+import Cookies from "js-cookie";
+import { FavoritePodcastsProvider } from "./context/FavoritePodcastsContext";
 
 // Import translation files
 import translationEN from "./components/languages/en.json";
 import translationKH from "./components/languages/kh.json";
 
-// Read proxyUrl from environment variable
-const proxyUrl = process.env.REACT_APP_PROXY;
+const language = Cookies.get("language") || "kh";
+Cookies.set("language", language);
 
-// Initialize i18next
-i18next.use(initReactI18next).init({
-  interpolation: { escapeValue: false },
-  lng: "kh",
-  fallbackLng: "kh",
-  resources: {
-    en: { translation: translationEN },
-    kh: { translation: translationKH },
-  },
-});
+i18next
+  .use(initReactI18next)
+  .init({
+    interpolation: { escapeValue: false },
+    lng: language,
+    fallbackLng: "kh",
+    resources: {
+      en: { translation: translationEN },
+      kh: { translation: translationKH },
+    },
+  })
+  .then(() => {
+    const root = createRoot(document.getElementById("root"));
 
-// Render the App component
-const root = createRoot(document.getElementById("root"));
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+    root.render(
+      <React.StrictMode>
+        <FavoritePodcastsProvider>
+          <App />
+        </FavoritePodcastsProvider>
+      </React.StrictMode>,
+      document.getElementById("root")
+    );
+  });

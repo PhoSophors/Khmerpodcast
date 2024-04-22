@@ -1,7 +1,15 @@
-import React, { useState, useRef } from "react";
-import { Card, Spin } from "antd";
-import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
+import { Card, Spin, Dropdown, Menu, message } from "antd";
+import {
+  MoreOutlined,
+  ShareAltOutlined,
+  CopyOutlined,
+  PlusCircleOutlined,
+  PlusCircleFilled,
+} from "@ant-design/icons";
 
 const CustomCard = ({ file }) => {
   const [loading, setLoading] = useState(true);
@@ -9,6 +17,56 @@ const CustomCard = ({ file }) => {
   const audioRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+
+  const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
+    const cookie = Cookies.get(`favorite-${file._id}`);
+    return cookie ? JSON.parse(cookie) : false;
+  });
+
+  useEffect(() => {
+    Cookies.set(`favorite-${file._id}`, JSON.stringify(isAddedToFavorites));
+  }, [isAddedToFavorites, file._id]);
+
+  const handleTogglePodcastInPlaylist = async () => {
+    try {
+      const authToken = Cookies.get("authToken");
+      let response;
+
+      if (isAddedToFavorites) {
+        response = await fetch(`/files/remove-favorite/${file._id}`, {
+          method: "POST",
+          baseUrl: process.env.REACT_APP_PROXY,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+      } else {
+        response = await fetch(`/files/favorite/${file._id}`, {
+          method: "POST",
+          baseUrl: process.env.REACT_APP_PROXY,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Toggle the state after a successful request
+      setIsAddedToFavorites(!isAddedToFavorites);
+      message.success(
+        isAddedToFavorites
+          ? "Podcast removed from favorites"
+          : "Podcast added to favorites"
+      );
+    } catch (error) {
+      message.error("Error toggling podcast in favorites");
+    }
+  };
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -28,7 +86,7 @@ const CustomCard = ({ file }) => {
   };
 
   if (!file) {
-    return null; 
+    return null;
   }
 
   return (
@@ -86,26 +144,72 @@ const CustomCard = ({ file }) => {
             />
 
             {isHovered && (
-              <div
-                className="play-icon"
-                style={{
-                  position: "absolute",
-                  bottom: "15px",
-                  right: "15px",
-                  zIndex: 2,
-                }}
-              >
-                {audioPlaying ? (
-                  <PauseCircleFilled
-                    style={{ fontSize: "2.5rem", color: "#4f46e5" }}
-                    onClick={toggleAudio}
-                  />
-                ) : (
-                  <PlayCircleFilled
-                    style={{ fontSize: "2.5rem", color: "#4f46e5" }}
-                    onClick={toggleAudio}
-                  />
-                )}
+              <div className="flex grid sm:grid-cols-2 sm:flex sm:gap-5">
+                <div
+                  className="play-icon w-full sm:w-1/2"
+                  style={{
+                    position: "absolute",
+                    bottom: "15px",
+                    left: "15px",
+                    zIndex: 2,
+                  }}
+                >
+                  {audioPlaying ? (
+                    <PauseCircleFilled
+                      style={{ fontSize: "2rem", color: "#4f46e5" }}
+                      onClick={toggleAudio}
+                    />
+                  ) : (
+                    <PlayCircleFilled
+                      style={{ fontSize: "2rem", color: "#4f46e5" }}
+                      onClick={toggleAudio}
+                    />
+                  )}
+                </div>
+                <div
+                  className=" w-full sm:w-1/2"
+                  style={{
+                    position: "absolute",
+                    bottom: "17px",
+                    right: "-60px",
+                    left: "auto",
+                    zIndex: 2,
+                  }}
+                >
+                  <div className="p-3 bg-indigo-600 h-8 w-8 flex justify-center items-center rounded-full">
+                    <button className="text-white rounded-full">
+                      <Dropdown
+                        overlay={
+                          <Menu style={{ width: "250px" }}>
+                            <Menu.Item key="0">
+                              <ShareAltOutlined /> Share
+                            </Menu.Item>
+                            <Menu.Item key="1">
+                              <CopyOutlined /> Copy link
+                            </Menu.Item>
+                            <Menu.Item
+                              key="2"
+                              onClick={handleTogglePodcastInPlaylist}
+                            >
+                              {isAddedToFavorites ? (
+                                <>
+                                  <PlusCircleFilled /> Remove from favorites
+                                </>
+                              ) : (
+                                <>
+                                  <PlusCircleOutlined /> Add to favorites
+                                </>
+                              )}
+                            </Menu.Item>
+                          </Menu>
+                        }
+                        trigger={["hover"]}
+                      >
+                        <MoreOutlined />
+                      </Dropdown>
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </div>
