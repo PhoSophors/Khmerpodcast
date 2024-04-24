@@ -6,6 +6,7 @@ import { initReactI18next } from "react-i18next";
 import i18next from "i18next";
 import Cookies from "js-cookie";
 import { FavoritePodcastsProvider } from "./context/FavoritePodcastsContext";
+import { AudioProvider } from "./context/AudioContext";
 
 // Import translation files
 import translationEN from "./components/languages/en.json";
@@ -31,7 +32,9 @@ i18next
     root.render(
       <React.StrictMode>
         <FavoritePodcastsProvider>
-          <App />
+          <AudioProvider>
+            <App />
+          </AudioProvider>
         </FavoritePodcastsProvider>
       </React.StrictMode>,
       document.getElementById("root")

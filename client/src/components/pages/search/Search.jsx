@@ -15,7 +15,7 @@ const Search = () => {
   };
 
   return (
-    <div className="p-10 ">
+    <div className="xl:p-5">
       <Card>
         <SearchForm handleSearchSubmit={handleSearchSubmit} />
       </Card>

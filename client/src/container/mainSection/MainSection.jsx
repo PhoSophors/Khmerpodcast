@@ -1,13 +1,14 @@
 // MainSection.jsx
 
 import React, { Component } from "react";
-import Footer from "../../components/footer/Footer";
+// import Footer from "../../components/footer/Footer";
 import "./MainSection.css";
 import LeftSection from "../leftSection/LeftSection";
 import RightSection from "../rightSection/RightSection";
 import Layout, { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import Header from "../../components/header/Header";
+import SideMenu from "../../components/sidemenu/SideMenu";
 
 class MainSection extends Component {
   constructor(props) {
@@ -66,22 +67,26 @@ class MainSection extends Component {
     return (
       <Layout>
         {!isMobileView && (
-          <Sider collapsed={collapsed}>
+          <Sider
+            collapsed={collapsed}
+            breakpoint="md"
+          >
             <LeftSection onSelectMenuItem={this.handleSelectMenuItem} />
           </Sider>
         )}
         <Layout>
           <Content className="content-containers">
             <Header
-              handleCollapse={this.handleCollapse}
+              onSelectMenuItem={this.handleSelectMenuItem}
+              handleCollapse={this.handleCollapse} // Pass function to handle collapse
               menuOpen={!isMobileView || !collapsed}
               collapsed={collapsed}
             />
             <div className="content-card">
               <RightSection
-                selectedMenuItem={this.state.selectedMenuItem}
-                toggleLeftSection={this.toggleLeftSection}
-                toggleHeaderFullScreen={this.toggleHeaderFullScreen}
+                selectedMenuItem={this.state.selectedMenuItem} // Pass selected menu item
+                toggleLeftSection={this.toggleLeftSection} // Pass function to toggle left section
+                toggleHeaderFullScreen={this.toggleHeaderFullScreen} // Pass function to toggle header full screen
               />
             </div>
             {/* <Footer /> */}

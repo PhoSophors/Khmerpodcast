@@ -27,7 +27,7 @@ const UserUploadCard = ({ file }) => {
   };
 
   const handleViewDetailPodcast = () => {
-    navigate(`/view-detail-podcast/${file._id}`);
+    navigate(`/viewdetailpodcast/${file._id}`);
   };
 
   const date = new Date(); // replace this with your date

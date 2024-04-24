@@ -15,9 +15,9 @@
   flex-direction: column;
   font-size: 1rem;
   position: relative;
+  top: 0;
   background-color: var(--slate-900);
   border: none;
-  /* padding-top: 20px; */
   padding-bottom: 20px;
 }
 
@@ -38,4 +38,54 @@
 
 .ant-menu-submenu-title {
   color: var(--slate-300) !important;
+}
+
+/* Styles for screens with a width of 768px or less */
+@media screen and (max-width: 768px) {
+  .side-menu-container {
+    width: 300px;
+    position: fixed;
+    top: 80px;
+    right: 0;
+    z-index: 1000;
+    height: calc(100vh - 80px);
+    padding: 0;
+    background-color: var(--main-color);
+  }
+
+  .side-menu-container .ant-menu-item-selected {
+    background: var(--sider-item-selected);
+    color: var(--slate-900) !important;
+    font-weight: bold;
+  }
+  
+  .side-menu-container .ant-menu-item{
+    color: var(--slate-900);
+    background-color: var(--slate-100) ;
+    top: 0;
+  }
+  .side-menu-container .ant-menu-submenu-title {
+    background-color: var(--slate-100) !important;
+  }
+  .ant-menu-item .ant-menu-submenu-title-active {
+    background-color: tomato!important;
+  }
+  .side-menu-container .ant-menu-title {
+    background-color: tomato!important;
+  }
+  .side-menu-container .ant-menu-item:hover{
+    color: var(--slate-900) !important;
+    top: 0;
+  }
+  
+  
+  .ant-menu-submenu-title {
+    color: var(--slate-900) !important;
+    top: 0;
+  }
+  
+  
+  .logo-app {
+    display: none;
+  }
 }

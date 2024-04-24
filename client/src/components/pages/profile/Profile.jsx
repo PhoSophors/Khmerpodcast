@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Spin } from "antd";
 import { UserOutlined, LoginOutlined } from "@ant-design/icons";
-import { Avatar } from "antd";
-import "./Profile.css"; // Import the CSS file
 import { useTranslation } from "react-i18next";
 import EditProfile from "./EditProfile";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import UserUploadCard from "../../card/UserUploadCard";
+import { Avatar } from "antd";
+import "./Profile.css";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -30,7 +30,6 @@ const Profile = () => {
         .get(`/auths/user-data/${id}`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            // "auth-token": authToken,
             Authorization: `Bearer ${authToken}`,
           },
         })
@@ -84,7 +83,7 @@ const Profile = () => {
         style={{
           backgroundColor: "transparent",
           cardPadding: "0",
-          border: "none",
+          // border: "none",
         }}
         title={
           <span>

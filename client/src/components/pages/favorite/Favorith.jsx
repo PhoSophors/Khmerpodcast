@@ -30,7 +30,7 @@ const Favorith = () => {
   }, []);
 
   return (
-    <div className="xl:p-5">
+    <div className="xl:p-5 sm:p-0">
       {favorites.length === 0 ? (
         <div className="favorites">
           <svg

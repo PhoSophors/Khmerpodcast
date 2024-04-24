@@ -5,7 +5,7 @@ body {
 
 .content-card {
   position: relative;
-  background-color: #f8fafc;
+  background-color: var(--main-color);
   min-height: calc(100vh - 150px);
   height: calc(100vh - 90px);
   padding: 2px;

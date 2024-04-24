@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Input, Row, Col, Card, Button, message, Spin } from "antd";
 import axios from "axios";
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { SafetyOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -80,7 +80,7 @@ const Otp = () => {
         style={{ width: 350, float: "left" }}
       >
       <div className="mt-10 ">
-          <CheckCircleOutlined
+          <SafetyOutlined
             style={{ fontSize: "100px", color: "#06b6d4" }}
           />
         </div>

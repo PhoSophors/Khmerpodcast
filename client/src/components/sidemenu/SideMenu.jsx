@@ -6,22 +6,7 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import Cookies from "js-cookie";
 import logo from "../assets/logo.jpg";
-import {
-  HeartOutlined,
-  HomeOutlined,
-  SearchOutlined,
-  SettingOutlined,
-  UserOutlined,
-  HomeFilled,
-  SettingFilled,
-  HeartFilled,
-  PlusCircleOutlined,
-  PlusCircleFilled,
-  DashboardOutlined,
-  DashboardFilled,
-  FileTextFilled,
-  FileTextOutlined
-} from "@ant-design/icons";
+import { getIcon } from "./iconUtils";
 
 const SideMenu = ({ onSelectMenuItem }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("/");
@@ -41,7 +26,6 @@ const SideMenu = ({ onSelectMenuItem }) => {
         .get(`/auths/user-data/${id}`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            // "auth-token": authToken,
             Authorization: `Bearer ${authToken}`,
           },
         })
@@ -63,48 +47,15 @@ const SideMenu = ({ onSelectMenuItem }) => {
           setIsLoading(false);
         });
     }
-  }, []);
-
-  const handleMenuItemClick = (menuItem) => {
-    setSelectedMenuItem(menuItem.key);
-    onSelectMenuItem(menuItem.key);
-  };
+  });
 
   const handleAppClick = () => {
     window.location.reload();
   };
 
-  const iconMapping = {
-    "/": { selected: <HomeFilled />, default: <HomeOutlined /> },
-    "/search": { selected: <SearchOutlined />, default: <SearchOutlined /> },
-    "/favorite": { selected: <HeartFilled />, default: <HeartOutlined /> },
-    "/create": {
-      selected: <PlusCircleFilled />,
-      default: <PlusCircleOutlined />,
-    },
-    "/setting": { selected: <SettingFilled />, default: <SettingOutlined /> },
-    "/profile": { selected: <UserOutlined />, default: <UserOutlined /> },
-    "/dashboard": {
-      selected: <DashboardFilled />,
-      default: <DashboardOutlined />,
-    },
-    "/all-user": {
-      selected: <UserOutlined />,
-      default: <UserOutlined />,
-    },
-    "/all-user-upload": {
-      selected:  <FileTextFilled />,
-      default: < FileTextOutlined />
-    },
-  };
-
-  const getIcon = (key) => {
-    const icon = iconMapping[key];
-    return icon
-      ? selectedMenuItem === key
-        ? icon.selected
-        : icon.default
-      : null;
+  const handleMenuItemClick = (menuItem) => {
+    setSelectedMenuItem(menuItem.key);
+    onSelectMenuItem(menuItem.key);
   };
 
   return (
@@ -117,37 +68,43 @@ const SideMenu = ({ onSelectMenuItem }) => {
       >
         <div
           onClick={handleAppClick}
-          className="flex items-center p-4 cursor-pointer"
+          className="flex items-center md:p-4 cursor-pointer"
         >
           <img src={logo} alt="" className="logo-app mr-2" />
-          {/* <div className="flex flex-col">
+          <div className="flex flex-col">
             <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
               Khmer
             </span>
             <span className="uppercase tracking-wide text-sm text-slate-300 font-semibold">
               Podcast
             </span>
-          </div> */}
+          </div>
         </div>
 
-        <Menu.Item key="/" icon={getIcon("/")}>
+        <Menu.Item key="/" icon={getIcon("/", selectedMenuItem)}>
           <span onClick={() => handleMenuItemClick({ key: "/" })}>
             {t("siderMenu.home")}
           </span>
         </Menu.Item>
-        <Menu.Item key="/search" icon={getIcon("/search")}>
+        <Menu.Item key="/search" icon={getIcon("/search", selectedMenuItem)}>
           <span onClick={() => handleMenuItemClick({ key: "/search" })}>
             {t("siderMenu.search")}
           </span>
         </Menu.Item>
         {isLoggedIn && (
           <>
-            <Menu.Item key="/favorite" icon={getIcon("/favorite")}>
+            <Menu.Item
+              key="/favorite"
+              icon={getIcon("/favorite", selectedMenuItem)}
+            >
               <span onClick={() => handleMenuItemClick({ key: "/favorite" })}>
                 {t("siderMenu.favorith")}
               </span>
             </Menu.Item>
-            <Menu.Item key="/create" icon={getIcon("/create")}>
+            <Menu.Item
+              key="/create"
+              icon={getIcon("/create", selectedMenuItem)}
+            >
               <span onClick={() => handleMenuItemClick({ key: "/create" })}>
                 {t("siderMenu.create")}
               </span>
@@ -156,18 +113,24 @@ const SideMenu = ({ onSelectMenuItem }) => {
             {user.role === "admin" && (
               <>
                 <Menu.SubMenu
-                  key="sub1"
+                  key="/admin"
                   icon={getIcon("/all-user")}
                   title={t("siderMenu.admin")}
                 >
-                  <Menu.Item key="/dashboard" icon={getIcon("/dashboard")}>
+                  <Menu.Item
+                    key="/dashboard"
+                    icon={getIcon("/dashboard", selectedMenuItem)}
+                  >
                     <span
                       onClick={() => handleMenuItemClick({ key: "/dashboard" })}
                     >
                       {t("siderMenu.dashboard")}
                     </span>
                   </Menu.Item>
-                  <Menu.Item key="/all-user" icon={getIcon("/all-user")}>
+                  <Menu.Item
+                    key="/all-user"
+                    icon={getIcon("/all-user", selectedMenuItem)}
+                  >
                     <span
                       onClick={() => handleMenuItemClick({ key: "/all-user" })}
                     >
@@ -176,7 +139,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
                   </Menu.Item>
                   <Menu.Item
                     key="/all-user-upload"
-                    icon={getIcon("/all-user-upload")}
+                    icon={getIcon("/all-user-upload", selectedMenuItem)}
                   >
                     <span
                       onClick={() =>
@@ -200,7 +163,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
                 {t("siderMenu.profile")}
               </span>
             </Menu.Item>
-            <Menu.Item key="/setting" icon={getIcon("/setting")}>
+            <Menu.Item key="/setting" icon={getIcon("/setting", selectedMenuItem)}>
               <span onClick={() => handleMenuItemClick({ key: "/setting" })}>
                 {t("siderMenu.setting")}
               </span>

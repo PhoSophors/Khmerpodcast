@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Dropdown, Menu, Alert, Spin, message, Modal } from "antd";
 import LanguageSwitcher from "../languageSwitcher/LanguageSwitcher";
 import Login from "../auth/login/Login";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "./Header.css";
 import logo from "../assets/logo.jpg";
-
+import { Avatar, Dropdown, Menu, Alert, Spin, message, Modal } from "antd";
 import {
   MenuOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
   CloseOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
+import SideMenu from "../sidemenu/SideMenu";
+import { Drawer } from "antd";
 
-const Header = ({ handleCollapse, menuOpen, results }) => {
+const Header = ({ handleCollapse, onSelectMenuItem }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
+  const [menuVisible, setMenuVisible] = useState(false);
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || "default"
   );
@@ -34,7 +38,6 @@ const Header = ({ handleCollapse, menuOpen, results }) => {
         .get(`/auths/user-data/${id}`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            // "auth-token": authToken,
             Authorization: `Bearer ${authToken}`,
           },
         })
@@ -101,36 +104,89 @@ const Header = ({ handleCollapse, menuOpen, results }) => {
     setLogoutModalVisible(false);
   };
 
+  const handleMenuItemClick = (e) => {
+    onSelectMenuItem(e);
+    handleMenuClick();
+  };
 
   const menu = (
     <Menu style={{ width: "250px" }} className="profile-dropdown-menu">
-      <Menu.Item key="0">
-        <a href="/">Your Profile</a>
-      </Menu.Item>
-      <Menu.Item key="1">
-        <a href="/">Settings</a>
-      </Menu.Item>
       <Menu.Item key="2">
         <LanguageSwitcher />
       </Menu.Item>
       <Menu.Item key="3" onClick={handleLogout}>
-        Logout
+        <LogoutOutlined /> Logout
       </Menu.Item>
     </Menu>
   );
 
+  const mobileMenu = <Menu onClick={handleMenuItemClick} />;
+
+  const handleMenuClick = () => {
+    setMenuVisible(!menuVisible);
+  };
+
   return (
     <header className="header-container">
-      <div className="p-3 bg-indigo-800 h-full flex justify-center items-center rounded-full">
-        <button
-          onClick={handleCollapse}
-          className="toggle-button text-white rounded-full"
-        >
-          {menuOpen ? <MenuOutlined /> : <MenuUnfoldOutlined />}
-        </button>
+      <div className="p-3 bg-slate-100 h-full flex justify-center items-center rounded-full">
+        <div className="p-3 bg-indigo-800 h-full flex justify-center items-center rounded-full">
+          {isMobileDevice ? (
+            <div onClick={handleMenuClick}>
+              {menuVisible ? (
+                <MenuUnfoldOutlined className="text-white cursor-pointer" />
+              ) : (
+                <MenuOutlined className="text-white cursor-pointer" />
+              )}
+              {menuVisible && mobileMenu}
+            </div>
+          ) : (
+            <button
+              onClick={handleCollapse} // Ensure this invokes the handleCollapse function
+              className="toggle-button text-white rounded-full"
+            >
+              <MenuOutlined />
+            </button>
+          )}
+          <Drawer
+            className="drawer"
+            title={
+              <div
+                // onClick={handleAppClick}
+                className="title-drawer"
+              >
+                <img
+                  className=""
+                  src={logo}
+                  alt=""
+                  style={{ height: "70px" }}
+                />
+                <div className="flex flex-col ">
+                  <span className="name-style tracking-wide text-xl text-red-600 font-bold">
+                    Khmer
+                  </span>
+                  <span className="name-style  tracking-wide text-sm text-slate-500 font-semibold">
+                    Podcast
+                  </span>
+                </div>
+              </div>
+            }
+            placement="right"
+            closable={false}
+            onClose={handleMenuClick}
+            visible={menuVisible}
+            style={{
+              width: "300px",
+              backgroundColor: "#f8fafc",
+              height: "100%",
+            }}
+          >
+            <SideMenu onSelectMenuItem={onSelectMenuItem} />
+          </Drawer>
+        </div>
+        <div className="p-3 bg-slate-100 h-full flex justify-center items-center rounded-full">
+          <LanguageSwitcher />
+        </div>
       </div>
-
-      {/* <SearchForm handleSearchSubmit={handleSearchSubmit} /> */}
 
       <div className="user-profile">
         {isLoading ? (

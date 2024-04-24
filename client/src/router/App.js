@@ -20,7 +20,6 @@ import AllUser from "../components/pages/admin/user/AllUser";
 import FileManager from "../components/pages/admin/user/FileManager";
 import ViewDetailPodcast from "../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import Test from "../components/pages/homePage/Test";
-import Header from "../components/header/Header";
 import UserCard from "../components/card/UserCard";
 
 const App = () => {
@@ -28,11 +27,9 @@ const App = () => {
   const [userRole, setUserRole] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
 
-
   const handleSearchSubmit = (results) => {
     setSearchResults(results);
   };
-
 
   useEffect(() => {
     const authToken = Cookies.get("authToken");
@@ -54,82 +51,90 @@ const App = () => {
         <AppLoading />
       ) : (
         <>
-        <Routes>
-      
-          <Route path="/" element={<MainSection />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/usercard" element = {<UserCard />} />
-          <Route path="/test" element = {<Test />} />
-          <Route path="/view-detail-podcast/:id" element={ <ViewDetailPodcast /> } />
+          <Routes>
+            <Route path="/" element={<MainSection />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/usercard" element={<UserCard />} />
+            <Route path="/test" element={<Test />} />
+            <Route
+              path="/viewdetailpodcast/:id"
+              element={<ViewDetailPodcast />}
+            />
 
+            {/* AdminRoute */}
+            <Route
+              path="/dashboard"
+              element={userRole === "admin" ? <Dashboard /> : <Login />}
+            />
+            <Route
+              path="/all-user"
+              element={userRole === "admin" ? <AllUser /> : <Login />}
+            />
+            <Route
+              path="/all-user-upload"
+              element={userRole === "admin" ? <FileManager /> : <Login />}
+            />
 
-            {/* AdminRoute */}  
-          <Route path="/dashboard" element={userRole === 'admin' ? <Dashboard /> : <Login />} />
-          <Route path="/all-user" element={userRole === 'admin' ? <AllUser /> : <Login />} />
-          <Route path="/all-user-upload" element={userRole === 'admin' ? <FileManager /> : <Login />} />
-       
+            {/* GuestRoute */}
+            <Route
+              path="/login"
+              element={
+                <GuestRoute>
+                  <Login />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <GuestRoute>
+                  <Register />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/otp"
+              element={
+                <GuestRoute>
+                  <Otp />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/forgotPassword"
+              element={
+                <GuestRoute>
+                  <ForgotPassword />
+                </GuestRoute>
+              }
+            />
 
-          {/* GuestRoute */}
-          <Route
-            path="/login"
-            element={
-              <GuestRoute>
-                <Login />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <GuestRoute>
-                <Register />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/otp"
-            element={
-              <GuestRoute>
-                <Otp />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/forgotPassword"
-            element={
-              <GuestRoute>
-                <ForgotPassword />
-              </GuestRoute>
-            }
-          />
-
-          {/* PrivateRoute */}
-          <Route
-            path="/favorite"
-            element={
-              <PrivateRoute>
-                <Favorith />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/setting"
-            element={
-              <PrivateRoute>
-                <Setting />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-        
-        </Routes>
+            {/* PrivateRoute */}
+            <Route
+              path="/favorite"
+              element={
+                <PrivateRoute>
+                  <Favorith />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/setting"
+              element={
+                <PrivateRoute>
+                  <Setting />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
         </>
       )}
     </Router>

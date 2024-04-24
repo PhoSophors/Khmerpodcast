@@ -10,9 +10,11 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css'; */
 
 :root {
+  --main-color: #f8fafc;
   --sider-bg: #3730a3;
   --sider-text-color: #fff;
   --sider-item-selected: #4f4d4d63;
+  
 
   --white: #fff;
 

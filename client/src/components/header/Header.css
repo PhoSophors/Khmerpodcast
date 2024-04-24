@@ -21,6 +21,46 @@
   width: 150px; 
 }
 
+.menu-icon {
+  color: red;
+  font-weight: bold;
+}
+
+.drawer {
+  width: 300px;
+  right: 0;
+  position: absolute;
+  display: block;
+}
+
+.name-style {
+  text-transform: uppercase;
+}
+
+.ant-drawer-content-wrapper {
+  width: 300px !important;
+}
+.title-drawer {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  padding: 0rem;
+  /* background-color: var(--white); */
+  border-radius: 20px;
+  height: 50px;
+
+
+}
+@media (min-width: 768px) {
+  .drawer,
+  .ant-drawer-mask {
+    display: none !important;
+  }
+  .ant-drawer-content-wrapper {
+    display: none !important;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .header-container {
     border-radius: 0;

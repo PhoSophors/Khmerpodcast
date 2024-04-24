@@ -27,7 +27,6 @@ const RightSection = ({ selectedMenuItem }) => {
     case "/create":
       content = <Create />;
       break;
-
     case "/profile":
       content = <Profile />;
       break;

@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+import SearchForm from "../../search/SearchForm";
+import "../admin.css";
+import { MoreOutlined, DeleteOutlined, RestOutlined } from "@ant-design/icons";
 import {
   Spin,
   Alert,
@@ -10,10 +14,6 @@ import {
   message,
   Modal,
 } from "antd";
-import Cookies from "js-cookie";
-import { MoreOutlined, DeleteOutlined } from "@ant-design/icons";
-import SearchForm from "../../search/SearchForm";
-import "../admin.css";
 
 const FileManager = () => {
   const [files, setFiles] = useState([]);
@@ -60,7 +60,7 @@ const FileManager = () => {
         deletePodcastConfirmed(id);
       },
       onCancel() {
-        console.log("Cancel");
+        message.info("Action canceled");
       },
     });
   };
@@ -89,6 +89,16 @@ const FileManager = () => {
     setSearchResults(results);
     setSearchQuery(query);
   };
+
+  const menu = (
+    <Menu style={{ width: "250px" }}>
+      <Menu.Item key="0">Edit</Menu.Item>
+      <Menu.Item key="1" onClick={() => deletePodcast()}>
+        <RestOutlined />
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
 
   const date = new Date(); // replace this with your date
   const formattedDate = date.toLocaleDateString("en-US", {
@@ -151,20 +161,7 @@ const FileManager = () => {
                         {formattedDate}
                       </td>
                       <td className="text-center">
-                        <Dropdown
-                          overlay={
-                            <Menu style={{ width: "250px" }}>
-                              <Menu.Item key="0">Edit</Menu.Item>
-                              <Menu.Item
-                                key="1"
-                                onClick={() => deletePodcast(result._id)}
-                              >
-                                Delete
-                              </Menu.Item>
-                            </Menu>
-                          }
-                          trigger={["hover"]}
-                        >
+                        <Dropdown overlay={menu} trigger={["hover"]}>
                           <MoreOutlined />
                         </Dropdown>
                       </td>

@@ -5,7 +5,7 @@ import SideMenu from "../../components/sidemenu/SideMenu";
 const LeftSection = ({ onSelectMenuItem }) => {
   return (
     <div>
-      <SideMenu onSelectMenuItem={onSelectMenuItem} />
+      <SideMenu onSelectMenuItem={onSelectMenuItem}  />
     </div>
   );
 };

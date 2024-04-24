@@ -29,7 +29,7 @@ const FavoritesCard = ({ file }) => {
   };
 
   const handleViewDetailPodcast = () => {
-    navigate(`/view-detail-podcast/${file._id}`);
+    navigate(`/viewdetailpodcast/${file._id}`);
   };
 
   const removePodcastFromFavorites = async () => {

@@ -1,14 +1,29 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useAudio } from "../../context/AudioContext";
 import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
-import { Card, Spin, Dropdown, Menu, message } from "antd";
+import { Card, Spin, Dropdown, Menu, message, Modal, Button } from "antd";
 import {
-  MoreOutlined,
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+  TelegramIcon,
+  FacebookMessengerIcon,
+  WhatsappIcon,
+} from "react-share";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  TelegramShareButton,
+  FacebookMessengerShareButton,
+  WhatsappShareButton,
+} from "react-share";
+import {
   ShareAltOutlined,
-  CopyOutlined,
-  PlusCircleOutlined,
-  PlusCircleFilled,
+  LinkOutlined,
+  MoreOutlined,
 } from "@ant-design/icons";
 
 const CustomCard = ({ file }) => {
@@ -17,6 +32,8 @@ const CustomCard = ({ file }) => {
   const audioRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const { isPlaying, currentTrack, playTrack, pauseTrack } = useAudio();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
     const cookie = Cookies.get(`favorite-${file._id}`);
@@ -72,22 +89,92 @@ const CustomCard = ({ file }) => {
     setLoading(false);
   };
 
+  const handlePlayClick = () => {
+    playTrack(file.audio.url);
+  };
+
+  const handlePauseClick = () => {
+    if (currentTrack === file.audio.url) {
+      pauseTrack();
+    }
+  };
+
   const toggleAudio = () => {
-    setAudioPlaying(!audioPlaying);
-    if (audioPlaying) {
-      audioRef.current.pause();
+    if (isPlaying && setAudioPlaying && currentTrack === file.audio.url) {
+      handlePauseClick();
     } else {
-      audioRef.current.play();
+      handlePlayClick();
     }
   };
 
   const handleViewDetailPodcast = () => {
-    navigate(`/view-detail-podcast/${file._id}`);
+    navigate(`/viewdetailpodcast/${file._id}`);
   };
 
-  if (!file) {
-    return null;
-  }
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const shareUrl = `http://localhost:3000/viewdetailpodcast/${file._id}`;
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(shareUrl);
+    message.success("Link copied to clipboard");
+  };
+
+  const shareMenu = (
+    <Menu style={{ width: "250px" }}>
+      <Menu.Item key="0" onClick={showModal}>
+        <ShareAltOutlined />
+        {""} Share
+      </Menu.Item>
+      <Menu.Item key="1" onClick={handleCopyLink}>
+        <LinkOutlined /> Copy Link
+      </Menu.Item>
+      <Menu.Item key="2" onClick={handleTogglePodcastInPlaylist}>
+        {isAddedToFavorites ? (
+          <>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <svg
+                className="w-3.5 h-3.5 text-gray-500"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 14 20"
+              >
+                <path d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
+              </svg>
+              <span> Remove from Favorites</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <svg
+                className="w-3.5 h-3.5 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 20"
+              >
+                <path
+                  stroke="black"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"
+                />
+              </svg>
+              <span> Add to favorites</span>
+            </div>
+          </>
+        )}
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <div
@@ -146,11 +233,10 @@ const CustomCard = ({ file }) => {
             {isHovered && (
               <div className="flex grid sm:grid-cols-2 sm:flex sm:gap-5">
                 <div
-                  className="play-icon w-full sm:w-1/2"
                   style={{
                     position: "absolute",
                     bottom: "15px",
-                    left: "15px",
+                    right: "15px",
                     zIndex: 2,
                   }}
                 >
@@ -171,43 +257,14 @@ const CustomCard = ({ file }) => {
                   style={{
                     position: "absolute",
                     bottom: "17px",
-                    right: "-60px",
-                    left: "auto",
+                  left: "15px",
                     zIndex: 2,
                   }}
                 >
-                  <div className="p-3 bg-indigo-600 h-8 w-8 flex justify-center items-center rounded-full">
-                    <button className="text-white rounded-full">
-                      <Dropdown
-                        overlay={
-                          <Menu style={{ width: "250px" }}>
-                            <Menu.Item key="0">
-                              <ShareAltOutlined /> Share
-                            </Menu.Item>
-                            <Menu.Item key="1">
-                              <CopyOutlined /> Copy link
-                            </Menu.Item>
-                            <Menu.Item
-                              key="2"
-                              onClick={handleTogglePodcastInPlaylist}
-                            >
-                              {isAddedToFavorites ? (
-                                <>
-                                  <PlusCircleFilled /> Remove from favorites
-                                </>
-                              ) : (
-                                <>
-                                  <PlusCircleOutlined /> Add to favorites
-                                </>
-                              )}
-                            </Menu.Item>
-                          </Menu>
-                        }
-                        trigger={["hover"]}
-                      >
-                        <MoreOutlined />
-                      </Dropdown>
-                    </button>
+                  <div className="p-3 text-white  bg-indigo-600 h-8 w-8 flex justify-center items-center rounded-full">
+                    <Dropdown overlay={shareMenu} trigger={["click"]}>
+                      <MoreOutlined />
+                    </Dropdown>
                   </div>
                 </div>
               </div>
@@ -229,6 +286,50 @@ const CustomCard = ({ file }) => {
           <p className="mt-2 text-slate-500">{file.description}</p>
         </div>
       </Card>
+      <Modal
+        title="Share"
+        visible={isModalVisible}
+        onCancel={handleModalCancel}
+        footer={null}
+        centered
+      >
+        <Card>
+          <div className="text-center gab-5">
+            <FacebookShareButton
+              className="text-center"
+              url={shareUrl}
+              style={{ margin: "0 5px" }}
+            >
+              <FacebookIcon size={45} round />
+              <span>Facebook</span>
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <TwitterIcon size={45} round />
+              <span>Twiiter</span>
+            </TwitterShareButton>
+            <LinkedinShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <LinkedinIcon size={45} round />
+              <span>Linkedin</span>
+            </LinkedinShareButton>
+            <TelegramShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <TelegramIcon size={45} round />
+              <span>Telegran</span>
+            </TelegramShareButton>
+            <FacebookMessengerShareButton
+              url={shareUrl}
+              appId="521270401588372"
+              style={{ margin: "0 5px" }}
+            >
+              <FacebookMessengerIcon size={45} round />
+              <span> Messenger</span>
+            </FacebookMessengerShareButton>
+            <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <WhatsappIcon size={45} round />
+              <span> Whatapp</span>
+            </WhatsappShareButton>
+          </div>
+        </Card>
+      </Modal>
       <audio ref={audioRef} src={file.audio.url} />
     </div>
   );

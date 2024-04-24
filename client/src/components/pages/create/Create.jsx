@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Upload, Card, Button, Input, Form, Modal, Alert } from "antd";
+import React, { useState } from "react";
+import { Upload, Card, Button, Input, Form, Modal, Alert, message } from "antd";
 import "./create.css";
 import { CloseOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -22,10 +22,6 @@ const Create = () => {
   const [description, setDescription] = useState("");
   const authToken = Cookies.get("authToken");
   const id = Cookies.get("id");
-
-  useEffect(() => {
-    handleNotification("success", "Component mounted successfully.");
-  }, []);
 
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
@@ -52,9 +48,10 @@ const Create = () => {
           Authorization: `Bearer ${authToken}`,
         },
       });
+      message.success("File uploaded successfully");
       handleSuccessUpload();
     } catch (error) {
-      console.error("Error uploading file:", error.message);
+      message.error(`Error uploading file: ${error.message}`);
       handleNotification("error", `Error uploading file: ${error.message}`);
     } finally {
       setLoading(false);
@@ -296,27 +293,6 @@ const Create = () => {
                 <CloudUploadOutlined />
                 Upload
               </Button>
-            </div>
-
-            {/* nofication alert */}
-            <div
-              style={{ position: "fixed", top: 15, right: 80, zIndex: 9999 }}
-            >
-              {notification && (
-                <Alert
-                  message={notification}
-                  type={
-                    notification.includes("Success")
-                      ? "success"
-                      : notification.includes("Error")
-                      ? "error"
-                      : "success"
-                  }
-                  closable
-                  onClose={() => setNotification("")} // Clear the notification on close
-                />
-              )}
-              {error && <Alert message={error} type="error" closable />}
             </div>
           </div>
         </Card>

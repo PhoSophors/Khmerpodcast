@@ -8,7 +8,7 @@ import { LeftOutlined } from "@ant-design/icons";
 const EditProfile = ({ user }) => {
   const [username, setUsername] = useState(user.username);
   // const [email, setEmail] = useState(user.email);
-
+  const [isProfile, setIsProfile] = useState(true);
 
   useEffect(() => {
     setUsername(user.username);
@@ -18,9 +18,6 @@ const EditProfile = ({ user }) => {
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
-  // const handleEmailChange = (e) => {
-  //   setEmail(e.target.value);
-  // };
 
   const handleSubmit = async () => {
     try {
@@ -56,48 +53,53 @@ const EditProfile = ({ user }) => {
     }
   };
 
+  const handleEditProfile = () => {
+    setIsProfile(isProfile);
+  };
+
   return (
     <div className="">
       <Button
         className="back-button bg-slate-500 h- text-white mt-5"
         type="text"
         icon={<LeftOutlined />}
+        onClick={handleEditProfile}
       >
         Back
       </Button>
 
-    <div className="flex text-center items-center justify-center ">
-      {/* set width form 50% */}
+      <div className="flex text-center items-center justify-center ">
+        {/* set width form 50% */}
 
-      <Form layout="vertical mt-5 text-center font-semibold w-96">
-        <Form.Item label="Username *">
-          <Input
-            value={username}
-            onChange={handleUsernameChange}
-            className="input-field "
-          />
-        </Form.Item>
-        {/* <Form.Item label="Email">
+        <Form layout="vertical mt-5 text-center font-semibold w-96">
+          <Form.Item label="Username *">
+            <Input
+              value={username}
+              onChange={handleUsernameChange}
+              className="input-field "
+            />
+          </Form.Item>
+          {/* <Form.Item label="Email">
           <Input
             value={email}
             onChange={handleEmailChange}
             className="input-field "
           />
         </Form.Item> */}
-        <Form.Item>
-          <Button
-            className="submit-button"
-            type="primary"
-            onClick={handleSubmit}
-            style={{
-              backgroundColor: "#3730a3",
-              color: "#ffffff",
-            }}
-          >
-            Save Changes
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item>
+            <Button
+              className="submit-button"
+              type="primary"
+              onClick={handleSubmit}
+              style={{
+                backgroundColor: "#3730a3",
+                color: "#ffffff",
+              }}
+            >
+              Save Changes
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );

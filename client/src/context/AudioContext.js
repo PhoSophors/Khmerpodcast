@@ -1,24 +1,25 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
-export const AudioContext = createContext();
+const AudioContext = createContext();
 
-export const AudioProvider = ({ children }) => {
-  const [audioState, setAudioState] = useState({
-    isPlaying: false,
-    currentTrack: null,
-  });
+export function AudioProvider({ children }) {
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const playAudio = (trackUrl) => {
-    setAudioState({ isPlaying: true, currentTrack: trackUrl });
+  const playTrack = (url) => {
+    setCurrentTrack(url);
+    setIsPlaying(true);
   };
 
-  const pauseAudio = () => {
-    setAudioState({ isPlaying: false, currentTrack: null });
+  const pauseTrack = () => {
+    setIsPlaying(false);
   };
 
   return (
-    <AudioContext.Provider value={{ audioState, playAudio, pauseAudio }}>
+    <AudioContext.Provider value={{ isPlaying, currentTrack, playTrack, pauseTrack }}>
       {children}
     </AudioContext.Provider>
   );
-};
+}
+
+export const useAudio = () => useContext(AudioContext);
