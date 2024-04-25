@@ -3,6 +3,7 @@ const EmailOTP = require("../models/otpModel");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const otpController = {};
 
@@ -117,8 +118,13 @@ otpController.verifyOTP = async (req, res) => {
       expiresIn: "30d",
     });
 
+    // Create a SHA-256 hash of the authToken
+    const hash = crypto.createHash("sha256");
+    hash.update(token);
+    const hashedAuthToken = hash.digest("hex");
+
     // Save the authToken to the user
-    user.authToken = token;
+    user.authToken = hashedAuthToken;
 
     const savedUser = await user.save();
     if (!savedUser) {
@@ -126,7 +132,7 @@ otpController.verifyOTP = async (req, res) => {
     }
 
     // Set the JWT token in an HTTPOnly cookie
-    res.cookie("token", token, {
+    res.cookie("token", hashedAuthToken, {
       httpOnly: true,
       secure: true,
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
@@ -144,5 +150,6 @@ otpController.verifyOTP = async (req, res) => {
       .json({ error: "An error occurred while verifying the OTP" });
   }
 };
+
 
 module.exports = otpController;

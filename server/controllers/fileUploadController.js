@@ -203,7 +203,7 @@ const addPodcastToPlaylist = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    
     // Find the file by ID
     const file = await File.findById(id);
     if (!file) {

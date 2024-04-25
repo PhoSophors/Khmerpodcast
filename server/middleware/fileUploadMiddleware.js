@@ -21,7 +21,6 @@ const upload2S3 = multer({
     s3: s3Client,
     bucket: process.env.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
-      // Set the file extension based on the MIME type
       const fileExtension = file.mimetype.split("/")[1];
       const uniqueKey = `${Date.now().toString()}.${fileExtension}`;
       cb(null, uniqueKey);

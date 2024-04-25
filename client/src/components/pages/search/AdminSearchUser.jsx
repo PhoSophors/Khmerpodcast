@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import axios from "axios";
 import "./search.css";
 
-const SearchForm = ({ handleSearchSubmit }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+const AdminSearchUser = ({ handleSearchSubmit }) => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
+
 
   useEffect(() => {
     const fetchSearchResults = async () => {
@@ -24,18 +25,14 @@ const SearchForm = ({ handleSearchSubmit }) => {
       try {
         let response;
         // Only search for podcasts
-        response = await axios.get(`/search/podcasts`, {
+        response = await axios.get(`/search/users`, {
           baseURL: process.env.REACT_APP_PROXY,
           params: {
             search: searchQuery,
           },
         });
   
-        if (response.data) {
-          handleSearchSubmit(response.data); // Pass the results
-        } else {
-          console.error('No data received');
-        }
+        handleSearchSubmit(response.data); // Pass the results
       } catch (error) {
         console.error(error);
       } finally {
@@ -47,6 +44,7 @@ const SearchForm = ({ handleSearchSubmit }) => {
   
     return () => clearTimeout(delayTimer); // Clear the timer when the component is unmounted or when the searchQuery changes
   }, [searchQuery, handleSearchSubmit]);
+
 
   return (
     <form className="search-form">
@@ -64,4 +62,4 @@ const SearchForm = ({ handleSearchSubmit }) => {
   );
 };
 
-export default SearchForm;
+export default AdminSearchUser;

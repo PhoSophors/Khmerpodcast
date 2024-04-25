@@ -53,7 +53,7 @@ const Profile = () => {
         .get(`/files/get-file-by-user/${id}`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            "auth-token": authToken,
+            Authorization: `Bearer ${authToken}`,
           },
         })
         .then((response) => {
@@ -101,6 +101,7 @@ const Profile = () => {
             <Avatar
               size={140}
               icon={<UserOutlined />}
+              src={userData.profileImage} // Update to use the profile image URL
               style={{ marginBottom: "16px" }}
             />
 

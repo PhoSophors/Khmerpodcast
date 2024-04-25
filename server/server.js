@@ -9,6 +9,7 @@ const passport = require("./config/passport-setup");
 const authRoutes = require("./routes/authRoutes");
 const fileUploadRoutes = require("./routes/fileUploadRoutes");
 const searchRoutes = require("./routes/searchRoutes");
+const storageRoutes = require("./routes/storageRoutes");
 const authenticateToken = require("./middleware/authenticateToken");
 const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
 
@@ -72,6 +73,8 @@ app.use("/api", googleRoutes); // Mount userRoutes at /api/user endpoint
 // login and register routes
 app.use("/auths", authRoutes);
 app.use("/search", searchRoutes); 
+// get bucket size 
+app.use("/getbucket", storageRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

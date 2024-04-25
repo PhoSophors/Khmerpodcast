@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Card } from "antd";
-import axios from "axios";
-import Cookies from "js-cookie";
-import "../admin.css";
-// import AllUser from "../user/AllUser";
-// import FileManager from "../user/FileManager";
+import { useState, useEffect } from 'react';
+import { Card } from 'antd';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { Pie } from 'react-chartjs-2';
+import { Chart } from 'chart.js/auto';
+import '../admin.css';
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
   const [fileCount, setFileCount] = useState(0);
-  const authToken = Cookies.get("authToken");
+  const authToken = Cookies.get('authToken');
 
   useEffect(() => {
     fetchUserCount();
@@ -19,39 +19,50 @@ const Dashboard = () => {
   const fetchUserCount = async () => {
     try {
       if (authToken) {
-        const response = await axios.get(`/auths/users`, {
+        const response = await axios.get('/auths/users', {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            // "auth-token": authToken,
             Authorization: `Bearer ${authToken}`,
           },
         });
         setUserCount(response.data.user);
       }
     } catch (error) {
-      console.error("Error:", error.message);
+      console.error('Error:', error.message);
     }
   };
 
   const fetchFileCount = async () => {
     try {
       if (authToken) {
-        const response = await axios.get(`/files/count`, {
+        const response = await axios.get('/files/count', {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            "auth-token": authToken,
+            Authorization: `Bearer ${authToken}`,
           },
         });
         setFileCount(response.data.count);
       }
     } catch (error) {
-      console.error("Error fetching file count:", error.message);
-      if (error.response) {
-        console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
-        console.error("Response headers:", error.response.headers);
-      }
+      console.error('Error:', error.message);
     }
+  };
+
+  const total = userCount + fileCount;
+  const userPercentage = (userCount / total) * 100;
+  const filePercentage = (fileCount / total) * 100;
+
+  const data = {
+    labels: ['Users', 'Files'],
+    datasets: [
+      {
+        label: '% of Total',
+        data: [userPercentage, filePercentage],
+        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+        borderWidth: 1,
+      },
+    ],
   };
 
   return (
@@ -71,11 +82,14 @@ const Dashboard = () => {
           <h1>100</h1>
         </Card>
       </div>
-
-      {/*
-       <AllUser />
-      <FileManager />
-       */}
+      <div className='flex grid xl:grid-cols-3 sm:flex gap-5 sm:gap-5 p-5'>
+        <Card title="User and File Counts"  className="card w-full md:w-1/3">
+          <Pie style={{ height: "200px" }} data={data} />
+        </Card>
+        <Card title="Total Categories" className="card w-full md:w-1/3">
+          <h1>100</h1>
+        </Card>
+      </div>
     </>
   );
 };

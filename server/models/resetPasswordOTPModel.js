@@ -19,10 +19,12 @@ const resetPasswordOTPModel = new Schema({
   expiresAt: {
     type: Date,
     required: true,
+    expiresAt: 60,
   },
   createdAt: {
     type: Date,
     default: Date.now,
+    expiresAt: 60,
   },
 });
 

@@ -52,9 +52,9 @@ registerController.register = async (req, res, next) => {
             "This email already registered. Please login to the account.",
         });
       }
-      // If user exists but not verified, allow registration
-      // Optionally, you can send a new OTP here or handle it as needed
     }
+
+    // Rest of your registration code...
 
     // Send OTP
     const otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP

@@ -29,6 +29,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     localStorage.getItem("language") || "default"
   );
 
+  
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     const id = Cookies.get("id");
@@ -126,6 +127,11 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     setMenuVisible(!menuVisible);
   };
 
+  const handleAppClick = () => {
+    window.location.reload();
+  };
+
+
   return (
     <header className="header-container">
       <div className="p-3 bg-slate-100 h-full flex justify-center items-center rounded-full">
@@ -151,8 +157,8 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             className="drawer"
             title={
               <div
-                // onClick={handleAppClick}
-                className="title-drawer"
+                onClick={handleAppClick}
+                className="title-drawer cursor-pointer"
               >
                 <img
                   className=""
@@ -201,7 +207,8 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
               </div>
               &nbsp;
               <Avatar
-                style={{ cursor: "pointer" }}
+                src={user && user.profileImage} 
+                style={{ cursor: "pointer" , border: '1px solid #6366f1' }}
                 size="large"
                 icon={<UserOutlined />}
               />

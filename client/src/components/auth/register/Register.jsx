@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import SigninWithGoogles from "../signinWithGoogle/SignInWithGoogle";
 
+
 const Register = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);

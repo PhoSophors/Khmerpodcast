@@ -2,39 +2,31 @@ import React, { useState } from "react";
 import { Card } from "antd";
 import SearchForm from "./SearchForm";
 import CustomCard from "../../card/CustomCard";
-import UserCard from "../../card/UserCard";
 
 const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
-  const handleSearchSubmit = async (results, option) => {
-    // console.log('Selected option:', option); // Log the selected option
+  const handleSearchSubmit = async (results) => {
     setSearchResults(results);
-    setSelectedOption(option);
+    setSearchPerformed(true); // Set searchPerformed to true when search is performed
   };
 
   return (
     <div className="xl:p-5">
-      <Card>
+      {/* <Card> */}
         <SearchForm handleSearchSubmit={handleSearchSubmit} />
-      </Card>
+      {/* </Card> */}
 
-      {selectedOption === "podcasts" && (
-        <div className="search-results mt-5 flex flex-wrap justify-center items-center">
-          {searchResults.map((result) => (
-            <CustomCard key={result._id} file={result} /> // Render CustomCard for each search result
-          ))}
-        </div>
-      )}
-
-      {selectedOption === "users" && (
-        <div className="search-results mt-5 flex flex-wrap justify-center items-center">
-          {searchResults.map((result) => (
-            <UserCard key={result._id} user={result} /> // Render UserCard for each search result
-          ))}
-        </div>
-      )}
+      <div className="search-results mt-5 flex flex-wrap justify-center items-center">
+        {searchPerformed && searchResults.length === 0 ? ( 
+          <p className="font-semibold text-gray-500 uppercase text-center mt-5">Podcast not found</p>
+        ) : (
+          searchResults.map((result) => (
+            <CustomCard key={result._id} file={result} /> 
+          ))
+        )}
+      </div>
     </div>
   );
 };

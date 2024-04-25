@@ -224,7 +224,7 @@ const CustomCard = ({ file }) => {
             <img
               onClick={handleViewDetailPodcast}
               className="w-full h-full object-cover"
-              alt={`.${file._id} hidden`}
+              alt={`.${file._id}`}
               src={file.image.url}
               onLoad={handleImageLoad}
               style={{ borderRadius: "10px" }}

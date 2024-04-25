@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  profileImage: {
+    type: String,
+    required: false,
+  },
   email: {
     type: String,
     required: true,
@@ -16,6 +20,18 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  files: [{ type: Schema.Types.ObjectId, ref: "File" }],
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+    },
+  ],
   emailVerified: {
     type: Boolean,
     default: false,
@@ -30,19 +46,7 @@ const userSchema = new Schema({
       return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     },
   },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
-  },
-  files: [{ type: Schema.Types.ObjectId, ref: "File" }],
 
-  favorites: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "File",
-    },
-  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

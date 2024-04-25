@@ -27,7 +27,7 @@ router.post("/reset-password", forgotPasswordController.resetPassword);
 router.put(
   "/user/:id",
   verifyToken,
-  checkRoleMiddleware("user"),
+  checkRoleMiddleware(["user", "admin"]),
   userController.updateUser
 );
 

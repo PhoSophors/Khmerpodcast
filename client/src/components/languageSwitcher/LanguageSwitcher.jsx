@@ -16,6 +16,7 @@ const LanguageSwitcher = () => {
     Cookies.set("language", languageCode);
     setSelectedLanguage(languageCode); // Update selected language
     message.success(t("Language changed successfully"));
+    window.location.reload(); 
     setModalVisible(false); // Close the language selection modal
   };
 

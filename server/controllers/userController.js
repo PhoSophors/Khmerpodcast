@@ -1,6 +1,74 @@
 const User = require("../models/userModel");
+const { S3Client } = require("@aws-sdk/client-s3");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
 
-exports.getUser = async (req, res) => {
+const s3Client = new S3Client({
+  region: "ap-southeast-2",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+});
+
+// Multer configuration for handling file uploads
+const upload = multer({
+  storage: multerS3({
+    s3: s3Client,
+    bucket: "kpuserprofilephoto",
+    key: function (req, file, cb) {
+      const fileExtension = file.mimetype.split("/")[1];
+      const uniqueKey = `${Date.now().toString()}.${fileExtension}`;
+      cb(null, uniqueKey);
+    },
+    contentType: multerS3.AUTO_CONTENT_TYPE, 
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    }
+  })
+}).single("profileImage");
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Handle file upload using multer
+    upload(req, res, async (err) => {
+      if (err) {
+        return res.status(500).json({ error: `Error uploading image: ${err.message}` });
+      }
+
+      // Update the username if provided
+      const { username } = req.body;
+      if (username) {
+        user.username = username;
+      }
+      
+      // If file upload was successful, update the user object with the S3 URL
+      if (req.file) {
+        user.profileImage = req.file.location;
+      }
+
+      // Save the updated user object
+      try {
+        await user.save();
+        res.status(200).json({ user });
+      } catch (error) {
+        res.status(500).json({ error: `Error updating user: ${error.message}` });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getUser = async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.findById(id);
@@ -13,7 +81,7 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.getUsersCount = async (req, res) => {
+const getUsersCount = async (req, res) => {
   try {
     const userCount = await User.countDocuments();
     res.status(200).json({ user: userCount }); 
@@ -22,7 +90,7 @@ exports.getUsersCount = async (req, res) => {
   }
 };
 
-exports.getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json({ users });
@@ -32,24 +100,8 @@ exports.getAllUsers = async (req, res) => {
 };
 
 
-exports.updateUser = async (req, res) => {
-  const { id } = req.params;
-  const updateFields = req.body;
 
-  try {
-    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
-      new: true,
-    });
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    res.status(200).json({ user: updatedUser });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-exports.deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     const deletedUser = await User.findByIdAndDelete(id);
@@ -61,3 +113,6 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+module.exports = { updateUser, getUser, getUsersCount, getAllUsers, deleteUser};

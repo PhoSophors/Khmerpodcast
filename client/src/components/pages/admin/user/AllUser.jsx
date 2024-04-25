@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Spin, Alert, Card, Avatar, Menu, Dropdown } from "antd";
-import { UserOutlined, MoreOutlined } from "@ant-design/icons";
-import SearchForm from "../../search/SearchForm";
+import { Spin, Alert, Card, Avatar, Menu, Dropdown, Input, Space } from "antd";
+import { UserOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons";
 import "../admin.css";
 
 const AllUser = () => {
   const [allUser, setAllUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const authToken = Cookies.get("authToken");
-  const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const authToken = Cookies.get("authToken");
+
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
 
   const fetchAllUser = async () => {
     setLoading(true);
@@ -21,7 +23,6 @@ const AllUser = () => {
         const response = await axios.get(`/auths/users/all`, {
           baseURL: process.env.REACT_APP_PROXY,
           headers: {
-            // "auth-token": authToken,
             Authorization: `Bearer ${authToken}`,
           },
         });
@@ -40,102 +41,83 @@ const AllUser = () => {
     }
   };
 
-  useEffect(() => {
-    fetchAllUser();
-  }, []);
-
-  const handleSearchSubmit = async (results, query) => {
-    setSearchResults(results);
-    setSearchQuery(query);
+  const handleSearch = (value) => {
+    setSearchQuery(value);
   };
+
+  const filteredUsers = allUser.filter(
+    (user) =>
+      user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="p-5">
       <Card title="All Users" className="w-full">
-        <SearchForm handleSearchSubmit={handleSearchSubmit} />
-        {loading ? (
-          <div className="spin-container">
-            <Spin size="large" />
-          </div>
-        ) : error ? (
-          <Alert message={error} type="error" />
-        ) : (
-          <>
-            <table id="user-table">
-              <tr>
-                <th>No *</th>
-                <th>Profile *</th>
-                <th className="text-start">Name *</th>
-                <th className="text-start">Email *</th>
-                <th className="text-start">Role *</th>
-                <th className="text-start">Status *</th>
-                <th>Create Date *</th>
-                <th>Action *</th>
-              </tr>
-
-              {allUser.map((user, index) => {
-                const menu = (
-                  <Menu style={{ width: "200px" }}>
-                    <Menu.Item key="0">Edit</Menu.Item>
-                    <Menu.Item key="1">Delete</Menu.Item>
-                  </Menu>
-                );
-
-                const roleColor = user.role === "admin" ? "#dcfce7" : "#fef3c7";
-                const statusColor = user.emailVerified ? "#dcfce7" : "#64748b";
-
-                // Format the createdAt date
-                const date = new Date(user.createdAt);
-                const formattedDate = `${
-                  date.getMonth() + 1
-                }/${date.getDate()}/${date.getFullYear()}`;
-
-                return (
+        <Space direction="vertical" style={{ width: "100%" }}>
+          <Input
+          style={{ width: "20%" }}
+            placeholder="Search users"
+            prefix={<SearchOutlined />}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+          {loading ? (
+            <div className="spin-container">
+              <Spin size="large" />
+            </div>
+          ) : error ? (
+            <Alert message={error} type="error" />
+          ) : filteredUsers.length === 0 ? (
+            <div className="font-semibold text-gray-500 uppercase text-center mt-5">
+              No users found
+            </div>
+          ) : (
+            <table id="user-podcast-table" className="mt-10">
+              <thead>
+                <tr>
+                  <th className="text-center">No *</th>
+                  <th className="text-center">Profile *</th>
+                  <th className="text-start">Name *</th>
+                  <th className="text-start">Email *</th>
+                  <th className="text-center">Role</th>
+                  <th className="text-center">Status</th>
+                  <th className="text-center">Create Date</th>
+                  <th className="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredUsers.map((user, index) => (
                   <tr key={user._id}>
-                    <td className="text-center text-indigo-500 font-semibold">
-                      {index + 1}
+                    <td className="text-center">{index + 1}</td>
+                    <td className="text-center">
+                      <Avatar src={user && user.profileImage}  size="large" icon={<UserOutlined />} />
+                    </td>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td className="text-center">{user.role}</td>
+                    <td className="text-center">{user.emailVerified ? "Active" : "Closed"}</td>
+                    <td className="text-center">
+                      {new Date(user.createdAt).toLocaleDateString()}
                     </td>
                     <td className="text-center">
-                      <Avatar size="large" icon={<UserOutlined />} />
-                    </td>
-                    <td className="font-semibold text-indigo-500">
-                      {user.username}
-                    </td>
-                    <td className="font-semibold text-indigo-500">
-                      {user.email}
-                    </td>
-                    <td className="role">
-                      <div
-                        className="chiil-role text-indigo-500"
-                        style={{ backgroundColor: roleColor }}
+                      <Dropdown
+                        overlay={
+                          <Menu>
+                            <Menu.Item key="0">Edit</Menu.Item>
+                            <Menu.Item key="1">Delete</Menu.Item>
+                          </Menu>
+                        }
+                        trigger={["hover"]}
                       >
-                        {user.role}
-                      </div>
-                    </td>
-
-                    <td className="status text-end">
-                      <div
-                        className="chil-status text-indigo-500"
-                        style={{ backgroundColor: statusColor }}
-                      >
-                        {user.emailVerified ? "Active" : "Closed"}
-                      </div>
-                    </td>
-
-                    <td className="text-center text-slate-500">
-                      {formattedDate}
-                    </td>
-                    <td className="text-center">
-                      <Dropdown overlay={menu} trigger={["hover"]}>
                         <MoreOutlined />
                       </Dropdown>
                     </td>
                   </tr>
-                );
-              })}
+                ))}
+              </tbody>
             </table>
-          </>
-        )}
+          )}
+        </Space>
       </Card>
     </div>
   );

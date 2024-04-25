@@ -11,7 +11,6 @@ const Create = () => {
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState("");
-  const [error, setError] = useState("");
   // Image state
   const [imageFileList, setImageFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
