@@ -1,14 +1,12 @@
 // MainSection.jsx
 
 import React, { Component } from "react";
-// import Footer from "../../components/footer/Footer";
 import "./MainSection.css";
 import LeftSection from "../leftSection/LeftSection";
 import RightSection from "../rightSection/RightSection";
 import Layout, { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import Header from "../../components/header/Header";
-import SideMenu from "../../components/sidemenu/SideMenu";
 
 class MainSection extends Component {
   constructor(props) {
@@ -67,10 +65,7 @@ class MainSection extends Component {
     return (
       <Layout>
         {!isMobileView && (
-          <Sider
-            collapsed={collapsed}
-            breakpoint="md"
-          >
+          <Sider collapsed={collapsed} breakpoint="md">
             <LeftSection onSelectMenuItem={this.handleSelectMenuItem} />
           </Sider>
         )}
@@ -89,7 +84,6 @@ class MainSection extends Component {
                 toggleHeaderFullScreen={this.toggleHeaderFullScreen} // Pass function to toggle header full screen
               />
             </div>
-            {/* <Footer /> */}
           </Content>
         </Layout>
       </Layout>

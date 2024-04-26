@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useAudio } from "../../context/AudioContext";
 import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
-import { Card, Spin, Dropdown, Menu, message, Modal, Button } from "antd";
+import { Card, Spin, Dropdown, Menu, message, Modal } from "antd";
 import {
   FacebookIcon,
   TwitterIcon,
@@ -28,21 +28,16 @@ import {
 
 const CustomCard = ({ file }) => {
   const [loading, setLoading] = useState(true);
-  const [audioPlaying, setAudioPlaying] = useState(false);
-  const audioRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
-  const { isPlaying, currentTrack, playTrack, pauseTrack } = useAudio();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { isPlaying, currentTrack, setIsPlaying, setCurrentTrack, audioRef } =
+    useAudio();
 
   const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
     const cookie = Cookies.get(`favorite-${file._id}`);
     return cookie ? JSON.parse(cookie) : false;
   });
-
-  useEffect(() => {
-    Cookies.set(`favorite-${file._id}`, JSON.stringify(isAddedToFavorites));
-  }, [isAddedToFavorites, file._id]);
 
   const handleTogglePodcastInPlaylist = async () => {
     try {
@@ -85,26 +80,21 @@ const CustomCard = ({ file }) => {
     }
   };
 
-  const handleImageLoad = () => {
-    setLoading(false);
-  };
-
-  const handlePlayClick = () => {
-    playTrack(file.audio.url);
-  };
-
-  const handlePauseClick = () => {
-    if (currentTrack === file.audio.url) {
-      pauseTrack();
-    }
-  };
+  useEffect(() => {
+    Cookies.set(`favorite-${file._id}`, JSON.stringify(isAddedToFavorites));
+  }, [file._id, isAddedToFavorites]);
 
   const toggleAudio = () => {
-    if (isPlaying && setAudioPlaying && currentTrack === file.audio.url) {
-      handlePauseClick();
+    if (currentTrack === file.audio.url) {
+      setIsPlaying(!isPlaying);
     } else {
-      handlePlayClick();
+      setCurrentTrack(file.audio.url);
+      setIsPlaying(true);
     }
+  };
+
+  const handleImageLoad = () => {
+    setLoading(false);
   };
 
   const handleViewDetailPodcast = () => {
@@ -240,15 +230,15 @@ const CustomCard = ({ file }) => {
                     zIndex: 2,
                   }}
                 >
-                  {audioPlaying ? (
+                  {isPlaying && currentTrack === file.audio.url ? (
                     <PauseCircleFilled
-                      style={{ fontSize: "2rem", color: "#4f46e5" }}
                       onClick={toggleAudio}
+                      style={{ fontSize: "2rem", color: "#000" }}
                     />
                   ) : (
                     <PlayCircleFilled
-                      style={{ fontSize: "2rem", color: "#4f46e5" }}
                       onClick={toggleAudio}
+                      style={{ fontSize: "2rem", color: "#000" }}
                     />
                   )}
                 </div>
@@ -257,7 +247,7 @@ const CustomCard = ({ file }) => {
                   style={{
                     position: "absolute",
                     bottom: "17px",
-                  left: "15px",
+                    left: "15px",
                     zIndex: 2,
                   }}
                 >

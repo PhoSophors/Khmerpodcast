@@ -13,7 +13,6 @@ const storageRoutes = require("./routes/storageRoutes");
 const authenticateToken = require("./middleware/authenticateToken");
 const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
 
-
 const crypto = require("crypto");
 const googleRoutes = require("./routes/googleRoutes");
 
@@ -72,9 +71,9 @@ app.use("/files", fileUploadRoutes); // Mount fileUploadRoutes at /api/upload en
 app.use("/api", googleRoutes); // Mount userRoutes at /api/user endpoint
 // login and register routes
 app.use("/auths", authRoutes);
-app.use("/search", searchRoutes); 
-// get bucket size 
-app.use("/getbucket", storageRoutes);
+app.use("/search", searchRoutes);
+// get bucket size
+// app.use("/getbucket", storageRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

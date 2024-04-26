@@ -30,7 +30,6 @@ const Login = ({ visible, onCancel }) => {
 
       if (response.status === 200) {
         // Login successful
-        // console.log(response.data);
 
         Cookies.set("authToken", response.data.authToken);
         Cookies.set("id", response.data.id);

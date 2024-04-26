@@ -18,6 +18,8 @@ const SideMenu = ({ onSelectMenuItem }) => {
 
   useEffect(() => {
     const authToken = Cookies.get("authToken");
+    // const encodedToken = Cookies.get("authToken");
+    // const authToken = atob(encodedToken);
 
     if (authToken) {
       setIsLoading(true);
@@ -163,7 +165,10 @@ const SideMenu = ({ onSelectMenuItem }) => {
                 {t("siderMenu.profile")}
               </span>
             </Menu.Item>
-            <Menu.Item key="/setting" icon={getIcon("/setting", selectedMenuItem)}>
+            <Menu.Item
+              key="/setting"
+              icon={getIcon("/setting", selectedMenuItem)}
+            >
               <span onClick={() => handleMenuItemClick({ key: "/setting" })}>
                 {t("siderMenu.setting")}
               </span>

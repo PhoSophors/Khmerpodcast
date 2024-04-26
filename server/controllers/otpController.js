@@ -151,5 +151,4 @@ otpController.verifyOTP = async (req, res) => {
   }
 };
 
-
 module.exports = otpController;

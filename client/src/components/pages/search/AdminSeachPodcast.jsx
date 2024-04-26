@@ -18,9 +18,9 @@ const AdminSeachPodcast = ({ handleSearchSubmit }) => {
         handleSearchSubmit([]); // Clear the search results if the query is empty
         return;
       }
-  
+
       setLoading(true);
-  
+
       try {
         const response = await axios.get(`/search/users`, {
           baseURL: process.env.REACT_APP_PROXY,
@@ -28,7 +28,7 @@ const AdminSeachPodcast = ({ handleSearchSubmit }) => {
             search: searchQuery,
           },
         });
-  
+
         handleSearchSubmit(response.data); // Pass the results
       } catch (error) {
         console.error(error);
@@ -37,7 +37,7 @@ const AdminSeachPodcast = ({ handleSearchSubmit }) => {
       }
     };
 
-    const delayTimer = setTimeout(fetchSearchResults, 500); // Add a delay before triggering the search to reduce API calls
+    const delayTimer = setTimeout(fetchSearchResults, 500);
 
     return () => clearTimeout(delayTimer); // Clear the timer when the component is unmounted or when the searchQuery changes
   }, [searchQuery, handleSearchSubmit]);

@@ -25,6 +25,7 @@ const Register = () => {
 
       if (response.status === 200) {
         // Save the id to cookies
+        
         Cookies.set("id", response.data.id);
 
         // Registration successful, navigate to /otp

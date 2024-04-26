@@ -14,6 +14,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import SideMenu from "../sidemenu/SideMenu";
+import AudioControl from "../audio/AudioControl";
 import { Drawer } from "antd";
 
 const Header = ({ handleCollapse, onSelectMenuItem }) => {
@@ -29,7 +30,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     localStorage.getItem("language") || "default"
   );
 
-  
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     const id = Cookies.get("id");
@@ -131,7 +131,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     window.location.reload();
   };
 
-
   return (
     <header className="header-container">
       <div className="p-3 bg-slate-100 h-full flex justify-center items-center rounded-full">
@@ -194,6 +193,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
         </div>
       </div>
 
+      <AudioControl />
       <div className="user-profile">
         {isLoading ? (
           // Render a loading spinner or some other placeholder
@@ -207,8 +207,8 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
               </div>
               &nbsp;
               <Avatar
-                src={user && user.profileImage} 
-                style={{ cursor: "pointer" , border: '1px solid #6366f1' }}
+                src={user && user.profileImage}
+                style={{ cursor: "pointer", border: "1px solid #6366f1" }}
                 size="large"
                 icon={<UserOutlined />}
               />
