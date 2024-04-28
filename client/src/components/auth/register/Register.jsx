@@ -18,7 +18,7 @@ const Register = () => {
       setIsLoading(true);
 
       const response = await axios.post(
-        "http://localhost:8085/auths/register",
+        "http://localhost:3001/auths/register",
         values
       );
       setIsLoading(true);

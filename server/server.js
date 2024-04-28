@@ -18,7 +18,7 @@ const googleRoutes = require("./routes/googleRoutes");
 
 // Initialize express app
 const app = express();
-const PORT = process.env.PORT || 8085; // Set up port
+const PORT = process.env.PORT || 3001; // Set up port
 
 // Generate a random secret for session
 function generateRandomSecret(length = 32) {

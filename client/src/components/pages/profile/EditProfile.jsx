@@ -56,10 +56,6 @@ const EditProfile = ({ user }) => {
     );
   };
 
-  const handleChange = ({ fileList: newFileList }) => {
-    setImageFileList(newFileList);
-  };
-
   const handleCancelPreview = () => setPreviewOpen(false);
 
   const getBase64 = (file) =>
@@ -77,7 +73,7 @@ const EditProfile = ({ user }) => {
 
       if (authToken && user._id) {
         const response = await axios.put(
-          `http://localhost:8085/auths/user/${user._id}`,
+          `http://localhost:3001/auths/user/${user._id}`,
           {
             username,
             profileImage,
