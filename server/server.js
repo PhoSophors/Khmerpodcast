@@ -5,7 +5,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const passport = require("./config/passport-setup");
+// const passport = require("./config/passport-setup");
 const authRoutes = require("./routes/authRoutes");
 const fileUploadRoutes = require("./routes/fileUploadRoutes");
 const searchRoutes = require("./routes/searchRoutes");
@@ -48,8 +48,8 @@ app.use(
 );
 
 // Initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 // Middleware to parse JSON requests
 app.use(express.json());
 
@@ -66,9 +66,9 @@ createDefaultAdmin().then(() => {
 });
 
 // Mount routes
-app.use("/auth", googleRoutes); // google auth routes
+// app.use("/auth", googleRoutes); // google auth routes
 app.use("/files", fileUploadRoutes); // Mount fileUploadRoutes at /api/upload endpoint
-app.use("/api", googleRoutes); // Mount userRoutes at /api/user endpoint
+// app.use("/api", googleRoutes); // Mount userRoutes at /api/user endpoint
 // login and register routes
 app.use("/auths", authRoutes);
 app.use("/search", searchRoutes);

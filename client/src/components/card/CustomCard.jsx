@@ -31,6 +31,7 @@ const CustomCard = ({ file }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { isPlaying, currentTrack, setIsPlaying, setCurrentTrack, audioRef } =
     useAudio();
 
@@ -38,6 +39,10 @@ const CustomCard = ({ file }) => {
     const cookie = Cookies.get(`favorite-${file._id}`);
     return cookie ? JSON.parse(cookie) : false;
   });
+
+  useEffect(() => {
+    Cookies.set(`favorite-${file._id}`, JSON.stringify(isAddedToFavorites));
+  }, [file._id, isAddedToFavorites]);
 
   const handleTogglePodcastInPlaylist = async () => {
     try {
@@ -80,34 +85,51 @@ const CustomCard = ({ file }) => {
     }
   };
 
-  useEffect(() => {
-    Cookies.set(`favorite-${file._id}`, JSON.stringify(isAddedToFavorites));
-  }, [file._id, isAddedToFavorites]);
-
-  const toggleAudio = () => {
-    if (currentTrack === file.audio.url) {
-      setIsPlaying(!isPlaying);
-    } else {
-      setCurrentTrack(file.audio.url);
-      setIsPlaying(true);
-    }
-  };
-
   const handleImageLoad = () => {
     setLoading(false);
   };
-
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+  };
   const handleViewDetailPodcast = () => {
     navigate(`/viewdetailpodcast/${file._id}`);
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // const toggleAudio = () => {
+  //   if (currentTrack === file.audio.url) {
+  //     setIsPlaying(!isPlaying);
+  //   } else {
+  //     setCurrentTrack(file.audio.url);
+  //     setIsPlaying(true);
+  //   }
+  // };
+  const toggleAudio = () => {
+    if (isMobile || isHovered) {
+      if (currentTrack === file.audio.url) {
+        setIsPlaying(!isPlaying);
+      } else {
+        setCurrentTrack(file.audio.url);
+        setIsPlaying(true);
+      }
+    }
   };
+  
 
   const shareUrl = `http://localhost:3000/viewdetailpodcast/${file._id}`;
   const handleCopyLink = () => {
@@ -219,8 +241,7 @@ const CustomCard = ({ file }) => {
               onLoad={handleImageLoad}
               style={{ borderRadius: "10px" }}
             />
-
-            {isHovered && (
+            {(isMobile || isHovered) && (
               <div className="flex grid sm:grid-cols-2 sm:flex sm:gap-5">
                 <div
                   style={{
@@ -233,12 +254,12 @@ const CustomCard = ({ file }) => {
                   {isPlaying && currentTrack === file.audio.url ? (
                     <PauseCircleFilled
                       onClick={toggleAudio}
-                      style={{ fontSize: "2rem", color: "#000" }}
+                      style={{ fontSize: "2rem", color: "#fff" }}
                     />
                   ) : (
                     <PlayCircleFilled
                       onClick={toggleAudio}
-                      style={{ fontSize: "2rem", color: "#000" }}
+                      style={{ fontSize: "2rem", color: "#fff" }}
                     />
                   )}
                 </div>
