@@ -9,14 +9,15 @@ import Create from "../../components/pages/create/Create";
 import Dashboard from "../../components/pages/admin/dashboard/Dashboard";
 import AllUser from "../../components/pages/admin/user/AllUser";
 import FileManager from "../../components/pages/admin/user/FileManager";
+import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
 
-const RightSection = ({ selectedMenuItem }) => {
+const RightSection = ({ selectedMenuItem, onPodcastSelected }) => {
   let content = "";
 
   // Render different content based on the selected menu item
   switch (selectedMenuItem) {
     case "/":
-      content = <HomePage />;
+      content = <HomePage  onPodcastSelected={onPodcastSelected}/>;
       break;
     case "/search":
       content = <Search />;
@@ -42,6 +43,9 @@ const RightSection = ({ selectedMenuItem }) => {
     case "/all-user-upload":
       content = <FileManager />;
       break;
+    case "/viewdetailpodcast":
+        content = <ViewDetailPodcast onPodcastSelected={onPodcastSelected} />;
+        break;
 
       
     default:

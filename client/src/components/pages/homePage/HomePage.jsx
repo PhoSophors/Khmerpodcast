@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Button, Spin, Card } from "antd";
+import React, { useState, useEffect, useCallback } from "react";
+import { Button, Spin, Card, message } from "antd";
 import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import CustomCard from "../../card/CustomCard";
 import axios from "axios";
 import "./HomePage.css";
+import { t } from "i18next";
+import { useNavigate } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = ({ onPodcastSelected }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [startIndex, setStartIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 24;
+  const navigate = useNavigate();
 
   // Function to fetch files
   const fetchFiles = async (page) => {
@@ -70,6 +73,7 @@ const HomePage = () => {
                   hoveredIndex={hoveredIndex}
                   setHoveredIndex={setHoveredIndex} // Pass setHoveredIndex function to CustomCard
                   file={file} // Pass file data to CustomCard
+                  setSelectedPodcast={onPodcastSelected} // Pass setSelectedPodcast function to CustomCard
                 />
               ))}
           </div>

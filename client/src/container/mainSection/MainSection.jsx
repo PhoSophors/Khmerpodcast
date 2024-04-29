@@ -7,6 +7,7 @@ import RightSection from "../rightSection/RightSection";
 import Layout, { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import Header from "../../components/header/Header";
+import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
 
 class MainSection extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class MainSection extends Component {
       isHeaderFullScreen: false,
       collapsed: false, // Initialize collapsed state
       isMobileView: false, // Track if in mobile view
+      selectedPodcast: null,
     };
   }
 
@@ -60,8 +62,16 @@ class MainSection extends Component {
     }));
   };
 
+  handlePodcastSelected = (podcast) => {
+    this.setState({ selectedPodcast: podcast });
+  };
+
+
+
   render() {
-    const { isMobileView, collapsed } = this.state;
+    const { isMobileView, collapsed, selectedPodcast, selectedMenuItem } =
+      this.state;
+
     return (
       <Layout>
         {!isMobileView && (
@@ -78,11 +88,16 @@ class MainSection extends Component {
               collapsed={collapsed}
             />
             <div className="content-card">
-              <RightSection
-                selectedMenuItem={this.state.selectedMenuItem} // Pass selected menu item
-                toggleLeftSection={this.toggleLeftSection} // Pass function to toggle left section
-                toggleHeaderFullScreen={this.toggleHeaderFullScreen} // Pass function to toggle header full screen
-              />
+              {selectedPodcast ? (
+                <ViewDetailPodcast podcast={selectedPodcast} />
+              ) : (
+                <RightSection
+                  selectedMenuItem={selectedMenuItem}
+                  toggleLeftSection={this.toggleLeftSection}
+                  toggleHeaderFullScreen={this.toggleHeaderFullScreen}
+                  onPodcastSelected={this.handlePodcastSelected}
+                />
+              )}
             </div>
           </Content>
         </Layout>
@@ -92,3 +107,4 @@ class MainSection extends Component {
 }
 
 export default MainSection;
+

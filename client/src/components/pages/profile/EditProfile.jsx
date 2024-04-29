@@ -73,7 +73,7 @@ const EditProfile = ({ user }) => {
 
       if (authToken && user._id) {
         const response = await axios.put(
-          `http://localhost:3001/auths/user/${user._id}`,
+          `http://localhost:4000/auths/user/${user._id}`, 
           {
             username,
             profileImage,

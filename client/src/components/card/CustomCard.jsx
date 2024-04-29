@@ -26,7 +26,7 @@ import {
   MoreOutlined,
 } from "@ant-design/icons";
 
-const CustomCard = ({ file }) => {
+const CustomCard = ({ file, setSelectedPodcast}) => {
   const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
@@ -94,10 +94,12 @@ const CustomCard = ({ file }) => {
   const handleModalCancel = () => {
     setIsModalVisible(false);
   };
-  const handleViewDetailPodcast = () => {
-    navigate(`/viewdetailpodcast/${file._id}`);
-  };
 
+
+  const handleViewDetailPodcast = () => {
+    setSelectedPodcast(file);
+  };
+  
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -111,14 +113,6 @@ const CustomCard = ({ file }) => {
     };
   }, []);
 
-  // const toggleAudio = () => {
-  //   if (currentTrack === file.audio.url) {
-  //     setIsPlaying(!isPlaying);
-  //   } else {
-  //     setCurrentTrack(file.audio.url);
-  //     setIsPlaying(true);
-  //   }
-  // };
   const toggleAudio = () => {
     if (isMobile || isHovered) {
       if (currentTrack === file.audio.url) {

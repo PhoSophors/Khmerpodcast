@@ -8,7 +8,6 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import SigninWithGoogles from "../signinWithGoogle/SignInWithGoogle";
 
-
 const Register = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -17,15 +16,14 @@ const Register = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.post(
-        "http://localhost:3001/auths/register",
-        values
-      );
+      const response = await axios.post("/auths/register", values, {
+        baseURL: process.env.REACT_APP_PROXY,
+      });
       setIsLoading(true);
 
       if (response.status === 200) {
         // Save the id to cookies
-        
+
         Cookies.set("id", response.data.id);
 
         // Registration successful, navigate to /otp
@@ -107,11 +105,7 @@ const Register = () => {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(
-                      new Error(
-                        "Password not match!"
-                      )
-                    );
+                    return Promise.reject(new Error("Password not match!"));
                   },
                 }),
               ]}

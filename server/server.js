@@ -14,11 +14,11 @@ const authenticateToken = require("./middleware/authenticateToken");
 const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
 
 const crypto = require("crypto");
-const googleRoutes = require("./routes/googleRoutes");
+// const googleRoutes = require("./routes/googleRoutes");
 
 // Initialize express app
 const app = express();
-const PORT = process.env.PORT || 3001; // Set up port
+const port = process.env.PORT || 4000; // Set up port
 
 // Generate a random secret for session
 function generateRandomSecret(length = 32) {
@@ -85,7 +85,8 @@ module.exports = {
   authenticateToken,
 };
 
+console.log(`Listening on port: ${port}`);
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`); // Print to console
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`); // Print to console
 });

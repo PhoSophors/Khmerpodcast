@@ -9,7 +9,7 @@ const SigninWithGoogles = () => {
   const [errorMessage, setErrorMessage] = useState("");
   
   const handleSignInWithGoogle = () => {
-    window.location.href = "http://localhost:3001/auth/google";
+    window.location.href = "http://localhost:4000/auth/google";
   };
 
   const handleCloseError = () => {
