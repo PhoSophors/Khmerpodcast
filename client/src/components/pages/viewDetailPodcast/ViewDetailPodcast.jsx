@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Card, Spin } from "antd";
 
-const ViewDetailPodcast = ({ podcast }) => {
+const ViewDetailPodcast = ({ podcast, onSelectMenuItem}) => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState(null);
@@ -20,6 +20,7 @@ const ViewDetailPodcast = ({ podcast }) => {
       console.log("Response:", response.data); // Log the response data
       setFile(response.data);
       setUser(response.data.user); // Set the user state to the user who uploaded the file
+      onSelectMenuItem("/");
     } catch (error) {
       console.error("Error fetching file:", error.message);
       setNotification("Error fetching file"); // Update the state directly
@@ -30,7 +31,7 @@ const ViewDetailPodcast = ({ podcast }) => {
 
   useEffect(() => {
     fetchFile();
-  }, [id]);
+  }, [id, onSelectMenuItem]);
 
   if (loading) {
     return (

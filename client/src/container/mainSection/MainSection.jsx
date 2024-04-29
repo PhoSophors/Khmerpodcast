@@ -66,8 +66,6 @@ class MainSection extends Component {
     this.setState({ selectedPodcast: podcast });
   };
 
-
-
   render() {
     const { isMobileView, collapsed, selectedPodcast, selectedMenuItem } =
       this.state;
@@ -76,7 +74,10 @@ class MainSection extends Component {
       <Layout>
         {!isMobileView && (
           <Sider collapsed={collapsed} breakpoint="md">
-            <LeftSection onSelectMenuItem={this.handleSelectMenuItem} />
+            <LeftSection
+              onSelectMenuItem={this.handleSelectMenuItem}
+              podcast={selectedPodcast}
+            />
           </Sider>
         )}
         <Layout>
@@ -107,4 +108,3 @@ class MainSection extends Component {
 }
 
 export default MainSection;
-
