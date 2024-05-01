@@ -78,13 +78,13 @@ const Profile = ({ onPodcastSelected }) => {
   };
 
   return (
-    <div className="profile-container xl:p-5 ">
+    <div className="profile-container xl:p-0 ">
       <Card
         style={{
           backgroundColor: "transparent",
-          cardPadding: "0",
-          // border: "none",
+          borderRadius: "0",
         }}
+        bodyStyle={{  padding: 0 }}
         title={
           <span>
             <UserOutlined style={{ marginRight: "8px" }} />
@@ -97,7 +97,7 @@ const Profile = ({ onPodcastSelected }) => {
         {isEditingProfile ? (
           <EditProfile user={userData} />
         ) : userData ? (
-          <div className="profile-content">
+          <div className="profile-content mt-5">
             <Avatar
               size={140}
               icon={<UserOutlined />}
