@@ -19,7 +19,7 @@ const Register = () => {
       const response = await axios.post("/auths/register", values, {
         baseURL: process.env.REACT_APP_PROXY,
       });
-      setIsLoading(true);
+    setIsLoading(true);
 
       if (response.status === 200) {
         // Save the id to cookies

@@ -1,18 +1,18 @@
 import React, { useState, useRef } from "react";
 import { Spin, Card } from "antd";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import {
   PauseCircleFilled,
   PlayCircleFilled,
   MoreOutlined,
 } from "@ant-design/icons";
 
-const UserUploadCard = ({ file }) => {
+const UserUploadCard = ({ file, setSelectedPodcast}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const audioRef = useRef(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -25,10 +25,11 @@ const UserUploadCard = ({ file }) => {
       audioRef.current.play();
     }
   };
-
+  
   const handleViewDetailPodcast = () => {
-    navigate(`/viewdetailpodcast/${file._id}`);
+    setSelectedPodcast(file);
   };
+  
 
   const date = new Date(); // replace this with your date
   const formattedDate = date.toLocaleDateString("en-US", {

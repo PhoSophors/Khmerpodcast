@@ -10,7 +10,7 @@ import UserUploadCard from "../../card/UserUploadCard";
 import { Avatar } from "antd";
 import "./Profile.css";
 
-const Profile = () => {
+const Profile = ({ onPodcastSelected }) => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -150,8 +150,11 @@ const Profile = () => {
         ) : (
           <>
             <div className="mt-10 flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
-              {userPodcasts.map((podcast, index) => (
-                <UserUploadCard key={index} file={podcast} />
+              {userPodcasts.map((file, index) => (
+                <UserUploadCard key={index} 
+                file={file} 
+                setSelectedPodcast={onPodcastSelected} 
+                />
               ))}
             </div>
           </>

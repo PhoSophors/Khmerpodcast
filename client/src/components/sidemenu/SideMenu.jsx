@@ -60,6 +60,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
     onSelectMenuItem(menuItem.key);
   };
 
+
   return (
     <div>
       <Menu

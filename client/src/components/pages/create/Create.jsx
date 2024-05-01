@@ -3,6 +3,7 @@ import { Upload, Card, Button, Input, Form, Modal, Alert, message } from "antd";
 import "./create.css";
 import { CloseOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useDropzone } from "react-dropzone";
 import ImgCrop from "antd-img-crop";
 import Cookies from "js-cookie";
 
@@ -136,6 +137,7 @@ const Create = () => {
     );
   };
 
+
   return (
     <div className="mx-auto flex xl:p-8   ">
       <div className="w-full p-2">
@@ -213,7 +215,7 @@ const Create = () => {
                     <Upload
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
-                      imageFileList={imageFileList}
+                      fileList={imageFileList}
                       onChange={handleChange}
                       onPreview={handlePreview}
                     >

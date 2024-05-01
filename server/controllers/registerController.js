@@ -51,6 +51,25 @@ registerController.register = async (req, res, next) => {
             +email +
             "This email already registered. Please login to the account.",
         });
+      } else {
+        // If user exists but is not verified, resend OTP
+        const otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
+
+        // Update the OTP and extend its validity
+        existingUser.otp = otp;
+        existingUser.otpExpires = Date.now() + 20 * 60 * 1000; // OTP valid for 20 minutes
+        await existingUser.save();
+
+        // Send OTP
+        const emailResult = await otpController.sendOTP(email, otp); // Send OTP to email
+        if (!emailResult) {
+          throw new Error("Error sending OTP");
+        }
+
+        return res.status(200).json({
+          message:
+            "OTP has been sent to your email. Please verify your account.",
+        });
       }
     }
 

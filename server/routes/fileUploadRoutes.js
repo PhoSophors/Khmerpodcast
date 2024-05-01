@@ -23,6 +23,17 @@ router.post(
   fileUploadController.uploadPodcast
 );
 
+// PUT route to update a Podcast by ID
+router.put(
+  "/update/:id",
+  verifyToken,
+  checkRoleMiddleware(["admin", "user"]),
+  upload2S3,
+  compressImageMiddleware,
+  compressAudioMiddleware,
+  fileUploadController.updateFile
+);
+
 // GET route to retrieve all Podcast
 router.get("/get-all-file", fileUploadController.getAllFiles);
 router.get("/get-file-by-user/:id", fileUploadController.getFilesByUserId);
@@ -38,13 +49,8 @@ router.get(
 // GET route to retrieve details of a Podcast by ID
 router.get("/get-file/:id", fileUploadController.getFileById);
 
-// PUT route to update a Podcast by ID
-router.put(
-  "/:id",
-  verifyToken,
-  checkRoleMiddleware(["admin", "user"]),
-  fileUploadController.updateFile
-);
+
+
 
 // DELETE route to delete a Podcast by ID
 router.delete(

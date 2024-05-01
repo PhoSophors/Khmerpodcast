@@ -4,7 +4,7 @@ import FavoritesCard from "../../card/FavoritesCard";
 import Cookies from "js-cookie";
 import "./Favorith.css";
 
-const Favorith = () => {
+const Favorith = ({ onPodcastSelected }) => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -53,7 +53,11 @@ const Favorith = () => {
         </div>
       ) : (
         favorites.map((file, index) => (
-          <FavoritesCard key={index} file={file} />
+          <FavoritesCard
+            key={index}
+            file={file}
+            setSelectedPodcast={onPodcastSelected}
+          />
         ))
       )}
     </div>

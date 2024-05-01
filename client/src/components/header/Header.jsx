@@ -200,7 +200,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
           <Spin />
         ) : isLoggedIn ? (
           // Render the user's profile dropdown if the user is logged in
-          <Dropdown overlay={menu} trigger={["hover"]}>
+          <Dropdown overlay={menu} trigger={["click"]}>
             <div className=" items-center flex">
               <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
                 {user && user.username}

@@ -8,7 +8,7 @@ import {
   MoreOutlined,
 } from "@ant-design/icons";
 
-const FavoritesCard = ({ file }) => {
+const FavoritesCard = ({ file, setSelectedPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
@@ -29,8 +29,9 @@ const FavoritesCard = ({ file }) => {
   };
 
   const handleViewDetailPodcast = () => {
-    navigate(`/viewdetailpodcast/${file._id}`);
+    setSelectedPodcast(file);
   };
+  
 
   const removePodcastFromFavorites = async () => {
     const authToken = Cookies.get("authToken");

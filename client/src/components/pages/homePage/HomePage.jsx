@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Spin, Card, message } from "antd";
 import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import CustomCard from "../../card/CustomCard";
 import axios from "axios";
 import "./HomePage.css";
-import { t } from "i18next";
-import { useNavigate } from "react-router-dom";
 
 const HomePage = ({ onPodcastSelected }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -14,7 +12,6 @@ const HomePage = ({ onPodcastSelected }) => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 24;
-  const navigate = useNavigate();
 
   // Function to fetch files
   const fetchFiles = async (page) => {
@@ -27,9 +24,7 @@ const HomePage = ({ onPodcastSelected }) => {
       setFiles(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching files:", error.message);
-      setLoading(false);
-    } finally {
+      message.error("Error fetching files");
       setLoading(false);
     }
   };
@@ -52,6 +47,7 @@ const HomePage = ({ onPodcastSelected }) => {
       setStartIndex(startIndex - cardsPerPage);
     }
   };
+
 
   return (
     <div className="xl:p-5 p-0 ">

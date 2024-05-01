@@ -17,19 +17,19 @@ const RightSection = ({ selectedMenuItem, onPodcastSelected }) => {
   // Render different content based on the selected menu item
   switch (selectedMenuItem) {
     case "/":
-      content = <HomePage  onPodcastSelected={onPodcastSelected}/>;
+      content = <HomePage onPodcastSelected={onPodcastSelected} />;
       break;
     case "/search":
-      content = <Search />;
+      content = <Search onPodcastSelected={onPodcastSelected}/>;
       break;
     case "/favorite":
-      content = <Favorith />;
+      content = <Favorith onPodcastSelected={onPodcastSelected} />;
       break;
     case "/create":
       content = <Create />;
       break;
     case "/profile":
-      content = <Profile />;
+      content = <Profile onPodcastSelected={onPodcastSelected} />;
       break;
     case "/setting":
       content = <Setting />;
@@ -44,10 +44,8 @@ const RightSection = ({ selectedMenuItem, onPodcastSelected }) => {
       content = <FileManager />;
       break;
     case "/viewdetailpodcast":
-        content = <ViewDetailPodcast onPodcastSelected={onPodcastSelected} />;
-        break;
-
-      
+      content = <ViewDetailPodcast onPodcastSelected={onPodcastSelected} />;
+      break;
     default:
       content = "No Content";
   }

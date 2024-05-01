@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Card } from "antd";
 import SearchForm from "./SearchForm";
 import CustomCard from "../../card/CustomCard";
 
-const Search = () => {
+const Search = ({ onPodcastSelected }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
@@ -22,8 +21,10 @@ const Search = () => {
         {searchPerformed && searchResults.length === 0 ? ( 
           <p className="font-semibold text-gray-500 uppercase text-center mt-5">Podcast not found</p>
         ) : (
-          searchResults.map((result) => (
-            <CustomCard key={result._id} file={result} /> 
+          searchResults.map((results) => (
+            <CustomCard key={results._id} file={results} 
+            setSelectedPodcast={onPodcastSelected} 
+            /> 
           ))
         )}
       </div>

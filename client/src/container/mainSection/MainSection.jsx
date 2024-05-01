@@ -76,7 +76,7 @@ class MainSection extends Component {
           <Sider collapsed={collapsed} breakpoint="md">
             <LeftSection
               onSelectMenuItem={this.handleSelectMenuItem}
-              podcast={selectedPodcast}
+              onPodcastSelected={this.handlePodcastSelected}
             />
           </Sider>
         )}

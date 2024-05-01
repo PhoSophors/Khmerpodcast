@@ -4,7 +4,6 @@
 const User = require("../models/userModel");
 const File = require("../models/fileUploadModel");
 const mongoose = require("mongoose");
-// const { deleteFileFromS3 } = require("../middleware/fileUploadMiddleware");
 
 // Function to upload a file ================================================================
 const uploadPodcast = async (req, res) => {
@@ -54,12 +53,16 @@ const uploadPodcast = async (req, res) => {
       },
     });
 
-    // Save the file document
-    await file.save();
+    // Save the new file to the database
+    const savedFile = await file.save();
 
     res
       .status(201)
-      .json({ message: "File uploaded successfully", fileId: file._id });
+      .json({
+        message: "File uploaded successfully",
+        fileId: file._id,
+        file: savedFile,
+      });
   } catch (error) {
     console.error("Error uploading file:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -91,22 +94,61 @@ const getFileCount = async (req, res) => {
 // Function to update a file ================================================================
 const updateFile = async (req, res) => {
   try {
-    const { id } = req.params;
     const { title, description } = req.body;
+    const { id } = req.params;
 
-    if (!title || !description) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
+    // set user id from token
+    const userId = req.user.id;
 
-    const updatedFile = await File.findByIdAndUpdate(
-      id,
-      { title, description },
-      { new: true }
-    );
+    // Find the file in the database
+    let file = await File.findById(id);
 
-    if (!updatedFile) {
+    if (!file) {
       return res.status(404).json({ message: "File not found" });
     }
+
+    // Check if the user is the uploader of the file
+    if (file.user.toString() !== userId) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to update this podacst" });
+    }
+
+    // Delete the old file from S3
+    await deleteOldFileFromS3(file); // Function to delete file from S3
+
+    // Update the file's properties
+    file.title = title || file.title;
+    file.description = description || file.description;
+
+    // Check if audio file is updated
+    if (req.files && req.files.audioFile) {
+      const { audioFile } = req.files;
+      const compressedAudioSize = audioFile[0].buffer
+        ? audioFile[0].buffer.length
+        : 0;
+
+      file.audio.filename = `audio_/${audioFile[0].key}`;
+      file.audio.url = audioFile[0].location;
+      file.audio.compressedSize = compressedAudioSize;
+      file.audio.mimetype = audioFile[0].mimetype;
+    }
+
+    // Check if image file is updated
+    if (req.files && req.files.imageFile) {
+      const { imageFile } = req.files;
+      const compressedImageSize = imageFile[0].buffer
+        ? imageFile[0].buffer.length
+        : 0;
+
+      file.image.filename = `image_/${imageFile[0].key}`;
+      file.image.url = imageFile[0].location;
+      file.image.compressedSize = compressedImageSize;
+      file.image.mimetype = imageFile[0].mimetype;
+    }
+
+    // Save the updated file
+    const updatedFile = await file.save();
 
     res.json({ message: "File updated successfully", file: updatedFile });
   } catch (error) {
@@ -195,15 +237,15 @@ const addPodcastToPlaylist = async (req, res) => {
     const { id } = req.params; // ID of the file to add to favorites
     const userId = req.user.id; // ID of the user making the request
 
-    console.log('id:', id); // Debugging line
-    console.log('userId:', userId); // Debugging line
+    console.log("id:", id); // Debugging line
+    console.log("userId:", userId); // Debugging line
 
     // Find the user by ID
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    
+
     // Find the file by ID
     const file = await File.findById(id);
     if (!file) {

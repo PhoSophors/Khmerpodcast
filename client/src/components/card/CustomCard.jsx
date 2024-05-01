@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useAudio } from "../../context/AudioContext";
 import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
@@ -26,15 +25,15 @@ import {
   MoreOutlined,
 } from "@ant-design/icons";
 
+
 const CustomCard = ({ file, setSelectedPodcast}) => {
   const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { isPlaying, currentTrack, setIsPlaying, setCurrentTrack, audioRef } =
-    useAudio();
-
+    useAudio();;
+    
   const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
     const cookie = Cookies.get(`favorite-${file._id}`);
     return cookie ? JSON.parse(cookie) : false;
@@ -95,11 +94,10 @@ const CustomCard = ({ file, setSelectedPodcast}) => {
     setIsModalVisible(false);
   };
 
-
   const handleViewDetailPodcast = () => {
     setSelectedPodcast(file);
   };
-  
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
