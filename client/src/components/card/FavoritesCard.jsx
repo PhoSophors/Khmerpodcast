@@ -1,35 +1,16 @@
 import React, { useState } from "react";
 import { Spin, Card, message } from "antd"; // Import Button and message from antd
 import Cookies from "js-cookie";
-import { useAudio } from "../../context/AudioContext";
 import SocailMedia from "../socialBtn/SocialBtn";
-import {
-  PauseCircleFilled,
-  PlayCircleFilled,
-  MoreOutlined,
-} from "@ant-design/icons";
+import PlayBtn from "../playBtn/PlayBtn";
 import "./card.css";
 
 const FavoritesCard = ({ file, setSelectedPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  // const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const { isPlaying, currentTrack, setIsPlaying, setCurrentTrack, audioRef } =
-    useAudio();
 
   const handleImageLoad = () => {
     setIsLoading(false);
-  };
-
-  const toggleAudio = () => {
-    // if (isMobile || isHovered) {
-    if (currentTrack === file.audio.url) {
-      setIsPlaying(!isPlaying);
-    } else {
-      setCurrentTrack(file.audio.url);
-      setIsPlaying(true);
-    }
-    // }
   };
 
   const handleViewDetailPodcast = () => {
@@ -115,17 +96,7 @@ const FavoritesCard = ({ file, setSelectedPodcast }) => {
                       zIndex: 2,
                     }}
                   >
-                    {isPlaying && currentTrack === file.audio.url ? (
-                      <PauseCircleFilled
-                        onClick={toggleAudio}
-                        style={{ fontSize: "2rem", color: "#fff" }}
-                      />
-                    ) : (
-                      <PlayCircleFilled
-                        onClick={toggleAudio}
-                        style={{ fontSize: "2rem", color: "#fff" }}
-                      />
-                    )}
+                    <PlayBtn file={file} />
                   </div>
                 )}
               </div>
@@ -177,7 +148,6 @@ const FavoritesCard = ({ file, setSelectedPodcast }) => {
           </div>
         }
       />
-      <audio ref={audioRef} src={file.audio.url} />
     </div>
   );
 };

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useAudio } from "../../context/AudioContext";
 import { Card, Spin } from "antd";
 import SocialBtn from "../socialBtn/SocialBtn";
-import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
+import PlayBtn from "../playBtn/PlayBtn";
 
 const CustomCard = ({ file, setSelectedPodcast }) => {
   const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const { isPlaying, currentTrack, setIsPlaying, setCurrentTrack, audioRef } =
-    useAudio();
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -30,16 +27,6 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
     };
   }, []);
 
-  const toggleAudio = () => {
-    if (isMobile || isHovered) {
-      if (currentTrack === file.audio.url) {
-        setIsPlaying(!isPlaying);
-      } else {
-        setCurrentTrack(file.audio.url);
-        setIsPlaying(true);
-      }
-    }
-  };
 
   return (
     <div
@@ -104,17 +91,9 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
                     zIndex: 2,
                   }}
                 >
-                  {isPlaying && currentTrack === file.audio.url ? (
-                    <PauseCircleFilled
-                      onClick={toggleAudio}
-                      style={{ fontSize: "2rem", color: "#fff" }}
-                    />
-                  ) : (
-                    <PlayCircleFilled
-                      onClick={toggleAudio}
-                      style={{ fontSize: "2rem", color: "#fff" }}
-                    />
-                  )}
+                  <>
+                    <PlayBtn file={file} /> 
+                  </>
                 </div>
                 <div
                   className=" w-full sm:w-1/2"
@@ -148,8 +127,6 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
           <p className="mt-2 text-slate-500">{file.description}</p>
         </div>
       </Card>
-
-      <audio ref={audioRef} src={file.audio.url} />
     </div>
   );
 };
