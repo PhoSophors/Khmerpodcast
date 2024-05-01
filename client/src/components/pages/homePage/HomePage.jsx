@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Spin, Card, message } from "antd";
+import { Button, Spin, message } from "antd";
 import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import CustomCard from "../../card/CustomCard";
 import axios from "axios";
@@ -22,6 +22,7 @@ const HomePage = ({ onPodcastSelected }) => {
         `/files/get-all-file?page=${page}&limit=${cardsPerPage}`
       );
       setFiles(response.data);
+      setError(false);
       setLoading(false);
     } catch (error) {
       message.error("Error fetching files");
@@ -50,7 +51,7 @@ const HomePage = ({ onPodcastSelected }) => {
 
 
   return (
-    <div className="xl:p-5 p-0 ">
+    <div className="xl:p-1 p-0 ">
       {/* Display loading spinner if loading state is true */}
       {loading || error ? (
         <div className="spin-container">
@@ -58,7 +59,7 @@ const HomePage = ({ onPodcastSelected }) => {
         </div>
       ) : (
         <>
-          <div className="flex  sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
+          <div className="flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
             {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
             {files
               .slice(startIndex, startIndex + cardsPerPage)

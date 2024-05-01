@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Spin, Card } from "antd";
 import { useAudio } from "../../context/AudioContext";
-import "./card.css";
+import SocialBtn from "../socialBtn/SocialBtn";
 import {
   PauseCircleFilled,
   PlayCircleFilled,
   MoreOutlined,
 } from "@ant-design/icons";
+import "./card.css";
 
 const UserUploadCard = ({ file, setSelectedPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -126,11 +127,9 @@ const UserUploadCard = ({ file, setSelectedPodcast }) => {
                   {formattedDate}
                 </div>
               </div>
-              <div className="p-3 text-white  bg-indigo-600 h-8 w-8 flex justify-center items-center rounded-full">
-                {/* <Dropdown overlay={shareMenu} trigger={["click"]}> */}
-                <MoreOutlined />
-                {/* </Dropdown> */}
-              </div>
+              <>
+                <SocialBtn file={file} />
+              </>
             </div>
           </div>
         }

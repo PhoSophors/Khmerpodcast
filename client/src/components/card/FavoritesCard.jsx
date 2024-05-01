@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Spin, Card, message, Dropdown } from "antd"; // Import Button and message from antd
+import { Spin, Card, message } from "antd"; // Import Button and message from antd
 import Cookies from "js-cookie";
 import { useAudio } from "../../context/AudioContext";
-import "./card.css";
+import SocailMedia from "../socialBtn/SocialBtn";
 import {
   PauseCircleFilled,
   PlayCircleFilled,
   MoreOutlined,
 } from "@ant-design/icons";
+import "./card.css";
 
 const FavoritesCard = ({ file, setSelectedPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -169,11 +170,9 @@ const FavoritesCard = ({ file, setSelectedPodcast }) => {
                 </svg>
               </div>
 
-              <div className="p-3 text-white  bg-indigo-600 h-8 w-8 flex justify-center items-center rounded-full">
-                {/* <Dropdown overlay={shareMenu} trigger={["click"]}> */}
-                <MoreOutlined />
-                {/* </Dropdown> */}
-              </div>
+              <>
+                <SocailMedia file={file} />
+              </>
             </div>
           </div>
         }
