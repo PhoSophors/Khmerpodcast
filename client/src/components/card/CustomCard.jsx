@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Spin } from "antd";
-import SocialBtn from "../socialBtn/SocialBtn";
+import MoreBtn from "../moreBtn/MoreBtn";
 import PlayBtn from "../playBtn/PlayBtn";
-
 const CustomCard = ({ file, setSelectedPodcast }) => {
   const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -26,7 +25,6 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
 
   return (
     <div
@@ -92,7 +90,7 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
                   }}
                 >
                   <>
-                    <PlayBtn file={file} /> 
+                    <PlayBtn file={file} />
                   </>
                 </div>
                 <div
@@ -105,7 +103,7 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
                   }}
                 >
                   <>
-                    <SocialBtn file={file} />
+                    <MoreBtn file={file} />
                   </>
                 </div>
               </div>

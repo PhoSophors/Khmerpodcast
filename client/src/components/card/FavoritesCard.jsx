@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Spin, Card, message } from "antd"; // Import Button and message from antd
 import Cookies from "js-cookie";
-import SocailMedia from "../socialBtn/SocialBtn";
+import MoreBtn from "../moreBtn/MoreBtn";
 import PlayBtn from "../playBtn/PlayBtn";
 import "./card.css";
 
@@ -91,8 +91,8 @@ const FavoritesCard = ({ file, setSelectedPodcast }) => {
                     className="play-icon"
                     style={{
                       position: "absolute",
-                      bottom: "37px",
-                      left: "37px",
+                      bottom: "40px",
+                      left: "40px",
                       zIndex: 2,
                     }}
                   >
@@ -142,7 +142,7 @@ const FavoritesCard = ({ file, setSelectedPodcast }) => {
               </div>
 
               <>
-                <SocailMedia file={file} />
+                <MoreBtn file={file} />
               </>
             </div>
           </div>

@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Avatar, Alert, Spin } from "antd";
-import Cookies from "js-cookie";
-import axios from "axios";
 import { UserOutlined } from "@ant-design/icons";
 import "./card.css";
 
@@ -9,7 +7,6 @@ const UserCard = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
  
-
   return (
     <div>
       {loading ? (

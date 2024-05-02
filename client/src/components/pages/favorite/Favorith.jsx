@@ -14,7 +14,6 @@ const Favorith = ({ onPodcastSelected }) => {
       .get(`/files/get-all-favorite`, {
         baseURL: process.env.REACT_APP_PROXY,
         headers: {
-          // "auth-token": authToken,
           Authorization: `Bearer ${authToken}`,
         },
       })

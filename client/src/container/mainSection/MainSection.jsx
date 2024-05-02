@@ -8,6 +8,7 @@ import Layout, { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import Header from "../../components/header/Header";
 import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
+import UpdatePodcast from "../../components/pages/create/UpdatePodcast";
 
 class MainSection extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class MainSection extends Component {
       collapsed: false, // Initialize collapsed state
       isMobileView: false, // Track if in mobile view
       selectedPodcast: null,
+      isUpdatePodcast: false,
     };
   }
 
@@ -66,9 +68,22 @@ class MainSection extends Component {
     this.setState({ selectedPodcast: podcast });
   };
 
+  handleUpdatePodcast = () => {
+    this.setState({ isUpdatePodcast: true });
+  };
+
   render() {
-    const { isMobileView, collapsed, selectedPodcast, selectedMenuItem } =
-      this.state;
+    const {
+      isMobileView,
+      collapsed,
+      selectedPodcast,
+      selectedMenuItem,
+      isUpdatePodcast,
+    } = this.state;
+
+    if (isUpdatePodcast) {
+      return <UpdatePodcast file={selectedPodcast} />;
+    }
 
     return (
       <Layout>
@@ -76,7 +91,7 @@ class MainSection extends Component {
           <Sider collapsed={collapsed} breakpoint="md">
             <LeftSection
               onSelectMenuItem={this.handleSelectMenuItem}
-              onPodcastSelected={this.handlePodcastSelected}
+              // onPodcastSelected={this.handlePodcastSelected}
             />
           </Sider>
         )}
@@ -97,6 +112,7 @@ class MainSection extends Component {
                   toggleLeftSection={this.toggleLeftSection}
                   toggleHeaderFullScreen={this.toggleHeaderFullScreen}
                   onPodcastSelected={this.handlePodcastSelected}
+                  onUpdatePodcast={this.handleUpdatePodcast} 
                 />
               )}
             </div>

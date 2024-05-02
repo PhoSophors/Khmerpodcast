@@ -3,7 +3,6 @@ import { Upload, Card, Button, Input, Form, Modal, Alert, message } from "antd";
 import "./create.css";
 import { CloseOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { useDropzone } from "react-dropzone";
 import ImgCrop from "antd-img-crop";
 import Cookies from "js-cookie";
 
@@ -44,7 +43,6 @@ const Create = () => {
         // Include the user's ID as a query parameter
         headers: {
           "Content-Type": "multipart/form-data",
-          // "auth-token": authToken,
           Authorization: `Bearer ${authToken}`,
         },
       });
@@ -157,7 +155,7 @@ const Create = () => {
                   Supported file types:
                 </div>
                 <div className="text-gray-500">
-                  Audio files: aac, mp3, m4a, wav, or mpg
+                  Audio files: aac, mp3
                 </div>
                 {/* upload audio */}
                 <Card title="Upload Audio " className="mt-5">
@@ -192,7 +190,7 @@ const Create = () => {
                         customRequest={() => {}}
                         fileList={fileList}
                         onChange={handleFileChange}
-                        accept=".aac, .mp3, .m4a, .wav, .mpg"
+                        accept=".aac, .mp3"
                         showUploadList={false}
                       >
                         <div>{"+ Upload"}</div>
@@ -208,7 +206,7 @@ const Create = () => {
                   Supported file types:
                 </div>
                 <div className="text-gray-500">
-                  Audio files: jpeg, jpg, png and web formats
+                  Thumnaill files: jpeg, jpg
                 </div>
                 <Card title="Upload Thumbnail" className="mt-5">
                   <ImgCrop>
@@ -216,6 +214,7 @@ const Create = () => {
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
                       fileList={imageFileList}
+                      accept=".jpg, .jpeg"
                       onChange={handleChange}
                       onPreview={handlePreview}
                     >
@@ -285,7 +284,7 @@ const Create = () => {
             {/* upload button */}
             <div className="mt-5 gap-5">
               <Button
-                className="upload-button "
+                className="upload-button"
                 style={{ backgroundColor: "#ea580c", color: "#ffffff" }}
                 onClick={handleUpload}
                 loading={loading}

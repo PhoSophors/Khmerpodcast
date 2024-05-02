@@ -120,7 +120,6 @@ const Profile = ({ onPodcastSelected }) => {
               size="large"
               onClick={handleEditProfile}
             >
-              {/* <EditOutlined style={{ marginRight: "8px" }} /> */}
               Edit profile
             </Button>
             <p className="hidden">User Token: </p>

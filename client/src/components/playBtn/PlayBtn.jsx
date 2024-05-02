@@ -20,12 +20,12 @@ const PlayBtn = ({ file }) => {
       {isPlaying && currentTrack === file.audio.url ? (
         <PauseCircleFilled
           onClick={toggleAudio}
-          style={{ fontSize: "2rem", color: "#fff" }}
+          style={{ fontSize: "2rem", color: "#4f46e5" }}
         />
       ) : (
         <PlayCircleFilled
           onClick={toggleAudio}
-          style={{ fontSize: "2rem", color: "#fff" }}
+          style={{ fontSize: "2rem", color: "#4f46e5" }}
         />
       )}
       <audio ref={audioRef} src={file.audio.url} />

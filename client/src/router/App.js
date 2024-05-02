@@ -21,6 +21,7 @@ import FileManager from "../components/pages/admin/user/FileManager";
 import ViewDetailPodcast from "../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import UserCard from "../components/card/UserCard";
 import { AudioProvider } from "../context/AudioContext";
+import UpdatePodcast from "../components/pages/create/UpdatePodcast";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -51,10 +52,7 @@ const App = () => {
               <Route exact path="/" element={<MainSection />} />
               <Route path="/search" element={<Search />} />
               <Route path="/usercard" element={<UserCard />} />
-              <Route
-                path="/viewdetailpodcast/:id"
-                element={<ViewDetailPodcast />}
-              />
+              <Route path="/update-podcast" element={<UpdatePodcast />} />
 
               {/* AdminRoute */}
               <Route

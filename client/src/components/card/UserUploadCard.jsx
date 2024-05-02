@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Spin, Card } from "antd";
-import SocialBtn from "../socialBtn/SocialBtn";
+import MoreBtn from "../moreBtn/MoreBtn";
 import PlayBtn from "../playBtn/PlayBtn";
 import "./card.css";
 
@@ -102,7 +102,7 @@ const UserUploadCard = ({ file, setSelectedPodcast }) => {
                 </div>
               </div>
               <>
-                <SocialBtn file={file} />
+                <MoreBtn file={file} />
               </>
             </div>
           </div>

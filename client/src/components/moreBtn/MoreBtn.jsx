@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Card, Modal, message, Menu, Dropdown } from "antd";
+import UpdatePodcast from "../pages/create/UpdatePodcast";
+import { useNavigate } from "react-router-dom";
 import {
   ShareAltOutlined,
   LinkOutlined,
   MoreOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import {
   FacebookIcon,
@@ -23,9 +26,10 @@ import {
   WhatsappShareButton,
 } from "react-share";
 
-const SocialBtn = ({ file }) => {
+const MoreBtn = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const navigate = useNavigate();
   const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
     const cookie = Cookies.get(`favorite-${file._id}`);
     return cookie ? JSON.parse(cookie) : false;
@@ -76,12 +80,18 @@ const SocialBtn = ({ file }) => {
     }
   };
 
+  const handleToggleUpdateMode = () => {
+    setIsUpdateMode(!isUpdateMode);
+  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
   const handleModalCancel = () => {
     setIsModalVisible(false);
   };
+
+
 
   const shareUrl = `http://localhost:3000/viewdetailpodcast/${file._id}`;
   const handleCopyLink = () => {
@@ -137,14 +147,33 @@ const SocialBtn = ({ file }) => {
           </>
         )}
       </Menu.Item>
+      <Menu.Item key="3">
+        <div onClick={handleToggleUpdateMode}>
+          <EditOutlined /> <span> Edit Podcast</span>
+        </div>
+      </Menu.Item>
     </Menu>
   );
 
+  if (isUpdateMode) {
+    if (file) {
+      return <UpdatePodcast file={file} />;
+    } else {
+      console.error("File is undefined");
+      return null;
+    }
+  }
+
   return (
     <div>
-      <div className="p-3 text-white  bg-indigo-600 h-8 w-8 flex justify-center items-center rounded-full">
+      {/* bg-indigo-600  */}
+      <div className="p-3 text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full">
         <Dropdown overlay={shareMenu} trigger={["click"]}>
-          <MoreOutlined />
+          <MoreOutlined
+            style={{
+              fontSize: "18px"
+            }}
+          />
         </Dropdown>
       </div>
       <>
@@ -197,4 +226,4 @@ const SocialBtn = ({ file }) => {
   );
 };
 
-export default SocialBtn;
+export default MoreBtn;
