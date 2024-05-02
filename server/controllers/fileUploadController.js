@@ -72,13 +72,32 @@ const uploadPodcast = async (req, res) => {
 // Function to get all files ================================================================
 const getAllFiles = async (req, res) => {
   try {
-    const files = await File.find();
+    const files = await File.find().sort({ createdAt: -1 });
     res.status(200).json(files);
   } catch (error) {
     console.error("Error fetching files:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+// Function to get a random file
+const getRandomFilesHomePage = async (req, res) => {
+  try {
+    const count = await File.countDocuments();
+    let file;
+
+    // Retry until a unique file is found
+    while (!file) {
+      const random = Math.floor(Math.random() * count);
+      file = await File.findOne().skip(random);
+    }
+
+    res.status(200).json(file);
+  } catch (error) {
+    console.error("Error fetching random file:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 // Function to get file count ================================================================
 const getFileCount = async (req, res) => {
@@ -333,4 +352,5 @@ module.exports = {
   addPodcastToPlaylist,
   removePodcastFromPlaylist,
   getPodcastPlaylist,
+  getRandomFilesHomePage,
 };

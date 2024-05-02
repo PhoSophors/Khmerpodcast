@@ -9,7 +9,6 @@ const Favorith = ({ onPodcastSelected }) => {
 
   useEffect(() => {
     const authToken = Cookies.get("authToken");
-
     axios
       .get(`/files/get-all-favorite`, {
         baseURL: process.env.REACT_APP_PROXY,
@@ -18,7 +17,8 @@ const Favorith = ({ onPodcastSelected }) => {
         },
       })
       .then((response) => {
-        setFavorites(response.data);
+        const favorites = response.data.reverse();
+        setFavorites(favorites);
       })
       .catch((error) => {
         console.error(

@@ -55,7 +55,7 @@ const fileSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+}, {timeseries: true});
 
 // search index
 fileSchema.index({ title: 'text', description: 'text' });

@@ -14,15 +14,34 @@ const HomePage = ({ onPodcastSelected }) => {
   const [error, setError] = useState(false);
   const cardsPerPage = 24;
 
-  // Function to fetch files
+  const fetchRandomFile = async () => {
+    try {
+      const response = await axios.get("/files/get-random-file");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching random file:", error);
+      throw error;
+    }
+  };
+  
   const fetchFiles = async (page) => {
     setLoading(true);
-
+  
     try {
       const response = await axios.get(
         `/files/get-all-file?page=${page}&limit=${cardsPerPage}`
       );
-      setFiles(response.data);
+      let files = response.data;
+  
+      // Fetch unique random files
+      const firstRandomFile = await fetchRandomFile();
+      const lastRandomFile = await fetchRandomFile();
+  
+      // Replace first and last files with random ones
+      files[0] = firstRandomFile;
+      files[files.length - 1] = lastRandomFile;
+  
+      setFiles(files);
       setError(false);
       setLoading(false);
     } catch (error) {
@@ -30,10 +49,11 @@ const HomePage = ({ onPodcastSelected }) => {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchFiles(0);
   }, []);
+  
 
   // Function to handle next page
   const handleNext = () => {
@@ -95,9 +115,11 @@ const HomePage = ({ onPodcastSelected }) => {
             {files
               .slice(startIndex, startIndex + cardsPerPage)
               .map((file, index) => (
+                
                 <CustomCard
-                  key={index}
+                  key={file._id}
                   index={index}
+                  
                   hoveredIndex={hoveredIndex}
                   setHoveredIndex={setHoveredIndex} // Pass setHoveredIndex function to CustomCard
                   file={file} // Pass file data to CustomCard

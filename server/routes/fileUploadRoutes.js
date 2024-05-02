@@ -36,6 +36,7 @@ router.put(
 
 // GET route to retrieve all Podcast
 router.get("/get-all-file", fileUploadController.getAllFiles);
+router.get("/get-random-file", fileUploadController.getRandomFilesHomePage);
 router.get("/get-file-by-user/:id", fileUploadController.getFilesByUserId);
 
 // GET route to handle Podcast count

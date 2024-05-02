@@ -74,8 +74,8 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
             <img
               onClick={handleViewDetailPodcast}
               className="w-full h-full object-cover"
-              alt={`.${file._id}`}
-              src={file.image.url}
+              alt={`.${file?._id}`}
+              src={file?.image?.url}
               onLoad={handleImageLoad}
               style={{ borderRadius: "10px" }}
             />

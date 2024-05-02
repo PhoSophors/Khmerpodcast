@@ -57,7 +57,7 @@ const Profile = ({ onPodcastSelected }) => {
           },
         })
         .then((response) => {
-          const podcasts = response.data;
+          const podcasts = response.data.reverse();
           if (podcasts) {
             // Update podcasts data only if valid data is received
             setUserPodcasts(podcasts);
