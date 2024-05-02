@@ -65,7 +65,10 @@
   .header-container {
     border-radius: 0;
   }
-  .uppercase {
+}
+
+@media screen and (max-width: 700px) {
+  .audio-control {
     display: none;
   }
 }

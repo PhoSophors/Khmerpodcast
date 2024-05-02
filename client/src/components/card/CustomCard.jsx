@@ -116,13 +116,15 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            margin: "-20px 0px 5px",
+            margin: "-30px 0px 5px",
           }}
         >
-          <div className="tracking-wide text-sm text-indigo-500 font-semibold">
+          <div className="mt-1 tracking-wide truncate text-sm text-indigo-500 font-semibold">
             {file.title}
           </div>
-          <p className="mt-2 text-slate-500">{file.description}</p>
+          <p className="mt-1 mb-0 truncate text-slate-500">
+            {file.description}
+          </p>
         </div>
       </Card>
     </div>

@@ -193,43 +193,49 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
         </div>
       </div>
 
-      <AudioControl />
-      <div className="user-profile">
-        {isLoading ? (
-          // Render a loading spinner or some other placeholder
-          <Spin />
-        ) : isLoggedIn ? (
-          // Render the user's profile dropdown if the user is logged in
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <div className=" items-center flex">
-              <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                {user && user.username}
+      <div className="audio-control">
+        <AudioControl />
+      </div>
+
+      {/* flex-row-reverse */}
+      <div className="flex gap-3">
+        <div className="user-profile">
+          {isLoading ? (
+            // Render a loading spinner or some other placeholder
+            <Spin />
+          ) : isLoggedIn ? (
+            // Render the user's profile dropdown if the user is logged in
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <div className=" items-center flex">
+                <div class="uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
+                  {user && user.username}
+                </div>
+                &nbsp;
+                <Avatar
+                  src={user && user.profileImage}
+                  style={{ cursor: "pointer", border: "1px solid #6366f1" }}
+                  size="large"
+                  icon={<UserOutlined />}
+                />
               </div>
-              &nbsp;
-              <Avatar
-                src={user && user.profileImage}
-                style={{ cursor: "pointer", border: "1px solid #6366f1" }}
-                size="large"
-                icon={<UserOutlined />}
-              />
-            </div>
-          </Dropdown>
-        ) : (
-          // Render the login button if the user is not logged in
-          <button
-            onClick={() => setLoginModalVisible(true)}
-            className="bg-indigo-600 hover:bg-indigo-500 text-white p-10 font-bold py-2 px-4 rounded-3xl"
-          >
-            Login
-          </button>
-        )}
-        {loginModalVisible && (
-          <Login
-            visible={loginModalVisible}
-            onCancel={handleLoginModalCancel}
-            onSuccess={handleSuccessfulLogin}
-          />
-        )}
+            </Dropdown>
+          ) : (
+            // Render the login button if the user is not logged in
+            <button
+              onClick={() => setLoginModalVisible(true)}
+              className="bg-indigo-600 hover:bg-indigo-500 text-white p-10 font-bold py-2 px-4 rounded-3xl"
+            >
+              Login
+            </button>
+          )}
+          {loginModalVisible && (
+            <Login
+              visible={loginModalVisible}
+              onCancel={handleLoginModalCancel}
+              onSuccess={handleSuccessfulLogin}
+            />
+          )}
+        </div>
       </div>
 
       {/* Render the success alert when showSuccessAlert is true */}

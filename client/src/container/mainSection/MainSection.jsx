@@ -9,6 +9,7 @@ import Sider from "antd/es/layout/Sider";
 import Header from "../../components/header/Header";
 import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import UpdatePodcast from "../../components/pages/create/UpdatePodcast";
+import Footer from "../../components/footer/Footer";
 
 class MainSection extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class MainSection extends Component {
   // Function to handle window resize
   handleWindowResize = () => {
     // Update state based on window width
-    this.setState({ isMobileView: window.innerWidth <= 768 });
+    this.setState({ isMobileView: window.innerWidth <= 897 });
   };
 
   handleSelectMenuItem = (menuItem) => {
@@ -112,12 +113,13 @@ class MainSection extends Component {
                   toggleLeftSection={this.toggleLeftSection}
                   toggleHeaderFullScreen={this.toggleHeaderFullScreen}
                   onPodcastSelected={this.handlePodcastSelected}
-                  onUpdatePodcast={this.handleUpdatePodcast} 
+                  onUpdatePodcast={this.handleUpdatePodcast}
                 />
               )}
             </div>
           </Content>
         </Layout>
+        <Footer />
       </Layout>
     );
   }

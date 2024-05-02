@@ -111,9 +111,9 @@ const FavoritesCard = ({ file, setSelectedPodcast }) => {
               >
                 <div
                   onClick={handleViewDetailPodcast}
-                  className="underline cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
+                  className="hover:underline hover:italic cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
                 >
-                  {file.title}
+                     {file.title}
                 </div>
                 <p className="mt-2 text-slate-500 ">{file.description}</p>
               </div>

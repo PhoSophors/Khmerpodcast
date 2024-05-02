@@ -41,7 +41,7 @@ const AudioControl = () => {
       setCurrentTrack(podcasts[newIndex].audio.url);
     }
   };
-  
+
   const handlePrevious = () => {
     if (currentPodcastIndex > 0) {
       const newIndex = currentPodcastIndex - 1;
@@ -51,9 +51,12 @@ const AudioControl = () => {
   };
 
   return (
-    <div className="p-2 w-auto bg-slate-200 flex text-center items-center justify-center gap-5 rounded-full">
+    <div className="p-2 w-96 bg-slate-200 flex text-center items-center justify-center gap-5 rounded-xl">
       <audio ref={audioRef} src={currentTrack} />
-      <StepBackwardFilled onClick={handlePrevious} style={{ fontSize: "2rem", color: "#000" }} />
+      <StepBackwardFilled
+        onClick={handlePrevious}
+        style={{ fontSize: "2rem", color: "#000" }}
+      />
       {isPlaying ? (
         <PauseCircleFilled
           onClick={handlePlayPause}
@@ -65,7 +68,10 @@ const AudioControl = () => {
           style={{ fontSize: "2rem", color: "#000" }}
         />
       )}
-      <StepForwardOutlined onClick={handleNext} style={{ fontSize: "2rem", color: "#000" }} />
+      <StepForwardOutlined
+        onClick={handleNext}
+        style={{ fontSize: "2rem", color: "#000" }}
+      />
     </div>
   );
 };

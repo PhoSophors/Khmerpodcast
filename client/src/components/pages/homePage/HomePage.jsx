@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Spin, message } from "antd";
+import { Button, Spin, message, Card } from "antd";
 import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import CustomCard from "../../card/CustomCard";
 import axios from "axios";
+import podcasticon from "../../assets/podcasticon.png";
 import "./HomePage.css";
 
 const HomePage = ({ onPodcastSelected }) => {
@@ -49,7 +50,6 @@ const HomePage = ({ onPodcastSelected }) => {
     }
   };
 
-
   return (
     <div className="xl:p-1 p-0 ">
       {/* Display loading spinner if loading state is true */}
@@ -59,6 +59,37 @@ const HomePage = ({ onPodcastSelected }) => {
         </div>
       ) : (
         <>
+          <div className="xl:p-5 md:p-5 lg:p-5 sm:p-5 p-2 ">
+            <Card
+              className="box-decoration-slice bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2"
+              style={{ borderRadius: "50px", height: "30vh" }}
+              bodyStyle={{ padding: 0 }}
+            >
+              <div className="flex grid xl:grid-cols-2 gap-4 sm:flex sm:gap-5">
+                <div className="sm:w-1/2 self-center p-10 col-span-2 justify-center items-center">
+                  <span className="text-4xl text-slate-100 subpixel-antialiased font-semibold tracking-wide">
+                    Listion to trending Khmer Podcasts all the time
+                  </span>
+                  <p class=" text-slate-200 mt-3">
+                    Welcome to our Khmer Podcast Hub! Immerse yourself in the
+                    world of Khmer language podcasts, where you can discover
+                    trending shows anytime, anywhere. Stay connected to
+                    Cambodian culture and language through our curated selection
+                    of podcasts covering a wide range of topics. Start listening
+                    now and explore the richness of Khmer podcasting!
+                  </p>
+                </div>
+                <div className=" sm:w-1/2 text-center flex justify-end">
+                  <img
+                    src={podcasticon}
+                    alt=""
+                    style={{ height: "30vh", width: "auto" }}
+                  />
+                </div>
+              </div>
+            </Card>
+          </div>
+
           <div className="flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
             {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
             {files
