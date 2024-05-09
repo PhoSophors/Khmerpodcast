@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { Card, Spin, message } from "antd";
+import PlayBtn from "../../Btn/PlayBtn";
+import Cookies from "js-cookie";
 
-const ViewDetailPodcast = ({ podcast }) => {
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
+const ViewDetailPodcast = ({ file }) => {
+  const [loading, setLoading] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const [user, setUser] = useState({});
-  const { id } = useParams();
+  const id = Cookies.get("id");
+
+  const fetchUserDetails = async () => {
+    try {
+      const response = await axios.get(`/auths/user-data/${id}`, {
+        baseURL: process.env.REACT_APP_PROXY,
+      });
+      return response.data.user;
+    } catch (error) {
+      console.error(
+        "Error fetching user data:",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
 
   const fetchFile = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`/files/get-file/${id}`);
-
-      console.log("Response:", response.data); // Log the entire response
-
-      setFile(response.data);
-      if (response.data.user) {
-        setUser(response.data.user);
-        console.log("User data found in response:", response.data.user);
+      if (response.data) {
+        const userDetails = await fetchUserDetails(response.data.user);
+        if (userDetails) {
+          setUser(userDetails);
+        } else {
+          message.error("Failed to fetch user details");
+        }
       } else {
-        // Handle missing user data
-        console.log("User data not found in response");
+        message.error("File data not found in response");
       }
     } catch (error) {
+      console.error("Error fetching file:", error.message);
       if (error.response && error.response.status === 500) {
         console.error("Server error:", error.message);
-      } else {
-        message.error("Error fetching file");
-        console.error("Error fetching file:", error.message);
       }
     } finally {
       setLoading(false);
@@ -58,30 +70,58 @@ const ViewDetailPodcast = ({ podcast }) => {
       >
         <>
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5  mx-auto ">
-            <div className="w-full sm:w-1/2 w-fit-content">
-              {podcast.image && podcast.image.url && (
+            <div
+              className="relative w-full sm:w-1/2 w-fit-content"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {file.image && file.image.url && (
                 <img
                   style={{
+                    className: "thumbnail-card object-cover",
                     height: "200px",
                     borderRadius: "10px",
                     border: "1px solid #f0f0f0",
+                    minWidth: "auto",
+                    maxHeight: "20vw",
                   }}
-                  src={podcast.image.url}
+                  src={file.image.url}
                   alt=""
                 />
+              )}
+              {isHovered && (
+                <div
+                  className="play-icon"
+                  style={{
+                    position: "absolute",
+                    bottom: "10px",
+                    right: "80px",
+                    zIndex: 2,
+                  }}
+                >
+                  <PlayBtn file={file} />
+                </div>
               )}
             </div>
             <div className="w-full col-span-8">
               <h1 className="text-2xl font-semibold text-gray-500  tracking-wide">
-                {podcast.title || ""}
+                {file.title || ""}
               </h1>
-              {podcast.audio && podcast.audio.url && (
-                <audio controls src={podcast.audio.url} />
-              )}
             </div>
           </div>
-          <h1>{podcast.description || ""} </h1>
-          {podcast.user && <p>Posted By: {podcast.user.id}</p>}
+          <h1>{file.description || ""} </h1>
+
+
+
+         
+
+          {file.user && (
+            <>
+              <p>User ID: {file.user}</p>
+              <p>Username: {file.user.username}</p>
+              <p>Email: {file.user.email}</p>
+            </>
+          )}
         </>
       </Card>
     </div>

@@ -10,7 +10,7 @@
   padding: 13px;
   width: 100%;
   box-sizing: border-box; 
-  background-color: #fff; /* Set background color to white */
+  background-color: #fff;
 }
 .input-field:focus {
   border-color: #0e7490;

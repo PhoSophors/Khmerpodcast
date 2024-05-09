@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Spin, Card } from "antd";
-import MoreBtn from "../moreBtn/MoreBtn";
-import PlayBtn from "../playBtn/PlayBtn";
+import MoreBtn from "../Btn/MoreBtn";
+import PlayBtn from "../Btn/MoreBtn";
+import DeletePodcastBtn from "../Btn/DeletePodcastBtn";
 import "./card.css";
 
 const UserUploadCard = ({ file, setSelectedPodcast }) => {
@@ -15,13 +16,6 @@ const UserUploadCard = ({ file, setSelectedPodcast }) => {
   const handleViewDetailPodcast = () => {
     setSelectedPodcast(file);
   };
-
-  const date = new Date(); // replace this with your date
-  const formattedDate = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 
   return (
     <div
@@ -87,7 +81,7 @@ const UserUploadCard = ({ file, setSelectedPodcast }) => {
               >
                 <div
                   onClick={handleViewDetailPodcast}
-                  className="underline tracking-wide text-sm text-indigo-500 font-semibold"
+                  className="hover:underline hover:italic cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
                 >
                   {file.title}
                 </div>
@@ -95,12 +89,18 @@ const UserUploadCard = ({ file, setSelectedPodcast }) => {
               </div>
             </div>
 
-            <div className="flex items-center gap-10">
+          
+            <div className="flex items-center xl:gap-10 md:gap-10 gap-2">
               <div className="items-center">
                 <div className="w-24 date-element text-end text-slate-500">
-                  {formattedDate}
+                  {new Date(file.uploadDate).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
                 </div>
               </div>
+              <DeletePodcastBtn file={file} />
               <>
                 <MoreBtn file={file} />
               </>

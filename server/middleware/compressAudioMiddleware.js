@@ -17,17 +17,19 @@ const compressAudioMiddleware = async (req, res, next) => {
 
     // Compress the audio using fluent-ffmpeg
     ffmpeg(audioPath)
-      .audioBitrate('32k')
-      .on('end', () => {
+      .audioBitrate('128k') // Set the audio bitrate to 128 kbps (kilobits per second) 
+      .format('aac') // Set the output format to mp3
+      .on('end', () => { // When the compression is finished
         console.log('Audio compression finished');
-
+ 
+        // Read the compressed audio file and update the buffer in req.files.audioFile
         const compressedAudioBuffer = fs.readFileSync(audioPath);
-        req.files.audioFile[0].buffer = compressedAudioBuffer;
+        req.files.audioFile[0].buffer = compressedAudioBuffer; // Update the buffer in req.files.audioFile  
 
         // Delete the temporary audio file
         fs.unlinkSync(audioPath);
 
-        next();
+        next(); 
       })
       .on('error', (err) => {
         console.error('Error compressing audio:', err);
@@ -39,5 +41,7 @@ const compressAudioMiddleware = async (req, res, next) => {
     res.status(500).json({ message: 'Error in compressAudioMiddleware. Please try again later.' });
   }
 };
+
+
 
 module.exports = compressAudioMiddleware;

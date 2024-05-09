@@ -3,10 +3,11 @@ import { Snackbar } from "@mui/material";
 import "./SignInWithGoogle.css";
 import { GoogleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const SigninWithGoogles = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const { t } = useTranslation();
   
   const handleSignInWithGoogle = () => {
     window.location.href = "http://localhost:4000/auth/google";
@@ -26,7 +27,7 @@ const SigninWithGoogles = () => {
         block
         className="google-button"
       >
-        Login with Google
+        {t("login.loginWithGoogle")}
       </Button>
 
       <Snackbar

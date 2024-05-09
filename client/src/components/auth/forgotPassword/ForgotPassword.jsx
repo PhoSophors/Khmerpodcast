@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../login/Login.css";
 import logo from "../../assets/logo.jpg";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -13,6 +14,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleForgotPassword = async () => {
     setLoading(true);
@@ -65,7 +67,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-slate-100">
-      <Card title="Forgot Password" className="card">
+      <Card title={t("forgotPassword.title")} className="card xl:w-1/3 md:w-1/2 w-full">
         <Form layout="vertical">
           {currentStep === 1 && (
             <>
@@ -74,20 +76,19 @@ const ForgotPassword = () => {
               </div>
 
               <p className="text-center mb-4">
-                Please enter the email associated with your account to receive a
-                password reset OTP.
+                {t("forgotPassword.description")}
               </p>
               <Form.Item
-                label="Email"
+                label={t("forgotPassword.email")}
                 name="email"
                 rules={[
-                  { required: true, message: "Please input your email!" },
+                  { required: true, message: t("forgotPassword.emailRequired") },
                 ]}
               >
                 <Input
                   type="email"
                   className="input-field"
-                  placeholder="Enter your email to reset your password"
+                  placeholder={t("forgotPassword.emailPlaceholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -98,13 +99,12 @@ const ForgotPassword = () => {
               </div>
 
               <Button
-                className="mt-5"
-                type="dashed"
+                className="mt-5 bg-indigo-600 text-white w-36 h-12 animate-bounce rounded-full hover:none"
                 onClick={handleForgotPassword}
                 loading={loading}
                 style={{ float: "right" }}
               >
-                Send OTP
+                {t("forgotPassword.sendOtp")}
               </Button>
             </>
           )}
@@ -137,8 +137,7 @@ const ForgotPassword = () => {
               </Form.Item>
               {error && <Alert message={error} type="error" />}
               <Button
-                className="mt-5"
-                type="dashed"
+                className="mt-5 bg-indigo-600 text-white w-36 h-12 animate-bounce rounded-full hover:none"
                 onClick={handleVerifyOTP}
                 loading={loading}
                 style={{ float: "right" }}
@@ -176,8 +175,7 @@ const ForgotPassword = () => {
               </Form.Item>
               {error && <Alert message={error} type="error" />}
               <Button
-                className="mt-5"
-                type="dashed"
+                  className="mt-5 bg-indigo-600 text-white w-36 h-12 animate-bounce rounded-full hover:none"
                 onClick={handleResetPassword}
                 loading={loading}
                 style={{ float: "right" }}

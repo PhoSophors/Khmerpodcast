@@ -65,8 +65,8 @@ class MainSection extends Component {
     }));
   };
 
-  handlePodcastSelected = (podcast) => {
-    this.setState({ selectedPodcast: podcast });
+  handlePodcastSelected = (file) => {
+    this.setState({ selectedPodcast: file });
   };
 
   handleUpdatePodcast = () => {
@@ -92,7 +92,6 @@ class MainSection extends Component {
           <Sider collapsed={collapsed} breakpoint="md">
             <LeftSection
               onSelectMenuItem={this.handleSelectMenuItem}
-              // onPodcastSelected={this.handlePodcastSelected}
             />
           </Sider>
         )}
@@ -106,7 +105,7 @@ class MainSection extends Component {
             />
             <div className="content-card">
               {selectedPodcast ? (
-                <ViewDetailPodcast podcast={selectedPodcast} />
+                <ViewDetailPodcast file={selectedPodcast} />
               ) : (
                 <RightSection
                   selectedMenuItem={selectedMenuItem}

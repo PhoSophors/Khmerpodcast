@@ -50,12 +50,9 @@ router.get(
 // GET route to retrieve details of a Podcast by ID
 router.get("/get-file/:id", fileUploadController.getFileById);
 
-
-
-
 // DELETE route to delete a Podcast by ID
 router.delete(
-  "/:id",
+  "/delete/:id",
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
   fileUploadController.deleteFile

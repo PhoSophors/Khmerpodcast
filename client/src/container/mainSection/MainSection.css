@@ -17,13 +17,12 @@ body {
 }
 
 .content-containers{
-  background-color: var(--slate-900);
+  background-color: var(--indigo-700);
   padding: 10px;
   height: 100vh;
 }
 
 /* set mobile screen pasdding 0 for content container */
-
 @media screen and (max-width: 768px) {
   .content-containers {
     padding: 0;

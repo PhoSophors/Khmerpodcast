@@ -12,16 +12,16 @@ const compressImageMiddleware = async (req, res, next) => {
 
     // Compress the image using Sharp for both JPEG, PNG and WEB formats
     const compressedJpegBuffer = await sharp(imageBuffer)
-      .resize(5000, 5000) 
-      .jpeg({ quality: 80 }) 
+      .resize(5000, 5000) // Resize the image to a maximum of 5000x5000 pixels
+      .jpeg({ quality: 80 })  // Set the quality to 80%
       .toBuffer();
     const compressedPngBuffer = await sharp(imageBuffer)
-      .resize(1000, 1000) 
-      .png({ compressionLevel: 8 }) 
+      .resize(1000, 1000)  // Resize the image to a maximum of 1000x1000 pixels
+      .png({ compressionLevel: 8 }) // Set the compression level to 8
       .toBuffer();
     const compressedWebBuffer = await sharp(imageBuffer)
-      .resize(1000, 1000) 
-      .webp({ quality: 80 }) 
+      .resize(1000, 1000)  // Resize the image to a maximum of 1000x1000 pixels
+      .webp({ quality: 80 }) // Set the quality to 80%
       .toBuffer();
 
     // Choose the appropriate buffer based on your selection

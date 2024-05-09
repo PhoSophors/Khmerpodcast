@@ -126,18 +126,6 @@ const Profile = ({ onPodcastSelected }) => {
           </div>
         ) : (
           <div className="profile-content">
-            <Avatar
-              size={140}
-              icon={<UserOutlined />}
-              style={{ marginBottom: "16px" }}
-            />
-
-            <Link to="/login">
-              <Button className="edit-button" size="large">
-                <LoginOutlined style={{ marginRight: "8px" }} />
-                Login
-              </Button>
-            </Link>
           </div>
         )}
 

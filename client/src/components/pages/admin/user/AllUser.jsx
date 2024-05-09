@@ -56,7 +56,7 @@ const AllUser = () => {
       <Card title="All Users" className="w-full">
         <Space direction="vertical" style={{ width: "100%" }}>
           <Input
-          style={{ width: "20%" }}
+            className="xl:w-96 w-full"
             placeholder="Search users"
             prefix={<SearchOutlined />}
             onChange={(e) => handleSearch(e.target.value)}
@@ -72,50 +72,58 @@ const AllUser = () => {
               No users found
             </div>
           ) : (
-            <table id="user-podcast-table" className="mt-10">
-              <thead>
-                <tr>
-                  <th className="text-center">No *</th>
-                  <th className="text-center">Profile *</th>
-                  <th className="text-start">Name *</th>
-                  <th className="text-start">Email *</th>
-                  <th className="text-center">Role</th>
-                  <th className="text-center">Status</th>
-                  <th className="text-center">Create Date</th>
-                  <th className="text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredUsers.map((user, index) => (
-                  <tr key={user._id}>
-                    <td className="text-center">{index + 1}</td>
-                    <td className="text-center">
-                      <Avatar src={user && user.profileImage}  size="large" icon={<UserOutlined />} />
-                    </td>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td className="text-center">{user.role}</td>
-                    <td className="text-center">{user.emailVerified ? "Active" : "Closed"}</td>
-                    <td className="text-center">
-                      {new Date(user.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="text-center">
-                      <Dropdown
-                        overlay={
-                          <Menu>
-                            <Menu.Item key="0">Edit</Menu.Item>
-                            <Menu.Item key="1">Delete</Menu.Item>
-                          </Menu>
-                        }
-                        trigger={["hover"]}
-                      >
-                        <MoreOutlined />
-                      </Dropdown>
-                    </td>
+            <div className="overflow-auto">
+              <table id="user-podcast-table" className="mt-10">
+                <thead>
+                  <tr>
+                    <th className="text-center">No *</th>
+                    <th className="text-center">Profile *</th>
+                    <th className="text-start">Name *</th>
+                    <th className="text-start">Email *</th>
+                    <th className="text-center">Role</th>
+                    <th className="text-center">Status</th>
+                    <th className="text-center">Create Date</th>
+                    <th className="text-center">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredUsers.map((user, index) => (
+                    <tr key={user._id}>
+                      <td className="text-center">{index + 1}</td>
+                      <td className="text-center">
+                        <Avatar
+                          src={user && user.profileImage}
+                          size="large"
+                          icon={<UserOutlined />}
+                        />
+                      </td>
+                      <td>{user.username}</td>
+                      <td>{user.email}</td>
+                      <td className="text-center">{user.role}</td>
+                      <td className="text-center">
+                        {user.emailVerified ? "Active" : "Closed"}
+                      </td>
+                      <td className="text-center">
+                        {new Date(user.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="text-center">
+                        <Dropdown
+                          overlay={
+                            <Menu>
+                              <Menu.Item key="0">Edit</Menu.Item>
+                              <Menu.Item key="1">Delete</Menu.Item>
+                            </Menu>
+                          }
+                          trigger={["hover"]}
+                        >
+                          <MoreOutlined />
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </Space>
       </Card>

@@ -21,6 +21,7 @@ const Create = () => {
   const [description, setDescription] = useState("");
   const authToken = Cookies.get("authToken");
   const id = Cookies.get("id");
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
@@ -40,7 +41,11 @@ const Create = () => {
       formData.append("description", description);
       formData.append("imageFile", imageFileList[0].originFileObj); // Append the image file
       await axios.post(`/files/upload?id=${id}`, formData, {
-        // Include the user's ID as a query parameter
+        onUploadProgress: (progressEvent) => { 
+          // Calculate the upload progress
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted); // Update the upload progress state
+        },
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${authToken}`,
@@ -135,7 +140,6 @@ const Create = () => {
     );
   };
 
-
   return (
     <div className="mx-auto flex xl:p-8   ">
       <div className="w-full p-2">
@@ -154,9 +158,7 @@ const Create = () => {
                 <div className="mt-5 font-semibold text-gray-500 uppercase tracking-wide">
                   Supported file types:
                 </div>
-                <div className="text-gray-500">
-                  Audio files: aac, mp3
-                </div>
+                <div className="text-gray-500">Audio files: aac, mp3</div>
                 {/* upload audio */}
                 <Card title="Upload Audio " className="mt-5">
                   {fileList.length > 0 ? (
@@ -205,9 +207,7 @@ const Create = () => {
                 <div className="mt-5 font-semibold text-gray-500 uppercase tracking-wide">
                   Supported file types:
                 </div>
-                <div className="text-gray-500">
-                  Thumnaill files: jpeg, jpg
-                </div>
+                <div className="text-gray-500">Thumnaill files: jpeg, jpg</div>
                 <Card title="Upload Thumbnail" className="mt-5">
                   <ImgCrop>
                     <Upload
@@ -246,7 +246,7 @@ const Create = () => {
                       Title *
                     </p>
                     <Input.TextArea
-                      className="mt-5"
+                      className="mt-5 caret-pink-500 "
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Input title"
@@ -260,7 +260,7 @@ const Create = () => {
                       Description *
                     </p>
                     <Input.TextArea
-                      className="mt-5"
+                      className="mt-5 caret-pink-500 "
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Input description"
@@ -281,11 +281,21 @@ const Create = () => {
               </Form>
             </Card>
 
+            <div class="w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
+              <div
+                class="bg-indigo-500 text-xs font-medium text-blue-100 text-center p-0 leading-none rounded-full"
+                style={{ width: `${uploadProgress}%` }}
+              >
+                {" "}
+                {uploadProgress}%
+              </div>
+            </div>
+
             {/* upload button */}
-            <div className="mt-5 gap-5">
+            <div className="mt-5 gap-5 mb-20">
               <Button
-                className="upload-button"
-                style={{ backgroundColor: "#ea580c", color: "#ffffff" }}
+                className="upload-button animate-bounce cursor-progress"
+                style={{ backgroundColor: "#4f46e5", color: "#ffffff" }}
                 onClick={handleUpload}
                 loading={loading}
                 disabled={!isUploadEnabled()}

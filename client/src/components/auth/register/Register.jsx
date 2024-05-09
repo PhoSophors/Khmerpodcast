@@ -7,10 +7,12 @@ import "../login/Login.css";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import SigninWithGoogles from "../signinWithGoogle/SignInWithGoogle";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   const onFinish = async (values) => {
     try {
@@ -19,7 +21,7 @@ const Register = () => {
       const response = await axios.post("/auths/register", values, {
         baseURL: process.env.REACT_APP_PROXY,
       });
-    setIsLoading(true);
+      setIsLoading(true);
 
       if (response.status === 200) {
         // Save the id to cookies
@@ -51,8 +53,9 @@ const Register = () => {
       <Card className="card overflow-auto">
         <div className="items-center p-4">
           <h1 className="text-center mb-4 ">
-            <span className="text-black title md:mt-10">Welcome to </span>
-            <span className="text-indigo-600 title">KhmerPodcast</span>
+            <span className="title md:mt-10 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500">
+              {t("register.title")}
+            </span>
           </h1>
 
           <Form
@@ -62,44 +65,47 @@ const Register = () => {
             layout="vertical"
           >
             <Form.Item
-              label="Username *"
+              label={t("register.username")}
               name="username"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: t("register.usernameRequired") },
               ]}
             >
               <Input
                 className="input-field"
-                placeholder="Enter your username"
+                placeholder={t("register.usernamePlaceholder")}
               />
             </Form.Item>
 
             <Form.Item
-              label="Email *"
+              label={t("register.email")}
               name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[{ required: true, message: t("register.emailRequired") }]}
             >
-              <Input className="input-field" placeholder="Enter your email" />
+              <Input
+                className="input-field"
+                placeholder={t("register.emailPlaceholder")}
+              />
             </Form.Item>
 
             <Form.Item
-              label="Password *"
+              label={t("register.password")}
               name="password"
               rules={[
-                { required: true, message: "Please input your password!" },
+                { required: true, message: t("register.passwordRequired") },
               ]}
             >
               <Input.Password
                 className="input-field"
-                placeholder="Create password"
+                placeholder={t("register.passwordPlaceholder")}
               />
             </Form.Item>
 
             <Form.Item
-              label="Confirm Password *"
+              label={t("register.confirmPassword")}
               name="confirmPassword"
               rules={[
-                { required: true, message: "Please confirm your password!" },
+                { required: true, message: t("register.confirmPasswordRequired") },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
@@ -112,14 +118,14 @@ const Register = () => {
             >
               <Input.Password
                 className="input-field"
-                placeholder="Confirm password"
+                placeholder={t("register.confirmPasswordPlaceholder")}
               />
             </Form.Item>
 
             <Form.Item>
               <Button
                 style={{
-                  backgroundColor: "#3730a3",
+                  backgroundColor: "#4f46e5",
                   color: "#ffffff",
                 }}
                 type="default"
@@ -127,25 +133,24 @@ const Register = () => {
                 htmlType="submit"
                 disabled={isLoading}
               >
-                {isLoading ? <Spin /> : "Register"}
+                {isLoading ? <Spin /> : t("register.register")}
               </Button>
             </Form.Item>
 
-            <h1 className="text-center mb-4">OR</h1>
+            <h1 className="text-center mb-4">{t("register.or")}</h1>
 
             <SigninWithGoogles />
 
             <h1 className="text-center mb-4 mt-5">
-              <span className="text-black ">Do you have an account? </span>
+              <span className="text-black ">{t("register.haveAccount")} </span>
               <Link to="/">
-                <span className="text-indigo-600 font-bold">Login</span>
+                <span className="text-indigo-600  hover:underline hover:italic  font-bold">{t("register.login")} </span>
               </Link>
             </h1>
 
             <hr className="mt-5" />
             <p className="text-gray-600 mt-5 text-center">
-              By signing up, you agree to our Terms, Data Policy and Cookies
-              Policy.
+             {t("register.termsAndConditions")}
             </p>
           </Form>
         </div>

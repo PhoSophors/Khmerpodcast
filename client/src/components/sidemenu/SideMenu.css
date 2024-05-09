@@ -16,7 +16,7 @@
   font-size: 1rem;
   position: relative;
   top: 0;
-  background-color: var(--slate-900);
+  background-color: var(--indigo-700);
   border: none;
   padding-bottom: 20px;
 }
@@ -24,15 +24,15 @@
 
 .side-menu-container .ant-menu-item-selected {
   background: var(--sider-item-selected);
-  color: var(--slate-300) !important;
+  color: var(--white) !important;
   font-weight: bold;
 }
 
 .side-menu-container .ant-menu-item{
-  color: var(--slate-300);
+  color: var(--slate-200);
 }
 .side-menu-container .ant-menu-item:hover{
-  color: var(--slate-300) !important;
+  color: var(--white) !important;
 }
 
 
@@ -47,7 +47,7 @@
     position: fixed;
     top: 80px;
     right: 0;
-    z-index: 1000;
+    z-index: 10;
     height: calc(100vh - 80px);
     padding: 0;
     background-color: var(--main-color);
@@ -80,8 +80,10 @@
     top: 0;
   }
   
-  
   .logo-app {
+    display: none;
+  }
+  .app-name {
     display: none;
   }
 }

@@ -134,7 +134,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
   return (
     <header className="header-container">
       <div className="p-3 bg-slate-100 h-full flex justify-center items-center rounded-full">
-        <div className="p-3 bg-indigo-800 h-full flex justify-center items-center rounded-full">
+        <div className="p-3 bg-indigo-600 h-full flex justify-center items-center rounded-full">
           {isMobileDevice ? (
             <div onClick={handleMenuClick}>
               {menuVisible ? (
@@ -165,7 +165,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
                   alt=""
                   style={{ height: "70px" }}
                 />
-                <div className="flex flex-col ">
+                <div className=" flex flex-col ">
                   <span className="name-style tracking-wide text-xl text-red-600 font-bold">
                     Khmer
                   </span>

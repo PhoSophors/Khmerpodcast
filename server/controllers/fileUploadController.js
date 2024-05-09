@@ -19,9 +19,6 @@ const uploadPodcast = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // set user id from token
-    const userId = req.user.id;
-
     // Calculate the size of the compressed image
     const compressedImageSize = imageFile[0].buffer
       ? imageFile[0].buffer.length
@@ -36,7 +33,8 @@ const uploadPodcast = async (req, res) => {
     const file = new File({
       title: title,
       description: description,
-      user: userId, // set user id
+      // user: userId, // set user id
+      user: req.user.id,
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
@@ -194,7 +192,7 @@ const deleteFile = async (req, res) => {
 
     // Check if the user who uploaded the file is the same user who is trying to delete it
     // or if the user is an admin
-    if (file.user.toString() !== user.id && user.role !== "admin") {
+    if (file.user.toString() !== user.id && user.role !== "admin") { 
       return res
         .status(403)
         .json({ message: "You do not have permission to delete this file" });
@@ -210,16 +208,29 @@ const deleteFile = async (req, res) => {
 };
 
 // Function to get details of a file by ID ================================================================
+// const getFileById = async (req, res) => {
+//   try {
+//     const file = await File.findById(req.params.id).populate("user");
+//     if (!file) {
+//       return res.status(404).json({ message: "File not found" });
+//     }
+//     // Fetch the user who uploaded the file
+//     const user = await User.findById(file.user);
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     res.json(file);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 const getFileById = async (req, res) => {
   try {
     const file = await File.findById(req.params.id).populate("user");
     if (!file) {
       return res.status(404).json({ message: "File not found" });
-    }
-    // Fetch the user who uploaded the file
-    const user = await User.findById(file.user);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(file);
@@ -227,6 +238,7 @@ const getFileById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Function to get files by user ID that user upload ================================================================
 const getFilesByUserId = async (req, res) => {

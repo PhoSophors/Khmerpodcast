@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Spin, Card, message } from "antd"; // Import Button and message from antd
 import Cookies from "js-cookie";
-import MoreBtn from "../moreBtn/MoreBtn";
-import PlayBtn from "../playBtn/PlayBtn";
+import MoreBtn from "../Btn/MoreBtn";
+import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
 
 const FavoritesCard = ({ file, setSelectedPodcast }) => {

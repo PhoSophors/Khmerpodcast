@@ -91,8 +91,6 @@ const MoreBtn = ({ file }) => {
     setIsModalVisible(false);
   };
 
-
-
   const shareUrl = `http://localhost:3000/viewdetailpodcast/${file._id}`;
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
@@ -103,10 +101,11 @@ const MoreBtn = ({ file }) => {
     <Menu style={{ width: "250px" }}>
       <Menu.Item key="0" onClick={showModal}>
         <ShareAltOutlined />
-        {""} Share
+        <span className="mx-2">Share</span>
       </Menu.Item>
       <Menu.Item key="1" onClick={handleCopyLink}>
-        <LinkOutlined /> Copy Link
+        <LinkOutlined />
+        <span className="mx-2">Copy Link</span>
       </Menu.Item>
       <Menu.Item key="2" onClick={handleTogglePodcastInPlaylist}>
         {isAddedToFavorites ? (
@@ -121,7 +120,7 @@ const MoreBtn = ({ file }) => {
               >
                 <path d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
               </svg>
-              <span> Remove from Favorites</span>
+              <span className="mx-2">Remove from Favorites</span>
             </div>
           </>
         ) : (
@@ -142,14 +141,14 @@ const MoreBtn = ({ file }) => {
                   d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"
                 />
               </svg>
-              <span> Add to favorites</span>
+              <span className="mx-2">Add to favorites</span>
             </div>
           </>
         )}
       </Menu.Item>
       <Menu.Item key="3">
         <div onClick={handleToggleUpdateMode}>
-          <EditOutlined /> <span> Edit Podcast</span>
+          <EditOutlined /> <span className="mx-2">Edit Podcast</span>
         </div>
       </Menu.Item>
     </Menu>
@@ -171,7 +170,7 @@ const MoreBtn = ({ file }) => {
         <Dropdown overlay={shareMenu} trigger={["click"]}>
           <MoreOutlined
             style={{
-              fontSize: "18px"
+              fontSize: "18px",
             }}
           />
         </Dropdown>

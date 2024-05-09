@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Spin } from "antd";
-import MoreBtn from "../moreBtn/MoreBtn";
-import PlayBtn from "../playBtn/PlayBtn";
+import MoreBtn from "../Btn/MoreBtn";
+import PlayBtn from "../Btn/PlayBtn";
 const CustomCard = ({ file, setSelectedPodcast }) => {
   const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -53,7 +53,7 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
           >
             {loading && (
               <div
-                className="loading-spinner"
+              className="animate-pulse bg-gray-100 rounded-xl w-full h-full object-cover"
                 style={{
                   position: "absolute",
                   top: 0,
@@ -63,7 +63,7 @@ const CustomCard = ({ file, setSelectedPodcast }) => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  background: "rgba(255, 255, 255, 0.5)",
+                  background: "rgba(255, 255, 255, 1.5)",
                   zIndex: 1,
                 }}
               >

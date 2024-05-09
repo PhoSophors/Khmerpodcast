@@ -64,7 +64,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
   return (
     <div>
       <Menu
-        className="side-menu-container"
+        className="side-menu-container "
         mode="inline"
         selectedKeys={[selectedMenuItem]}
         onClick={handleMenuItemClick}
@@ -74,11 +74,11 @@ const SideMenu = ({ onSelectMenuItem }) => {
           className="flex items-center md:p-4 cursor-pointer"
         >
           <img src={logo} alt="" className="logo-app mr-2" />
-          <div className="flex flex-col">
-            <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
+          <div className=" flex flex-col">
+            <span className="app-name uppercase tracking-wide text-xl text-red-600 font-bold">
               Khmer
             </span>
-            <span className="uppercase tracking-wide text-sm text-slate-300 font-semibold">
+            <span className="app-name uppercase tracking-wide text-sm text-slate-300 font-semibold">
               Podcast
             </span>
           </div>

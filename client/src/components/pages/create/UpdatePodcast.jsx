@@ -17,6 +17,7 @@ const UpdatePodcast = ({ file }) => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
   const [fileList, setFileList] = useState([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleUpdate = async (values) => {
     try {
@@ -35,8 +36,17 @@ const UpdatePodcast = ({ file }) => {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${authToken}`,
         },
+        onUploadProgress: (progressEvent) => {
+          // Calculate the upload progress
+          let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          // Cap the progress at 99% until the server response is received
+          percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
+          setUploadProgress(percentCompleted); // Update the upload progress state
+        },
       };
       await axios.put(`/files/update/${file._id}`, formData, config);
+      // Set the progress to 100% once the server response is received
+      setUploadProgress(100);
       message.success("File updated successfully");
       setIsModalVisible(false);
       window.location.reload();
@@ -46,7 +56,7 @@ const UpdatePodcast = ({ file }) => {
       setLoading(false);
     }
   };
-
+  
   // Functions for  handle image Preview
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -96,6 +106,7 @@ const UpdatePodcast = ({ file }) => {
   return (
     <div>
       <Modal
+        className="modal-container xl:min-w-[800px]"
         title="Update Podcast"
         visible={isModalVisible}
         onCancel={handleModalCancel}
@@ -180,7 +191,7 @@ const UpdatePodcast = ({ file }) => {
                     customRequest={() => {}}
                     fileList={fileList}
                     onChange={handleFileChange}
-                    accept=".aac, .mp3"
+                    accept=".aac, .mp3, .m4a"
                     showUploadList={false}
                   >
                     <div>{"+ Upload"}</div>
@@ -233,9 +244,20 @@ const UpdatePodcast = ({ file }) => {
               </Modal>
             </Form.Item>
           </Card>
+
+          <div class="w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
+            <div
+              class="bg-indigo-500 text-xs font-medium text-blue-100 text-center p-0 leading-none rounded-full"
+              style={{ width: `${uploadProgress}%`, height: "0.5rem" }}
+            >
+              {" "}
+              {uploadProgress}%
+            </div>
+          </div>
+
           <Button
-            className="upload-button mt-5 mb-5"
-            style={{ backgroundColor: "#ea580c", color: "#ffffff" }}
+            className="upload-button mt-10 mb-5 animate-bounce "
+            style={{ backgroundColor: "#f43f5e", color: "#ffffff" }}
             loading={loading}
             type="primary"
             htmlType="submit"

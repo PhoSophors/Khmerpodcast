@@ -12,9 +12,61 @@
     "allUsers": "All Users",
     "fileManager": "File Manager"
   },
+
+  "login" : {
+    "title": "Welcome to KhmerPodcast",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailRequired": "Please input your email!",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "passwordRequired": "Please input your password!",
+    "forgotPassword": "Forgot Password",
+    "login": "Login",
+    "or": "Or",
+    "loginWithGoogle": "Login with Google",
+    "notHaveAccount": "Not on KhmerPodcast yet?",
+    "signUp": "Sign Up",
+    "discription": "Your go-to platform for discovering and listening to podcasts in Khmer language."
+  },
+  "register" : {
+    "title": "Welcome to KhmerPodcast",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "usernameRequired": "Please input your username!",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailRequired": "Please input your email!",
+    "password": "Password",
+    "passwordPlaceholder": "Create password",
+    "passwordRequired": "Please create password!",
+
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "confirmPasswordRequired": "Please confirm password!",
+    "register": "Register",
+    "or": "Or",
+    "haveAccount": "Do you have an account?",
+    "login": "Login",
+    "termsAndConditions": "By signing up, you agree to our Terms, Data Policy and Cookies Policy."
+  },
+  "forgotPassword" : {
+    "title": "Forgot Password",
+    "description": "Please enter the email associated with your account to receive a password reset OTP.",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email to reset your password",
+    "emailRequired": "Please input your email!",
+    "sendOtp": "Send OTP"
+  },
+  
   
   "profile" : {
     "title": "Profile",
     "editProfileTitle": "Edit Profile"
+  },
+  
+  "banner": {
+    "title": "Listion to trending Khmer Podcasts all the time",
+    "description" : "Welcome to our Khmer Podcast! Immerse yourself in the world of Khmer language podcasts, where you can discover trending shows anytime, anywhere. Stay connected to Cambodian culture and language through our curated selection of podcasts covering a wide range of topics. Start listening now and explore the richness of Khmer podcasting!"
   }
 }
