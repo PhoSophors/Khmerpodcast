@@ -18,9 +18,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
 
   useEffect(() => {
     const authToken = Cookies.get("authToken");
-    // const encodedToken = Cookies.get("authToken");
-    // const authToken = atob(encodedToken);
-
+  
     if (authToken) {
       setIsLoading(true);
       // Fetch user data if user is logged in
@@ -40,16 +38,13 @@ const SideMenu = ({ onSelectMenuItem }) => {
           }
         })
         .catch((error) => {
-          console.error(
-            "Error fetching user data:",
-            error.response?.data?.message || error.message
-          );
+          console.error('Failed to fetch user data:', error);
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
-  });
+  }, [id]); // Add 'id' as a dependency
 
   const handleAppClick = () => {
     window.location.reload();

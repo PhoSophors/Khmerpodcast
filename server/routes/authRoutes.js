@@ -57,7 +57,7 @@ router.get(
 );
 // delete user
 router.delete(
-  "/user/:id",
+  "/delete/user/:id",
   verifyToken,
   checkRoleMiddleware("admin"),
   userController.deleteUser

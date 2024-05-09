@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Spin, Alert, Card, Avatar, Menu, Dropdown, Input, Space } from "antd";
-import { UserOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  Spin,
+  Alert,
+  Card,
+  Avatar,
+  Menu,
+  Dropdown,
+  Input,
+  Space,
+  message,
+} from "antd";
+import {
+  UserOutlined,
+  MoreOutlined,
+  SearchOutlined,
+  DeleteFilled,
+} from "@ant-design/icons";
 import "../admin.css";
 
 const AllUser = () => {
@@ -38,6 +53,30 @@ const AllUser = () => {
       setError("Error fetching users: " + error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteUser = async (_id) => {
+    try {
+      const response = await axios.delete(`/auths/delete/user/${_id}`, {
+        method: "DELETE",
+        baseURL: process.env.REACT_APP_PROXY,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      if (response.status === 200) {
+        message.success("User deleted successfully");
+        fetchAllUser(); // Assuming this function exists and fetches updated user data
+      } else {
+        message.error("Unexpected response status: " + response.status);
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        message.error("Error deleting user: " + error.response.data.error);
+      } else {
+        message.error("Error deleting user: " + error.message);
+      }
     }
   };
 
@@ -80,10 +119,11 @@ const AllUser = () => {
                     <th className="text-center">Profile *</th>
                     <th className="text-start">Name *</th>
                     <th className="text-start">Email *</th>
-                    <th className="text-center">Role</th>
-                    <th className="text-center">Status</th>
+                    <th className="text-start">Role</th>
+                    <th className="text-start">Status</th>
                     <th className="text-center">Create Date</th>
-                    <th className="text-center">Action</th>
+                    <th className="text-start">Delete User</th>
+                    {/* <th className="text-center">Action</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -99,26 +139,49 @@ const AllUser = () => {
                       </td>
                       <td>{user.username}</td>
                       <td>{user.email}</td>
-                      <td className="text-center">{user.role}</td>
                       <td className="text-center">
-                        {user.emailVerified ? "Active" : "Closed"}
+                        <div
+                          className={`text-white h-8 w-14 flex justify-center items-center rounded-xl ${
+                            user.role === "admin"
+                              ? "bg-green-500"
+                              : "bg-orange-500"
+                          }`}
+                        >
+                          {user.role}
+                        </div>
+                      </td>
+                      <td className="text-center">
+                        <div
+                          className={`text-white h-8 w-14 flex justify-center items-center rounded-xl ${
+                            user.emailVerified ? "bg-green-500" : "bg-red-500"
+                          }`}
+                        >
+                          {user.emailVerified ? "Active" : "Closed"}
+                        </div>
                       </td>
                       <td className="text-center">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
                       <td className="text-center">
+                        <div onClick={handleDeleteUser} className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full">
+                          <DeleteFilled />
+                        </div>
+                      </td>
+                      {/* <td className="text-center">
                         <Dropdown
                           overlay={
                             <Menu>
                               <Menu.Item key="0">Edit</Menu.Item>
-                              <Menu.Item key="1">Delete</Menu.Item>
+                              <Menu.Item key="1" onClick={handleDeleteUser}>
+                                Delete
+                              </Menu.Item>
                             </Menu>
                           }
                           trigger={["hover"]}
                         >
                           <MoreOutlined />
                         </Dropdown>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>

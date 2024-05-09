@@ -1,0 +1,32 @@
+.container-view-podcast {
+  justify-content: space-between;
+}
+
+.play-and-more-btn-mobile  {
+  display: none;
+}
+
+@media (max-width: 868px) {
+  .play-and-more-btn-laptop  {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 868px) {
+  .play-and-more-btn-mobile {
+    display: flex;
+  }
+
+  .image-view-podcast {
+    min-width: 300px !important;
+    min-height: 300px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .container-view-podcast {
+    display: flex;
+    justify-content: center !important;
+  }
+}
