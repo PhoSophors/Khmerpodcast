@@ -12,10 +12,11 @@ const HomePage = () => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 50;
-
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
 
+  console.log(api_url);
+  
   const fetchRandomFile = async () => {
     try {
       const response = await axios.get(`${api_url}/files/get-random-file`);
