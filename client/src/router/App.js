@@ -25,8 +25,6 @@ import FileManager from "../components/pages/admin/user/FileManager";
 import UserCard from "../components/card/UserCard";
 import { AudioProvider } from "../context/AudioContext";
 import UpdatePodcast from "../components/pages/create/UpdatePodcast";
-import MainContainer from "../container/mainSection/MainContainer";
-import SideMenu from "../components/sidemenu/SideMenu";
 import EditProfile from "../components/pages/profile/EditProfile";
 
 const App = () => {

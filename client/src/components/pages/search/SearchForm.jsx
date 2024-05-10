@@ -24,8 +24,7 @@ const SearchForm = ({ handleSearchSubmit }) => {
       try {
         let response;
         // Only search for podcasts
-        response = await axios.get(`/search/podcasts`, {
-          baseURL: process.env.REACT_APP_PROXY,
+        response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/search/podcasts`, {
           params: {
             search: searchQuery,
           },
