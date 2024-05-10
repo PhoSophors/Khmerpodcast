@@ -19,11 +19,14 @@ const DeletePodcastBtn = ({ file }) => {
       return;
     }
     try {
-      const response = await axios.delete(`${process.env.REACT_APP_BACKEND_API}/files/delete/${deleteFileId}`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND_API}/files/delete/${deleteFileId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
       if (response.status === 200) {
         message.success("Podcast deleted successfully");
         setIsDeleteModalVisible(false);
@@ -66,12 +69,13 @@ const DeletePodcastBtn = ({ file }) => {
             <h1 className="text-center  text-gray-500 ">
               This Action{" "}
               <span className="font-semibold  text-gray-600">CANNOT</span> be
-              undone. This will permanently delete the{" "}
-              <span className="font-semibold  text-gray-600">{filename}</span>{" "}
-              file, and remove all collaborator ssositions.{" "}
+              undone. This will permanently delete the Podcast file, and remove
+              all collaborator ssositions.{" "}
             </h1>
             <p className="text-center text-gray-800 mt-5">
-              Please enter the title of the podcast to confirm
+              Enter the title of podcast name{" "}
+              <span className="font-semibold text-gray-600">{filename}</span> to
+              continue:
             </p>
 
             <Input
