@@ -10,7 +10,16 @@ import {
   StepForwardFilled,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Spin, Alert, Card, Avatar, Space, Input, Button } from "antd";
+import {
+  Spin,
+  Alert,
+  Card,
+  Avatar,
+  Space,
+  Input,
+  Button,
+  DatePicker,
+} from "antd";
 
 // Define FileManager component
 const FileManager = () => {
@@ -21,6 +30,7 @@ const FileManager = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const authToken = Cookies.get("authToken");
   const [startIndex, setStartIndex] = useState(0);
+  const [dateRange, setDateRange] = useState([]);
   const cardsPerPage = 10;
 
   // Fetch files function
@@ -61,11 +71,26 @@ const FileManager = () => {
     setSearchQuery(value);
   };
 
-  const filteredFiles = files.filter(
-    (file) =>
-      file.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      file.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleDateRangeChange = (dates) => {
+    if (dates && dates.length === 2) {
+      setDateRange(dates.map((date) => date.format("YYYY-MM-DD")));
+    } else {
+      setDateRange([]);
+    }
+  };
+
+  const filteredFiles = files.filter((file) => {
+    const userCreatedDate = new Date(file.createdAt);
+    const startDate = dateRange[0] ? new Date(dateRange[0]) : null;
+    const endDate = dateRange[1] ? new Date(dateRange[1]) : null;
+
+    return (
+      (!startDate || userCreatedDate >= startDate) &&
+      (!endDate || userCreatedDate <= endDate) &&
+      (file.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        file.description.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  });
 
   // Function to handle next page
   const handleNext = () => {
@@ -91,12 +116,23 @@ const FileManager = () => {
       <Card title="File Manager" className="w-full">
         {/* Search Input */}
         <Space direction="vertical" style={{ width: "100%" }}>
-          <Input
-            className="xl:w-96 w-full"
-            placeholder="Search files"
-            prefix={<SearchOutlined />}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
+          <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
+            <div className="w-full sm:w-1/2">
+              <Input
+                className="xl:w-96 w-full"
+                placeholder="Search files"
+                prefix={<SearchOutlined />}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
+            <div className="w-full sm:w-1/2 text-end">
+              <DatePicker.RangePicker
+                className="xl:w-96 w-full mb-3"
+                format="YYYY-MM-DD"
+                onChange={handleDateRangeChange}
+              />
+            </div>
+          </div>
 
           {/* Loading/Error/No files message */}
           {loading ? (
@@ -139,7 +175,14 @@ const FileManager = () => {
                       <td className="text-center">{file.audio.mimetype}</td>
                       <td className="text-center">{file.image.mimetype}</td>
                       <td className="text-center">
-                        {new Date(file.uploadDate).toLocaleDateString()}
+                        {new Date(file.uploadDate).toLocaleDateString(
+                          undefined,
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
                       </td>
                       <td className="text-center">
                         {/* Delete Button */}

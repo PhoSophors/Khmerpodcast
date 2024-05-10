@@ -1,6 +1,5 @@
-// App.js
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import MainSection from "../container/mainSection/MainSection";
@@ -53,79 +52,27 @@ const App = () => {
               <Route path="/usercard" element={<UserCard />} />
               <Route path="/update-podcast" element={<UpdatePodcast />} />
 
-              {/* AdminRoute */}
-              <Route
-                path="/dashboard"
-                element={userRole === "admin" ? <Dashboard /> : <Login />}
-              />
-              <Route
-                path="/all-user"
-                element={userRole === "admin" ? <AllUser /> : <Login />}
-              />
-              <Route
-                path="/all-user-upload"
-                element={userRole === "admin" ? <FileManager /> : <Login />}
-              />
+              {/* Admin Routes */}
+              {userRole === "admin" ? (
+                <>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/all-user" element={<AllUser />} />
+                  <Route path="/all-user-upload" element={<FileManager />} />
+                </>
+              ) : (
+                <Route path="/dashboard" element={<Navigate to="/login" />} /> 
+              )}
 
-              {/* GuestRoute */}
-              <Route
-                path="/login"
-                element={
-                  <GuestRoute>
-                    <Login />
-                  </GuestRoute>
-                }
-              />
-              <Route
-                path="/register"
-                element={
-                  <GuestRoute>
-                    <Register />
-                  </GuestRoute>
-                }
-              />
-              <Route
-                path="/otp"
-                element={
-                  <GuestRoute>
-                    <Otp />
-                  </GuestRoute>
-                }
-              />
-              <Route
-                path="/forgotPassword"
-                element={
-                  <GuestRoute>
-                    <ForgotPassword />
-                  </GuestRoute>
-                }
-              />
+              {/* Guest Routes */}
+              <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+              <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
+              <Route path="/otp" element={<GuestRoute><Otp /></GuestRoute>} />
+              <Route path="/forgotPassword" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
 
-              {/* PrivateRoute */}
-              <Route
-                path="/favorite"
-                element={
-                  <PrivateRoute>
-                    <Favorith />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/setting"
-                element={
-                  <PrivateRoute>
-                    <Setting />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <PrivateRoute>
-                    <Profile />
-                  </PrivateRoute>
-                }
-              />
+              {/* Private Routes */}
+              <Route path="/favorite" element={<PrivateRoute><Favorith /></PrivateRoute>} />
+              <Route path="/setting" element={<PrivateRoute><Setting /></PrivateRoute>} />
+              <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
             </Routes>
           </>
         )}

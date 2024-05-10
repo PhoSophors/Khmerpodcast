@@ -21,7 +21,7 @@ const RightSection = ({ selectedMenuItem, onPodcastSelected, file }) => {
       content = <HomePage onPodcastSelected={onPodcastSelected} />;
       break;
     case "/search":
-      content = <Search onPodcastSelected={onPodcastSelected}/>;
+      content = <Search onPodcastSelected={onPodcastSelected} />;
       break;
     case "/favorite":
       content = <Favorith onPodcastSelected={onPodcastSelected} />;
@@ -48,7 +48,9 @@ const RightSection = ({ selectedMenuItem, onPodcastSelected, file }) => {
       content = <ViewDetailPodcast onPodcastSelected={onPodcastSelected} />;
       break;
     case "/update-podcast":
-      content = <UpdatePodcast file={file} onPodcastSelected={onPodcastSelected}/>;
+      content = (
+        <UpdatePodcast file={file} onPodcastSelected={onPodcastSelected} />
+      );
       break;
 
     default:

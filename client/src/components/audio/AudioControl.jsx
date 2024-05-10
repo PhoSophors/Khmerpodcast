@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   StepBackwardFilled,
   StepForwardOutlined,
@@ -9,17 +9,20 @@ import { useAudio } from "../../context/AudioContext";
 
 const AudioControl = () => {
   const audioRef = useRef();
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isDurationSet, setIsDurationSet] = useState(false);
   const {
     isPlaying,
     currentTrack,
     setIsPlaying,
-    currentPodcastIndex,
-    setCurrentPodcastIndex,
     setCurrentTrack,
     podcasts,
+    setCurrentPodcastIndex,
+    audioRef: globalAudioRef,
   } = useAudio();
 
-  const handlePlayPause = () => {
+  const toggleAudio = () => {
     setIsPlaying(!isPlaying);
   };
 
@@ -35,36 +38,60 @@ const AudioControl = () => {
   }, [isPlaying, currentTrack]);
 
   const handleNext = () => {
-    if (currentPodcastIndex < podcasts.length - 1) {
-      const newIndex = currentPodcastIndex + 1;
-      setCurrentPodcastIndex(newIndex);
-      setCurrentTrack(podcasts[newIndex].audio.url);
+    const index = podcasts.findIndex((podcast) => podcast.audio.url === currentTrack);
+    if (index < podcasts.length - 1) {
+      setCurrentPodcastIndex(index + 1);
+      setCurrentTrack(podcasts[index + 1].audio.url);
     }
   };
 
   const handlePrevious = () => {
-    if (currentPodcastIndex > 0) {
-      const newIndex = currentPodcastIndex - 1;
-      setCurrentPodcastIndex(newIndex);
-      setCurrentTrack(podcasts[newIndex].audio.url);
+    const index = podcasts.findIndex((podcast) => podcast.audio.url === currentTrack);
+    if (index > 0) {
+      setCurrentPodcastIndex(index - 1);
+      setCurrentTrack(podcasts[index - 1].audio.url);
     }
+  };
+
+  const handleSeekChange = (e) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = e.target.value;
+      setCurrentTime(e.target.value);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (!isDurationSet) {
+      setDuration(audioRef.current.duration);
+      setIsDurationSet(true);
+    }
+  };
+
+  const handleDurationChange = () => {
+    setDuration(audioRef.current.duration);
   };
 
   return (
     <div className="p-2 w-96 bg-slate-200 flex text-center items-center justify-center gap-5 rounded-xl">
-      <audio ref={audioRef} src={currentTrack} />
+      <audio
+        ref={audioRef}
+        src={currentTrack}
+        onLoadedMetadata={handleLoadedMetadata}
+        onDurationChange={handleDurationChange}
+        onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+      />
       <StepBackwardFilled
         onClick={handlePrevious}
         style={{ fontSize: "2rem", color: "#000" }}
       />
       {isPlaying ? (
         <PauseCircleFilled
-          onClick={handlePlayPause}
+          onClick={toggleAudio}
           style={{ fontSize: "2rem", color: "#000" }}
         />
       ) : (
         <PlayCircleFilled
-          onClick={handlePlayPause}
+          onClick={toggleAudio}
           style={{ fontSize: "2rem", color: "#000" }}
         />
       )}
@@ -72,6 +99,12 @@ const AudioControl = () => {
         onClick={handleNext}
         style={{ fontSize: "2rem", color: "#000" }}
       />
+      {/* <input
+        type="range"
+        value={currentTime}
+        max={duration}
+        onChange={handleSeekChange}
+      /> */}
     </div>
   );
 };

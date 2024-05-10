@@ -141,7 +141,7 @@ const Create = () => {
   };
 
   return (
-    <div className="mx-auto flex xl:p-8   ">
+    <div className="mx-auto flex xl:p-8">
       <div className="w-full p-2">
         <Card style={{ backgroundColor: "transparent" }}>
           <div className="uppercase tracking-wide text-xl text-indigo-500 font-semibold">
@@ -192,7 +192,7 @@ const Create = () => {
                         customRequest={() => {}}
                         fileList={fileList}
                         onChange={handleFileChange}
-                        accept=".aac, .mp3"
+                        accept=".aac, .mp3, .ogg "
                         showUploadList={false}
                       >
                         <div>{"+ Upload"}</div>

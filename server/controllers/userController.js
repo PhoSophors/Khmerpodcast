@@ -91,8 +91,14 @@ const getUsersCount = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
+  const { date } = req.query; // Get the date from the query parameters
   try {
-    const users = await User.find();
+    let users;
+    if (date) {
+      users = await User.find({ createdAt: { $gte: new Date(date) } });
+    } else {
+      users = await User.find();
+    }
     res.status(200).json({ users });
   } catch (error) {
     res.status(500).json({ error: error.message });

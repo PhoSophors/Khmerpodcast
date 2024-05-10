@@ -72,7 +72,10 @@ class MainSection extends Component {
   handleUpdatePodcast = () => {
     this.setState({ isUpdatePodcast: true });
   };
-
+  handleCloseDetailPodcast = () => {
+    this.setState({ selectedPodcast: null });
+  };
+  
   render() {
     const {
       isMobileView,
@@ -105,7 +108,7 @@ class MainSection extends Component {
             />
             <div className="content-card">
               {selectedPodcast ? (
-                <ViewDetailPodcast file={selectedPodcast} />
+                <ViewDetailPodcast file={selectedPodcast} onClose={this.handleCloseDetailPodcast}  />
               ) : (
                 <RightSection
                   selectedMenuItem={selectedMenuItem}

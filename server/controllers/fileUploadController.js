@@ -69,14 +69,21 @@ const uploadPodcast = async (req, res) => {
 
 // Function to get all files ================================================================
 const getAllFiles = async (req, res) => {
+  const { date } = req.query; 
   try {
-    const files = await File.find().sort({ createdAt: -1 });
+    let files;
+    if (date) {
+      files = await File.find({ createdAt: { $gte: new Date(date) } });
+    } else {
+      files = await File.find();
+    }
     res.status(200).json(files);
   } catch (error) {
     console.error("Error fetching files:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 // Function to get a random file
 const getRandomFilesHomePage = async (req, res) => {
   try {
@@ -208,24 +215,6 @@ const deleteFile = async (req, res) => {
 };
 
 // Function to get details of a file by ID ================================================================
-// const getFileById = async (req, res) => {
-//   try {
-//     const file = await File.findById(req.params.id).populate("user");
-//     if (!file) {
-//       return res.status(404).json({ message: "File not found" });
-//     }
-//     // Fetch the user who uploaded the file
-//     const user = await User.findById(file.user);
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
-
-//     res.json(file);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 const getFileById = async (req, res) => {
   try {
     const file = await File.findById(req.params.id).populate("user");

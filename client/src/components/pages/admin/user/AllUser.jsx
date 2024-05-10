@@ -6,18 +6,12 @@ import {
   Alert,
   Card,
   Avatar,
-  Menu,
-  Dropdown,
   Input,
   Space,
   message,
+  DatePicker,
 } from "antd";
-import {
-  UserOutlined,
-  MoreOutlined,
-  SearchOutlined,
-  DeleteFilled,
-} from "@ant-design/icons";
+import { UserOutlined, SearchOutlined, DeleteFilled } from "@ant-design/icons";
 import "../admin.css";
 
 const AllUser = () => {
@@ -25,6 +19,7 @@ const AllUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [dateRange, setDateRange] = useState([]);
   const authToken = Cookies.get("authToken");
 
   useEffect(() => {
@@ -67,7 +62,7 @@ const AllUser = () => {
       });
       if (response.status === 200) {
         message.success("User deleted successfully");
-        fetchAllUser(); // Assuming this function exists and fetches updated user data
+        fetchAllUser();
       } else {
         message.error("Unexpected response status: " + response.status);
       }
@@ -84,22 +79,48 @@ const AllUser = () => {
     setSearchQuery(value);
   };
 
-  const filteredUsers = allUser.filter(
-    (user) =>
-      user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleDateRangeChange = (dates) => {
+    if (dates && dates.length === 2) {
+      setDateRange(dates.map((date) => date.format("YYYY-MM-DD")));
+    } else {
+      setDateRange([]);
+    }
+  };
+
+  const filteredUsers = allUser.filter((user) => {
+    const userCreatedDate = new Date(user.createdAt);
+    const startDate = dateRange[0] ? new Date(dateRange[0]) : null;
+    const endDate = dateRange[1] ? new Date(dateRange[1]) : null;
+
+    return (
+      (!startDate || userCreatedDate >= startDate) &&
+      (!endDate || userCreatedDate <= endDate) &&
+      (user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  });
 
   return (
     <div className="p-5">
       <Card title="All Users" className="w-full">
         <Space direction="vertical" style={{ width: "100%" }}>
-          <Input
-            className="xl:w-96 w-full"
-            placeholder="Search users"
-            prefix={<SearchOutlined />}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
+          <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
+            <div className="w-full sm:w-1/2">
+              <Input
+                className="xl:w-96 w-full"
+                placeholder="Search users"
+                prefix={<SearchOutlined />}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
+            <div className="w-full sm:w-1/2 text-end">
+              <DatePicker.RangePicker
+                className="xl:w-96 w-full mb-3"
+                format="YYYY-MM-DD"
+                onChange={handleDateRangeChange}
+              />
+            </div>
+          </div>
           {loading ? (
             <div className="spin-container">
               <Spin size="large" />
@@ -120,10 +141,9 @@ const AllUser = () => {
                     <th className="text-start">Name *</th>
                     <th className="text-start">Email *</th>
                     <th className="text-start">Role</th>
-                    <th className="text-start">Status</th>
+                    <th className="text-start">Email Verify</th>
                     <th className="text-center">Create Date</th>
                     <th className="text-start">Delete User</th>
-                    {/* <th className="text-center">Action</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -156,32 +176,27 @@ const AllUser = () => {
                             user.emailVerified ? "bg-green-500" : "bg-red-500"
                           }`}
                         >
-                          {user.emailVerified ? "Active" : "Closed"}
+                          {user.emailVerified ? "True" : "False"}
                         </div>
                       </td>
                       <td className="text-center">
-                        {new Date(user.createdAt).toLocaleDateString()}
+                        {new Date(user.createdAt).toLocaleDateString(
+                          undefined,
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
                       </td>
                       <td className="text-center">
-                        <div onClick={handleDeleteUser} className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <div
+                          onClick={() => handleDeleteUser(user._id)}
+                          className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full"
+                        >
                           <DeleteFilled />
                         </div>
                       </td>
-                      {/* <td className="text-center">
-                        <Dropdown
-                          overlay={
-                            <Menu>
-                              <Menu.Item key="0">Edit</Menu.Item>
-                              <Menu.Item key="1" onClick={handleDeleteUser}>
-                                Delete
-                              </Menu.Item>
-                            </Menu>
-                          }
-                          trigger={["hover"]}
-                        >
-                          <MoreOutlined />
-                        </Dropdown>
-                      </td> */}
                     </tr>
                   ))}
                 </tbody>
