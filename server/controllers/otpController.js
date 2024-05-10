@@ -49,7 +49,6 @@ otpController.sendOTP = async (email, otp) => {
 
     // Step 5: Save the OTP to the database with a 1-minute expiry and count
     const emailOTP = new EmailOTP({
-      // userId: new mongoose.Types.ObjectId(),
       email,
       otp,
       expiresAt: new Date(Date.now() + 1 * 60 * 1000),
@@ -83,14 +82,15 @@ otpController.verifyOTP = async (req, res) => {
 
   try {
     // Find the OTP document
-    const emailOTP = await EmailOTP.findOne({ email });
+const emailOTP = await EmailOTP.findOne({ email });
+
     if (!emailOTP) {
       return res.status(404).json({ error: "OTP not found" });
     }
 
     // Check if the OTP has expired
     const currentTime = new Date();
-    if (currentTime > emailOTP.expiry) {
+    if (currentTime > emailOTP.expiresAt) {
       return res.status(401).json({ error: "OTP has expired" });
     }
 
@@ -106,6 +106,9 @@ otpController.verifyOTP = async (req, res) => {
     }
     user.emailVerified = true;
 
+    // Save the user and OTP details sequentially
+    await Promise.all([user.save(), emailOTP.save()]);
+
     // Sign the payload and create a JWT token
     const payload = {
       id: user._id,
@@ -115,7 +118,7 @@ otpController.verifyOTP = async (req, res) => {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "30d",
+      // expiresIn: "30d",
     });
 
     // Create a SHA-256 hash of the authToken
@@ -135,13 +138,13 @@ otpController.verifyOTP = async (req, res) => {
     res.cookie("token", hashedAuthToken, {
       httpOnly: true,
       secure: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      // maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 
     // If the OTPs match and the OTP has not expired, the verification is successful
     return res.status(200).json({
       message: "OTP verified successfully",
-      authToken: token,
+      // authToken: token,
     });
   } catch (error) {
     console.error("Error verifying OTP:", error);
@@ -150,5 +153,6 @@ otpController.verifyOTP = async (req, res) => {
       .json({ error: "An error occurred while verifying the OTP" });
   }
 };
+
 
 module.exports = otpController;

@@ -41,21 +41,21 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
 
   return (
     <div className="p-1 min-w-full min-h-100">
-      <div
-        onClick={handleViewPodcast}
-        className="p-3 mx-7 cursor-pointer  text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full"
-      >
-        <ArrowLeftOutlined />
-      </div>
-
       <Card
         style={{
           height: "100%",
-          backgroundColor: "transparent",
-          border: "none",
+          // backgroundColor: "transparent",
+          // border: "none",
         }}
       >
-        <div className="w-full container-view-podcast">
+        <div
+          onClick={handleViewPodcast}
+          className="p-3 mx-2 cursor-pointer  text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full"
+        >
+          <ArrowLeftOutlined />
+        </div>
+
+        <div className="w-full container-view-podcast mt-5">
           <Card
             style={{
               border: "none",

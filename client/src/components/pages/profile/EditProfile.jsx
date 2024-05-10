@@ -1,30 +1,55 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
-import { Form, Input, Button, message, Upload, Avatar, Modal } from "antd";
 import {
-  LeftOutlined,
-  UploadOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+  Form,
+  Input,
+  Button,
+  message,
+  Upload,
+  Avatar,
+  Modal,
+  Card,
+} from "antd";
 import ImgCrop from "antd-img-crop";
+import { useParams, useNavigate } from "react-router-dom";
 
-const EditProfile = ({ user }) => {
-  const [username, setUsername] = useState(user.username);
-  const [profileImage, setProfileImage] = useState(user.profileImage);
+const EditProfile = () => {
+  const [username, setUsername] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
   const [imageFileList, setImageFileList] = useState([]);
-  const [confirmVisible, setConfirmVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
-    setUsername(user.username);
-    setProfileImage(user.profileImage);
-  }, [user]);
+    const fetchData = async () => {
+      try {
+        const authToken = Cookies.get("authToken");
+
+        if (authToken && id) {
+          const response = await axios.get(`/auths/user-data/${id}`, {
+            baseURL: process.env.REACT_APP_PROXY,
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+
+          const userData = response.data.user;
+          setUsername(userData.username);
+          setProfileImage(userData.profileImage);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        message.error("Failed to fetch user data. Please try again later.");
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -36,7 +61,6 @@ const EditProfile = ({ user }) => {
       return;
     }
     if (info.file.status === "done") {
-      // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl) => {
         setProfileImage(imageUrl);
         setLoading(false);
@@ -68,13 +92,12 @@ const EditProfile = ({ user }) => {
     });
 
   const handleUpdateProfile = async () => {
-    setConfirmLoading(true);
     try {
       const authToken = Cookies.get("authToken");
 
-      if (authToken && user._id) {
+      if (authToken && id) {
         const response = await axios.put(
-          `http://localhost:4000/auths/user/${user._id}`,
+          `/auths/user/update/${id}`,
           {
             username,
             profileImage,
@@ -88,8 +111,7 @@ const EditProfile = ({ user }) => {
 
         if (response.status === 200) {
           message.success("Profile updated successfully");
-          // Refresh the page
-          window.location.reload();
+          navigate(`/`);
         } else {
           message.error("Failed to update profile. Please try again later.");
         }
@@ -97,84 +119,59 @@ const EditProfile = ({ user }) => {
         message.error("Authentication failed. Please log in again.");
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
       message.error("Failed to update profile. Please try again later.");
-    } finally {
-      setConfirmLoading(false);
-      setConfirmVisible(false);
-    }
+    } 
   };
 
   return (
-    <div>
-      <Button
-        className="back-button bg-slate-500 h- text-white mt-5"
-        type="text"
-        icon={<LeftOutlined />}
-      >
-        Back
-      </Button>
-
-      <div className="flex justify-center items-center mt-5">
-        <Form layout="vertical" className="w-96">
-          <Form.Item className="text-center">
-            <ImgCrop>
-              <Upload
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                listType="picture-card"
-                imageFileList={imageFileList}
-                onChange={handleProfileImageChange}
-                onPreview={handlePreview}
+    <div className="bg-slate-100">
+      <div className="flex flex-col w-full items-center justify-center h-screen text-center p-5">
+        <Card title="Edit Profile">
+          <Form layout="vertical" className="w-96">
+            <Form.Item className="text-center">
+              <ImgCrop>
+                <Upload
+                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                  listType="picture-card"
+                  imageFileList={imageFileList}
+                  onChange={handleProfileImageChange}
+                  onPreview={handlePreview}
+                >
+                  {imageFileList.length === 0 && (
+                    <Avatar src={profileImage} size={100} />
+                  )}
+                </Upload>
+              </ImgCrop>
+              <Modal
+                visible={previewOpen}
+                title={previewTitle}
+                footer={null}
+                onCancel={handleCancelPreview}
               >
-                {imageFileList.length === 0}
-                {loading ? (
-                  <LoadingOutlined />
-                ) : profileImage ? (
-                  <Avatar src={profileImage} size={100} />
-                ) : (
-                  <Avatar size={100} icon={<UploadOutlined />} />
-                )}
-              </Upload>
-            </ImgCrop>
-            <Modal
-              visible={previewOpen}
-              title={previewTitle}
-              footer={null}
-              onCancel={handleCancelPreview}
-            >
-              <img alt="preview" style={{ width: "100%" }} src={previewImage} />
-            </Modal>
-          </Form.Item>
-          <Form.Item label="Username *">
-            <Input
-              value={username}
-              onChange={handleUsernameChange}
-              className="input-field"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              className="submit-button"
-              type="primary"
-              onClick={() => setConfirmVisible(true)}
-              style={{
-                backgroundColor: "#3730a3",
-                color: "#ffffff",
-              }}
-            >
-              Save Changes
-            </Button>
-            <Modal
-              title="Confirm"
-              visible={confirmVisible}
-              onOk={handleUpdateProfile}
-              confirmLoading={confirmLoading}
-              onCancel={() => setConfirmVisible(false)}
-            >
-              <p>Are you sure you want to update your profile?</p>
-            </Modal>
-          </Form.Item>
-        </Form>
+                <img
+                  alt="preview"
+                  style={{ width: "100%" }}
+                  src={previewImage}
+                />
+              </Modal>
+            </Form.Item>
+            <Form.Item label="Username *">
+              <Input
+                value={username}
+                onChange={handleUsernameChange}
+                className="input-field"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                className=" w-full"
+                onClick={() => handleUpdateProfile(true)}
+              >
+                Save Changes
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
       </div>
     </div>
   );

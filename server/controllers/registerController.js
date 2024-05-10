@@ -40,43 +40,44 @@ registerController.register = async (req, res, next) => {
       return res.status(400).json({ error: "Passwords do not match" });
     }
 
+    // Generate OTP
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
     // Check if the email is already registered
     let existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      // If user exists and is verified, return error
       if (existingUser.emailVerified) {
-        return res.status(400).json({
-          error:
-            +email +
-            "This email already registered. Please login to the account.",
-        });
+        // Return error or handle the case where the user is already verified
       } else {
-        // If user exists but is not verified, resend OTP
-        const otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
-
         // Update the OTP and extend its validity
         existingUser.otp = otp;
         existingUser.otpExpires = Date.now() + 20 * 60 * 1000; // OTP valid for 20 minutes
-        await existingUser.save();
 
-        // Send OTP
-        const emailResult = await otpController.sendOTP(email, otp); // Send OTP to email
-        if (!emailResult) {
-          throw new Error("Error sending OTP");
+        try {
+          // Save the existing user sequentially
+          await existingUser.save();
+
+          // Send OTP
+          const emailResult = await otpController.sendOTP(email, otp); // Send OTP to email
+          if (!emailResult) {
+            throw new Error("Error sending OTP");
+          }
+
+          return res.status(200).json({
+            message:
+              "OTP has been sent to your email. Please verify your account.",
+          });
+        } catch (error) {
+          console.error("Error updating existing user:", error);
+          return res
+            .status(500)
+            .json({ error: "Error updating existing user" });
         }
-
-        return res.status(200).json({
-          message:
-            "OTP has been sent to your email. Please verify your account.",
-        });
       }
     }
 
-    // Rest of your registration code...
-
     // Send OTP
-    const otp = Math.floor(100000 + Math.random() * 900000); // Generate OTP
     const emailResult = await otpController.sendOTP(email, otp); // Send OTP to email
 
     if (!emailResult) {

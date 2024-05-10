@@ -27,6 +27,7 @@ import { AudioProvider } from "../context/AudioContext";
 import UpdatePodcast from "../components/pages/create/UpdatePodcast";
 import MainContainer from "../container/mainSection/MainContainer";
 import SideMenu from "../components/sidemenu/SideMenu";
+import EditProfile from "../components/pages/profile/EditProfile";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -58,6 +59,7 @@ const App = () => {
               <Route path="/search" element={<Search />} />
               <Route path="/usercard" element={<UserCard />} />
               <Route path="/update-podcast" element={<UpdatePodcast />} />
+              <Route path="/edit-profile/:id" element={<EditProfile />} />
 
               {/* Admin Routes */}
               {userRole === "admin" ? (

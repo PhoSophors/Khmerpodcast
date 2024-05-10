@@ -25,7 +25,7 @@ router.post("/reset-password", forgotPasswordController.resetPassword);
 /** user routes ====================================== */
 // update user
 router.put(
-  "/user/:id",
+  "/user/update/:id",
   verifyToken,
   checkRoleMiddleware(["user", "admin"]),
   userController.updateUser

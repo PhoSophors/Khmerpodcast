@@ -98,15 +98,12 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex grid xl:grid-cols-4 grid-cols-2 gap-2 sm:flex sm:gap-5 p-2">
-        <Card title="Total Users" className="w-full md:w-1/2 bg-red-400">
+        <Card title="Total Users" className="w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center text-gray-100">
-              <FontAwesomeIcon
-                icon={faUsers}
-                style={{ fontSize: "40px", marginRight: "10px" }}
-              />
+            <div className="p-3 flex justify-center text-gray-500 bg-red-200 h-20 w-20 flex justify-center items-center rounded-full">
+              <FontAwesomeIcon icon={faUsers} style={{ fontSize: "40px" }} />
             </div>
-            <h1 className="text-3xl font-semibold text-gray-100">
+            <h1 className="text-3xl font-semibold text-gray-600">
               {userCount}
             </h1>
           </div>
@@ -120,51 +117,39 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card title="Total Podcasts" className="w-full md:w-1/2 bg-red-400">
+        <Card title="Total Podcasts" className="w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center text-gray-100">
-              <FontAwesomeIcon
-                icon={faPodcast}
-                style={{ fontSize: "40px", marginRight: "10px" }}
-              />
+            <div className="p-3 flex justify-center text-gray-500 bg-green-200 h-20 w-20 flex justify-center items-center rounded-full">
+              <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-gray-100">
+            <h1 className="text-3xl font-semibold text-gray-600">
               {fileCount}
             </h1>
           </div>
         </Card>
 
-        <Card title="News Users" className="w-full md:w-1/2 bg-emerald-400">
+        <Card title="News Users" className="w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center text-gray-100">
-              <FontAwesomeIcon
-                icon={faUserPlus}
-                style={{ fontSize: "40px", marginRight: "10px" }}
-              />
+            <div className="p-3 flex justify-center text-white bg-red-400 h-20 w-20 flex justify-center items-center rounded-full">
+              <FontAwesomeIcon icon={faUserPlus} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-red-600">
-              App Maintenance
-            </h1>
+            <h1 className="text-3xl font-semibold text-red-600">Maintenance</h1>
           </div>
         </Card>
 
-        <Card title="News Podcast" className="w-full md:w-1/2 bg-emerald-400">
+        <Card title="News Podcast" className="w-full md:w-1/2 ">
           <div className="flex items-center justify-between">
-            <div className="flex items-center text-gray-100">
-              <FontAwesomeIcon
-                icon={faPodcast}
-                style={{ fontSize: "40px", marginRight: "10px" }}
-              />
+            <div className="p-3 flex justify-center text-white bg-red-400 h-20 w-20 flex justify-center items-center rounded-full">
+              <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-red-600">
-              App Maintenance
-            </h1>
+            <h1 className="text-3xl font-semibold text-red-600">Maintenance</h1>
           </div>
         </Card>
       </div>
+
       <div className="flex grid xl:grid-cols-2 grid-cols-1 gap-4 gap-2 sm:flex sm:gap-5 p-2">
         <Card title="User and File Counts">
           <div

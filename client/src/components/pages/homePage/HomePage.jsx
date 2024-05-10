@@ -83,7 +83,7 @@ const HomePage = () => {
         ) : (
           <>
             {/* <Banner/> */}
-            <div className="flex sm:p-0 md:p-0 xl:p-1 flex-wrap justify-center items-center translate-y-6">
+            <div className="flex sm:p-0 md:p-0 xl:p-1 flex-wrap justify-center items-center">
               {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
               {isViewPodcast ? (
                 <ViewDetailPodcast
