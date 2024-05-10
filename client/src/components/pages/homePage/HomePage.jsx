@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Button, Spin, message } from "antd";
 import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import CustomCard from "../../card/CustomCard";
+import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 // import Banner from "./Banner";
 import axios from "axios";
 import "./HomePage.css";
 
-const HomePage = ({ onPodcastSelected }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [startIndex, setStartIndex] = useState(0);
+const HomePage = () => {
+  // const [startIndex, setStartIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 50;
+
+  const [isViewPodcast, setIsViewPodcast] = useState(false);
+  const [selectedPodcast, setSelectedPodcast] = useState(null);
 
   const fetchRandomFile = async () => {
     try {
@@ -54,73 +57,83 @@ const HomePage = ({ onPodcastSelected }) => {
     fetchFiles(0);
   }, []);
 
-  // Function to handle next page
-  const handleNext = () => {
-    const nextPage = startIndex / cardsPerPage + 1;
-    const nextStartIndex = nextPage * cardsPerPage;
-    setStartIndex(nextStartIndex);
-    fetchFiles(nextPage);
-  };
+  // // Function to handle next page
+  // const handleNext = () => {
+  //   const nextPage = startIndex / cardsPerPage + 1;
+  //   const nextStartIndex = nextPage * cardsPerPage;
+  //   setStartIndex(nextStartIndex);
+  //   fetchFiles(nextPage);
+  // };
 
-  // Function to handle previous page
-  const handlePrevious = () => {
-    if (startIndex - cardsPerPage >= 0) {
-      setStartIndex(startIndex - cardsPerPage);
-    }
-  };
+  // // Function to handle previous page
+  // const handlePrevious = () => {
+  //   if (startIndex - cardsPerPage >= 0) {
+  //     setStartIndex(startIndex - cardsPerPage);
+  //   }
+  // };
 
   return (
-    <div className="xl:p-1 p-0 ">
-      {/* Display loading spinner if loading state is true */}
-      {loading || error ? (
-        <div className="spin-container">
-          <Spin size="large" />
-        </div>
-      ) : (
-        <>
-        {/* <Banner/> */}
-          <div className="flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center translate-y-6">
-            {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
-            {files
-              .slice(startIndex, startIndex + cardsPerPage)
-              .map((file, index) => (
-                <CustomCard
-                  key={file._id}
-                  index={index}
-                  hoveredIndex={hoveredIndex}
-                  setHoveredIndex={setHoveredIndex} // Pass setHoveredIndex function to CustomCard
-                  file={file} // Pass file data to CustomCard
-                  setSelectedPodcast={onPodcastSelected} // Pass setSelectedPodcast function to CustomCard
+    <>
+      <div className="xl:p-1 p-0 ">
+        {/* Display loading spinner if loading state is true */}
+        {loading || error ? (
+          <div className="spin-container">
+            <Spin size="large" />
+          </div>
+        ) : (
+          <>
+            {/* <Banner/> */}
+            <div className="flex sm:p-0 md:p-0 xl:p-1 flex-wrap justify-center items-center translate-y-6">
+              {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
+              {isViewPodcast ? (
+                <ViewDetailPodcast
+                  file={selectedPodcast}
+                  handleViewPodcast={() => setIsViewPodcast(false)}
                 />
-              ))}
-          </div>
+              ) : (
+                files.map((file, index) => (
+                  <CustomCard
+                    key={file.id}
+                    file={file}
+                    handleViewPodcast={() => {
+                      setIsViewPodcast(true);
+                      setSelectedPodcast(file);
+                    }}
+                  />
+                ))
+              )}
+            </div>
 
-          {/* Pagination buttons */}
-          <div className="w-full flex  justify-center mt-5 gap-5">
-            <Button
-              onClick={handlePrevious}
-              disabled={startIndex === 0}
-              type="dashed"
-              size={5}
-              icon={<StepBackwardFilled />}
-            >
-              Previous
-            </Button>
-            <Button
-              onClick={handleNext}
-              disabled={startIndex + cardsPerPage >= files.length}
-              type="dashed"
-              size={5}
-              icon={<StepForwardFilled />}
-            >
-              Next
-            </Button>
-          </div>
+            {/* Pagination buttons */}
+            {/* <div className="w-full flex  justify-center mt-5 gap-5">
+              <Button
+                onClick={handlePrevious}
+                disabled={startIndex === 0}
+                type="dashed"
+                size={5}
+                icon={<StepBackwardFilled />}
+              >
+                Previous
+              </Button>
+              <Button
+                onClick={handleNext}
+                disabled={startIndex + cardsPerPage >= files.length}
+                type="dashed"
+                size={5}
+                icon={<StepForwardFilled />}
+              >
+                Next
+              </Button>
+            </div> */}
 
-          <div className="p-5"></div>
-        </>
-      )}
-    </div>
+            <div className="mb-50 mt-20">
+              .
+            </div>
+
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -5,16 +5,12 @@ import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
 
-const FavoritesCard = ({ file, setSelectedPodcast }) => {
+const FavoritesCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleImageLoad = () => {
     setIsLoading(false);
-  };
-
-  const handleViewDetailPodcast = () => {
-    setSelectedPodcast(file);
   };
 
   const removePodcastFromFavorites = async () => {
@@ -110,10 +106,10 @@ const FavoritesCard = ({ file, setSelectedPodcast }) => {
                 }}
               >
                 <div
-                  onClick={handleViewDetailPodcast}
+                  onClick={handleViewPodcast}
                   className="hover:underline hover:italic cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
                 >
-                     {file.title}
+                  {file.title}
                 </div>
                 <p className="mt-2 text-slate-500 ">{file.description}</p>
               </div>

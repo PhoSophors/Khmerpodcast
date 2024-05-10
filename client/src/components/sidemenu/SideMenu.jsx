@@ -57,7 +57,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
 
 
   return (
-    <div>
+    <>
       <Menu
         className="side-menu-container "
         mode="inline"
@@ -172,7 +172,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
           </>
         )}
       </Menu>
-    </div>
+    </>
   );
 };
 

@@ -1,43 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Spin, message } from "antd";
+import { Card, Spin, message, Button } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
-import Cookies from "js-cookie";
 import "./viewpodcast.css";
 
-const ViewDetailPodcast = ({ file }) => {
+const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
-  const [user, setUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const id = Cookies.get("id");
-
-  const fetchUserDetails = async () => {
-    try {
-      const response = await axios.get(`/auths/user-data/${id}`, {
-        baseURL: process.env.REACT_APP_PROXY,
-      });
-      return response.data.user;
-    } catch (error) {
-      console.error(
-        "Error fetching user data:",
-        error.response?.data?.message || error.message
-      );
-    }
-  };
 
   const fetchFile = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`/files/get-file/${id}`);
+      const response = await axios.get(`/files/get-file/${file._id}`);
       if (response.data) {
-        const userDetails = await fetchUserDetails(response.data.user);
-        if (userDetails) {
-          setUser(userDetails);
-        } else {
-          message.error("Failed to fetch user details");
-        }
+        setLoading(false);
       } else {
         message.error("File data not found in response");
       }
@@ -46,14 +23,13 @@ const ViewDetailPodcast = ({ file }) => {
       if (error.response && error.response.status === 500) {
         console.error("Server error:", error.message);
       }
-    } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchFile();
-  }, [id]);
+  }, [file._id]);
 
   if (loading) {
     return (
@@ -64,14 +40,22 @@ const ViewDetailPodcast = ({ file }) => {
   }
 
   return (
-    <div className="p-1 ">
+    <div className="p-1 min-w-full min-h-100">
+      <div
+        onClick={handleViewPodcast}
+        className="p-3 mx-7 cursor-pointer  text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full"
+      >
+        <ArrowLeftOutlined />
+      </div>
+
       <Card
         style={{
-          height: `calc(100vh - 110px)`,
+          height: "100%",
           backgroundColor: "transparent",
+          border: "none",
         }}
       >
-        <div className="w-full container-view-podcast ">
+        <div className="w-full container-view-podcast">
           <Card
             style={{
               border: "none",
@@ -100,7 +84,7 @@ const ViewDetailPodcast = ({ file }) => {
                         marginRight: "10px",
                         minWidth: "15vw",
                         maxHeight: "15vw",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                     />
                   </div>
@@ -113,7 +97,7 @@ const ViewDetailPodcast = ({ file }) => {
                       maxHeight: "95px",
                     }}
                   >
-                    <div className="tracking-wide play-and-more-btn-laptop text-xl text-indigo-500 font-semibold">
+                    <div className="tracking-wide mt-5 play-and-more-btn-laptop text-xl text-indigo-500 font-semibold">
                       {file.title}
                     </div>
                   </div>

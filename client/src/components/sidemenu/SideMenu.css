@@ -10,7 +10,7 @@
 .side-menu-container {
   flex: 1;
   width: auto;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   font-size: 1rem;
@@ -20,7 +20,11 @@
   border: none;
   padding-bottom: 20px;
 }
+.ant-layout-sider-children {
+  background-color: var(--indigo-700);
+}
 
+/* style={{ display: 'flex', flexDirection: 'column', height: '100%' }} */
 
 .side-menu-container .ant-menu-item-selected {
   background: var(--sider-item-selected);
@@ -47,9 +51,10 @@
     position: fixed;
     top: 80px;
     right: 0;
-    z-index: 10;
-    height: calc(100vh - 80px);
+    z-index: 1;
+    height: calc(100% - 90px);
     padding: 0;
+    bottom: 10px;
     background-color: var(--main-color);
   }
 

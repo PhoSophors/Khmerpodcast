@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import { Form, Input, Button, message, Upload, Avatar, Modal } from "antd";
 import {
   LeftOutlined,
@@ -73,7 +74,7 @@ const EditProfile = ({ user }) => {
 
       if (authToken && user._id) {
         const response = await axios.put(
-          `http://localhost:4000/auths/user/${user._id}`, 
+          `http://localhost:4000/auths/user/${user._id}`,
           {
             username,
             profileImage,
@@ -110,7 +111,6 @@ const EditProfile = ({ user }) => {
         className="back-button bg-slate-500 h- text-white mt-5"
         type="text"
         icon={<LeftOutlined />}
-        // onClick={() => history.goBack()}
       >
         Back
       </Button>

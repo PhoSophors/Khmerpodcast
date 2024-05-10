@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import MainSection from "../container/mainSection/MainSection";
@@ -20,11 +25,13 @@ import FileManager from "../components/pages/admin/user/FileManager";
 import UserCard from "../components/card/UserCard";
 import { AudioProvider } from "../context/AudioContext";
 import UpdatePodcast from "../components/pages/create/UpdatePodcast";
+import MainContainer from "../container/mainSection/MainContainer";
+import SideMenu from "../components/sidemenu/SideMenu";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
-  
+
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     if (authToken) {
@@ -60,19 +67,68 @@ const App = () => {
                   <Route path="/all-user-upload" element={<FileManager />} />
                 </>
               ) : (
-                <Route path="/dashboard" element={<Navigate to="/login" />} /> 
+                <Route path="/dashboard" element={<Navigate to="/login" />} />
               )}
 
               {/* Guest Routes */}
-              <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-              <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-              <Route path="/otp" element={<GuestRoute><Otp /></GuestRoute>} />
-              <Route path="/forgotPassword" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
+              <Route
+                path="/login"
+                element={
+                  <GuestRoute>
+                    <Login />
+                  </GuestRoute>
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <GuestRoute>
+                    <Register />
+                  </GuestRoute>
+                }
+              />
+              <Route
+                path="/otp"
+                element={
+                  <GuestRoute>
+                    <Otp />
+                  </GuestRoute>
+                }
+              />
+              <Route
+                path="/forgotPassword"
+                element={
+                  <GuestRoute>
+                    <ForgotPassword />
+                  </GuestRoute>
+                }
+              />
 
               {/* Private Routes */}
-              <Route path="/favorite" element={<PrivateRoute><Favorith /></PrivateRoute>} />
-              <Route path="/setting" element={<PrivateRoute><Setting /></PrivateRoute>} />
-              <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+              <Route
+                path="/favorite"
+                element={
+                  <PrivateRoute>
+                    <Favorith />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/setting"
+                element={
+                  <PrivateRoute>
+                    <Setting />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </>
         )}

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Spin, Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
-import PlayBtn from "../Btn/MoreBtn";
+import PlayBtn from "../Btn/PlayBtn";
 import DeletePodcastBtn from "../Btn/DeletePodcastBtn";
 import "./card.css";
 
-const UserUploadCard = ({ file, setSelectedPodcast }) => {
+const UserUploadCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -13,9 +13,6 @@ const UserUploadCard = ({ file, setSelectedPodcast }) => {
     setIsLoading(false);
   };
 
-  const handleViewDetailPodcast = () => {
-    setSelectedPodcast(file);
-  };
 
   return (
     <div
@@ -80,7 +77,7 @@ const UserUploadCard = ({ file, setSelectedPodcast }) => {
                 }}
               >
                 <div
-                  onClick={handleViewDetailPodcast}
+                  onClick={handleViewPodcast}
                   className="hover:underline hover:italic cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
                 >
                   {file.title}

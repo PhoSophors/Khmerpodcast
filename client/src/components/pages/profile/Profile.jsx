@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Spin } from "antd";
-import { UserOutlined, LoginOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import EditProfile from "./EditProfile";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
+import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import UserUploadCard from "../../card/UserUploadCard";
+
 import { Avatar } from "antd";
 import "./Profile.css";
 
-const Profile = ({ onPodcastSelected }) => {
+const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [userPodcasts, setUserPodcasts] = useState([]);
   const { t } = useTranslation();
+  const [isViewPodcast, setIsViewPodcast] = useState(false);
+  const [selectedPodcast, setSelectedPodcast] = useState(null);
 
   const id = Cookies.get("id");
 
@@ -78,76 +81,86 @@ const Profile = ({ onPodcastSelected }) => {
   };
 
   return (
-    <div className="profile-container xl:p-0 ">
-      <Card
-        style={{
-          backgroundColor: "transparent",
-          borderRadius: "0",
-        }}
-        bodyStyle={{  padding: 0 }}
-        title={
-          <span>
-            <UserOutlined style={{ marginRight: "8px" }} />
-            {isEditingProfile
-              ? t("profile.editProfileTitle")
-              : t("profile.title")}
-          </span>
-        }
-      >
-        {isEditingProfile ? (
-          <EditProfile user={userData} />
-        ) : userData ? (
-          <div className="profile-content mt-5">
-            <Avatar
-              size={140}
-              icon={<UserOutlined />}
-              src={userData.profileImage} // Update to use the profile image URL
-              style={{ marginBottom: "16px" }}
-            />
-
-            <h1
-              style={{
-                fontSize: "40px",
-                fontWeight: "bold",
-                marginBottom: "8px",
-              }}
-            >
-              {userData.username}
-            </h1>
-
-            <Button
-              className="edit-button"
-              size="large"
-              onClick={handleEditProfile}
-            >
-              Edit profile
-            </Button>
-            <p className="hidden">User Token: </p>
-          </div>
-        ) : (
-          <div className="profile-content">
-          </div>
-        )}
-
-        {/* get all files in here */}
-        {isLoading || isError ? (
-          <div className="spin-container">
-            <Spin size="large" />
-          </div>
-        ) : (
-          <>
-            <div className="mt-10 flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
-              {userPodcasts.map((file, index) => (
-                <UserUploadCard key={index} 
-                file={file} 
-                setSelectedPodcast={onPodcastSelected} 
+    <>
+      {isViewPodcast && selectedPodcast ? (
+        <ViewDetailPodcast
+          file={selectedPodcast}
+          handleViewPodcast={() => setIsViewPodcast(false)}
+        />
+      ) : (
+        <div className="profile-container xl:p-0 ">
+          <Card
+            style={{
+              backgroundColor: "transparent",
+              borderRadius: "0",
+            }}
+            bodyStyle={{ padding: 0 }}
+            title={
+              <span>
+                <UserOutlined style={{ marginRight: "8px" }} />
+                {isEditingProfile
+                  ? t("profile.editProfileTitle")
+                  : t("profile.title")}
+              </span>
+            }
+          >
+            {isEditingProfile ? (
+              <EditProfile user={userData} />
+            ) : userData ? (
+              <div className="profile-content mt-5">
+                <Avatar
+                  size={140}
+                  icon={<UserOutlined />}
+                  src={userData.profileImage} // Update to use the profile image URL
+                  style={{ marginBottom: "16px" }}
                 />
-              ))}
-            </div>
-          </>
-        )}
-      </Card>
-    </div>
+
+                <h1
+                  style={{
+                    fontSize: "40px",
+                    fontWeight: "bold",
+                    marginBottom: "8px",
+                  }}
+                >
+                  {userData.username}
+                </h1>
+
+                <Button
+                  className="edit-button"
+                  size="large"
+                  onClick={handleEditProfile}
+                >
+                  Edit profile
+                </Button>
+                <p className="hidden">User Token: </p>
+              </div>
+            ) : (
+              <div className="profile-content"></div>
+            )}
+
+            {/* get all files in here */}
+            {isLoading || isError ? (
+              <div className="spin-container">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <div className="mt-10 flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
+                {userPodcasts.map((file, index) => (
+                  <UserUploadCard
+                    key={file.id}
+                    file={file}
+                    handleViewPodcast={() => {
+                      setIsViewPodcast(true);
+                      setSelectedPodcast(file);
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </Card>
+        </div>
+      )}
+    </>
   );
 };
 

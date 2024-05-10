@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FavoritesCard from "../../card/FavoritesCard";
 import Cookies from "js-cookie";
+import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import "./Favorith.css";
 
-const Favorith = ({ onPodcastSelected }) => {
+const Favorith = () => {
   const [favorites, setFavorites] = useState([]);
+  const [isViewPodcast, setIsViewPodcast] = useState(false);
+  const [selectedPodcast, setSelectedPodcast] = useState(null);
 
   useEffect(() => {
     const authToken = Cookies.get("authToken");
@@ -51,13 +54,25 @@ const Favorith = ({ onPodcastSelected }) => {
           </span>
         </div>
       ) : (
-        favorites.map((file, index) => (
-          <FavoritesCard
-            key={index}
-            file={file}
-            setSelectedPodcast={onPodcastSelected}
-          />
-        ))
+        <>
+          {isViewPodcast ? (
+            <ViewDetailPodcast
+              file={selectedPodcast}
+              handleViewPodcast={() => setIsViewPodcast(false)}
+            />
+          ) : (
+            favorites.map((file, index) => (
+              <FavoritesCard
+                key={file.id}
+                file={file}
+                handleViewPodcast={() => {
+                  setIsViewPodcast(true);
+                  setSelectedPodcast(file);
+                }}
+              />
+            ))
+          )}
+        </>
       )}
     </div>
   );
