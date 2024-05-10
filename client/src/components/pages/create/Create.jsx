@@ -145,7 +145,7 @@ const Create = () => {
   return (
     <div className="mx-auto flex xl:p-8">
       <div className="w-full p-2">
-        <Card style={{ backgroundColor: "transparent" }}>
+        <Card style={{ backgroundColor: "transparent", border: "none" }}>
           <div className="uppercase tracking-wide text-xl text-indigo-500 font-semibold">
             Upload Podcast
           </div>

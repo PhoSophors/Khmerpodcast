@@ -73,15 +73,15 @@ const Profile = () => {
   }, [id]);
 
   return (
-    <>
+    <div className="bg-white h-screen">
       {isViewPodcast && selectedPodcast ? (
         <ViewDetailPodcast
           file={selectedPodcast}
           handleViewPodcast={() => setIsViewPodcast(false)}
         />
       ) : (
-        <div className="flex grid xl:grid-cols-2 grid-cols-1 md:grid-cols-1 gap-2 sm:flex sm:gap-5 p-2">
-          <Card title="Profile">
+        <div className="flex grid xl:grid-cols-2 grid-cols-1 md:grid-cols-1 md:flex xl:p-2 md:p-2 p-0 xl:gap-2 md:gap-2 gap-2 ">
+          <Card className="profile-card">
             <div
               style={{
                 display: "flex",
@@ -132,7 +132,7 @@ const Profile = () => {
                   </span>
                 </div>
 
-                <Link  to={`/edit-profile/${id}`}>
+                <Link to={`/edit-profile/${id}`}>
                   <Button className="mt-10 w-full" size="large">
                     Edit profile
                   </Button>
@@ -142,10 +142,13 @@ const Profile = () => {
           </Card>
 
           <div className="col-span-2 w-full">
-            <Card title="Recent Podcasts">
+            <Card className="profile-card">
               {isLoading || isError ? (
                 <div className="spin-container">
-                  <Spin size="large" />
+                  {/* <Spin size="large" /> */}
+                  <p className="font-semibold text-gray-500 uppercase top-0">
+                    Not have Podcasts!
+                  </p>
                 </div>
               ) : (
                 <div className="flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
@@ -165,7 +168,7 @@ const Profile = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

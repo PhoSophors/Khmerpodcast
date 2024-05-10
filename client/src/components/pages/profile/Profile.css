@@ -1,3 +1,4 @@
+/*  Profile */
 .profile-container {
   justify-content: center;
   height: auto;
@@ -9,21 +10,39 @@
   align-items: center;
 }
 
-.edit-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  background-color: var(--sider-bg);
-  border-color: var(--sider-bg);
-  color: var(--white);
-  transition: background-color 0.3s; /* Add transition for smooth effect */
+.profile-card {
+  height: calc(100vh - 110px);
+  min-height: calc(100vh - 110px) !important;
+  /* border: none; */
 }
 
-.edit-button:hover {
- 
-  background-color: var(--slate-900) !important;
-  border-color: var(--slate-900) !important;
+@media screen and (max-width: 768px) {
+  .profile-card {
+    height: auto !important;
+    min-height: auto !important;
+    border: none ;
+  }
+}
+
+/* edit profile */
+.saveBtn {
+  background-color: var(--indigo-500);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  cursor: pointer;
+  bottom: -10px;
+}
+.saveBtn:hover {
+  background-color: var(--indigo-600) !important;
   color: var(--white) !important;
 }
-
+@media screen and (max-width: 768px) {
+  .edit-profile-card {
+    height: 100vh !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    border: none ;
+  }
+}

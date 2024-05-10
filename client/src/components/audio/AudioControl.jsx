@@ -72,7 +72,7 @@ const AudioControl = () => {
   // };
 
   return (
-    <div className="p-2 w-96 bg-slate-200 flex text-center items-center justify-center gap-5 rounded-xl">
+    <div className="p-2 w-96 bg-slate-100 flex text-center items-center justify-center gap-5 rounded-xl">
       <audio
         ref={audioRef}
         src={currentTrack}

@@ -14,8 +14,7 @@
   max-width: 400px;
   border-radius: 15px;
   border: 0;
-  /* background-color: var(--slate-100); */
-  background-color: white;
+  background-color: var(--slate-100);
 }
 
 .search-input:hover {

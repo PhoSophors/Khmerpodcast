@@ -9,7 +9,9 @@
   background-color: var(--white);
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
+  border: 0.1px solid rgba(128, 128, 128, 0.205);
 }
+
 .modal-logout {
   display: flex;
   flex-direction: column; 

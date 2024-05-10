@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "./Profile.css";
 import {
   Form,
   Input,
@@ -11,6 +12,7 @@ import {
   Modal,
   Card,
 } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import { useParams, useNavigate } from "react-router-dom";
 import { api_url } from "../../../api/config";
@@ -19,7 +21,7 @@ const EditProfile = () => {
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState("");
   // const [loading, setLoading] = useState(false);
-  const [ setLoading] = useState(false);
+  const [setLoading] = useState(false);
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -123,14 +125,14 @@ const EditProfile = () => {
       }
     } catch (error) {
       message.error("Failed to update profile. Please try again later.");
-    } 
+    }
   };
 
   return (
     <div className="bg-slate-100">
-      <div className="flex flex-col w-full items-center justify-center h-screen text-center p-5">
-        <Card title="Edit Profile">
-          <Form layout="vertical" className="w-96">
+      <div className="flex flex-col w-full items-center  justify-center h-screen text-center">
+        <Card title="Edit Profile" className="p-5 h-4/6 edit-profile-card">
+          <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
             <Form.Item className="text-center">
               <ImgCrop>
                 <Upload
@@ -167,8 +169,9 @@ const EditProfile = () => {
             </Form.Item>
             <Form.Item>
               <Button
-                className=" w-full"
                 onClick={() => handleUpdateProfile(true)}
+                className="saveBtn"
+                size="large"
               >
                 Save Changes
               </Button>

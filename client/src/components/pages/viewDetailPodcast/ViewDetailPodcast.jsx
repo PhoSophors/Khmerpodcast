@@ -29,7 +29,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
 
   useEffect(() => {
     fetchFile();
-  });
+  }, []);
 
   if (loading) {
     return (
@@ -40,14 +40,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   }
 
   return (
-    <div className="p-1 min-w-full min-h-100">
-      <Card
-        style={{
-          height: "100%",
-          // backgroundColor: "transparent",
-          // border: "none",
-        }}
-      >
+    <div className=" min-w-full ">
+      <Card className="view-podcast-card">
         <div
           onClick={handleViewPodcast}
           className="p-3 mx-2 cursor-pointer  text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full"
@@ -135,7 +129,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         <p className="mt-2 text-slate-500 xl:w-6/12 md:w-6/12 w-full">
           {file.description}
         </p>
-        <hr className="mt-5 mb-5" />
+        <hr className="mt-5" />
         {file.user && (
           <>
             <p className="">User ID: {file.user}</p>
