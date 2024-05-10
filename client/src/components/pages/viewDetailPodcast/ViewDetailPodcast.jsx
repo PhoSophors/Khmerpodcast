@@ -49,7 +49,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           <ArrowLeftOutlined />
         </div> */}
 
-        <Breadcrumb className="w-full bg-slate-100 p-2 rounded-xl">
+        <Breadcrumb className="w-full bg-slate-50 p-2 rounded-xl">
           <Breadcrumb.Item onClick={handleViewPodcast}>
             {/* <ArrowLeftOutlined /> Back */}
             Back
@@ -83,7 +83,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
                       alt={`.${file._id} hidden`}
                       style={{
                         borderRadius: "10px",
-                        marginRight: "10px",
+                        marginRight: "-10px",
                         minWidth: "15vw",
                         maxHeight: "15vw",
                         justifyContent: "center",
