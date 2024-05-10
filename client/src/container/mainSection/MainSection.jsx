@@ -40,7 +40,7 @@ class MainSection extends Component {
   // Function to handle window resize
   handleWindowResize = () => {
     // Update state based on window width
-    this.setState({ isMobileView: window.innerWidth <= 897 });
+    this.setState({ isMobileView: window.innerWidth <= 768 });
   };
 
   handleSelectMenuItem = (menuItem) => {

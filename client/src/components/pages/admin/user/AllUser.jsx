@@ -104,7 +104,7 @@ const AllUser = () => {
   });
 
   return (
-    <div className="p-5">
+    <div className="xl:p-5 md:p-5 p-0">
       <Card title="All Users" className="w-full">
         <Space direction="vertical" style={{ width: "100%" }}>
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">

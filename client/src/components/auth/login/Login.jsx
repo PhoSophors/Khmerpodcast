@@ -40,7 +40,6 @@ const Login = ({ visible, onCancel }) => {
         message.success("Login successful ");
 
         // Close the modal
-
         handleCancel();
 
         // refresh the page

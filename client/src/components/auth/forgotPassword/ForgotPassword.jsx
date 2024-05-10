@@ -100,7 +100,7 @@ const ForgotPassword = () => {
               </div>
 
               <Button
-                className="mt-5 bg-indigo-600 text-white w-36 h-12 animate-bounce rounded-full hover:none"
+                className="mt-5 bg-indigo-600 text-white w-36 h-12 rounded-full hover:none"
                 onClick={handleForgotPassword}
                 loading={loading}
                 style={{ float: "right" }}
@@ -138,7 +138,7 @@ const ForgotPassword = () => {
               </Form.Item>
               {error && <Alert message={error} type="error" />}
               <Button
-                className="mt-5 bg-indigo-600 text-white w-36 h-12 animate-bounce rounded-full hover:none"
+                className="mt-5 bg-indigo-600 text-white w-36 h-12 rounded-full hover:none"
                 onClick={handleVerifyOTP}
                 loading={loading}
                 style={{ float: "right" }}
@@ -176,7 +176,7 @@ const ForgotPassword = () => {
               </Form.Item>
               {error && <Alert message={error} type="error" />}
               <Button
-                  className="mt-5 bg-indigo-600 text-white w-36 h-12 animate-bounce rounded-full hover:none"
+                  className="mt-5 bg-indigo-600 text-white w-36 h-12 rounded-full hover:none"
                 onClick={handleResetPassword}
                 loading={loading}
                 style={{ float: "right" }}
