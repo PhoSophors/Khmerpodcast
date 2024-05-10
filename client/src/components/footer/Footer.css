@@ -1,13 +1,15 @@
 .footer-container {
   width: 100%;
   position: absolute;
+  z-index: 100;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: transparent;
   box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  /* padding: 10px; */
   bottom: 0;
   display: none;
+
 }
 
 @media screen and (max-width: 700px) {

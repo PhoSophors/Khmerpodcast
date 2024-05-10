@@ -80,27 +80,31 @@ const CustomCard = ({ file, handleViewPodcast }) => {
               </>
               {(isMobile || isHovered) && (
                 <div className="flex grid sm:grid-cols-2 sm:flex sm:gap-5">
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: "15px",
-                      right: "15px",
-                      zIndex: 2,
-                    }}
-                  >
-                    <PlayBtn file={file} />
-                  </div>
-                  <div
-                    className=" w-full sm:w-1/2"
-                    style={{
-                      position: "absolute",
-                      bottom: "17px",
-                      left: "15px",
-                      zIndex: 2,
-                    }}
-                  >
-                    <MoreBtn file={file} />
-                  </div>
+                  {!isMobile && (
+                    <>
+                      <div
+                        style={{
+                          position: "absolute",
+                          bottom: "15px",
+                          right: "15px",
+                          zIndex: 2,
+                        }}
+                      >
+                        <PlayBtn file={file} />
+                      </div>
+                      <div
+                        className=" w-full sm:w-1/2"
+                        style={{
+                          position: "absolute",
+                          bottom: "17px",
+                          left: "15px",
+                          zIndex: 2,
+                        }}
+                      >
+                        <MoreBtn file={file} />
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>

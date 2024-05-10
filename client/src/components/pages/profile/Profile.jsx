@@ -142,7 +142,7 @@ const Profile = () => {
           </Card>
 
           <div className="col-span-2 w-full">
-            <Card className="profile-card">
+            <Card className="profile-card"   bodyStyle={{ padding: 0 }}>
               {isLoading || isError ? (
                 <div className="spin-container">
                   {/* <Spin size="large" /> */}
