@@ -22,9 +22,7 @@ const AllUser = () => {
   const [dateRange, setDateRange] = useState([]);
   const authToken = Cookies.get("authToken");
 
-  useEffect(() => {
-    fetchAllUser();
-  }, []);
+ 
 
 
   const fetchAllUser = async () => {
@@ -50,6 +48,10 @@ const AllUser = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
 
   const handleDeleteUser = async (_id) => {
     try {
