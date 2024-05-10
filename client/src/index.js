@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./router/App";
 import "./index.css"; // Import the Tailwind CSS styles
+
 import { initReactI18next } from "react-i18next";
 import i18next from "i18next";
 import Cookies from "js-cookie";

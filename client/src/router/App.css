@@ -1,3 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100..900&display=swap');
+
+body {
+  font-family: 'Noto Sans Khmer', sans-serif;
+}
+
 .main-section {
   display: flex;
   flex-direction: row;
@@ -15,13 +22,12 @@
 }
 
 .footer {
-  background-color: #333;
   color: #fff;
   padding: 20px;
 }
 .right-section {
   flex: 1;
-  background-color: gainsboro;
+  /* background-color: gainsboro; */
   padding: 20px;
   border-radius: 20px;
   margin: 5px; /* Shorter syntax for margin */
