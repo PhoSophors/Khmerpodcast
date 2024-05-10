@@ -26,6 +26,7 @@ const AllUser = () => {
     fetchAllUser();
   }, []);
 
+
   const fetchAllUser = async () => {
     setLoading(true);
     try {

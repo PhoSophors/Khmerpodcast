@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Spin, message } from "antd";
-import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
+import { Spin, message } from "antd";
 import CustomCard from "../../card/CustomCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 // import Banner from "./Banner";
@@ -8,7 +7,6 @@ import axios from "axios";
 import "./HomePage.css";
 
 const HomePage = () => {
-  // const [startIndex, setStartIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);

@@ -17,11 +17,13 @@ import { useParams, useNavigate } from "react-router-dom";
 const EditProfile = () => {
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const [ setLoading] = useState(false);
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [imageFileList, setImageFileList] = useState([]);
+  // const [imageFileList, setImageFileList] = useState([]);
+  const [imageFileList] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
 

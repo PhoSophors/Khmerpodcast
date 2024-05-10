@@ -3,7 +3,8 @@ import { Card, DatePicker } from "antd";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Pie } from "react-chartjs-2";
-import Chart from "chart.js/auto";
+import { Chart } from "chart.js";
+import { ArcElement } from 'chart.js';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPodcast,
@@ -11,6 +12,9 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import "../admin.css";
+
+
+Chart.register(ArcElement);
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
@@ -20,7 +24,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchCounts();
-  }, [selectedDate]); // Call API whenever selectedDate changes
+  });
+// }, [selectedDate]);
 
   const fetchCounts = async () => {
     try {

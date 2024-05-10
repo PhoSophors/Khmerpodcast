@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Spin, message, Button } from "antd";
+import { Card, Spin, message } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
@@ -29,7 +29,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
 
   useEffect(() => {
     fetchFile();
-  }, [file._id]);
+  });
 
   if (loading) {
     return (

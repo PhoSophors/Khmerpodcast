@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, Card, Button, Input, Form, Modal, Alert, message } from "antd";
+import { Upload, Card, Button, Input, Form, Modal, message } from "antd";
 import "./create.css";
 import { CloseOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -10,7 +10,8 @@ import Cookies from "js-cookie";
 const Create = () => {
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [notification, setNotification] = useState("");
+  // const [notification, setNotification] = useState("");
+  const [ , setNotification] = useState("");
   // Image state
   const [imageFileList, setImageFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);

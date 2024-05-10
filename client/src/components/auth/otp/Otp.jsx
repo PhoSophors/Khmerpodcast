@@ -18,7 +18,8 @@ const Otp = () => {
     if (otpValues.join("").length === 6) {
       handleVerifyOTP();
     }
-  }, [otpValues]);
+  });
+  // }, [otpValues]);
 
   const handleInputChange = (e, index) => {
     const { value } = e.target;

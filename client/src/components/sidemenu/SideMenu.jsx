@@ -12,7 +12,8 @@ const SideMenu = ({ onSelectMenuItem }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("/");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [ ,setIsLoading] = useState(false);
   const { t } = useTranslation();
   const id = Cookies.get("id");
 
