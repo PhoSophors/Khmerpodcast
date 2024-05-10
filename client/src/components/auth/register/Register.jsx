@@ -53,8 +53,6 @@ const Register = () => {
 
   return (
     <>
-      
-
       <div className="register-form bg-white-100 mx-auto flex p-0 overflow-auto">
         <Card className="card ">
           <div className="items-center p-4">
@@ -96,11 +94,42 @@ const Register = () => {
                 />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 label={t("register.password")}
                 name="password"
                 rules={[
                   { required: true, message: t("register.passwordRequired") },
+                ]}
+              >
+                <Input.Password
+                  className="input-field"
+                  placeholder={t("register.passwordPlaceholder")}
+                />
+              </Form.Item> */}
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: t("register.passwordRequired"),
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      const passwordRegex =
+                        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
+                      if (!value || getFieldValue("password") === value) {
+                        if (!passwordRegex.test(value)) {
+                          return Promise.reject(
+                            new Error(
+                              "Password must contain at least one letter, one number."
+                            )
+                          );
+                        }
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error("Password not match!"));
+                    },
+                  }),
                 ]}
               >
                 <Input.Password

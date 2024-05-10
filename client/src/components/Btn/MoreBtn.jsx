@@ -144,9 +144,11 @@ const MoreBtn = ({ file }) => {
         )}
       </Menu.Item>
       <Menu.Item key="3">
-        <div onClick={handleToggleUpdateMode}>
-          <EditOutlined /> <span className="mx-2">Edit Podcast</span>
-        </div>
+      {/* {currentUser && currentUser._id === file.userId && ( */}
+          <div onClick={handleToggleUpdateMode}>
+            <EditOutlined /> <span className="mx-2">Edit Podcast</span>
+          </div>
+        {/* )} */}
       </Menu.Item>
     </Menu>
   );

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Spin, message } from "antd";
+import { Spin, message, Button } from "antd";
 import CustomCard from "../../card/CustomCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
-// import Banner from "./Banner";
+import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import axios from "axios";
 import "./HomePage.css";
 import { api_url } from "../../../api/config";
@@ -11,9 +11,11 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
   const cardsPerPage = 50;
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
+
 
   console.log(api_url);
   
@@ -58,20 +60,20 @@ const HomePage = () => {
     fetchFiles(0);
   }, []);
 
-  // // Function to handle next page
-  // const handleNext = () => {
-  //   const nextPage = startIndex / cardsPerPage + 1;
-  //   const nextStartIndex = nextPage * cardsPerPage;
-  //   setStartIndex(nextStartIndex);
-  //   fetchFiles(nextPage);
-  // };
+  // Function to handle next page
+  const handleNext = () => {
+    const nextPage = startIndex / cardsPerPage + 1;
+    const nextStartIndex = nextPage * cardsPerPage;
+    setStartIndex(nextStartIndex);
+    fetchFiles(nextPage);
+  };
 
-  // // Function to handle previous page
-  // const handlePrevious = () => {
-  //   if (startIndex - cardsPerPage >= 0) {
-  //     setStartIndex(startIndex - cardsPerPage);
-  //   }
-  // };
+  // Function to handle previous page
+  const handlePrevious = () => {
+    if (startIndex - cardsPerPage >= 0) {
+      setStartIndex(startIndex - cardsPerPage);
+    }
+  };
 
   return (
     <>
@@ -105,8 +107,13 @@ const HomePage = () => {
               )}
             </div>
 
-            {/* Pagination buttons */}
-            {/* <div className="w-full flex  justify-center mt-5 gap-5">
+           
+
+          </>
+        )}
+
+         {/* Pagination buttons */}
+         <div className="w-full flex  justify-center mt-5 gap-5 mb-10">
               <Button
                 onClick={handlePrevious}
                 disabled={startIndex === 0}
@@ -125,14 +132,12 @@ const HomePage = () => {
               >
                 Next
               </Button>
-            </div> */}
+            </div> 
 
-            <div className="mb-50 mt-20">
-              .
-            </div>
 
-          </>
-        )}
+      </div>
+      <div className="mt-20">
+
       </div>
     </>
   );

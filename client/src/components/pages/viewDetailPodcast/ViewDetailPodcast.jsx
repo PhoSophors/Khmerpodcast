@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Spin, message } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Card, Spin, message, Breadcrumb } from "antd";
+import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
@@ -42,12 +42,20 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   return (
     <div className=" min-w-full ">
       <Card className="view-podcast-card">
-        <div
+        {/* <div
           onClick={handleViewPodcast}
           className="p-3 mx-2 cursor-pointer  text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full"
         >
           <ArrowLeftOutlined />
-        </div>
+        </div> */}
+
+        <Breadcrumb className="w-full bg-slate-100 p-2 rounded-xl">
+          <Breadcrumb.Item onClick={handleViewPodcast}>
+            {/* <ArrowLeftOutlined /> Back */}
+            Back
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>View Podcast</Breadcrumb.Item>
+        </Breadcrumb>
 
         <div className="w-full container-view-podcast mt-5">
           <Card
