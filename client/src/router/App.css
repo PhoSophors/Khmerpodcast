@@ -23,12 +23,12 @@ body {
 
 .footer {
   color: #fff;
-  padding: 20px;
+  /* padding: 20px; */
 }
 .right-section {
   flex: 1;
   /* background-color: gainsboro; */
-  padding: 20px;
+  /* padding: 20px; */
   border-radius: 20px;
   margin: 5px; /* Shorter syntax for margin */
   margin-bottom: 110px; /* Adjusted to account for footer height */
