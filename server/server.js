@@ -12,6 +12,7 @@ const searchRoutes = require("./routes/searchRoutes");
 const storageRoutes = require("./routes/storageRoutes");
 const authenticateToken = require("./middleware/authenticateToken");
 const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
+const allowedOrigins = ['http://localhost:3000', 'https://khmerpodcast.vercel.app'];
 
 const crypto = require("crypto");
 // const googleRoutes = require("./routes/googleRoutes");
@@ -28,7 +29,13 @@ function generateRandomSecret(length = 32) {
 // Set up CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
