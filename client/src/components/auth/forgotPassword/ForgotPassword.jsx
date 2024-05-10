@@ -51,7 +51,7 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       await axios.post(
-        `{{api_url}/auths/reset-password`,
+        `${api_url}/auths/reset-password`,
         { email, newPassword },
         { withCredentials: true }
       );

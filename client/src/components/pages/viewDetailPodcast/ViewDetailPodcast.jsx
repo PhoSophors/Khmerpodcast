@@ -129,13 +129,13 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         <p className="mt-2 text-slate-500 xl:w-6/12 md:w-6/12 w-full">
           {file.description}
         </p>
-        <hr className="mt-5" />
-        {file.user && (
+
+        {/* {file.user && (
           <>
             <p className="">User ID: {file.user}</p>
             <p>Username: {file.user.username}</p>
           </>
-        )}
+        )} */}
       </Card>
     </div>
   );
