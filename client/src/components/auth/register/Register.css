@@ -7,15 +7,18 @@
   justify-content: center;
   align-items: center;
   overflow: auto;
+  background-color: white;
 }
 
 
 @media (max-width: 520px) {
   .register-form {
     overflow: auto;
+    background-color: white !important;
   }
   .card {
     height: 100vh;
+    background-color: white !important;
   }
   
 }
@@ -24,5 +27,6 @@
   .register-form {
     /* flex: 1; */
     overflow: auto;
+    background-color: white !important;
   }
 }

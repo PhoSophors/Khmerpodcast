@@ -55,7 +55,7 @@ const Register = () => {
     <>
       
 
-      <div className="register-form bg-slate-100 mx-auto flex p-0 overflow-auto">
+      <div className="register-form bg-white-100 mx-auto flex p-0 overflow-auto">
         <Card className="card ">
           <div className="items-center p-4">
             <h1 className="text-center mb-4 ">
