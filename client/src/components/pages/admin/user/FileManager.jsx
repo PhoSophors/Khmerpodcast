@@ -39,7 +39,7 @@ const FileManager = () => {
     try {
       if (authToken) {
         const response = await axios.get(
-          `/files/get-all-file?page=${page}&limit=${cardsPerPage}`,
+          `${process.env.REACT_APP_BACKEND_API}/files/get-all-file?page=${page}&limit=${cardsPerPage}`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,

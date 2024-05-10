@@ -40,7 +40,7 @@ const Create = () => {
       formData.append("title", title); // Append title and description to the formData
       formData.append("description", description);
       formData.append("imageFile", imageFileList[0].originFileObj); // Append the image file
-      await axios.post(`/files/upload?id=${id}`, formData, {
+      await axios.post(`${process.env.REACT_APP_BACKEND_API}/files/upload?id=${id}`, formData, {
         onUploadProgress: (progressEvent) => { 
           // Calculate the upload progress
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);

@@ -37,7 +37,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     if (authToken && id) {
       axios
         .get(`/auths/user-data/${id}`, {
-          baseURL: process.env.REACT_APP_PROXY,
+          baseURL: process.env.REACT_APP_BACKEND_API,
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

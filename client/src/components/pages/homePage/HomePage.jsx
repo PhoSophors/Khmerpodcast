@@ -19,7 +19,7 @@ const HomePage = () => {
 
   const fetchRandomFile = async () => {
     try {
-      const response = await axios.get("/files/get-random-file");
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/files/get-random-file`);
       return response.data;
     } catch (error) {
       console.error("Error fetching random file:", error);
@@ -32,7 +32,8 @@ const HomePage = () => {
 
     try {
       const response = await axios.get(
-        `/files/get-all-file?page=${page}&limit=${cardsPerPage}`
+        `${process.env.REACT_APP_BACKEND_API}/files/get-all-file?page=${page}&limit=${cardsPerPage}`
+
       );
       let files = response.data;
 

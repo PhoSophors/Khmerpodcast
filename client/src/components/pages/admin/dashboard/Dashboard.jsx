@@ -26,22 +26,26 @@ const Dashboard = () => {
     try {
       if (authToken) {
         // Fetch user count
-        const userResponse = await axios.get("/auths/users", {
-          baseURL: process.env.REACT_APP_PROXY,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-          params: { date: selectedDate }, // Pass selectedDate as query parameter
-        });
+        const userResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_API}/auths/users`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: { date: selectedDate }, // Pass selectedDate as query parameter
+          }
+        );
         setUserCount(userResponse.data.user);
 
         // Fetch file count
-        const fileResponse = await axios.get("/files/count", {
-          baseURL: process.env.REACT_APP_PROXY,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
+        const fileResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_API}/files/count`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
         setFileCount(fileResponse.data.count);
       }
     } catch (error) {
@@ -69,7 +73,7 @@ const Dashboard = () => {
   const fetchUserCountForDateRange = async (selectedDates) => {
     try {
       const response = await fetch(
-        `/api/users/count?start=${selectedDates[0]}&end=${selectedDates[1]}`
+        `${process.env.REACT_APP_BACKEND_API}/api/users/count?start=${selectedDates[0]}&end=${selectedDates[1]}`
       );
       const data = await response.json();
       return data.userCount;

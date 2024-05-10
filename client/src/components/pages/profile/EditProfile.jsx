@@ -31,7 +31,7 @@ const EditProfile = () => {
         const authToken = Cookies.get("authToken");
 
         if (authToken && id) {
-          const response = await axios.get(`/auths/user-data/${id}`, {
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/auths/user-data/${id}`, {
             baseURL: process.env.REACT_APP_PROXY,
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -97,7 +97,7 @@ const EditProfile = () => {
 
       if (authToken && id) {
         const response = await axios.put(
-          `/auths/user/update/${id}`,
+          `${process.env.REACT_APP_BACKEND_API}/auths/user/update/${id}`,
           {
             username,
             profileImage,

@@ -24,7 +24,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
       // Fetch user data if user is logged in
       axios
         .get(`/auths/user-data/${id}`, {
-          baseURL: process.env.REACT_APP_PROXY,
+          baseURL: process.env.REACT_APP_BACKEND_API,
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

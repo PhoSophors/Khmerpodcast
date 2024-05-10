@@ -45,7 +45,7 @@ const Otp = () => {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        "http://localhost:4000/auths/user/verify-otp",
+        `${process.env.REACT_APP_BACKEND_API}/auths/user/verify-otp`,
         {
           email,
           otp: otpValues.join(""),

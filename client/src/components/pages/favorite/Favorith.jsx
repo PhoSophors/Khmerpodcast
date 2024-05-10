@@ -13,8 +13,7 @@ const Favorith = () => {
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     axios
-      .get(`/files/get-all-favorite`, {
-        baseURL: process.env.REACT_APP_PROXY,
+      .get(`${process.env.REACT_APP_BACKEND_API}/files/get-all-favorite`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

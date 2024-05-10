@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
-import { useNavigate } from "react-router-dom";
 import {
   ShareAltOutlined,
   LinkOutlined,
@@ -29,7 +28,6 @@ import {
 const MoreBtn = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const navigate = useNavigate();
   const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
     const cookie = Cookies.get(`favorite-${file._id}`);
     return cookie ? JSON.parse(cookie) : false;
@@ -45,18 +43,16 @@ const MoreBtn = ({ file }) => {
       let response;
 
       if (isAddedToFavorites) {
-        response = await fetch(`/files/remove-favorite/${file._id}`, {
+        response = await fetch(`${process.env.REACT_APP_BACKEND_API}/files/remove-favorite/${file._id}`, {
           method: "POST",
-          baseUrl: process.env.REACT_APP_PROXY,
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${authToken}`,
           },
         });
       } else {
-        response = await fetch(`/files/favorite/${file._id}`, {
+        response = await fetch(`${process.env.REACT_APP_BACKEND_API}/files/favorite/${file._id}`, {
           method: "POST",
-          baseUrl: process.env.REACT_APP_PROXY,
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${authToken}`,
@@ -91,7 +87,7 @@ const MoreBtn = ({ file }) => {
     setIsModalVisible(false);
   };
 
-  const shareUrl = `http://localhost:3000/viewdetailpodcast/${file._id}`;
+  const shareUrl = `${process.env.REACT_APP_BACKEND_API}/${file._id}`;
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     message.success("Link copied to clipboard");

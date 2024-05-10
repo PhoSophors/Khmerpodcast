@@ -29,8 +29,6 @@ const CustomCard = ({ file, handleViewPodcast }) => {
         className="sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/6 w-1/2 p-1 "
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={handleViewPodcast}
-        
       >
         <Card
           hoverable
@@ -72,6 +70,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
               )}
               <>
                 <img
+                  onClick={handleViewPodcast}
                   className="w-full h-full object-cover"
                   alt={`.${file?._id}`}
                   src={file?.image?.url}

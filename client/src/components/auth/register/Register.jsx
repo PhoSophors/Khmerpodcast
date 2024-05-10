@@ -18,8 +18,7 @@ const Register = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.post("/auths/register", values, {
-        baseURL: process.env.REACT_APP_PROXY,
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API}/auths/register`, values, {
       });
       setIsLoading(true);
 

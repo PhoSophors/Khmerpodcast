@@ -19,9 +19,8 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
     try {
       let response;
 
-      response = await fetch(`/files/remove-favorite/${file._id}`, {
+      response = await fetch(`${process.env.REACT_APP_BACKEND_API}/files/remove-favorite/${file._id}`, {
         method: "POST",
-        baseUrl: process.env.REACT_APP_PROXY,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,

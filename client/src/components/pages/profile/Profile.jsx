@@ -26,8 +26,7 @@ const Profile = () => {
     if (authToken && id) {
       // Fetch user data if user is logged in
       axios
-        .get(`/auths/user-data/${id}`, {
-          baseURL: process.env.REACT_APP_PROXY,
+        .get(`${process.env.REACT_APP_BACKEND_API}/auths/user-data/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -50,8 +49,7 @@ const Profile = () => {
 
       // Fetch podcasts uploaded by the user
       axios
-        .get(`/files/get-file-by-user/${id}`, {
-          baseURL: process.env.REACT_APP_PROXY,
+        .get(`${process.env.REACT_APP_BACKEND_API}/files/get-file-by-user/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

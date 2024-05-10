@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { message, Input, Modal } from "antd";
@@ -19,7 +19,7 @@ const DeletePodcastBtn = ({ file }) => {
       return;
     }
     try {
-      const response = await axios.delete(`/files/delete/${deleteFileId}`, {
+      const response = await axios.delete(`${process.env.REACT_APP_BACKEND_API}/files/delete/${deleteFileId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
