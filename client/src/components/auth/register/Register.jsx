@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import SigninWithGoogles from "../signinWithGoogle/SignInWithGoogle";
 import { useTranslation } from "react-i18next";
+import { api_url } from "../../../api/config";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Register = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API}/auths/register`, values, {
+      const response = await axios.post(`${api_url}/auths/register`, values, {
       });
       setIsLoading(true);
 

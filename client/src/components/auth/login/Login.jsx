@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
+import { api_url } from "../../../api/config";
 
 const Login = ({ visible, onCancel }) => {
   const navigate = useNavigate();
@@ -21,8 +22,7 @@ const Login = ({ visible, onCancel }) => {
   const onFinish = async (values) => {
     try {
       setIsLoading(true);
-      const response = await axios.post("/auths/login", values, {
-        baseURL: process.env.REACT_APP_BACKEND_API,
+      const response = await axios.post(`${api_url}/auths/login`, values, {
         headers: {
           "Content-Type": "application/json",
         },

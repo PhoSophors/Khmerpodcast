@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { Pie } from "react-chartjs-2";
 import { Chart } from "chart.js";
 import { ArcElement } from 'chart.js';
+import { api_url } from "../../../../api/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPodcast,
@@ -32,7 +33,7 @@ const Dashboard = () => {
       if (authToken) {
         // Fetch user count
         const userResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_API}/auths/users`,
+          `${api_url}/auths/users`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -44,7 +45,7 @@ const Dashboard = () => {
 
         // Fetch file count
         const fileResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_API}/files/count`,
+          `${api_url}/files/count`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -78,7 +79,7 @@ const Dashboard = () => {
   const fetchUserCountForDateRange = async (selectedDates) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_API}/api/users/count?start=${selectedDates[0]}&end=${selectedDates[1]}`
+        `${api_url}/api/users/count?start=${selectedDates[0]}&end=${selectedDates[1]}`
       );
       const data = await response.json();
       return data.userCount;

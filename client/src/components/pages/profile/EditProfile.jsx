@@ -13,6 +13,7 @@ import {
 } from "antd";
 import ImgCrop from "antd-img-crop";
 import { useParams, useNavigate } from "react-router-dom";
+import { api_url } from "../../../api/config";
 
 const EditProfile = () => {
   const [username, setUsername] = useState("");
@@ -33,7 +34,7 @@ const EditProfile = () => {
         const authToken = Cookies.get("authToken");
 
         if (authToken && id) {
-          const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/auths/user-data/${id}`, {
+          const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
             baseURL: process.env.REACT_APP_PROXY,
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -99,7 +100,7 @@ const EditProfile = () => {
 
       if (authToken && id) {
         const response = await axios.put(
-          `${process.env.REACT_APP_BACKEND_API}/auths/user/update/${id}`,
+          `${api_url}/auths/user/update/${id}`,
           {
             username,
             profileImage,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
+import { api_url } from "../../api/config";
 import {
   ShareAltOutlined,
   LinkOutlined,
@@ -43,7 +44,7 @@ const MoreBtn = ({ file }) => {
       let response;
 
       if (isAddedToFavorites) {
-        response = await fetch(`${process.env.REACT_APP_BACKEND_API}/files/remove-favorite/${file._id}`, {
+        response = await fetch(`${api_url}/files/remove-favorite/${file._id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -51,7 +52,7 @@ const MoreBtn = ({ file }) => {
           },
         });
       } else {
-        response = await fetch(`${process.env.REACT_APP_BACKEND_API}/files/favorite/${file._id}`, {
+        response = await fetch(`${api_url}/files/favorite/${file._id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -87,7 +88,7 @@ const MoreBtn = ({ file }) => {
     setIsModalVisible(false);
   };
 
-  const shareUrl = `${process.env.REACT_APP_BACKEND_API}/${file._id}`;
+  const shareUrl = `${api_url}/${file._id}`;
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     message.success("Link copied to clipboard");

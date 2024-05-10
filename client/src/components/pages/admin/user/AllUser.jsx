@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { api_url } from "../../../../api/config";
 import {
   Spin,
   Alert,
@@ -29,7 +30,7 @@ const AllUser = () => {
     setLoading(true);
     try {
       if (authToken) {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/auths/users/all`, {
+        const response = await axios.get(`${api_url}/auths/users/all`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -55,7 +56,7 @@ const AllUser = () => {
 
   const handleDeleteUser = async (_id) => {
     try {
-      const response = await axios.delete(`${process.env.REACT_APP_BACKEND_API}/auths/delete/user/${_id}`, {
+      const response = await axios.delete(`${api_url}/auths/delete/user/${_id}`, {
         method: "DELETE",
         baseURL: process.env.REACT_APP_PROXY,
         headers: {

@@ -4,6 +4,7 @@ import FavoritesCard from "../../card/FavoritesCard";
 import Cookies from "js-cookie";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import "./Favorith.css";
+import { api_url } from "../../../api/config";
 
 const Favorith = () => {
   const [favorites, setFavorites] = useState([]);
@@ -13,7 +14,7 @@ const Favorith = () => {
   useEffect(() => {
     const authToken = Cookies.get("authToken");
     axios
-      .get(`${process.env.REACT_APP_BACKEND_API}/files/get-all-favorite`, {
+      .get(`${api_url}/files/get-all-favorite`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

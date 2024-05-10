@@ -4,6 +4,7 @@ import axios from "axios";
 import { SafetyOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import { api_url } from "../../../api/config";
 
 const Otp = () => {
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
@@ -46,7 +47,7 @@ const Otp = () => {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_API}/auths/user/verify-otp`,
+        `${api_url}/auths/user/verify-otp`,
         {
           email,
           otp: otpValues.join(""),

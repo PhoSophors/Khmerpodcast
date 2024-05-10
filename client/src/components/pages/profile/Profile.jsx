@@ -8,6 +8,7 @@ import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import UserUploadCard from "../../card/UserUploadCard";
 import { Avatar } from "antd";
 import "./Profile.css";
+import { api_url } from "../../../api/config";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -26,7 +27,7 @@ const Profile = () => {
     if (authToken && id) {
       // Fetch user data if user is logged in
       axios
-        .get(`${process.env.REACT_APP_BACKEND_API}/auths/user-data/${id}`, {
+        .get(`${api_url}/auths/user-data/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -49,7 +50,7 @@ const Profile = () => {
 
       // Fetch podcasts uploaded by the user
       axios
-        .get(`${process.env.REACT_APP_BACKEND_API}/files/get-file-by-user/${id}`, {
+        .get(`${api_url}/files/get-file-by-user/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

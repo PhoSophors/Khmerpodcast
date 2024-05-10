@@ -4,6 +4,7 @@ import Login from "../auth/login/Login";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "./Header.css";
+import { api_url } from "../../api/config";
 import logo from "../assets/logo.jpg";
 import { Avatar, Dropdown, Menu, Alert, Spin, message, Modal } from "antd";
 import {
@@ -36,8 +37,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
 
     if (authToken && id) {
       axios
-        .get(`/auths/user-data/${id}`, {
-          baseURL: process.env.REACT_APP_BACKEND_API,
+        .get(`${api_url}/auths/user-data/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

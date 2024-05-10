@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { message, Input, Modal } from "antd";
 import { CloseOutlined, DeleteFilled } from "@ant-design/icons";
+import { api_url } from "../../api/config";
 
 const DeletePodcastBtn = ({ file }) => {
   const authToken = Cookies.get("authToken");
@@ -20,7 +21,7 @@ const DeletePodcastBtn = ({ file }) => {
     }
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_BACKEND_API}/files/delete/${deleteFileId}`,
+        `${api_url}/files/delete/${deleteFileId}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,

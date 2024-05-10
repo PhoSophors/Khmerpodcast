@@ -7,6 +7,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
+import { api_url } from "../../api/config";
 
 const SideMenu = ({ onSelectMenuItem }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("/");
@@ -24,8 +25,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
       setIsLoading(true);
       // Fetch user data if user is logged in
       axios
-        .get(`/auths/user-data/${id}`, {
-          baseURL: process.env.REACT_APP_BACKEND_API,
+        .get(`${api_url}/auths/user-data/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

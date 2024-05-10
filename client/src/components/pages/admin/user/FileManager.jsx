@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import "../admin.css";
 import MoreBtn from "../../../Btn/MoreBtn";
+import { api_url } from "../../../../api/config";
 import DeletePodcastBtn from "../../../Btn/DeletePodcastBtn";
 import {
   StepBackwardFilled,
@@ -39,7 +40,7 @@ const FileManager = () => {
     try {
       if (authToken) {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_API}/files/get-all-file?page=${page}&limit=${cardsPerPage}`,
+          `${api_url}/files/get-all-file?page=${page}&limit=${cardsPerPage}`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,

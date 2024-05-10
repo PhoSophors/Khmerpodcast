@@ -5,6 +5,7 @@ import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 // import Banner from "./Banner";
 import axios from "axios";
 import "./HomePage.css";
+import { api_url } from "../../../api/config";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const HomePage = () => {
 
   const fetchRandomFile = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/files/get-random-file`);
+      const response = await axios.get(`${api_url}/files/get-random-file`);
       return response.data;
     } catch (error) {
       console.error("Error fetching random file:", error);
@@ -30,7 +31,7 @@ const HomePage = () => {
 
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_API}/files/get-all-file?page=${page}&limit=${cardsPerPage}`
+        `${api_url}/files/get-all-file?page=${page}&limit=${cardsPerPage}`
 
       );
       let files = response.data;

@@ -3,6 +3,7 @@ import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import "./search.css";
+import { api_url } from '../../../api/config';
 
 const SearchForm = ({ handleSearchSubmit }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,7 +25,7 @@ const SearchForm = ({ handleSearchSubmit }) => {
       try {
         let response;
         // Only search for podcasts
-        response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/search/podcasts`, {
+        response = await axios.get(`${api_url}/search/podcasts`, {
           params: {
             search: searchQuery,
           },

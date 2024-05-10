@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../login/Login.css";
 import logo from "../../assets/logo.jpg";
 import { useTranslation } from "react-i18next";
+import { api_url } from "../../../api/config";
 
 const ForgotPassword = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,7 +20,7 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     setLoading(true);
     try {
-      await axios.post("/auths/forgot-password", { email });
+      await axios.post(`${api_url}/auths/forgot-password`, { email });
       setCurrentStep(2);
       message.success("Please check your email for the OTP.");
     } catch (error) {
@@ -33,7 +34,7 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       await axios.post(
-        "/auths/reset-pass-verify-otp",
+        `${api_url}/auths/reset-pass-verify-otp`,
         { email, otp },
         { withCredentials: true }
       );
@@ -50,7 +51,7 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       await axios.post(
-        "/auths/reset-password",
+        `{{api_url}/auths/reset-password`,
         { email, newPassword },
         { withCredentials: true }
       );

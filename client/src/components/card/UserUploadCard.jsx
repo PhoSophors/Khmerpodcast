@@ -5,6 +5,7 @@ import PlayBtn from "../Btn/PlayBtn";
 import DeletePodcastBtn from "../Btn/DeletePodcastBtn";
 import "./card.css";
 
+
 const UserUploadCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);

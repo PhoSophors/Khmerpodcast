@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
+import { api_url } from "../../api/config";
 
 const FavoritesCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +20,7 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
     try {
       let response;
 
-      response = await fetch(`${process.env.REACT_APP_BACKEND_API}/files/remove-favorite/${file._id}`, {
+      response = await fetch(`${api_url}/files/remove-favorite/${file._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
