@@ -12,12 +12,10 @@ const HomePage = () => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
-  const cardsPerPage = 50;
+  const cardsPerPage = 10;
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
 
-
-  
   // const fetchRandomFile = async () => {
   //   try {
   //     const response = await axios.get(`${api_url}/files/get-random-file`);
@@ -34,7 +32,6 @@ const HomePage = () => {
     try {
       const response = await axios.get(
         `${api_url}/files/get-all-file?page=${page}&limit=${cardsPerPage}`
-
       );
       let files = response.data.reverse();
 
@@ -76,7 +73,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="xl:p-1 p-0 ">
+      <div className="xl:p-1 gap-2 p-0 ">
         {/* Display loading spinner if loading state is true */}
         {loading || error ? (
           <div className="spin-container">
@@ -85,7 +82,7 @@ const HomePage = () => {
         ) : (
           <>
             {/* <Banner/> */}
-            <div className="flex sm:p-0 md:p-0 xl:p-1 flex-wrap justify-center items-center">
+            <div className="flex sm:p-0 md:p-0 flex-wrap justify-center items-center">
               {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
               {isViewPodcast ? (
                 <ViewDetailPodcast
@@ -105,39 +102,32 @@ const HomePage = () => {
                 ))
               )}
             </div>
-
-           
-
           </>
         )}
 
-         {/* Pagination buttons */}
-         <div className="w-full flex  justify-center mt-5 gap-5 mb-10">
-              <Button
-                onClick={handlePrevious}
-                disabled={startIndex === 0}
-                type="dashed"
-                size={5}
-                icon={<StepBackwardFilled />}
-              >
-                Previous
-              </Button>
-              <Button
-                onClick={handleNext}
-                disabled={startIndex + cardsPerPage >= files.length}
-                type="dashed"
-                size={5}
-                icon={<StepForwardFilled />}
-              >
-                Next
-              </Button>
-            </div> 
-
-
+        {/* Pagination buttons */}
+        {/* <div className="w-full flex  justify-center mt-5 gap-5 mb-10">
+          <Button
+            onClick={handlePrevious}
+            disabled={startIndex === 0}
+            type="dashed"
+            size={5}
+            icon={<StepBackwardFilled />}
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={handleNext}
+            disabled={startIndex + cardsPerPage >= files.length}
+            type="dashed"
+            size={5}
+            icon={<StepForwardFilled />}
+          >
+            Next
+          </Button>
+        </div> */}
       </div>
-      <div className="mt-20">
-
-      </div>
+      <div className="mt-20"></div>
     </>
   );
 };

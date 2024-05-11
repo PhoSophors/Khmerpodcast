@@ -46,7 +46,8 @@ const Create = () => {
       await axios.post(`${api_url}/files/upload?id=${id}`, formData, {
         onUploadProgress: (progressEvent) => { 
           // Calculate the upload progress
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
           setUploadProgress(percentCompleted); // Update the upload progress state
         },
         headers: {
@@ -284,9 +285,9 @@ const Create = () => {
               </Form>
             </Card>
 
-            <div class="w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
+            <div class="w-full mt-5 bg-white rounded-full">
               <div
-                class="bg-indigo-500 text-xs font-medium text-blue-100 text-center p-0 leading-none rounded-full"
+                class="bg-indigo-500 text-xs font-medium text-white text-center p-0 leading-none rounded-full"
                 style={{ width: `${uploadProgress}%` }}
               >
                 {" "}
@@ -297,7 +298,7 @@ const Create = () => {
             {/* upload button */}
             <div className="mt-5 gap-5 mb-20">
               <Button
-                className="upload-button animate-bounce cursor-progress"
+                className="upload-button cursor-progress"
                 style={{ backgroundColor: "#4f46e5", color: "#ffffff" }}
                 onClick={handleUpload}
                 loading={loading}

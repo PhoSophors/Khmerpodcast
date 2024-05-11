@@ -246,9 +246,9 @@ const UpdatePodcast = ({ file }) => {
             </Form.Item>
           </Card>
 
-          <div class="w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
+          <div class="w-full mt-5 bg-white rounded-full ">
             <div
-              class="bg-indigo-500 text-xs font-medium text-blue-100 text-center p-0 leading-none rounded-full"
+              class="bg-indigo-500 text-xs font-medium text-white text-center p-0 leading-none rounded-full"
               style={{ width: `${uploadProgress}%`, height: "0.5rem" }}
             >
               {" "}

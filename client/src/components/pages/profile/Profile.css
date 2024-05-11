@@ -13,11 +13,23 @@
 .profile-card {
   height: calc(100vh - 110px);
   min-height: calc(100vh - 110px) !important;
+  overflow: auto;
+}
+.recent-upload-card {
+  height: calc(100vh - 110px);
+  min-height: calc(100vh - 110px) !important;
+  
   /* border: none; */
 }
 
 @media screen and (max-width: 768px) {
   .profile-card {
+    height: auto !important;
+    min-height: auto !important;
+    border: none ;
+    margin-bottom: 100px;
+  }
+  .recent-upload-card{
     height: auto !important;
     min-height: auto !important;
     border: none ;
