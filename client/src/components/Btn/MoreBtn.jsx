@@ -119,7 +119,7 @@ const MoreBtn = ({ file }) => {
     setIsModalVisible(false);
   };
 
-  const shareUrl = `${api_url}/${file._id}`;
+  const shareUrl = `https://khmerpodcast.vercel.app/${file._id}`;
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     message.success("Link copied to clipboard");
