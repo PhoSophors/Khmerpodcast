@@ -36,6 +36,7 @@ const MoreBtn = ({ file }) => {
     const cookie = Cookies.get(`favorite-${file._id}`);
     return cookie ? JSON.parse(cookie) : false;
   });
+  const authToken = Cookies.get("authToken");
   const id = Cookies.get("id");
 
   useEffect(() => {
@@ -43,10 +44,7 @@ const MoreBtn = ({ file }) => {
   }, [file._id, isAddedToFavorites]);
 
   useEffect(() => {
-    const authToken = Cookies.get("authToken");
-
     if (authToken) {
-      // setIsLoading(true);
       // Fetch user data if user is logged in
       axios
         .get(`${api_url}/auths/user-data/${id}`, {
@@ -183,11 +181,14 @@ const MoreBtn = ({ file }) => {
 
       {isLoggedIn && (
         <Menu.Item key="3">
-          {user && user._id === file.userId && (
-            <div onClick={handleToggleUpdateMode}>
-              <EditOutlined /> <span className="mx-2">Edit Podcast</span>
-            </div>
-          )}
+          {
+            // Only show the edit option if the user is the owner of the podcast
+            user && user._id === file.user._id && (
+              <div onClick={handleToggleUpdateMode}>
+                <EditOutlined /> <span className="mx-2">Edit Podcast</span>
+              </div>
+            )
+          }
         </Menu.Item>
       )}
     </Menu>
