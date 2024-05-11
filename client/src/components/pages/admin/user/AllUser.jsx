@@ -23,9 +23,6 @@ const AllUser = () => {
   const [dateRange, setDateRange] = useState([]);
   const authToken = Cookies.get("authToken");
 
- 
-
-
   const fetchAllUser = async () => {
     setLoading(true);
     try {
@@ -56,13 +53,16 @@ const AllUser = () => {
 
   const handleDeleteUser = async (_id) => {
     try {
-      const response = await axios.delete(`${api_url}/auths/delete/user/${_id}`, {
-        method: "DELETE",
-        baseURL: process.env.REACT_APP_PROXY,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await axios.delete(
+        `${api_url}/auths/delete/user/${_id}`,
+        {
+          method: "DELETE",
+          baseURL: process.env.REACT_APP_PROXY,
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
       if (response.status === 200) {
         message.success("User deleted successfully");
         fetchAllUser();
@@ -150,6 +150,7 @@ const AllUser = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  
                   {filteredUsers.map((user, index) => (
                     <tr key={user._id}>
                       <td className="text-center">{index + 1}</td>
@@ -193,12 +194,14 @@ const AllUser = () => {
                         )}
                       </td>
                       <td className="text-center">
-                        <div
-                          onClick={() => handleDeleteUser(user._id)}
-                          className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full"
-                        >
-                          <DeleteFilled />
-                        </div>
+                        {user.role !== "admin" && (
+                          <div
+                            onClick={() => handleDeleteUser(user._id)}
+                            className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full"
+                          >
+                            <DeleteFilled />
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}

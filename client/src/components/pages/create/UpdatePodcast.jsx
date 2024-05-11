@@ -5,6 +5,7 @@ import { Modal, Form, Input, Button, message, Upload, Card } from "antd";
 import ImgCrop from "antd-img-crop";
 import "./create.css";
 import { CloseOutlined } from "@ant-design/icons";
+import { api_url } from "../../../api/config";
 
 const UpdatePodcast = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(true);
@@ -44,7 +45,7 @@ const UpdatePodcast = ({ file }) => {
           setUploadProgress(percentCompleted); // Update the upload progress state
         },
       };
-      await axios.put(`/files/update/${file._id}`, formData, config);
+      await axios.put(`${api_url}/files/update/${file._id}`, formData, config);
       // Set the progress to 100% once the server response is received
       setUploadProgress(100);
       message.success("File updated successfully");
@@ -256,7 +257,7 @@ const UpdatePodcast = ({ file }) => {
           </div>
 
           <Button
-            className="upload-button mt-10 mb-5 animate-bounce "
+            className="upload-button mt-10 mb-5 "
             style={{ backgroundColor: "#f43f5e", color: "#ffffff" }}
             loading={loading}
             type="primary"

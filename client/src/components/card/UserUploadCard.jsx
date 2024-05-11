@@ -6,7 +6,7 @@ import DeletePodcastBtn from "../Btn/DeletePodcastBtn";
 import "./card.css";
 
 
-const UserUploadCard = ({ file, handleViewPodcast }) => {
+const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -100,7 +100,7 @@ const UserUploadCard = ({ file, handleViewPodcast }) => {
               </div>
               <DeletePodcastBtn file={file} />
               <>
-                <MoreBtn file={file} />
+                <MoreBtn file={file} userId={userId}/>
               </>
             </div>
           </div>

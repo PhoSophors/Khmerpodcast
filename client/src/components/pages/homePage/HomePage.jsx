@@ -17,17 +17,16 @@ const HomePage = () => {
   const [selectedPodcast, setSelectedPodcast] = useState(null);
 
 
-  console.log(api_url);
   
-  const fetchRandomFile = async () => {
-    try {
-      const response = await axios.get(`${api_url}/files/get-random-file`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching random file:", error);
-      throw error;
-    }
-  };
+  // const fetchRandomFile = async () => {
+  //   try {
+  //     const response = await axios.get(`${api_url}/files/get-random-file`);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error fetching random file:", error);
+  //     throw error;
+  //   }
+  // };
 
   const fetchFiles = async (page) => {
     setLoading(true);
@@ -37,14 +36,14 @@ const HomePage = () => {
         `${api_url}/files/get-all-file?page=${page}&limit=${cardsPerPage}`
 
       );
-      let files = response.data;
+      let files = response.data.reverse();
 
       // Fetch unique random files
-      const firstRandomFile = await fetchRandomFile();
+      // const firstRandomFile = await fetchRandomFile();
       // const lastRandomFile = await fetchRandomFile();
 
       // Replace first and last files with random ones
-      files[0] = firstRandomFile;
+      // files[0] = firstRandomFile;
       // files[files.length - 1] = lastRandomFile;
 
       setFiles(files);

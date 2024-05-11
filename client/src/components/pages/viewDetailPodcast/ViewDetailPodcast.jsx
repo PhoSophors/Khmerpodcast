@@ -7,7 +7,6 @@ import "./viewpodcast.css";
 import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
 
-
 const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -33,12 +32,15 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`${api_url}/get-file-by-user/${file.userId}`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-  
+      const response = await axios.get(
+        `${api_url}/get-file-by-user/${file.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
       if (response.data) {
         setUser(response.data);
       } else {
@@ -65,7 +67,6 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   return (
     <div className=" min-w-full ">
       <Card className="view-podcast-card">
-
         <Breadcrumb className="w-full bg-slate-50 p-2 rounded-xl cursor-pointer">
           <Breadcrumb.Item onClick={handleViewPodcast}>
             {/* <ArrowLeftOutlined /> Back */}
@@ -155,12 +156,14 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           {file.description}
         </p>
 
-        {/* {file.user && (
-          <>
-            <p className="">User ID: {file.user}</p>
-            <p>Username: {file._id}</p>
-          </>
-        )} */}
+        {user && (
+          <div>
+            {user._id}
+            <h2> name{user.username}</h2>
+            <p> email {user.email}</p>
+            {/* Display other user information here */}
+          </div>
+        )}
       </Card>
     </div>
   );
