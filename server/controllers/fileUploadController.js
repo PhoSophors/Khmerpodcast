@@ -33,8 +33,7 @@ const uploadPodcast = async (req, res) => {
     const file = new File({
       title: title,
       description: description,
-      // user: userId, // set user id
-      user: req.user.id,
+      user: req.user.id, // Set the user ID from the token
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,

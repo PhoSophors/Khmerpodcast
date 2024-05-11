@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Spin, message, Breadcrumb } from "antd";
-import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
+
 
 const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
@@ -42,14 +42,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   return (
     <div className=" min-w-full ">
       <Card className="view-podcast-card">
-        {/* <div
-          onClick={handleViewPodcast}
-          className="p-3 mx-2 cursor-pointer  text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full"
-        >
-          <ArrowLeftOutlined />
-        </div> */}
 
-        <Breadcrumb className="w-full bg-slate-50 p-2 rounded-xl">
+        <Breadcrumb className="w-full bg-slate-50 p-2 rounded-xl cursor-pointer">
           <Breadcrumb.Item onClick={handleViewPodcast}>
             {/* <ArrowLeftOutlined /> Back */}
             Back
@@ -99,7 +93,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
                       maxHeight: "95px",
                     }}
                   >
-                    <div className="tracking-wide mt-5 play-and-more-btn-laptop text-xl text-indigo-500 font-semibold">
+                    <div className=" mx-3 tracking-wide mt-5 play-and-more-btn-laptop text-xl text-indigo-500 font-semibold">
                       {file.title}
                     </div>
                   </div>
@@ -141,7 +135,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         {/* {file.user && (
           <>
             <p className="">User ID: {file.user}</p>
-            <p>Username: {file.user.username}</p>
+            <p>Username: {file._id}</p>
           </>
         )} */}
       </Card>
