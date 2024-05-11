@@ -12,7 +12,7 @@ const Create = () => {
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   // const [notification, setNotification] = useState("");
-  const [ , setNotification] = useState("");
+  const [, setNotification] = useState("");
   // Image state
   const [imageFileList, setImageFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -44,9 +44,11 @@ const Create = () => {
       formData.append("imageFile", imageFileList[0].originFileObj); // Append the image file
       formData.append("user", id); // Append the user ID
       await axios.post(`${api_url}/files/upload?id=${id}`, formData, {
-        onUploadProgress: (progressEvent) => { 
+        onUploadProgress: (progressEvent) => {
           // Calculate the upload progress
-          let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          let percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
           percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
           setUploadProgress(percentCompleted); // Update the upload progress state
         },
@@ -147,11 +149,15 @@ const Create = () => {
   return (
     <div className="mx-auto flex xl:p-8">
       <div className="w-full p-2">
-        <Card style={{ backgroundColor: "transparent", border: "none" }}>
-          <div className="uppercase tracking-wide text-xl text-indigo-500 font-semibold">
-            Upload Podcast
+        <Card
+          className=" text-center"
+          style={{ backgroundColor: "transparent", border: "none" }}
+          bodyStyle={{ padding: 0 }}
+        >
+          <div className="uppercase xl:text-start md:text-start text-ceter tracking-wide text-xl md:mt-3 mt-3 text-indigo-500 font-semibold">
+            Create Podcast
           </div>
-          <div className="tracking-wide text-sm text-gray-500">
+          <div className="tracking-wide text-start md:text-start text-ceter text-sm text-gray-500">
             Create an Podcast episode in a few simple steps.
           </div>
 
@@ -159,12 +165,14 @@ const Create = () => {
             <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5">
               {/* set two colum */}
               <div className="w-full sm:w-1/2">
-                <div className="mt-5 font-semibold text-gray-500 uppercase tracking-wide">
-                  Supported file types:
+                <div className="mt-5  text-start  font-semibold text-gray-500 uppercase tracking-wide">
+                  Audio Supported file types:
                 </div>
-                <div className="text-gray-500">Audio files: aac, mp3</div>
+                <div className="text-gray-500 text-start ">
+                  Audio files: aac, mp3
+                </div>
                 {/* upload audio */}
-                <Card title="Upload Audio " className="mt-5">
+                <Card className="mt-5">
                   {fileList.length > 0 ? (
                     <div className="audio-preview">
                       <div className="flex items-center">
@@ -199,7 +207,7 @@ const Create = () => {
                         accept=".aac, .mp3, .ogg "
                         showUploadList={false}
                       >
-                        <div>{"+ Upload"}</div>
+                        <div>{"Upload Audio"}</div>
                       </Upload>
                     </div>
                   )}
@@ -208,11 +216,13 @@ const Create = () => {
 
               {/* upload  thumbnail */}
               <div className="w-full sm:w-1/2 ">
-                <div className="mt-5 font-semibold text-gray-500 uppercase tracking-wide">
-                  Supported file types:
+                <div className="mt-5 text-start  font-semibold text-gray-500 uppercase tracking-wide">
+                  Thumnaill upported file types:
                 </div>
-                <div className="text-gray-500">Thumnaill files: jpeg, jpg</div>
-                <Card title="Upload Thumbnail" className="mt-5">
+                <div className="text-gray-500 text-start ">
+                  Thumnaill files: jpeg, jpg
+                </div>
+                <Card className="mt-5">
                   <ImgCrop>
                     <Upload
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
@@ -222,7 +232,7 @@ const Create = () => {
                       onChange={handleChange}
                       onPreview={handlePreview}
                     >
-                      {imageFileList.length === 0 && "+ Upload"}
+                      {imageFileList.length === 0 && "Upload Thumnaill"}
                     </Upload>
                   </ImgCrop>
                   <Modal
@@ -242,11 +252,11 @@ const Create = () => {
             </div>
 
             {/* input form */}
-            <Card title="Input Form" className="mt-5 create-card">
+            <Card className="mt-5 create-card">
               <Form variant="filled">
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
-                    <p className="font-semibold text-gray-500 uppercase tracking-wide">
+                    <p className="font-semibold  text-start text-gray-500 uppercase tracking-wide">
                       Title *
                     </p>
                     <Input.TextArea
@@ -260,7 +270,7 @@ const Create = () => {
                     />
                   </div>
                   <div className="w-full sm:w-3/5">
-                    <p className="font-semibold text-gray-500 uppercase tracking-wide">
+                    <p className="font-semibold text-start text-gray-500 uppercase tracking-wide">
                       Description *
                     </p>
                     <Input.TextArea

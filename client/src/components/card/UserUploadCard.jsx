@@ -79,7 +79,7 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
               >
                 <div
                   onClick={handleViewPodcast}
-                  className="hover:underline hover:italic cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
+                  className="hover:underline  hover:italic cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
                 >
                   {file.title}
                 </div>

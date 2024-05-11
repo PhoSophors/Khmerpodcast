@@ -165,6 +165,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           </div>
         )}
       </Card>
+
+      <div className="mt-20"></div>
     </div>
   );
 };

@@ -126,9 +126,11 @@ const HomePage = () => {
             Next
           </Button>
         </div> */}
+              
       </div>
-      <div className="mt-20"></div>
+      <div className="mt-20 text-white">.</div>
     </>
+    
   );
 };
 

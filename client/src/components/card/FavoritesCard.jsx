@@ -52,6 +52,7 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <Card
+        className="card-hover"
         style={{
           borderRadius: "20px",
         }}
