@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import {
   StepBackwardFilled,
   StepForwardOutlined,
@@ -9,10 +9,10 @@ import { useAudio } from "../../context/AudioContext";
 
 const AudioControl = () => {
   const audioRef = useRef();
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isDurationSet, setIsDurationSet] = useState(false);
-  const [podcastImage, setPodcastImage] = useState('');
+  // const [currentTime, setCurrentTime] = useState(0);
+  // const [duration, setDuration] = useState(0);
+  // const [isDurationSet, setIsDurationSet] = useState(false);
+  // const [podcastImage, setPodcastImage] = useState('');
   const {
     isPlaying,
     currentTrack,
@@ -20,7 +20,7 @@ const AudioControl = () => {
     setCurrentTrack,
     podcasts,
     setCurrentPodcastIndex,
-    audioRef: globalAudioRef,
+    // audioRef: globalAudioRef,
   } = useAudio();
 
   const toggleAudio = () => {
@@ -55,39 +55,39 @@ const AudioControl = () => {
     }
   };
 
-  const handleSeekChange = (e) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = e.target.value;
-      setCurrentTime(e.target.value);
-    }
-  };
+  // const handleSeekChange = (e) => {
+  //   if (audioRef.current) {
+  //     audioRef.current.currentTime = e.target.value;
+  //     setCurrentTime(e.target.value);
+  //   }
+  // };
 
-  const handleLoadedMetadata = () => {
-    if (!isDurationSet) {
-      setDuration(audioRef.current.duration);
-      setIsDurationSet(true);
-    }
-  };
+  // const handleLoadedMetadata = () => {
+  //   if (!isDurationSet) {
+  //     setDuration(audioRef.current.duration);
+  //     setIsDurationSet(true);
+  //   }
+  // };
 
-  const handleDurationChange = () => {
-    setDuration(audioRef.current.duration);
-  };
+  // const handleDurationChange = () => {
+  //   setDuration(audioRef.current.duration);
+  // };
 
-  const handlePodcastSelect = (podcast) => {
-    // Update the podcastImage state variable when a podcast is selected
-    setPodcastImage(podcast.image);
-    // alt={`.${file?._id}`}
-    // src={file?.image?.url}
-  };
+  // const handlePodcastSelect = (podcast) => {
+  //   // Update the podcastImage state variable when a podcast is selected
+  //   setPodcastImage(podcast.image);
+  //   // alt={`.${file?._id}`}
+  //   // src={file?.image?.url}
+  // };
 
   return (
     <div className="p-2 w-auto xl:bg-white md:bg-white bg-slate-100 flex text-center items-center justify-center gap-5 rounded-xl">
       <audio
         ref={audioRef}
         src={currentTrack}
-        onLoadedMetadata={handleLoadedMetadata}
-        onDurationChange={handleDurationChange}
-        onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+        // onLoadedMetadata={handleLoadedMetadata}
+        // onDurationChange={handleDurationChange}
+        // onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
       />
       <StepBackwardFilled
         onClick={handlePrevious}
@@ -130,13 +130,13 @@ const AudioControl = () => {
         onChange={handleSeekChange}
       /> */}
 
-      <input
+      {/* <input
       className="hidden"
         type="range"
         value={currentTime}
         max={duration}
         onChange={handleSeekChange}
-      />
+      /> */}
     </div>
   );
 };
