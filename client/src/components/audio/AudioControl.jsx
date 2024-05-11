@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   StepBackwardFilled,
   StepForwardOutlined,
@@ -9,9 +9,10 @@ import { useAudio } from "../../context/AudioContext";
 
 const AudioControl = () => {
   const audioRef = useRef();
-  // const [currentTime, setCurrentTime] = useState(0);
-  // const [duration, setDuration] = useState(0);
-  // const [isDurationSet, setIsDurationSet] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isDurationSet, setIsDurationSet] = useState(false);
+  const [podcastImage, setPodcastImage] = useState('');
   const {
     isPlaying,
     currentTrack,
@@ -19,7 +20,7 @@ const AudioControl = () => {
     setCurrentTrack,
     podcasts,
     setCurrentPodcastIndex,
-    // audioRef: globalAudioRef,
+    audioRef: globalAudioRef,
   } = useAudio();
 
   const toggleAudio = () => {
@@ -36,6 +37,7 @@ const AudioControl = () => {
       audioRef.current.pause();
     }
   }, [isPlaying, currentTrack]);
+  
 
   const handleNext = () => {
     const index = podcasts.findIndex((podcast) => podcast.audio.url === currentTrack);
@@ -53,58 +55,88 @@ const AudioControl = () => {
     }
   };
 
-  // const handleSeekChange = (e) => {
-  //   if (audioRef.current) {
-  //     audioRef.current.currentTime = e.target.value;
-  //     setCurrentTime(e.target.value);
-  //   }
-  // };
+  const handleSeekChange = (e) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = e.target.value;
+      setCurrentTime(e.target.value);
+    }
+  };
 
-  // const handleLoadedMetadata = () => {
-  //   if (!isDurationSet) {
-  //     setDuration(audioRef.current.duration);
-  //     setIsDurationSet(true);
-  //   }
-  // };
+  const handleLoadedMetadata = () => {
+    if (!isDurationSet) {
+      setDuration(audioRef.current.duration);
+      setIsDurationSet(true);
+    }
+  };
 
-  // const handleDurationChange = () => {
-  //   setDuration(audioRef.current.duration);
-  // };
+  const handleDurationChange = () => {
+    setDuration(audioRef.current.duration);
+  };
+
+  const handlePodcastSelect = (podcast) => {
+    // Update the podcastImage state variable when a podcast is selected
+    setPodcastImage(podcast.image);
+    // alt={`.${file?._id}`}
+    // src={file?.image?.url}
+  };
 
   return (
-    <div className="p-2 w-96 bg-slate-100 flex text-center items-center justify-center gap-5 rounded-xl">
+    <div className="p-2 w-auto xl:bg-white md:bg-white bg-slate-100 flex text-center items-center justify-center gap-5 rounded-xl">
       <audio
         ref={audioRef}
         src={currentTrack}
-        // onLoadedMetadata={handleLoadedMetadata}
-        // onDurationChange={handleDurationChange}
-        // onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+        onLoadedMetadata={handleLoadedMetadata}
+        onDurationChange={handleDurationChange}
+        onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
       />
       <StepBackwardFilled
         onClick={handlePrevious}
-        style={{ fontSize: "2rem", color: "#000" }}
+        style={{ fontSize: "2rem", color: "#f59e0b" }}
       />
       {isPlaying ? (
         <PauseCircleFilled
           onClick={toggleAudio}
-          style={{ fontSize: "2rem", color: "#000" }}
+          style={{ fontSize: "2rem", color: "#f59e0b" }}
         />
       ) : (
         <PlayCircleFilled
           onClick={toggleAudio}
-          style={{ fontSize: "2rem", color: "#000" }}
+          style={{ fontSize: "2rem", color: "#f59e0b" }}
         />
       )}
       <StepForwardOutlined
         onClick={handleNext}
-        style={{ fontSize: "2rem", color: "#000" }}
+        style={{ fontSize: "2rem", color: "#f59e0b" }}
       />
-      {/* <input
+
+
+
+      {/* <img 
+      alt={`.${podcasts?._id}`}
+      src={podcasts?.image?.url}
+       alt="Podcast" />
+      <div className="flex flex-col">
+        <span>{podcasts?.title}</span>
+        <span>{podcasts?.author}</span>
+
+      </div>
+      <span>
+        {currentTime}/{duration}
+      </span>
+      <input
         type="range"
         value={currentTime}
         max={duration}
         onChange={handleSeekChange}
       /> */}
+
+      <input
+      className="hidden"
+        type="range"
+        value={currentTime}
+        max={duration}
+        onChange={handleSeekChange}
+      />
     </div>
   );
 };

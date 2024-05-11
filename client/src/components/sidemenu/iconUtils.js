@@ -14,6 +14,7 @@ import {
   DashboardOutlined,
   FileTextFilled,
   FileTextOutlined,
+  LogoutOutlined,
  } from "@ant-design/icons";
 
 export const iconMapping = {
@@ -37,6 +38,10 @@ export const iconMapping = {
   "/all-user-upload": {
     selected:  <FileTextFilled />,
     default: < FileTextOutlined />
+  },
+  "/logout": {
+    selected:  <LogoutOutlined />,
+    default: < LogoutOutlined />
   },
 };
 

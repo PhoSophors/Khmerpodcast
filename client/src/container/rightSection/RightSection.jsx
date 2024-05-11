@@ -54,7 +54,8 @@ const RightSection = ({ selectedMenuItem, onPodcastSelected, file }) => {
       break;
 
     default:
-      content = "No Content";
+      // content = "No Content";
+      content = <HomePage onPodcastSelected={onPodcastSelected} />;
   }
 
   return (

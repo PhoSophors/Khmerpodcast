@@ -20,7 +20,7 @@ import { Drawer } from "antd";
 
 const Header = ({ handleCollapse, onSelectMenuItem }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
-  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [user, setUser] = useState(null);
@@ -80,31 +80,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     }, 3000);
   };
 
-  const handleLogout = () => {
-    // Open the logout confirmation modal
-    setLogoutModalVisible(true);
-  };
-
-  const handleConfirmLogout = () => {
-    // Clear user data and cookies
-    setUser(null);
-    setIsLoggedIn(false);
-
-    Cookies.remove("authToken");
-    Cookies.remove("id");
-
-    // Close the logout confirmation modal
-    setLogoutModalVisible(false);
-
-    // Refresh the page
-    window.location.reload();
-  };
-
-  const handleCancelLogout = () => {
-    // Close the logout confirmation modal
-    setLogoutModalVisible(false);
-  };
-
   const handleMenuItemClick = (e) => {
     onSelectMenuItem(e);
     handleMenuClick();
@@ -115,9 +90,9 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
       <Menu.Item key="2">
         <LanguageSwitcher />
       </Menu.Item>
-      <Menu.Item key="3" onClick={handleLogout}>
+      {/* <Menu.Item key="3">
         <LogoutOutlined /> Logout
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
 
@@ -248,37 +223,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
         />
       )}
       {/* Logout confirmation modal */}
-      <Modal
-        visible={logoutModalVisible}
-        onCancel={handleCancelLogout}
-        footer={null}
-        centered
-        width={300}
-        closeIcon={
-          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
-        }
-      >
-        <div className="modal-logout mt-10 flex flex-col items-center">
-          <img src={logo} alt="" />
-          <h1 className="text-center text-xl text-indigo-500 font-semibold mb-4 mt-5">
-            Are you sure you want to logout your account?
-          </h1>
-
-          <button
-            onClick={handleConfirmLogout}
-            className="bg-indigo-600 w-32 hover:bg-red-500 text-white p-10 font-bold py-2 px-4 rounded-3xl mt-5"
-          >
-            Logout
-          </button>
-
-          <button
-            onClick={handleCancelLogout}
-            className="text-slate-600 hover:text-indigo-600 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
-          >
-            Cancel
-          </button>
-        </div>
-      </Modal>
     </header>
   );
 };

@@ -1,6 +1,5 @@
 // SideMenu.js
 import React, { useState, useEffect } from "react";
-import { Menu } from "antd";
 import "./SideMenu.css";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
@@ -8,22 +7,23 @@ import Cookies from "js-cookie";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
 import { api_url } from "../../api/config";
+import { Menu, Modal } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
 const SideMenu = ({ onSelectMenuItem }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("/");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
-  const [ ,setIsLoading] = useState(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+  const [, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const id = Cookies.get("id");
 
   useEffect(() => {
     const authToken = Cookies.get("authToken");
-  
+
     if (authToken) {
       setIsLoading(true);
-      // Fetch user data if user is logged in
       axios
         .get(`${api_url}/auths/user-data/${id}`, {
           headers: {
@@ -33,19 +33,18 @@ const SideMenu = ({ onSelectMenuItem }) => {
         .then((response) => {
           const userData = response.data.user;
           if (userData) {
-            // Update user data only if valid data is received
             setUser(userData);
             setIsLoggedIn(true);
           }
         })
         .catch((error) => {
-          console.error('Failed to fetch user data:', error);
+          console.error("Failed to fetch user data:", error);
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [id]); // Add 'id' as a dependency
+  }, [id]);
 
   const handleAppClick = () => {
     window.location.reload();
@@ -56,6 +55,32 @@ const SideMenu = ({ onSelectMenuItem }) => {
     onSelectMenuItem(menuItem.key);
   };
 
+  //  =================== Logout Modal ===================
+
+  const handleConfirmLogout = () => {
+    // Clear user data and cookies
+    setUser(null);
+    setIsLoggedIn(false);
+
+    Cookies.remove("authToken");
+    Cookies.remove("id");
+
+    // Close the logout confirmation modal
+    setLogoutModalVisible(false);
+
+    // Refresh the page
+    window.location.reload();
+  };
+
+  const handleCancelLogout = () => {
+    // Close the logout confirmation modal
+    setLogoutModalVisible(false);
+  };
+
+  const handleLogout = () => {
+    // Open the logout confirmation modal
+    setLogoutModalVisible(true);
+  };
 
   return (
     <>
@@ -162,17 +187,46 @@ const SideMenu = ({ onSelectMenuItem }) => {
                 {t("siderMenu.profile")}
               </span>
             </Menu.Item>
-            <Menu.Item
-              key="/setting"
-              icon={getIcon("/setting", selectedMenuItem)}
-            >
-              <span onClick={() => handleMenuItemClick({ key: "/setting" })}>
-                {t("siderMenu.setting")}
-              </span>
+            <Menu.Item onClick={handleLogout} icon={getIcon("/logout")}>
+              <span>{t("siderMenu.logout")}</span>
             </Menu.Item>
           </>
         )}
       </Menu>
+
+      <>
+        <Modal
+          visible={logoutModalVisible}
+          onCancel={handleCancelLogout}
+          footer={null}
+          centered
+          width={300}
+          closeIcon={
+            <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
+          }
+        >
+          <div className="modal-logout mt-10 flex flex-col items-center">
+            <img src={logo} alt="" />
+            <h1 className="text-center text-xl text-indigo-500 font-semibold mb-4 mt-5">
+              Are you sure you want to logout your account?
+            </h1>
+
+            <button
+              onClick={handleConfirmLogout}
+              className="bg-indigo-600 w-32 hover:bg-red-500 text-white p-10 font-bold py-2 px-4 rounded-3xl mt-5"
+            >
+              Logout
+            </button>
+
+            <button
+              onClick={handleCancelLogout}
+              className="text-slate-600 hover:text-indigo-600 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
+      </>
     </>
   );
 };

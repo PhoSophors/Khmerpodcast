@@ -9,7 +9,8 @@
     "admin": "Admin",
     "dashboard": "Dashboard",
     "allUsers": "All Users",
-    "fileManager": "File Manager"
+    "fileManager": "File Manager",
+    "logout": "ចាកចេញ"
   },
 
   "login" : {
