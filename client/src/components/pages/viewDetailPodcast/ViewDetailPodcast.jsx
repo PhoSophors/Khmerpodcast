@@ -67,7 +67,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   return (
     <div className=" min-w-full ">
       <Card className="view-podcast-card">
-        <Breadcrumb className="w-full bg-slate-50 p-2 rounded-xl cursor-pointer">
+        <Breadcrumb className="w-full bg-slate-100 p-3 rounded-xl cursor-pointer">
           <Breadcrumb.Item onClick={handleViewPodcast}>
             {/* <ArrowLeftOutlined /> Back */}
             Back

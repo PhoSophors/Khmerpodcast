@@ -206,7 +206,7 @@ const MoreBtn = ({ file }) => {
   return (
     <div>
       {/* bg-indigo-600  */}
-      <div className="p-3 text-white bg-indigo-600   h-8 w-8 flex justify-center items-center rounded-full">
+      <div className="p-3 text-white bg-amber-400   h-8 w-8 flex justify-center items-center rounded-full">
         <Dropdown overlay={shareMenu} trigger={["click"]}>
           <MoreOutlined
             style={{

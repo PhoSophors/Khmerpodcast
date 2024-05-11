@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Spin, message, Button } from "antd";
+import { Spin, message } from "antd";
 import CustomCard from "../../card/CustomCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
-import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
+// import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import axios from "axios";
 import "./HomePage.css";
 import { api_url } from "../../../api/config";
@@ -11,7 +11,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
-  const [startIndex, setStartIndex] = useState(0);
+  // const [startIndex, setStartIndex] = useState(0);
   const cardsPerPage = 10;
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
@@ -56,20 +56,20 @@ const HomePage = () => {
     fetchFiles(0);
   }, []);
 
-  // Function to handle next page
-  const handleNext = () => {
-    const nextPage = startIndex / cardsPerPage + 1;
-    const nextStartIndex = nextPage * cardsPerPage;
-    setStartIndex(nextStartIndex);
-    fetchFiles(nextPage);
-  };
+  // // Function to handle next page
+  // const handleNext = () => {
+  //   const nextPage = startIndex / cardsPerPage + 1;
+  //   const nextStartIndex = nextPage * cardsPerPage;
+  //   setStartIndex(nextStartIndex);
+  //   fetchFiles(nextPage);
+  // };
 
-  // Function to handle previous page
-  const handlePrevious = () => {
-    if (startIndex - cardsPerPage >= 0) {
-      setStartIndex(startIndex - cardsPerPage);
-    }
-  };
+  // // Function to handle previous page
+  // const handlePrevious = () => {
+  //   if (startIndex - cardsPerPage >= 0) {
+  //     setStartIndex(startIndex - cardsPerPage);
+  //   }
+  // };
 
   return (
     <>

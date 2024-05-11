@@ -1,4 +1,14 @@
 
+
+.card-hover:hover {
+  background-color: var(--gray-100);
+  /* border: none !important; */
+}
+
+
+
+
+
 @media (max-width: 868px) {
   .date-element {
     display: none;

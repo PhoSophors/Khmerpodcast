@@ -3,18 +3,15 @@ import { Card, DatePicker } from "antd";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Pie } from "react-chartjs-2";
-import { Chart } from "chart.js";
-import { ArcElement } from 'chart.js';
-import { api_url } from "../../../../api/config";
+import { Chart, ArcElement } from "chart.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPodcast,
   faUserPlus,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+import { api_url } from "../../../../api/config";
 import "../admin.css";
-
-
 Chart.register(ArcElement);
 
 const Dashboard = () => {
@@ -25,33 +22,26 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchCounts();
-  });
-// }, [selectedDate]);
+  }, [selectedDate]);
 
   const fetchCounts = async () => {
     try {
       if (authToken) {
         // Fetch user count
-        const userResponse = await axios.get(
-          `${api_url}/auths/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-            params: { date: selectedDate }, // Pass selectedDate as query parameter
-          }
-        );
+        const userResponse = await axios.get(`${api_url}/auths/users`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+          params: { date: selectedDate },
+        });
         setUserCount(userResponse.data.user);
 
         // Fetch file count
-        const fileResponse = await axios.get(
-          `${api_url}/files/count`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
+        const fileResponse = await axios.get(`${api_url}/files/count`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
         setFileCount(fileResponse.data.count);
       }
     } catch (error) {
@@ -90,18 +80,12 @@ const Dashboard = () => {
   };
 
   const handleDateChange = async (dates) => {
-    if (dates && dates.length === 2) {
-      // If both start and end dates are selected
-      const selectedDates = dates.map((date) => date.format("YYYY-MM-DD"));
-      setSelectedDate(selectedDates);
-
-      // Fetch the user count for the selected date range
-      // Replace this with your actual function to fetch the user count
-      const count = await fetchUserCountForDateRange(selectedDates);
+    if (dates && dates.length === 1) {
+      const count = await fetchUserCountForDateRange([dates[0], dates[0]]);
       setUserCount(count);
     } else {
-      setSelectedDate(null); // Reset selectedDate if dates are not selected properly
-      setUserCount(0); // Reset userCount if dates are not selected properly
+      setSelectedDate(null);
+      setUserCount(0);
     }
   };
 
@@ -110,7 +94,7 @@ const Dashboard = () => {
       <div className="flex grid xl:grid-cols-4 grid-cols-2 gap-2 sm:flex sm:gap-5 p-2">
         <Card title="Total Users" className="w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="p-3 flex justify-center text-gray-500 bg-red-200 h-20 w-20 flex justify-center items-center rounded-full">
+            <div className="p-3 flex justify-center bg-green-200 h text-gray-500 h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faUsers} style={{ fontSize: "40px" }} />
             </div>
             <h1 className="text-3xl font-semibold text-gray-600">
@@ -119,7 +103,7 @@ const Dashboard = () => {
           </div>
           {/* Date Picker */}
           <div className="mt-4">
-            <DatePicker.RangePicker
+            <DatePicker
               className="w-full"
               format="YYYY-MM-DD"
               onChange={handleDateChange} // Call handleDateChange on date selection
@@ -129,7 +113,7 @@ const Dashboard = () => {
 
         <Card title="Total Podcasts" className="w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="p-3 flex justify-center text-gray-500 bg-green-200 h-20 w-20 flex justify-center items-center rounded-full">
+            <div className="p-3 flex justify-center text-gray-500 bg-red-200  h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
@@ -161,7 +145,7 @@ const Dashboard = () => {
       </div>
 
       <div className="flex grid xl:grid-cols-2 grid-cols-1 gap-4 gap-2 sm:flex sm:gap-5 p-2">
-        <Card title="User and File Counts">
+        <Card title="Users and Podcasts Counts">
           <div
             style={{
               display: "flex",

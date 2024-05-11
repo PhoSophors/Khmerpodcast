@@ -73,7 +73,7 @@ const Profile = () => {
   }, [id]);
 
   return (
-    <div className="bg-white h-screen">
+    <div className="bg-white h-screen ">
       {isViewPodcast && selectedPodcast ? (
         <ViewDetailPodcast
           file={selectedPodcast}

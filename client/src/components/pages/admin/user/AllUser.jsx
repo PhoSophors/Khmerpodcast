@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { api_url } from "../../../../api/config";
+import DeleteUserBtn from "../../../Btn/DeleteUserBtn";
 import {
   Spin,
   Alert,
@@ -12,7 +13,7 @@ import {
   message,
   DatePicker,
 } from "antd";
-import { UserOutlined, SearchOutlined, DeleteFilled } from "@ant-design/icons";
+import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import "../admin.css";
 
 const AllUser = () => {
@@ -33,7 +34,7 @@ const AllUser = () => {
           },
         });
         if (Array.isArray(response.data.users)) {
-          setAllUser(response.data.users);
+          setAllUser(response.data.users.reverse());
         } else {
           setError(
             "Expected array but received: " + JSON.stringify(response.data)
@@ -150,7 +151,6 @@ const AllUser = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  
                   {filteredUsers.map((user, index) => (
                     <tr key={user._id}>
                       <td className="text-center">{index + 1}</td>
@@ -195,12 +195,10 @@ const AllUser = () => {
                       </td>
                       <td className="text-center">
                         {user.role !== "admin" && (
-                          <div
-                            onClick={() => handleDeleteUser(user._id)}
-                            className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full"
-                          >
-                            <DeleteFilled />
-                          </div>
+                          <DeleteUserBtn
+                            user={user}
+                            fetchAllUser={fetchAllUser}
+                          />
                         )}
                       </td>
                     </tr>

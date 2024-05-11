@@ -21,7 +21,7 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Card
+      <Card className="card-hover"
         style={{
           borderRadius: "20px",
         }}
