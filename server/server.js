@@ -21,6 +21,7 @@ const crypto = require("crypto");
 const app = express();
 const port = process.env.PORT || 4000; // Set up port
 
+
 // Generate a random secret for session
 function generateRandomSecret(length = 32) {
   return crypto.randomBytes(length).toString("hex");
