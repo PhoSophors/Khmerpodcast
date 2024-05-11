@@ -3,9 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const fileUploadController = require("../controllers/fileUploadController");
-const {
-  upload2S3,
-} = require("../middleware/fileUploadMiddleware");
+const { upload2S3 } = require("../middleware/fileUploadMiddleware");
 const compressImageMiddleware = require("../middleware/compressImageMiddleware");
 const compressAudioMiddleware = require("../middleware/compressAudioMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
@@ -79,5 +77,11 @@ router.get(
   checkRoleMiddleware(["admin", "user"]),
   fileUploadController.getPodcastPlaylist
 );
+
+//
+router.get("/get-file-by-user/:id", 
+verifyToken,
+checkRoleMiddleware(["admin", "user"]),
+fileUploadController.getFilesByUserId);
 
 module.exports = router;

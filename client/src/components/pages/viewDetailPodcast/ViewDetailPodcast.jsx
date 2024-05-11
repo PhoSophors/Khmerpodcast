@@ -4,10 +4,14 @@ import { Card, Spin, message, Breadcrumb } from "antd";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
+import Cookies from "js-cookie";
+import { api_url } from "../../../api/config";
 
 
 const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const authToken = Cookies.get("authToken");
 
   const fetchFile = async () => {
     setLoading(true);
@@ -27,8 +31,27 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
     }
   };
 
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get(`${api_url}/get-file-by-user/${file.userId}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+  
+      if (response.data) {
+        setUser(response.data);
+      } else {
+        message.error("User data not found in response");
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error.message);
+    }
+  };
+
   useEffect(() => {
     fetchFile();
+    fetchUser();
   }, []);
 
   if (loading) {

@@ -42,7 +42,7 @@ const Create = () => {
       formData.append("title", title); // Append title and description to the formData
       formData.append("description", description);
       formData.append("imageFile", imageFileList[0].originFileObj); // Append the image file
-      formData.append("userId", id); // Append the user ID
+      formData.append("user", id); // Append the user ID
       await axios.post(`${api_url}/files/upload?id=${id}`, formData, {
         onUploadProgress: (progressEvent) => { 
           // Calculate the upload progress
