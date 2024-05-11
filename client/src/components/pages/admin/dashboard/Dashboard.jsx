@@ -125,21 +125,21 @@ const Dashboard = () => {
 
         <Card title="News Users" className="w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="p-3 flex justify-center text-white bg-red-400 h-20 w-20 flex justify-center items-center rounded-full">
+            <div className="p-3 flex justify-center text-gray-500 bg-slate-200 h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faUserPlus} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-red-600">Maintenance</h1>
+            <h1 className="text-3xl font-semibold text-gray-600">2</h1>
           </div>
         </Card>
 
         <Card title="News Podcast" className="w-full md:w-1/2 ">
           <div className="flex items-center justify-between">
-            <div className="p-3 flex justify-center text-white bg-red-400 h-20 w-20 flex justify-center items-center rounded-full">
+            <div className="p-3 flex justify-center text-gray-500 bg-amber-200 h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-red-600">Maintenance</h1>
+            <h1 className="text-3xl font-semibold text-gray-600">12</h1>
           </div>
         </Card>
       </div>
