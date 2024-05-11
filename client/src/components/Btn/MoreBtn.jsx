@@ -183,7 +183,7 @@ const MoreBtn = ({ file }) => {
         <Menu.Item key="3">
           {
             // Only show the edit option if the user is the owner of the podcast
-            user && user._id === file.user._id && (
+            user && user.id === file.user.id && (
               <div onClick={handleToggleUpdateMode}>
                 <EditOutlined /> <span className="mx-2">Edit Podcast</span>
               </div>
