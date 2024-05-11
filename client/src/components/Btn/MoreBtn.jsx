@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
 import { api_url } from "../../api/config";
+import axios from "axios";
 import {
   ShareAltOutlined,
   LinkOutlined,
@@ -29,14 +30,46 @@ import {
 const MoreBtn = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
     const cookie = Cookies.get(`favorite-${file._id}`);
     return cookie ? JSON.parse(cookie) : false;
   });
+  const id = Cookies.get("id");
 
   useEffect(() => {
     Cookies.set(`favorite-${file._id}`, JSON.stringify(isAddedToFavorites));
   }, [file._id, isAddedToFavorites]);
+
+  useEffect(() => {
+    const authToken = Cookies.get("authToken");
+
+    if (authToken) {
+      // setIsLoading(true);
+      // Fetch user data if user is logged in
+      axios
+        .get(`${api_url}/auths/user-data/${id}`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+        .then((response) => {
+          const userData = response.data.user;
+          if (userData) {
+            // Update user data only if valid data is received
+            setUser(userData);
+            setIsLoggedIn(true);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch user data:", error);
+        })
+        .finally(() => {
+          // setIsLoading(false);
+        });
+    }
+  }, [id]); // Add 'id' as a dependency
 
   const handleTogglePodcastInPlaylist = async () => {
     try {
@@ -94,6 +127,7 @@ const MoreBtn = ({ file }) => {
     message.success("Link copied to clipboard");
   };
 
+  // Inside the shareMenu variable declaration
   const shareMenu = (
     <Menu style={{ width: "250px" }}>
       <Menu.Item key="0" onClick={showModal}>
@@ -104,52 +138,58 @@ const MoreBtn = ({ file }) => {
         <LinkOutlined />
         <span className="mx-2">Copy Link</span>
       </Menu.Item>
-      <Menu.Item key="2" onClick={handleTogglePodcastInPlaylist}>
-        {isAddedToFavorites ? (
-          <>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <svg
-                className="w-3.5 h-3.5 text-gray-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 14 20"
-              >
-                <path d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
-              </svg>
-              <span className="mx-2">Remove from Favorites</span>
+
+      {isLoggedIn && (
+        <Menu.Item key="2" onClick={handleTogglePodcastInPlaylist}>
+          {isAddedToFavorites ? (
+            <>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <svg
+                  className="w-3.5 h-3.5 text-gray-500"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 14 20"
+                >
+                  <path d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
+                </svg>
+                <span className="mx-2">Remove from Favorites</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <svg
+                  className="w-3.5 h-3.5 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 20"
+                >
+                  <path
+                    stroke="black"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"
+                  />
+                </svg>
+                <span className="mx-2">Add to favorites</span>
+              </div>
+            </>
+          )}
+        </Menu.Item>
+      )}
+
+      {isLoggedIn && (
+        <Menu.Item key="3">
+          {user && user._id === file.userId && (
+            <div onClick={handleToggleUpdateMode}>
+              <EditOutlined /> <span className="mx-2">Edit Podcast</span>
             </div>
-          </>
-        ) : (
-          <>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <svg
-                className="w-3.5 h-3.5 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 20"
-              >
-                <path
-                  stroke="black"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"
-                />
-              </svg>
-              <span className="mx-2">Add to favorites</span>
-            </div>
-          </>
-        )}
-      </Menu.Item>
-      <Menu.Item key="3">
-      {/* {currentUser && currentUser._id === file.userId && ( */}
-          <div onClick={handleToggleUpdateMode}>
-            <EditOutlined /> <span className="mx-2">Edit Podcast</span>
-          </div>
-        {/* )} */}
-      </Menu.Item>
+          )}
+        </Menu.Item>
+      )}
     </Menu>
   );
 
