@@ -114,6 +114,8 @@ otpController.verifyOTP = async (req, res) => {
     const payload = {
       id: user._id,
       email: user.email,
+      username: user.username,
+      email: user.email,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {

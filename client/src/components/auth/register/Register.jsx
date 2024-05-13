@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Card, message, Spin } from "antd";
+import { Form, Input, Button, Card, message, Spin, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
@@ -28,7 +28,6 @@ const Register = () => {
 
       if (response.status === 200) {
         // Save the id to cookies
-
         Cookies.set("id", response.data.id);
 
         // Registration successful, navigate to /otp
