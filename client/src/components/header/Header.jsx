@@ -6,13 +6,13 @@ import Cookies from "js-cookie";
 import "./Header.css";
 import { api_url } from "../../api/config";
 import logo from "../assets/logo.jpg";
-import { Avatar, Dropdown, Menu, Alert, Spin, message, Modal } from "antd";
+import { Avatar, Dropdown, Menu, Alert, Spin, message } from "antd";
 import {
   MenuOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
-  CloseOutlined,
-  LogoutOutlined,
+  // CloseOutlined,
+  // LogoutOutlined,
 } from "@ant-design/icons";
 import SideMenu from "../sidemenu/SideMenu";
 import AudioControl from "../audio/AudioControl";
