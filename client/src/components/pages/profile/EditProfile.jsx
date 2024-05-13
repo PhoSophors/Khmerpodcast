@@ -143,7 +143,7 @@ const EditProfile = () => {
   return (
     <div className="bg-indigo-600">
       <div className="flex flex-col w-full items-center  justify-center h-screen text-center">
-        <Card title="Edit Profile" className="p-2.5 h-4/6 edit-profile-card">
+        <Card title="Edit Profile" className="p-2.5 h-4/6 edit-profile-card bg-slate-100">
           <BackBtn />
           <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
             <Form.Item className="text-center">
@@ -182,9 +182,9 @@ const EditProfile = () => {
               />
             </Form.Item>
 
-            <div class="w-full mt-5 bg-white rounded-full">
+            <div class="w-full mt-5 bg-slate-100 rounded-full">
               <div
-                class="bg-indigo-500 text-xs font-medium text-white text-center p-0 leading-none rounded-full"
+                class="bg-indigo-500 text-xs font-medium text-slate-100 text-center p-0 leading-none rounded-full"
                 style={{ width: `${uploadProgress}%` }}
               >
                 {" "}
