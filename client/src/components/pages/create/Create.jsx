@@ -220,7 +220,7 @@ const Create = () => {
                   Thumnaill upported file types:
                 </div>
                 <div className="text-gray-500 text-start ">
-                  Thumnaill files: jpeg, jpg
+                  Thumnaill files: .jpeg, .jpg
                 </div>
                 <Card className="mt-5">
                   <ImgCrop>
