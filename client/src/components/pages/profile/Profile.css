@@ -38,7 +38,7 @@
 
 /* edit profile */
 .saveBtn {
-  background-color: var(--indigo-500);
+  background-color: var(--indigo-600);
   color: var(--white);
   border: none;
   border-radius: 10px;

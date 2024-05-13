@@ -22,11 +22,11 @@ const upload = multer({
       const uniqueKey = `${Date.now().toString()}.${fileExtension}`;
       cb(null, uniqueKey);
     },
-    contentType: multerS3.AUTO_CONTENT_TYPE, 
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
-    }
-  })
+    },
+  }),
 }).single("profileImage");
 
 const updateUser = async (req, res) => {
@@ -42,7 +42,9 @@ const updateUser = async (req, res) => {
     // Handle file upload using multer
     upload(req, res, async (err) => {
       if (err) {
-        return res.status(500).json({ error: `Error uploading image: ${err.message}` });
+        return res
+          .status(500)
+          .json({ error: `Error uploading image: ${err.message}` });
       }
 
       // Update the username if provided
@@ -50,7 +52,7 @@ const updateUser = async (req, res) => {
       if (username) {
         user.username = username;
       }
-      
+
       // If file upload was successful, update the user object with the S3 URL
       if (req.file) {
         user.profileImage = req.file.location;
@@ -61,7 +63,9 @@ const updateUser = async (req, res) => {
         await user.save();
         res.status(200).json({ user });
       } catch (error) {
-        res.status(500).json({ error: `Error updating user: ${error.message}` });
+        res
+          .status(500)
+          .json({ error: `Error updating user: ${error.message}` });
       }
     });
   } catch (error) {
@@ -85,7 +89,7 @@ const getUser = async (req, res) => {
 const getUsersCount = async (req, res) => {
   try {
     const userCount = await User.countDocuments();
-    res.status(200).json({ user: userCount }); 
+    res.status(200).json({ user: userCount });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -110,7 +114,9 @@ const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     if (!id) {
-      return res.status(400).json({ error: "ID parameter is missing or invalid" });
+      return res
+        .status(400)
+        .json({ error: "ID parameter is missing or invalid" });
     }
 
     const deletedUser = await User.findByIdAndDelete(id);
@@ -119,19 +125,25 @@ const deleteUser = async (req, res) => {
     }
 
     // Remove the user's token from the blacklist
-    const userToken = req.headers.authorization.split(' ')[1];
+    const userToken = req.headers.authorization.split(" ")[1];
     const tokenIndex = tokenBlacklist.indexOf(userToken);
     if (tokenIndex !== -1) {
       tokenBlacklist.splice(tokenIndex, 1);
     }
 
-    res.status(200).json({ message: "User deleted successfully", deleteToken: true });
+    res
+      .status(200)
+      .json({ message: "User deleted successfully", deleteToken: true });
   } catch (error) {
-    console.error('Error deleting user:', error); // Log the error to the console
+    console.error("Error deleting user:", error); // Log the error to the console
     res.status(500).json({ error: error.message }); // Return the specific error message
   }
 };
 
-
-
-module.exports = { updateUser, getUser, getUsersCount, getAllUsers, deleteUser};
+module.exports = {
+  updateUser,
+  getUser,
+  getUsersCount,
+  getAllUsers,
+  deleteUser,
+};

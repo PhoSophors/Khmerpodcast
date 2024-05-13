@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "./Profile.css";
+import ImgCrop from "antd-img-crop";
+import { useParams, useNavigate } from "react-router-dom";
+import { api_url } from "../../../api/config";
+import BackBtn from "../../Btn/BackBtn";
 import {
   Form,
   Input,
@@ -12,23 +16,18 @@ import {
   Modal,
   Card,
 } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import ImgCrop from "antd-img-crop";
-import { useParams, useNavigate } from "react-router-dom";
-import { api_url } from "../../../api/config";
 
 const EditProfile = () => {
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  // const [loading, setLoading] = useState(false);
-  const [setLoading] = useState(false);
-  const [previewTitle, setPreviewTitle] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [imageFileList, setImageFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
-  // const [imageFileList, setImageFileList] = useState([]);
-  const [imageFileList] = useState([]);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,9 +60,9 @@ const EditProfile = () => {
   };
 
   const handleProfileImageChange = (info) => {
+    setImageFileList([...info.fileList]); // Update imageFileList
     if (info.file.status === "uploading") {
       setLoading(true);
-      return;
     }
     if (info.file.status === "done") {
       getBase64(info.file.originFileObj, (imageUrl) => {
@@ -80,10 +79,10 @@ const EditProfile = () => {
       file.preview = await getBase64(file.originFileObj);
     }
     setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
     setPreviewTitle(
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
+    setPreviewOpen(true);
   };
 
   const handleCancelPreview = () => setPreviewOpen(false);
@@ -98,38 +97,52 @@ const EditProfile = () => {
 
   const handleUpdateProfile = async () => {
     try {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append("username", username);
+
+      if (imageFileList.length > 0) {
+        const file = imageFileList[0].originFileObj;
+        formData.append("profileImage", file);
+      }
+
       const authToken = Cookies.get("authToken");
-
-      if (authToken && id) {
-        const response = await axios.put(
-          `${api_url}/auths/user/update/${id}`,
-          {
-            username,
-            profileImage,
+      const response = await axios.put(
+        `${api_url}/auths/user/update/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${authToken}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          message.success("Profile updated successfully");
-          navigate(`/`);
-        } else {
-          message.error("Failed to update profile. Please try again later.");
+          onUploadProgress: (progressEvent) => {
+            // Calculate the upload progress
+            let percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
+            setUploadProgress(percentCompleted); // Update the upload progress state
+          },
         }
+      );
+
+      if (response.status === 200) {
+        message.success("Profile updated successfully");
+        navigate(`/`);
       } else {
-        message.error("Authentication failed. Please log in again.");
+        message.error("Failed to update profile. Please try again later.");
       }
     } catch (error) {
       message.error("Failed to update profile. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="bg-slate-100">
+    <div className="bg-indigo-600">
+      <BackBtn />
       <div className="flex flex-col w-full items-center  justify-center h-screen text-center">
         <Card title="Edit Profile" className="p-5 h-4/6 edit-profile-card">
           <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
@@ -138,7 +151,7 @@ const EditProfile = () => {
                 <Upload
                   action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                   listType="picture-card"
-                  imageFileList={imageFileList}
+                  fileList={imageFileList}
                   onChange={handleProfileImageChange}
                   onPreview={handlePreview}
                 >
@@ -167,6 +180,18 @@ const EditProfile = () => {
                 className="input-field"
               />
             </Form.Item>
+
+            <div class="w-full mt-5 bg-white rounded-full">
+              <div
+                class="bg-indigo-500 text-xs font-medium text-white text-center p-0 leading-none rounded-full"
+                style={{ width: `${uploadProgress}%` }}
+              >
+                {" "}
+                {uploadProgress}%
+              </div>
+            </div>
+
+
             <Form.Item>
               <Button
                 onClick={() => handleUpdateProfile(true)}

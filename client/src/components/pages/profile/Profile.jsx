@@ -81,7 +81,7 @@ const Profile = () => {
         />
       ) : (
         <div className="flex grid xl:grid-cols-2 grid-cols-1 md:grid-cols-1 md:flex xl:p-2 md:p-2 p-0 xl:gap-2 md:gap-2 gap-2 ">
-          <Card className="recent-upload-card" >
+          <Card className="recent-upload-card">
             <div
               style={{
                 display: "flex",
@@ -91,12 +91,17 @@ const Profile = () => {
               }}
             >
               <div className="profile-content mt-5">
-                <Avatar
-                  size={140}
-                  icon={<UserOutlined />}
-                  src={userData && userData.profileImage}
-                  style={{ marginBottom: "16px" }}
-                />
+                <Spin spinning={isLoading}>
+                  <Avatar
+                    size={140}
+                    icon={<UserOutlined />}
+                    src={userData && userData.profileImage}
+                    style={{
+                      marginBottom: "16px",
+                      border: "1px solid #6366f1",
+                    }}
+                  />
+                </Spin>
 
                 <h1 className="text-2xl text-center text-gray-600 font-bold ">
                   {userData && userData.username}
@@ -142,7 +147,7 @@ const Profile = () => {
           </Card>
 
           <div className="col-span-2 w-full">
-            <Card className="profile-card"   bodyStyle={{ padding: 0 }}>
+            <Card className="profile-card" bodyStyle={{ padding: 0 }}>
               {isLoading || isError ? (
                 <div className="spin-container">
                   {/* <Spin size="large" /> */}
