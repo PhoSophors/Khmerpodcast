@@ -142,9 +142,9 @@ const EditProfile = () => {
 
   return (
     <div className="bg-indigo-600">
-      <BackBtn />
       <div className="flex flex-col w-full items-center  justify-center h-screen text-center">
-        <Card title="Edit Profile" className="p-5 h-4/6 edit-profile-card">
+        <Card title="Edit Profile" className="p-2.5 h-4/6 edit-profile-card">
+          <BackBtn />
           <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
             <Form.Item className="text-center">
               <ImgCrop>
@@ -191,7 +191,6 @@ const EditProfile = () => {
                 {uploadProgress}%
               </div>
             </div>
-
 
             <Form.Item>
               <Button
