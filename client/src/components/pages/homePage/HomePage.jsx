@@ -102,6 +102,11 @@ const HomePage = () => {
                 ))
               )}
             </div>
+            {error && (
+              <div className="mt-10 text-red-500">
+                <p className="text-center font-semebold ">Srver Error..!</p>
+              </div>
+            )}
           </>
         )}
 
@@ -126,11 +131,9 @@ const HomePage = () => {
             Next
           </Button>
         </div> */}
-              
       </div>
       <div className="mt-20 text-white">.</div>
     </>
-    
   );
 };
 
