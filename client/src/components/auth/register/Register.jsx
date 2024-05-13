@@ -94,19 +94,8 @@ const Register = () => {
                 />
               </Form.Item>
 
-              {/* <Form.Item
-                label={t("register.password")}
-                name="password"
-                rules={[
-                  { required: true, message: t("register.passwordRequired") },
-                ]}
-              >
-                <Input.Password
-                  className="input-field"
-                  placeholder={t("register.passwordPlaceholder")}
-                />
-              </Form.Item> */}
               <Form.Item
+                label={t("register.password")}
                 name="password"
                 rules={[
                   {
