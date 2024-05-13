@@ -10,6 +10,11 @@ const userController = require("../controllers/userController");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
 
+router.get(
+  "/verify-token",
+  verifyToken,
+);
+
 // Define routes for user registration and login
 router.post("/register", registerController.register);
 router.post("/login", loginController.login);
