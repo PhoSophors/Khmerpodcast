@@ -63,7 +63,7 @@ const Login = ({ visible, onCancel }) => {
       keyboard={true}
       onCancel={handleCancel}
     >
-      <div className="flex flex-col items-center bg-white p-4">
+      <div className="flex flex-col items-center p-4">
         <h1 className="text-center mb-4 mt-5">
           <span className="title mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500">
             {t("login.title")}

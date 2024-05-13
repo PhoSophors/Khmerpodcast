@@ -1,4 +1,11 @@
 
+.main-register {
+  justify-content: center;
+  align-items: center;
+  background-color: var(--slate-50);
+  height: 100vh;
+  overflow: auto;
+}
 
 .register-form {
   width: 100%;
@@ -7,26 +14,30 @@
   justify-content: center;
   align-items: center;
   overflow: auto;
-  background-color: white;
 }
 
 
-@media (max-width: 520px) {
-  .register-form {
-    overflow: auto;
-    background-color: white !important;
-  }
-  .card {
+@media (max-width: 600px) {
+  .register-card {
     height: 100vh;
-    background-color: white !important;
-  }
-  
-}
-
-@media (max-height: 90vh) {
-  .register-form {
-    /* flex: 1; */
     overflow: auto;
-    background-color: white !important;
+    background-color: var(--slate-50) !important;
+    border: none;
+    border-radius: 0 ;
+  }
+  .register-form {
+    height: 100vh;
+    overflow: auto;
+  }
+}
+@media (max-height: 100vh) {
+  .register-form {
+    overflow: auto;
+    background-color: var(--indigo-600) !important;
+  }
+}
+@media  (max-width: 830px) {
+  .register-backBtn {
+    display: none !important;
   }
 }

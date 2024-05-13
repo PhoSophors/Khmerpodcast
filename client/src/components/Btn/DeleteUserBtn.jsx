@@ -14,7 +14,7 @@ const DeleteUserBtn = ({ user }) => {
   const filename = username.split(" ")[0];
 
   // Function to handle delete podcast
-  const handleDeeleteUser = async () => {
+  const handleDeleteUser = async () => {
     if (confirmDelete !== filename) {
       alert("You must enter the username to confirm deletion.");
       return;
@@ -29,13 +29,17 @@ const DeleteUserBtn = ({ user }) => {
         }
       );
       if (response.status === 200) {
-        message.success("Podcast deleted successfully");
+        if (response.data.deleteToken) {
+          Cookies.remove("authToken"); // Remove the token from cookies
+        }
+        message.success("User deleted successfully");
         setIsDeleteModalVisible(false);
       }
     } catch (error) {
-      message.error("Error deleting podcast");
+      message.error("Error deleting user");
     }
   };
+  
 
   return (
     <div>
@@ -70,8 +74,8 @@ const DeleteUserBtn = ({ user }) => {
             <h1 className="text-center  text-gray-500 ">
               This Action{" "}
               <span className="font-semibold  text-gray-600">CANNOT</span> be
-              undone. This will permanently delete the user, and remove
-              all collaborator ssositions.{" "}
+              undone. This will permanently delete the user, and remove all
+              collaborator ssositions.{" "}
             </h1>
             <p className="text-center text-gray-800 mt-5">
               Enter the username of user{" "}
@@ -90,7 +94,7 @@ const DeleteUserBtn = ({ user }) => {
             <button
               onClick={() => {
                 if (confirmDelete === filename) {
-                  handleDeeleteUser();
+                  handleDeleteUser();
                 } else {
                   message.warning(
                     "Incorrect confirmation. Please enter the correct filename."

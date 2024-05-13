@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+let tokenBlacklist = [];
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.header("Authorization");
@@ -7,7 +8,7 @@ const verifyToken = (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1]; // Extract the token from the Authorization header
-  if (!token) {
+  if (!token || tokenBlacklist.includes(token)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
@@ -19,5 +20,7 @@ const verifyToken = (req, res, next) => {
     res.status(400).json({ error: "Invalid token" });
   }
 };
+
+
 
 module.exports = verifyToken;
