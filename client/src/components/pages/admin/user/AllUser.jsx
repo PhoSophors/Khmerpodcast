@@ -3,8 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { api_url } from "../../../../api/config";
 import DeleteUserBtn from "../../../Btn/DeleteUserBtn";
-import { Spin, Alert, Card, Avatar, Input, Space, DatePicker } from "antd";
-import { UserOutlined, SearchOutlined } from "@ant-design/icons";
+import { Spin, Alert, Card, Avatar, Input, Space, DatePicker, Button } from "antd";
+import { UserOutlined, SearchOutlined, StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import "../admin.css";
 
 const AllUser = () => {
@@ -13,6 +13,8 @@ const AllUser = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [dateRange, setDateRange] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 15;
   const authToken = Cookies.get("authToken");
 
   const fetchAllUser = async () => {
@@ -68,6 +70,23 @@ const AllUser = () => {
     );
   });
 
+  const paginatedUsers = filteredUsers.slice(
+    (currentPage - 1) * cardsPerPage,
+    currentPage * cardsPerPage
+  );
+
+  const handleNext = () => {
+    if (currentPage * cardsPerPage < filteredUsers.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className="xl:p-5 md:p-5 p-0 ">
       <Card title="All Users" className="w-full">
@@ -115,9 +134,9 @@ const AllUser = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredUsers.map((user, index) => (
+                  {paginatedUsers.map((user, index) => (
                     <tr key={user._id}>
-                      <td className="text-center">{index + 1}</td>
+                      <td className="text-center">{(currentPage - 1) * cardsPerPage + index + 1}</td>
                       <td className="text-center">
                         <Avatar
                           src={user && user.profileImage}
@@ -172,6 +191,28 @@ const AllUser = () => {
             </div>
           )}
         </Space>
+
+        {/* Pagination buttons */}
+        <div className="w-full flex justify-center mt-4 gap-5">
+          <Button
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+            type="dashed"
+            size={5}
+            icon={<StepBackwardFilled />}
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={handleNext}
+            disabled={currentPage * cardsPerPage >= filteredUsers.length}
+            type="dashed"
+            size={5}
+            icon={<StepForwardFilled />}
+          >
+            Next
+          </Button>
+        </div>
       </Card>
       <div className="mt-20 xl:mt-0 md:mt-0 text-white">.</div>
     </div>

@@ -29,24 +29,22 @@ const FileManager = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const authToken = Cookies.get("authToken");
-  const [startIndex, setStartIndex] = useState(0);
   const [dateRange, setDateRange] = useState([]);
-  const cardsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 15;
+
+  const authToken = Cookies.get("authToken");
 
   // Fetch files function
-  const fetchFiles = async (page) => {
+  const fetchFiles = async () => {
     setLoading(true);
     try {
       if (authToken) {
-        const response = await axios.get(
-          `${api_url}/files/get-all-file?page=${page}&limit=${cardsPerPage}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
+        const response = await axios.get(`${api_url}/files/get-all-file`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
         if (Array.isArray(response.data)) {
           setFiles(response.data);
         } else {
@@ -93,21 +91,22 @@ const FileManager = () => {
     );
   });
 
+  const paginatedFiles = filteredFiles.slice(
+    (currentPage - 1) * cardsPerPage,
+    currentPage * cardsPerPage
+  );
+
   // Function to handle next page
   const handleNext = () => {
-    const nextPage = startIndex / cardsPerPage + 1;
-    const nextStartIndex = (nextPage - 1) * cardsPerPage;
-    setStartIndex(nextStartIndex);
-    fetchFiles(nextPage);
+    if (currentPage * cardsPerPage < filteredFiles.length) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   // Function to handle previous page
   const handlePrevious = () => {
-    if (startIndex - cardsPerPage >= 0) {
-      const prevPage = startIndex / cardsPerPage - 1;
-      const prevStartIndex = prevPage * cardsPerPage;
-      setStartIndex(prevStartIndex);
-      fetchFiles(prevPage);
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
@@ -164,10 +163,12 @@ const FileManager = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Map through files and display in table */}
-                  {filteredFiles.map((file, index) => (
+                  {/* Map through paginatedFiles and display in table */}
+                  {paginatedFiles.map((file, index) => (
                     <tr key={file._id}>
-                      <td className="text-center">{index + 1}</td>
+                      <td className="text-center">
+                        {(currentPage - 1) * cardsPerPage + index + 1}
+                      </td>
                       <td className="text-center">
                         <Avatar size="large" src={file.image.url} />
                       </td>
@@ -202,10 +203,10 @@ const FileManager = () => {
         </Space>
 
         {/* Pagination buttons */}
-        <div className="w-full flex  justify-center mt-4 gap-5">
+        <div className="w-full flex justify-center mt-4 gap-5">
           <Button
             onClick={handlePrevious}
-            disabled={startIndex === 0}
+            disabled={currentPage === 1}
             type="dashed"
             size={5}
             icon={<StepBackwardFilled />}
@@ -214,7 +215,7 @@ const FileManager = () => {
           </Button>
           <Button
             onClick={handleNext}
-            disabled={startIndex + cardsPerPage >= files.length}
+            disabled={currentPage * cardsPerPage >= filteredFiles.length}
             type="dashed"
             size={5}
             icon={<StepForwardFilled />}
