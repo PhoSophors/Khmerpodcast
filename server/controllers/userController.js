@@ -5,7 +5,7 @@ const multerS3 = require("multer-s3");
 let tokenBlacklist = [];
 
 const s3Client = new S3Client({
-  region: "ap-southeast-2",
+  region: process.env.AWS_REGION_PROFILE,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY,
     secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -16,7 +16,7 @@ const s3Client = new S3Client({
 const upload = multer({
   storage: multerS3({
     s3: s3Client,
-    bucket: "kpuserprofilephoto",
+    bucket: process.env.AWS_BUCKET_NAME_PROFILE,
     key: function (req, file, cb) {
       const fileExtension = file.mimetype.split("/")[1];
       const uniqueKey = `${Date.now().toString()}.${fileExtension}`;

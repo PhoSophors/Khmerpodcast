@@ -3,26 +3,50 @@ import { Card, DatePicker } from "antd";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Pie } from "react-chartjs-2";
-import { Chart, ArcElement } from "chart.js";
+import StorageLineChart from "./dashbaordComponent/StorageLineChart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  Chart,
+  ArcElement,
+  LineController,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+import {
+  faDatabase,
+  faFile,
   faPodcast,
-  faUserPlus,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { api_url } from "../../../../api/config";
 import "../admin.css";
+
 Chart.register(ArcElement);
+// chart for bucket size
+Chart.register(
+  LineController,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale
+);
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
   const [fileCount, setFileCount] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [storageInfo, setStorageInfo] = useState({
+    totalSize: 0,
+    totalObjects: 0,
+  });
+  const [storageData] = useState([]);
   const authToken = Cookies.get("authToken");
 
   useEffect(() => {
     fetchCounts();
-  }, [selectedDate]);
+  }, []);
 
   const fetchCounts = async () => {
     try {
@@ -43,6 +67,13 @@ const Dashboard = () => {
           },
         });
         setFileCount(fileResponse.data.count);
+
+        const storageInfo = await axios.get(`${api_url}/admin/storage-info`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        setStorageInfo(storageInfo.data);
       }
     } catch (error) {
       console.error("Error:", error.message);
@@ -123,23 +154,35 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card title="News Users" className="dashboard-card w-full md:w-1/2">
+        <Card
+          title="Total Storage Used"
+          className="dashboard-card w-full md:w-1/2"
+        >
           <div className="flex items-center justify-between">
-            <div className="p-3 flex justify-center text-gray-500 bg-slate-200 h-20 w-20 flex justify-center items-center rounded-full">
-              <FontAwesomeIcon icon={faUserPlus} style={{ fontSize: "40px" }} />
+            <div className="p-3 flex justify-center text-gray-500 bg-blue-200 h-20 w-20 flex justify-center items-center rounded-full">
+              <FontAwesomeIcon icon={faDatabase} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-gray-600">2</h1>
+            <h1 className="text-xl font-semibold text-gray-600">
+              {storageInfo && (
+                <>{(storageInfo.totalSize / 1048576).toFixed(2)} MB</>
+              )}
+            </h1>
           </div>
         </Card>
 
-        <Card title="News Podcast" className="dashboard-card w-full md:w-1/2 ">
+        <Card
+          title="Total Storage Objects"
+          className="dashboard-card w-full md:w-1/2 "
+        >
           <div className="flex items-center justify-between">
             <div className="p-3 flex justify-center text-gray-500 bg-amber-200 h-20 w-20 flex justify-center items-center rounded-full">
-              <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
+              <FontAwesomeIcon icon={faFile} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-gray-600">12</h1>
+            <h1 className="text-3xl font-semibold text-gray-600">
+              {storageInfo && <>{storageInfo.totalObjects}</>}
+            </h1>
           </div>
         </Card>
       </div>
@@ -157,11 +200,15 @@ const Dashboard = () => {
             <Pie style={{ width: "auto" }} data={data} />
           </div>
         </Card>
-        <Card title="Cloud Storage" className="dashboard-card col-span-2 w-full">
-          <h1 className="text-3xl font-semibold text-red-600">
-            App Maintenance
-          </h1>
+        <Card
+          title="Cloud Storage"
+          className="dashboard-card col-span-2 w-full"
+        >
+          <div className="flex items-center justify-center">
+            <StorageLineChart data={storageData} />
+          </div>
         </Card>
+
         <div className="mb-20"></div>
       </div>
     </>

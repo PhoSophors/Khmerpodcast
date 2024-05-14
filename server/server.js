@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
 const fileUploadRoutes = require("./routes/fileUploadRoutes");
 const searchRoutes = require("./routes/searchRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const authenticateToken = require("./middleware/authenticateToken");
 const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
 const allowedOrigins = ['http://localhost:3000', 'https://khmerpodcast.vercel.app'];
@@ -70,6 +71,9 @@ createDefaultAdmin().then(() => {
 app.use("/files", fileUploadRoutes);
 app.use("/auths", authRoutes);
 app.use("/search", searchRoutes);
+
+// Route for fetching storage information
+app.use("/admin", adminRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
