@@ -108,7 +108,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
 
   return (
     <header className="header-container">
-      <div className="p-3 bg-slate-100 h-full flex justify-center items-center rounded-full">
+      <div className="p-1 bg-slate-100 h-full flex justify-center items-center rounded-full">
         <div className="p-3 bg-indigo-600 h-full flex justify-center items-center rounded-full">
           {isMobileDevice ? (
             <div onClick={handleMenuClick}>

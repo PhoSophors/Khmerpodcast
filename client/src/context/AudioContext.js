@@ -10,7 +10,6 @@ const AudioContext = createContext();
 export function AudioProvider({ children }) {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  // const [podcasts, setPodcasts] = useState([]); // [podcast1, podcast2, podcast3, ...
   const [podcasts] = useState([]); 
   const [currentPodcastIndex, setCurrentPodcastIndex] = useState(0);
   const audioRef = useRef();
@@ -29,7 +28,7 @@ export function AudioProvider({ children }) {
       }}
     >
       {children}
-      <audio ref={audioRef} src={currentTrack} />
+      <audio ref={audioRef} />
     </AudioContext.Provider>
   );
 }

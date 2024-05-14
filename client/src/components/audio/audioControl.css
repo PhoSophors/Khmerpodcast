@@ -1,0 +1,121 @@
+/*  audio-container ============================================ */
+.audio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+  min-width: 300px !important;
+  height: 100%;
+  overflow: hidden;
+}
+
+/*  play-back control ============================================ */
+.play-back-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100%;
+  height: 100%;
+  margin-bottom: -10px;
+}
+
+.play-back-btn {
+  display: flex;
+  margin: 0;
+  justify-content: center !important;
+}
+
+
+/*  volume control ============================================ */
+.volume-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  height: 10px;
+}
+
+.volume-control input {
+  width: 100%;
+  height: 3px;
+  margin: 0;
+  padding: 0;
+  /* background: transparent; */
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--indigo-600);
+}
+
+.volume-control input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 20px;
+  background: var(--pink-600);
+  cursor: pointer;
+}
+
+.volume-icon-style {
+  font-size: 12px;
+  color: var(--pink-600);
+
+}
+
+/*  time control ============================================ */
+.time-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 5px;
+}
+
+.time-control input {
+  width: 100%;
+  height: 3px;
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--indigo-600);
+}
+
+.time-control input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 20px;
+  background: var(--pink-600);
+  cursor: pointer;
+}
+
+.time-count {
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  float: right;
+}
+
+/*  image control ============================================ */
+.image-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  height: 5px;
+}
+.image-control img {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}

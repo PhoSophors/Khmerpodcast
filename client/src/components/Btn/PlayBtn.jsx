@@ -3,8 +3,7 @@ import { useAudio } from "../../context/AudioContext";
 import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
 
 const PlayBtn = ({ file }) => {
-  const { isPlaying, currentTrack, setIsPlaying, setCurrentTrack, audioRef } =
-    useAudio();
+  const { isPlaying, currentTrack, setIsPlaying, setCurrentTrack, audioRef } = useAudio();
 
   const toggleAudio = () => {
     if (currentTrack === file.audio.url) {
@@ -28,7 +27,6 @@ const PlayBtn = ({ file }) => {
           style={{ fontSize: "2rem", color: "#fbbf24" }}
         />
       )}
-      <audio ref={audioRef} src={file.audio.url} />
     </div>
   );
 };

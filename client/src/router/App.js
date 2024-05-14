@@ -47,94 +47,92 @@ const App = () => {
   }, []);
 
   return (
-    <AudioProvider>
-      <Router>
-        {loading ? (
-          <AppLoading />
-        ) : (
-          <>
-            <Routes>
-              <Route exact path="/" element={<MainSection />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/usercard" element={<UserCard />} />
-              <Route path="/update-podcast" element={<UpdatePodcast />} />
-              <Route path="/edit-profile/:id" element={<EditProfile />} />
+    <Router>
+      {loading ? (
+        <AppLoading />
+      ) : (
+        <>
+          <Routes>
+            <Route exact path="/" element={<MainSection />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/usercard" element={<UserCard />} />
+            <Route path="/update-podcast" element={<UpdatePodcast />} />
+            <Route path="/edit-profile/:id" element={<EditProfile />} />
 
-              {/* Admin Routes */}
-              {userRole === "admin" ? (
-                <>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/all-user" element={<AllUser />} />
-                  <Route path="/all-user-upload" element={<FileManager />} />
-                </>
-              ) : (
-                <Route path="/dashboard" element={<Navigate to="/login" />} />
-              )}
+            {/* Admin Routes */}
+            {userRole === "admin" ? (
+              <>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/all-user" element={<AllUser />} />
+                <Route path="/all-user-upload" element={<FileManager />} />
+              </>
+            ) : (
+              <Route path="/dashboard" element={<Navigate to="/login" />} />
+            )}
 
-              {/* Guest Routes */}
-              <Route
-                path="/login"
-                element={
-                  <GuestRoute>
-                    <Login />
-                  </GuestRoute>
-                }
-              />
-              <Route
-                path="/register"
-                element={
-                  <GuestRoute>
-                    <Register />
-                  </GuestRoute>
-                }
-              />
-              <Route
-                path="/otp"
-                element={
-                  <GuestRoute>
-                    <Otp />
-                  </GuestRoute>
-                }
-              />
-              <Route
-                path="/forgotPassword"
-                element={
-                  <GuestRoute>
-                    <ForgotPassword />
-                  </GuestRoute>
-                }
-              />
+            {/* Guest Routes */}
+            <Route
+              path="/login"
+              element={
+                <GuestRoute>
+                  <Login />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <GuestRoute>
+                  <Register />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/otp"
+              element={
+                <GuestRoute>
+                  <Otp />
+                </GuestRoute>
+              }
+            />
+            <Route
+              path="/forgotPassword"
+              element={
+                <GuestRoute>
+                  <ForgotPassword />
+                </GuestRoute>
+              }
+            />
 
-              {/* Private Routes */}
-              <Route
-                path="/favorite"
-                element={
-                  <PrivateRoute>
-                    <Favorith />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/setting"
-                element={
-                  <PrivateRoute>
-                    <Setting />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <PrivateRoute>
-                    <Profile />
-                  </PrivateRoute>
-                }
-              />
-            </Routes>
-          </>
-        )}
-      </Router>
-    </AudioProvider>
+            {/* Private Routes */}
+            <Route
+              path="/favorite"
+              element={
+                <PrivateRoute>
+                  <Favorith />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/setting"
+              element={
+                <PrivateRoute>
+                  <Setting />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </>
+      )}
+    </Router>
   );
 };
 

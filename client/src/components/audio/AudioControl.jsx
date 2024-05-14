@@ -1,18 +1,16 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useAudio } from "../../context/AudioContext";
+import "./audioControl.css";
 import {
   StepBackwardFilled,
   StepForwardOutlined,
   PlayCircleFilled,
   PauseCircleFilled,
 } from "@ant-design/icons";
-import { useAudio } from "../../context/AudioContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeHigh, faVolumeLow } from "@fortawesome/free-solid-svg-icons";
 
 const AudioControl = () => {
-  const audioRef = useRef();
-  // const [currentTime, setCurrentTime] = useState(0);
-  // const [duration, setDuration] = useState(0);
-  // const [isDurationSet, setIsDurationSet] = useState(false);
-  // const [podcastImage, setPodcastImage] = useState('');
   const {
     isPlaying,
     currentTrack,
@@ -20,27 +18,58 @@ const AudioControl = () => {
     setCurrentTrack,
     podcasts,
     setCurrentPodcastIndex,
-    // audioRef: globalAudioRef,
+    audioRef,
   } = useAudio();
+
+  const [volume, setVolume] = useState(50); // Initial volume set to 50%
+  const [currentTime, setCurrentTime] = useState(0); // State to store current time
+  const [duration, setDuration] = useState(0); // State to store duration
+  const [isSeeking, setIsSeeking] = useState(false); // State to track if the user is seeking
 
   const toggleAudio = () => {
     setIsPlaying(!isPlaying);
   };
 
   useEffect(() => {
-    if (isPlaying) {
-      const playPromise = audioRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.then((_) => {}).catch((error) => {});
-      }
-    } else {
-      audioRef.current.pause();
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = volume / 100; // Set volume level when it changes
+
+      const handleTimeUpdate = () => {
+        setCurrentTime(audio.currentTime);
+        setDuration(audio.duration);
+      };
+
+      audio.addEventListener("timeupdate", handleTimeUpdate);
+
+      return () => {
+        audio.removeEventListener("timeupdate", handleTimeUpdate);
+      };
     }
-  }, [isPlaying, currentTrack]);
-  
+  }, [volume, audioRef]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if (currentTrack && audio) {
+      audio.src = currentTrack;
+      if (isPlaying) {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) =>
+            console.error("Error playing audio", error)
+          );
+        }
+      } else {
+        audio.pause();
+      }
+    }
+  }, [isPlaying, currentTrack, audioRef]);
 
   const handleNext = () => {
-    const index = podcasts.findIndex((podcast) => podcast.audio.url === currentTrack);
+    const index = podcasts.findIndex(
+      (podcast) => podcast.audio.url === currentTrack
+    );
     if (index < podcasts.length - 1) {
       setCurrentPodcastIndex(index + 1);
       setCurrentTrack(podcasts[index + 1].audio.url);
@@ -48,97 +77,113 @@ const AudioControl = () => {
   };
 
   const handlePrevious = () => {
-    const index = podcasts.findIndex((podcast) => podcast.audio.url === currentTrack);
+    const index = podcasts.findIndex(
+      (podcast) => podcast.audio.url === currentTrack
+    );
     if (index > 0) {
       setCurrentPodcastIndex(index - 1);
       setCurrentTrack(podcasts[index - 1].audio.url);
     }
   };
 
-  // const handleSeekChange = (e) => {
-  //   if (audioRef.current) {
-  //     audioRef.current.currentTime = e.target.value;
-  //     setCurrentTime(e.target.value);
-  //   }
-  // };
+  const handleVolumeChange = (e) => {
+    setVolume(e.target.value);
+  };
 
-  // const handleLoadedMetadata = () => {
-  //   if (!isDurationSet) {
-  //     setDuration(audioRef.current.duration);
-  //     setIsDurationSet(true);
-  //   }
-  // };
+  const handleSeek = (e) => {
+    const newTime = e.target.value;
+    setCurrentTime(newTime);
+    audioRef.current.currentTime = newTime;
+  };
 
-  // const handleDurationChange = () => {
-  //   setDuration(audioRef.current.duration);
-  // };
+  const handleSeekStart = () => {
+    setIsSeeking(true);
+  };
 
-  // const handlePodcastSelect = (podcast) => {
-  //   // Update the podcastImage state variable when a podcast is selected
-  //   setPodcastImage(podcast.image);
-  //   // alt={`.${file?._id}`}
-  //   // src={file?.image?.url}
-  // };
+  const handleSeekEnd = () => {
+    setIsSeeking(false);
+  };
 
   return (
-    <div className="p-2 w-auto xl:bg-white md:bg-white bg-slate-100 flex text-center items-center justify-center gap-5 rounded-xl">
-      <audio
-        ref={audioRef}
-        src={currentTrack}
-        // onLoadedMetadata={handleLoadedMetadata}
-        // onDurationChange={handleDurationChange}
-        // onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
-      />
-      <StepBackwardFilled
-        onClick={handlePrevious}
-        style={{ fontSize: "2rem", color: "#f59e0b" }}
-      />
-      {isPlaying ? (
-        <PauseCircleFilled
-          onClick={toggleAudio}
-          style={{ fontSize: "2rem", color: "#f59e0b" }}
-        />
-      ) : (
-        <PlayCircleFilled
-          onClick={toggleAudio}
-          style={{ fontSize: "2rem", color: "#f59e0b" }}
-        />
-      )}
-      <StepForwardOutlined
-        onClick={handleNext}
-        style={{ fontSize: "2rem", color: "#f59e0b" }}
-      />
+    <div className="audio-container ">
+      <div className="p-1 xl:w-96 md:w-96 w-96">
+        <div className="play-back-container  ">
+          <div className="play-back-btn gap-5 p-2">
+            <StepBackwardFilled
+              onClick={handlePrevious}
+              style={{ fontSize: "2rem", color: "#4f46e5" }}
+            />
+            {isPlaying ? (
+              <PauseCircleFilled
+                onClick={toggleAudio}
+                style={{ fontSize: "2rem", color: "#4f46e5" }}
+              />
+            ) : (
+              <PlayCircleFilled
+                onClick={toggleAudio}
+                style={{ fontSize: "2rem", color: "#4f46e5" }}
+              />
+            )}
+            <StepForwardOutlined
+              onClick={handleNext}
+              style={{ fontSize: "2rem", color: "#4f46e5" }}
+            />
+          </div>
+          <div className="image-control">
+            <img
+              src="https://bucketkhpodcast.s3.ap-south-1.amazonaws.com/1715402005975.jpeg"
+              alt=""
+            />
+          </div>
+          <div className="volume-control gap-1">
+            <FontAwesomeIcon icon={faVolumeLow} className="volume-icon-style" />
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={volume}
+              onChange={handleVolumeChange}
+              style={{ width: "100px" }}
+            />
+            <FontAwesomeIcon
+              icon={faVolumeHigh}
+              className="volume-icon-style"
+            />
+          </div>
+        </div>
 
-
-
-      {/* <img 
-      alt={`.${podcasts?._id}`}
-      src={podcasts?.image?.url}
-       alt="Podcast" />
-      <div className="flex flex-col">
-        <span>{podcasts?.title}</span>
-        <span>{podcasts?.author}</span>
-
+        <div className="time-count">
+          <span
+            style={{ fontSize: "0.7rem", color: "#6b7280", float: "right" }}
+          >
+            {formatTime(currentTime)} / -{formatTime(duration - currentTime)}
+          </span>
+        </div>
+        <div className="time-control">
+          <input
+            type="range"
+            min="0"
+            max={duration}
+            value={isSeeking ? currentTime : currentTime}
+            onChange={handleSeek}
+            onMouseDown={handleSeekStart}
+            onMouseUp={handleSeekEnd}
+          />
+        </div>
       </div>
-      <span>
-        {currentTime}/{duration}
-      </span>
-      <input
-        type="range"
-        value={currentTime}
-        max={duration}
-        onChange={handleSeekChange}
-      /> */}
-
-      {/* <input
-      className="hidden"
-        type="range"
-        value={currentTime}
-        max={duration}
-        onChange={handleSeekChange}
-      /> */}
     </div>
   );
+};
+
+// Function to format time in MM:SS format
+const formatTime = (time) => {
+  const hours = Math.floor(time / 3600);
+  const minutes = Math.floor((time % 3600) / 60);
+  const seconds = Math.floor(time % 60);
+
+  return `${hours > 0 ? `${hours}:` : ""}${minutes < 10 ? "0" : ""}${minutes}:${
+    seconds < 10 ? "0" : ""
+  }${seconds}`;
 };
 
 export default AudioControl;

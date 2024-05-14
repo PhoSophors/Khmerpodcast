@@ -26,25 +26,26 @@ const Login = ({ visible, onCancel }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
-
+  
       setIsLoading(false);
-
+  
       if (response.status === 200) {
         // Login successful
-
+  
         Cookies.set("authToken", response.data.authToken);
         Cookies.set("id", response.data.id);
 
         // console.log("Login successful");
         message.success("Login successful ");
-
+  
         // Close the modal
         handleCancel();
-
+  
         // refresh the page
         window.location.reload();
-
+  
         // Navigate to the home page after successful login
         navigate("/");
       }

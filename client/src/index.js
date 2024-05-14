@@ -7,6 +7,7 @@ import i18next from "i18next";
 import Cookies from "js-cookie";
 import { FavoritePodcastsProvider } from "./context/FavoritePodcastsContext";
 import { AudioProvider } from "./context/AudioContext";
+// import { AuthProvider } from "./context/AuthContext";go
 
 // Import translation files
 import translationEN from "./components/languages/en.json";
@@ -31,11 +32,13 @@ i18next
 
     root.render(
       <React.StrictMode>
-        <FavoritePodcastsProvider>
-          <AudioProvider>
-            <App />
-          </AudioProvider>
-        </FavoritePodcastsProvider>
+        {/* <AuthProvider> */}
+          <FavoritePodcastsProvider>
+            <AudioProvider>
+              <App />
+            </AudioProvider>
+          </FavoritePodcastsProvider>
+        {/* </AuthProvider> */}
       </React.StrictMode>,
       document.getElementById("root")
     );
