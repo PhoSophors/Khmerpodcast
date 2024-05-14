@@ -105,7 +105,6 @@ const Dashboard = () => {
       const data = await response.json();
       return data.userCount;
     } catch (error) {
-      message.error("Failed to fetch user count");
       return 0;
     }
   };
