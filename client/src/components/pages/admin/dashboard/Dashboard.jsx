@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, DatePicker } from "antd";
+import { Card, DatePicker, message } from "antd";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Pie } from "react-chartjs-2";
@@ -76,7 +76,7 @@ const Dashboard = () => {
         setStorageInfo(storageInfo.data);
       }
     } catch (error) {
-      console.error("Error:", error.message);
+      message.error("Failed to fetch data");
     }
   };
 
@@ -105,7 +105,7 @@ const Dashboard = () => {
       const data = await response.json();
       return data.userCount;
     } catch (error) {
-      console.error("Failed to fetch user count:", error);
+      message.error("Failed to fetch user count");
       return 0;
     }
   };

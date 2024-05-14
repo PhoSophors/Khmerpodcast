@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Spin } from "antd";
+import { Card, Button, Spin, message } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -41,7 +41,7 @@ const Profile = () => {
           }
         })
         .catch((error) => {
-          console.error(
+          message.error(
             "Error fetching user data:",
             error.response?.data?.message || error.message
           );
@@ -63,7 +63,7 @@ const Profile = () => {
           }
         })
         .catch((error) => {
-          console.error(
+          message.error(
             "Error fetching podcasts:",
             error.response?.data?.message || error.message
           );

@@ -61,7 +61,7 @@ const MoreBtn = ({ file }) => {
           }
         })
         .catch((error) => {
-          console.error("Failed to fetch user data:", error);
+          message.error("Error fetching user data");
         })
         .finally(() => {
           // setIsLoading(false);
@@ -198,7 +198,7 @@ const MoreBtn = ({ file }) => {
     if (file) {
       return <UpdatePodcast file={file} />;
     } else {
-      console.error("File is undefined");
+      message.error("Error fetching podcast data");
       return null;
     }
   }

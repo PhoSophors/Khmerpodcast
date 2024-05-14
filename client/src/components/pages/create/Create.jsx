@@ -116,7 +116,6 @@ const Create = () => {
 
   // Function to handleChange thumnail
   const handleChange = ({ fileList: newFileList }) => {
-    // console.log("New File List:", newFileList);
     // Update the imageFileList with the new file list
     setImageFileList(newFileList);
   };

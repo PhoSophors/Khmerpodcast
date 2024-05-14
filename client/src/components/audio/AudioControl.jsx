@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faVolumeLow } from "@fortawesome/free-solid-svg-icons";
+import { message } from "antd";
 
 const AudioControl = () => {
   const {
@@ -29,7 +30,6 @@ const AudioControl = () => {
   const currentPodcast = podcasts.find(
     (podcast) => podcast.audio.url === currentTrack
   );
-
 
   const toggleAudio = () => {
     setIsPlaying(!isPlaying);
@@ -61,9 +61,7 @@ const AudioControl = () => {
       if (isPlaying) {
         const playPromise = audio.play();
         if (playPromise !== undefined) {
-          playPromise.catch((error) =>
-            console.error("Error playing audio", error)
-          );
+          playPromise.catch((error) => message.error("Error playing audio"));
         }
       } else {
         audio.pause();

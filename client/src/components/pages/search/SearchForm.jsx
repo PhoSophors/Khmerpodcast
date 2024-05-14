@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Input, message } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import axios from "axios";
 import "./search.css";
-import { api_url } from '../../../api/config';
+import { api_url } from "../../../api/config";
 
 const SearchForm = ({ handleSearchSubmit }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
@@ -19,9 +19,9 @@ const SearchForm = ({ handleSearchSubmit }) => {
         handleSearchSubmit([]); // Clear the search results if the query is empty
         return;
       }
-  
+
       setLoading(true);
-  
+
       try {
         let response;
         // Only search for podcasts
@@ -30,21 +30,21 @@ const SearchForm = ({ handleSearchSubmit }) => {
             search: searchQuery,
           },
         });
-  
+
         if (response.data) {
           handleSearchSubmit(response.data); // Pass the results
         } else {
-          console.error('No data received');
+          message.error("Error fetching search results");
         }
       } catch (error) {
-        console.error(error);
+        message.error("Error fetching search results");
       } finally {
         setLoading(false);
       }
     };
-  
+
     const delayTimer = setTimeout(fetchSearchResults, 500); // Add a delay before triggering the search to reduce API calls
-  
+
     return () => clearTimeout(delayTimer); // Clear the timer when the component is unmounted or when the searchQuery changes
   }, [searchQuery, handleSearchSubmit]);
 

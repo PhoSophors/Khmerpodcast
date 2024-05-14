@@ -54,17 +54,13 @@ const Otp = () => {
         // OTP verified successfully, set the authToken cookie
         Cookies.set("authToken", response.data.authToken);
         Cookies.set("id", response.data.id);
-        
+
         // Navigate to home page
         message.success("OTP verified successfully");
         navigate("/");
       } else {
         message.error("OTP verification failed. Please try again.");
       }
-    } catch (error) {
-      // Handle request error
-      console.error("Error:", error.message);
-      message.error("OTP verification failed. Please try again.");
     } finally {
       setIsLoading(false);
     }

@@ -1,8 +1,9 @@
-import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
-import { api_url } from '../api/config';
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+import { api_url } from "../api/config";
+import { message } from "antd";
 
 export const AuthContext = createContext();
 
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       try {
         decodedToken = jwtDecode(authToken);
       } catch (e) {
-        console.error("Invalid token:", e);
+        message.error("Invalid token:", e);
         return;
       }
 
@@ -35,7 +36,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${api_url}/auths/login`, { email, password });
+      const response = await axios.post(`${api_url}/auths/login`, {
+        email,
+        password,
+      });
       const { data } = response;
 
       if (data) {
@@ -48,7 +52,7 @@ export const AuthProvider = ({ children }) => {
         try {
           decodedToken = jwtDecode(encodedToken);
         } catch (e) {
-          console.error("Invalid token:", e);
+          message.error("Invalid token:", e);
           return;
         }
 
@@ -64,7 +68,10 @@ export const AuthProvider = ({ children }) => {
         });
       }
     } catch (error) {
-      console.error("Login failed:", error);
+      message.error(
+        "Error logging in:",
+        error.response?.data?.message || error.message
+      );
       setAuthState({
         isAuthenticated: false,
         user: null,

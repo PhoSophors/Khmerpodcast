@@ -85,7 +85,6 @@ module.exports = {
   authenticateToken,
 };
 
-console.log(`Listening on port: ${port}`);
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`); // Print to console

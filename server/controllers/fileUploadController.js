@@ -256,9 +256,6 @@ const addPodcastToPlaylist = async (req, res) => {
     const { id } = req.params; // ID of the file to add to favorites
     const userId = req.user.id; // ID of the user making the request
 
-    console.log("id:", id); // Debugging line
-    console.log("userId:", userId); // Debugging line
-
     // Find the user by ID
     const user = await User.findById(userId);
     if (!user) {

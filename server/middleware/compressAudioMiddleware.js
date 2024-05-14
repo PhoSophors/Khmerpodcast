@@ -15,17 +15,11 @@ const compressAudioMiddleware = async (req, res, next) => {
 
     fs.writeFileSync(audioPath, audioBuffer);
 
-    // Compress the audio using fluent-ffmpeg
-    // ffmpeg(audioPath)
-    //   .audioBitrate('64k') // Set the audio bitrate to 128 kbps (kilobits per second)
-    //   .format('aac') // Set the output format to mp3
     ffmpeg(audioPath)
       .audioCodec("libopus") // Set the audio codec to Opus
       .audioBitrate("64k") // Set the audio bitrate to 64 kbps (kilobits per second)
       .format("ogg") // Set the output format to OGG (Opus files are often put in an OGG container)
       .on("end", () => {
-        // When the compression is finished
-        console.log("Audio compression finished");
 
         // Read the compressed audio file and update the buffer in req.files.audioFile
         const compressedAudioBuffer = fs.readFileSync(audioPath);

@@ -37,7 +37,6 @@ const Login = ({ visible, onCancel }) => {
         Cookies.set("authToken", response.data.authToken);
         Cookies.set("id", response.data.id);
 
-        // console.log("Login successful");
         message.success("Login successful ");
   
         // Close the modal

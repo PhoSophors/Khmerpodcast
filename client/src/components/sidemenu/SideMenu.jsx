@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
 import { api_url } from "../../api/config";
-import { Menu, Modal } from "antd";
+import { Menu, Modal, message } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 const SideMenu = ({ onSelectMenuItem }) => {
@@ -38,7 +38,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
           }
         })
         .catch((error) => {
-          console.error("Failed to fetch user data:", error);
+          message.error("Error fetching user data");
         })
         .finally(() => {
           setIsLoading(false);

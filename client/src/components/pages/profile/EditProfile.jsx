@@ -47,7 +47,6 @@ const EditProfile = () => {
           setProfileImage(userData.profileImage);
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
         message.error("Failed to fetch user data. Please try again later.");
       }
     };

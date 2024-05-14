@@ -13,7 +13,6 @@ const searchPodcasts = async (req, res) => {
         .json({ message: "Search query parameter is required" });
     }
 
-    console.log(`Searching for podcasts with term: ${search}`);
 
     // Split the search string into words and create a regular expression that matches any part of the words
     const searchWords = search.split(" ").map((word) => `.*${word}.*`);
@@ -26,7 +25,6 @@ const searchPodcasts = async (req, res) => {
       ],
     });
 
-    console.log(`Found ${podcasts.length} podcasts`);
 
     res.json(podcasts);
   } catch (err) {
@@ -45,7 +43,6 @@ const searchUsers = async (req, res) => {
         .json({ message: "Search query parameter is required" });
     }
 
-    console.log(`Searching for users with term: ${search}`);
 
     // Split the search string into words and create a regular expression that matches any part of the words
     const searchWords = search.split(" ").map((word) => `.*${word}.*`);
@@ -57,8 +54,6 @@ const searchUsers = async (req, res) => {
         { email: { $regex: searchRegex } },
       ],
     });
-
-    console.log(`Found ${users.length} users`);
 
     res.json(users);
   } catch (err) {

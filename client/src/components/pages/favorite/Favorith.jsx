@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import "./Favorith.css";
 import { api_url } from "../../../api/config";
+import { message } from "antd";
 
 const Favorith = () => {
   const [favorites, setFavorites] = useState([]);
@@ -24,7 +25,7 @@ const Favorith = () => {
         setFavorites(favorites);
       })
       .catch((error) => {
-        console.error(
+        message.error(
           "Error fetching user favorites:",
           error.response?.data?.message || error.message
         );

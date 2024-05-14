@@ -23,9 +23,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         message.error("File data not found in response");
       }
     } catch (error) {
-      console.error("Error fetching file:", error.message);
       if (error.response && error.response.status === 500) {
-        console.error("Server error:", error.message);
+        message.error("Error fetching file: Internal server error");
       }
       setLoading(false);
     }
@@ -48,7 +47,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         message.error("User data not found in response");
       }
     } catch (error) {
-      console.error("Error fetching user:", error.message);
+      message.error("Error fetching user data");
     }
   };
 
@@ -69,7 +68,10 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
     <div className=" min-w-full ">
       <Card className="view-podcast-card">
         <Breadcrumb className="w-full bg-slate-100 p-3 rounded-xl">
-          <Breadcrumb.Item onClick={handleViewPodcast} className="cursor-pointer">
+          <Breadcrumb.Item
+            onClick={handleViewPodcast}
+            className="cursor-pointer"
+          >
             <LeftOutlined style={{ fontWeight: "bold" }} />
             <span>Back</span>
           </Breadcrumb.Item>
@@ -166,7 +168,6 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           </div>
         )}
       </Card>
-
     </div>
   );
 };

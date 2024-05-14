@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "antd";
+import { Input, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "./search.css";
@@ -33,7 +33,7 @@ const AdminSearchUser = ({ handleSearchSubmit }) => {
 
         handleSearchSubmit(response.data); // Pass the results
       } catch (error) {
-        console.error(error);
+        message.error("Error fetching search results");
       } finally {
         setLoading(false);
       }

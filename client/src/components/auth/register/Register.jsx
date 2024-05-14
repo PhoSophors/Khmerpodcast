@@ -50,14 +50,10 @@ const Register = () => {
         // After successful registration, navigate to OTP verification page
         navigate("/otp", { state: { email: values.email } });
       } else {
-        // Unexpected response status
-        console.error("Unexpected response status:", response.status);
         message.error("Registration failed. Please try again later.");
       }
     } catch (error) {
       setIsLoading(false); // Stop loading spinner
-      // Handle request error
-      console.error("Error:", error.message);
       message.error("Registration failed. Please try again later.");
     }
   };

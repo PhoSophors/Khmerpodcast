@@ -47,7 +47,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
           setIsLoggedIn(true);
         })
         .catch((error) => {
-          console.error("Error:", error.message);
+          message.error("Error fetching user data");
         })
         .finally(() => {
           setIsLoading(false);
