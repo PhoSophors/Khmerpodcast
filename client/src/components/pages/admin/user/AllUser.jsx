@@ -3,16 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { api_url } from "../../../../api/config";
 import DeleteUserBtn from "../../../Btn/DeleteUserBtn";
-import {
-  Spin,
-  Alert,
-  Card,
-  Avatar,
-  Input,
-  Space,
-  message,
-  DatePicker,
-} from "antd";
+import { Spin, Alert, Card, Avatar, Input, Space, DatePicker } from "antd";
 import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import "../admin.css";
 
@@ -52,33 +43,6 @@ const AllUser = () => {
     fetchAllUser();
   }, []);
 
-  const handleDeleteUser = async (_id) => {
-    try {
-      const response = await axios.delete(
-        `${api_url}/auths/delete/user/${_id}`,
-        {
-          method: "DELETE",
-          baseURL: process.env.REACT_APP_PROXY,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        message.success("User deleted successfully");
-        fetchAllUser();
-      } else {
-        message.error("Unexpected response status: " + response.status);
-      }
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        message.error("Error deleting user: " + error.response.data.error);
-      } else {
-        message.error("Error deleting user: " + error.message);
-      }
-    }
-  };
-
   const handleSearch = (value) => {
     setSearchQuery(value);
   };
@@ -105,7 +69,7 @@ const AllUser = () => {
   });
 
   return (
-    <div className="xl:p-5 md:p-5 p-0">
+    <div className="xl:p-5 md:p-5 p-0 ">
       <Card title="All Users" className="w-full">
         <Space direction="vertical" style={{ width: "100%" }}>
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
@@ -209,6 +173,7 @@ const AllUser = () => {
           )}
         </Space>
       </Card>
+      <div className="mt-20 xl:mt-0 md:mt-0 text-white">.</div>
     </div>
   );
 };

@@ -26,6 +26,11 @@ const AudioControl = () => {
   const [duration, setDuration] = useState(0); // State to store duration
   const [isSeeking, setIsSeeking] = useState(false); // State to track if the user is seeking
 
+  const currentPodcast = podcasts.find(
+    (podcast) => podcast.audio.url === currentTrack
+  );
+
+
   const toggleAudio = () => {
     setIsPlaying(!isPlaying);
   };
@@ -105,9 +110,9 @@ const AudioControl = () => {
   };
 
   return (
-    <div className="audio-container ">
+    <div className="audio-container">
       <div className="p-1 xl:w-96 md:w-96 w-96">
-        <div className="play-back-container  ">
+        <div className="play-back-container">
           <div className="play-back-btn gap-5 p-2">
             <StepBackwardFilled
               onClick={handlePrevious}
@@ -130,10 +135,13 @@ const AudioControl = () => {
             />
           </div>
           <div className="image-control">
-            <img
-              src="https://bucketkhpodcast.s3.ap-south-1.amazonaws.com/1715402005975.jpeg"
-              alt=""
-            />
+            {currentPodcast && currentPodcast.image && (
+              <img
+                src={currentPodcast.image.url}
+                alt={currentPodcast.title}
+                className="thumbnail"
+              />
+            )}
           </div>
           <div className="volume-control gap-1">
             <FontAwesomeIcon icon={faVolumeLow} className="volume-icon-style" />
@@ -151,7 +159,6 @@ const AudioControl = () => {
             />
           </div>
         </div>
-
         <div className="time-count">
           <span
             style={{ fontSize: "0.7rem", color: "#6b7280", float: "right" }}

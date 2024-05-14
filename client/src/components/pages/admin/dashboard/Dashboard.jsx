@@ -92,7 +92,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex grid xl:grid-cols-4 grid-cols-2 gap-2 sm:flex sm:gap-5 p-2">
-        <Card title="Total Users" className="w-full md:w-1/2">
+        <Card title="Total Users" className="dashboard-card w-full md:w-1/2">
           <div className="flex items-center justify-between">
             <div className="p-3 flex justify-center bg-green-200 h text-gray-500 h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faUsers} style={{ fontSize: "40px" }} />
@@ -111,7 +111,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card title="Total Podcasts" className="w-full md:w-1/2">
+        <Card title="Total Podcasts" className="dashboard-card w-full md:w-1/2">
           <div className="flex items-center justify-between">
             <div className="p-3 flex justify-center text-gray-500 bg-red-200  h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
@@ -123,7 +123,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card title="News Users" className="w-full md:w-1/2">
+        <Card title="News Users" className="dashboard-card w-full md:w-1/2">
           <div className="flex items-center justify-between">
             <div className="p-3 flex justify-center text-gray-500 bg-slate-200 h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faUserPlus} style={{ fontSize: "40px" }} />
@@ -133,7 +133,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card title="News Podcast" className="w-full md:w-1/2 ">
+        <Card title="News Podcast" className="dashboard-card w-full md:w-1/2 ">
           <div className="flex items-center justify-between">
             <div className="p-3 flex justify-center text-gray-500 bg-amber-200 h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
@@ -145,7 +145,7 @@ const Dashboard = () => {
       </div>
 
       <div className="flex grid xl:grid-cols-2 grid-cols-1 gap-4 gap-2 sm:flex sm:gap-5 p-2">
-        <Card title="Users and Podcasts Counts">
+        <Card title="Users and Podcasts Counts" className="dashboard-card">
           <div
             style={{
               display: "flex",
@@ -157,7 +157,7 @@ const Dashboard = () => {
             <Pie style={{ width: "auto" }} data={data} />
           </div>
         </Card>
-        <Card title="Cloud Storage" className="col-span-2 w-full">
+        <Card title="Cloud Storage" className="dashboard-card col-span-2 w-full">
           <h1 className="text-3xl font-semibold text-red-600">
             App Maintenance
           </h1>

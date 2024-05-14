@@ -6,6 +6,7 @@ import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
 import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
+import { LeftOutlined } from "@ant-design/icons";
 
 const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
@@ -67,10 +68,10 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   return (
     <div className=" min-w-full ">
       <Card className="view-podcast-card">
-        <Breadcrumb className="w-full bg-slate-100 p-3 rounded-xl cursor-pointer">
-          <Breadcrumb.Item onClick={handleViewPodcast}>
-            {/* <ArrowLeftOutlined /> Back */}
-            Back
+        <Breadcrumb className="w-full bg-slate-100 p-3 rounded-xl">
+          <Breadcrumb.Item onClick={handleViewPodcast} className="cursor-pointer">
+            <LeftOutlined style={{ fontWeight: "bold" }} />
+            <span>Back</span>
           </Breadcrumb.Item>
           <Breadcrumb.Item>View Podcast</Breadcrumb.Item>
         </Breadcrumb>
@@ -166,7 +167,6 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         )}
       </Card>
 
-      <div className="mt-20"></div>
     </div>
   );
 };

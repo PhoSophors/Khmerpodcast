@@ -6,6 +6,8 @@ import "../login/Login.css";
 import logo from "../../assets/logo.jpg";
 import { useTranslation } from "react-i18next";
 import { api_url } from "../../../api/config";
+import "./forgotpassword.css";
+import BackBtn from "../../Btn/BackBtn";
 
 const ForgotPassword = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -67,8 +69,9 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-slate-100">
-      <Card title={t("forgotPassword.title")} className="card xl:w-1/3 md:w-1/2 w-full">
+    <div className="flex justify-center text-center items-center h-screen bg-indigo-600">
+      <Card title={t("forgotPassword.title")} className="forgot-password-card xl:w-1/3 md:w-1/2 w-1/2 p-2">
+        <BackBtn />
         <Form layout="vertical">
           {currentStep === 1 && (
             <>

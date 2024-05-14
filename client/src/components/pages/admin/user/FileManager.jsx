@@ -112,7 +112,7 @@ const FileManager = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="xl:p-5 md:p-5 p-0 ">
       {/* File Manager Card */}
       <Card title="File Manager" className="w-full">
         {/* Search Input */}
@@ -223,7 +223,7 @@ const FileManager = () => {
           </Button>
         </div>
       </Card>
-
+      <div className="mt-20 xl:mt-0 md:mt-0 text-white">.</div>
       {/* Delete Modal */}
     </div>
   );

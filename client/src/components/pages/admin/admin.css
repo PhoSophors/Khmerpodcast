@@ -1,12 +1,11 @@
-/* dashbaord */
-.card {
-  box-shadow: 0 20px 37.6px rgba(0, 0, 0, 0.090);
-  border: none;
+
+
+.dashboard-card {
+  /* box-shadow: 0 20px 37.6px rgba(0, 0, 0, 0.090); */
+  /* border: none; */
 }
 
-
  /* AllUser and FileManager =================================== */
- 
 #user-podcast-table {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -15,7 +14,6 @@
 
 #user-podcast-table td, #user-podcast-table th {
   border: 1px solid #ddd;
-  /* border-top: none; */
   border-left: none;
   border-right: none;
   padding: 7px;
