@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start --port 5000",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build && javascript-obfuscator build/static/js/*.js --output build/static/js/",
+    "build": "react-scripts build",
     "serve": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -73,8 +73,6 @@ createDefaultAdmin().then(() => {
 app.use("/files", fileUploadRoutes);
 app.use("/auths", authRoutes);
 app.use("/search", searchRoutes);
-
-// Route for fetching storage information
 app.use("/admin", adminRoutes);
 
 // Error handling middleware
