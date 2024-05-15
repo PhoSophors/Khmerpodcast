@@ -3,8 +3,22 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { api_url } from "../../../../api/config";
 import DeleteUserBtn from "../../../Btn/DeleteUserBtn";
-import { Spin, Alert, Card, Avatar, Input, Space, DatePicker, Button } from "antd";
-import { UserOutlined, SearchOutlined, StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
+import {
+  Spin,
+  Alert,
+  Card,
+  Avatar,
+  Input,
+  Space,
+  DatePicker,
+  Button,
+} from "antd";
+import {
+  UserOutlined,
+  SearchOutlined,
+  StepBackwardFilled,
+  StepForwardFilled,
+} from "@ant-design/icons";
 import "../admin.css";
 
 const AllUser = () => {
@@ -17,33 +31,33 @@ const AllUser = () => {
   const cardsPerPage = 15;
   const authToken = Cookies.get("authToken");
 
-  const fetchAllUser = async () => {
-    setLoading(true);
-    try {
-      if (authToken) {
-        const response = await axios.get(`${api_url}/auths/users/all`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-        if (Array.isArray(response.data.users)) {
-          setAllUser(response.data.users.reverse());
-        } else {
-          setError(
-            "Expected array but received: " + JSON.stringify(response.data)
-          );
-        }
-      }
-    } catch (error) {
-      setError("Error fetching users: " + error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchAllUser = async () => {
+      setLoading(true);
+      try {
+        if (authToken) {
+          const response = await axios.get(`${api_url}/auths/users/all`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+          if (Array.isArray(response.data.users)) {
+            setAllUser(response.data.users.reverse());
+          } else {
+            setError(
+              "Expected array but received: " + JSON.stringify(response.data)
+            );
+          }
+        }
+      } catch (error) {
+        setError("Error fetching users: " + error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchAllUser();
-  }, []);
+  }, [authToken]);
 
   const handleSearch = (value) => {
     setSearchQuery(value);
@@ -136,7 +150,9 @@ const AllUser = () => {
                 <tbody>
                   {paginatedUsers.map((user, index) => (
                     <tr key={user._id}>
-                      <td className="text-center">{(currentPage - 1) * cardsPerPage + index + 1}</td>
+                      <td className="text-center">
+                        {(currentPage - 1) * cardsPerPage + index + 1}
+                      </td>
                       <td className="text-center">
                         <Avatar
                           src={user && user.profileImage}
@@ -180,7 +196,7 @@ const AllUser = () => {
                         {user.role !== "admin" && (
                           <DeleteUserBtn
                             user={user}
-                            fetchAllUser={fetchAllUser}
+                            fetchAllUser={setAllUser}
                           />
                         )}
                       </td>

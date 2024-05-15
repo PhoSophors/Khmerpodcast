@@ -20,7 +20,7 @@ import {
 const EditProfile = () => {
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Added loading state
   const [imageFileList, setImageFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -32,6 +32,7 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true); // Set loading to true when fetching data
         const authToken = Cookies.get("authToken");
 
         if (authToken && id) {
@@ -48,6 +49,8 @@ const EditProfile = () => {
         }
       } catch (error) {
         message.error("Failed to fetch user data. Please try again later.");
+      } finally {
+        setLoading(false); // Set loading to false when data fetching is done
       }
     };
 
@@ -60,16 +63,10 @@ const EditProfile = () => {
 
   const handleProfileImageChange = (info) => {
     setImageFileList([...info.fileList]); // Update imageFileList
-    if (info.file.status === "uploading") {
-      setLoading(true);
-    }
     if (info.file.status === "done") {
       getBase64(info.file.originFileObj, (imageUrl) => {
         setProfileImage(imageUrl);
-        setLoading(false);
       });
-    } else if (info.file.status === "error" || info.file.status === "removed") {
-      setLoading(false);
     }
   };
 
@@ -96,7 +93,7 @@ const EditProfile = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      setLoading(true);
+      setLoading(true); // Set loading to true during update
 
       const formData = new FormData();
       formData.append("username", username);
@@ -135,17 +132,17 @@ const EditProfile = () => {
     } catch (error) {
       message.error("Failed to update profile. Please try again later.");
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading to false after update
     }
   };
 
   return (
     <div className="bg-indigo-600">
-      <div className="flex flex-col w-full items-center  justify-center h-screen text-center">
-        <Card title="Edit Profile" className="p-2.5 h-4/6 edit-profile-card bg-slate-100">
+      <div className="flex flex-col w-full items-center justify-center h-screen text-center">
+        <Card title="Edit Profile" className="p-2.5 h-4/6 edit-profile-card bg-slate-100" >
           <BackBtn />
           <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
-            <Form.Item className="text-center">
+            <Form.Item className="text-center flex justify-center">
               <ImgCrop>
                 <Upload
                   action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
@@ -196,6 +193,7 @@ const EditProfile = () => {
                 onClick={() => handleUpdateProfile(true)}
                 className="saveBtn"
                 size="large"
+                loading={loading} // Use loading state for the Button component
               >
                 Save Changes
               </Button>

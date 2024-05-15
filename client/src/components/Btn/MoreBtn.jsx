@@ -64,10 +64,10 @@ const MoreBtn = ({ file }) => {
           message.error("Error fetching user data");
         })
         .finally(() => {
-          // setIsLoading(false);
+          // Set loading to false after the request is completed
         });
     }
-  }, [id]); // Add 'id' as a dependency
+  }, [authToken, id]);
 
   const handleTogglePodcastInPlaylist = async () => {
     try {

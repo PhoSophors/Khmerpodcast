@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -15,11 +15,37 @@ const Otp = () => {
   const location = useLocation();
   const email = location.state ? location.state.email : ""; // Get email from location state
 
+  const handleVerifyOTP = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${api_url}/auths/user/verify-otp`, {
+        email,
+        otp: otpValues.join(""),
+      });
+
+      if (response.status === 200) {
+        // OTP verified successfully, set the authToken cookie
+        Cookies.set("authToken", response.data.authToken);
+        Cookies.set("id", response.data.id);
+
+        // Navigate to home page
+        message.success("OTP verified successfully");
+        navigate("/");
+      } else {
+        message.error("OTP verification failed. Please try again.");
+      }
+    } catch (error) {
+      message.error("OTP verification failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [email, otpValues, navigate]);
+
   useEffect(() => {
     if (otpValues.join("").length === 6) {
       handleVerifyOTP();
     }
-  }, [otpValues]);
+  }, [otpValues, handleVerifyOTP]);
 
   const handleInputChange = (e, index) => {
     const { value } = e.target;
@@ -42,46 +68,22 @@ const Otp = () => {
     }
   };
 
-  const handleVerifyOTP = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.post(`${api_url}/auths/user/verify-otp`, {
-        email,
-        otp: otpValues.join(""),
-      });
-
-      if (response.status === 200) {
-        // OTP verified successfully, set the authToken cookie
-        Cookies.set("authToken", response.data.authToken);
-        Cookies.set("id", response.data.id);
-
-        // Navigate to home page
-        message.success("OTP verified successfully");
-        navigate("/");
-      } else {
-        message.error("OTP verification failed. Please try again.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <div div className="bg-indigo-600">
+    <div className="bg-indigo-600">
       <BackBtn />
 
-      <div className="flex flex-col w-full xl-min-w-96 items-center justify-center h-screen text-center  p-5">
+      <div className="flex flex-col w-full xl-min-w-96 items-center justify-center h-screen text-center p-5">
         <Card
-          title="Please verified OTP!"
+          title="Please verify OTP!"
           style={{ width: 350, float: "left" }}
         >
-          <div className="mt-10 ">
+          <div className="mt-10">
             <SafetyOutlined style={{ fontSize: "100px", color: "#4f46e5" }} />
           </div>
           <h1 className="mt-10">
-            We have sent you access code vai Email verification:{" "}
+            We have sent you an access code via email verification:
           </h1>
-          <h1 className="mb-10 text-bold" style={{ fontWeight: "bold" }}>
+          <h1 className="mb-10 font-bold">
             {email}
           </h1>
           <Row gutter={16}>
@@ -103,7 +105,7 @@ const Otp = () => {
               </Col>
             ))}
           </Row>
-          <hr className="mt-10 " />
+          <hr className="mt-10" />
           <div className="mt-10 mb-10 text-center">
             <Spin spinning={isLoading}>
               <Button
@@ -115,6 +117,7 @@ const Otp = () => {
                   color: "#ffffff",
                 }}
                 onClick={handleVerifyOTP}
+                disabled={otpValues.join("").length !== 6}
               >
                 Verify OTP
               </Button>

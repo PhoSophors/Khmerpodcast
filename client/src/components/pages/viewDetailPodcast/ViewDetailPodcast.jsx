@@ -13,48 +13,48 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [user, setUser] = useState(null);
   const authToken = Cookies.get("authToken");
 
-  const fetchFile = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`/files/get-file/${file._id}`);
-      if (response.data) {
-        setLoading(false);
-      } else {
-        message.error("File data not found in response");
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 500) {
-        message.error("Error fetching file: Internal server error");
-      }
-      setLoading(false);
-    }
-  };
-
-  const fetchUser = async () => {
-    try {
-      const response = await axios.get(
-        `${api_url}/get-file-by-user/${file.userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-
-      if (response.data) {
-        setUser(response.data);
-      } else {
-        message.error("User data not found in response");
-      }
-    } catch (error) {
-      return 0;
-    }
-  };
-
   useEffect(() => {
+    const fetchFile = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`/files/get-file/${file._id}`);
+        if (response.data) {
+          setLoading(false);
+        } else {
+          message.error("File data not found in response");
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 500) {
+          message.error("Error fetching file: Internal server error");
+        }
+        setLoading(false);
+      }
+    };
+
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          `${api_url}/get-file-by-user/${file.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+
+        if (response.data) {
+          setUser(response.data);
+        } else {
+          message.error("User data not found in response");
+        }
+      } catch (error) {
+        return 0;
+      }
+    };
+
     fetchFile();
     fetchUser();
-  }, []);
+  }, [file._id, file.userId, authToken]);
 
   if (loading) {
     return (
@@ -159,12 +159,14 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           {file.description}
         </p>
 
+
         {user && (
-          <div>
-            {user._id}
-            <h2> name{user.username}</h2>
-            <p> email {user.email}</p>
-            {/* Display other user information here */}
+          <div className="mt-5">
+            <p className="text-lg text-indigo-500 font-semibold">
+              {user.username} 
+            </p>
+            <p className="text-slate-500">{user.email}</p>
+            
           </div>
         )}
       </Card>

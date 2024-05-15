@@ -45,40 +45,40 @@ const Dashboard = () => {
   const authToken = Cookies.get("authToken");
 
   useEffect(() => {
-    fetchCounts();
-  }, []);
+    const fetchCounts = async () => {
+      try {
+        if (authToken) {
+          // Fetch user count
+          const userResponse = await axios.get(`${api_url}/auths/users`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: { date: selectedDate },
+          });
+          setUserCount(userResponse.data.user);
 
-  const fetchCounts = async () => {
-    try {
-      if (authToken) {
-        // Fetch user count
-        const userResponse = await axios.get(`${api_url}/auths/users`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-          params: { date: selectedDate },
-        });
-        setUserCount(userResponse.data.user);
+          // Fetch file count
+          const fileResponse = await axios.get(`${api_url}/files/count`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+          setFileCount(fileResponse.data.count);
 
-        // Fetch file count
-        const fileResponse = await axios.get(`${api_url}/files/count`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-        setFileCount(fileResponse.data.count);
-
-        const storageInfo = await axios.get(`${api_url}/admin/storage-info`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-        setStorageInfo(storageInfo.data);
+          const storageInfo = await axios.get(`${api_url}/admin/storage-info`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+          setStorageInfo(storageInfo.data);
+        }
+      } catch (error) {
+        message.error("Failed to fetch data");
       }
-    } catch (error) {
-      message.error("Failed to fetch data");
-    }
-  };
+    };
+
+    fetchCounts();
+  }, [authToken, selectedDate]);
 
   const total = userCount + fileCount;
   const userPercentage = (userCount / total) * 100;

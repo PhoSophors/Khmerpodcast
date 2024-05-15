@@ -1,8 +1,6 @@
-// Import necessary dependencies
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import "../admin.css";
 import MoreBtn from "../../../Btn/MoreBtn";
 import { api_url } from "../../../../api/config";
 import DeletePodcastBtn from "../../../Btn/DeletePodcastBtn";
@@ -23,7 +21,7 @@ import {
 } from "antd";
 
 // Define FileManager component
-const FileManager = () => {
+export const FileManager = () => {
   // State variables
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,10 +31,10 @@ const FileManager = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 15;
 
-  const authToken = Cookies.get("authToken");
+  // Function to fetch files
   useEffect(() => {
-    // Fetch files function
     const fetchFiles = async () => {
+      const authToken = Cookies.get("authToken");
       setLoading(true);
       try {
         if (authToken) {
@@ -60,10 +58,8 @@ const FileManager = () => {
       }
     };
 
-    // Fetch files on component mount
-
     fetchFiles();
-  }, [authToken]);
+  }, []);
 
   // Function to handle search
   const handleSearch = (value) => {
@@ -188,7 +184,7 @@ const FileManager = () => {
                       </td>
                       <td className="text-center">
                         {/* Delete Button */}
-                        <DeletePodcastBtn file={file} fetchFiles={setFiles} />
+                        <DeletePodcastBtn file={file} fetchFiles={fetchFiles} />
                       </td>
                       {/* More button */}
                       <td className="text-center place-items-center">
@@ -229,5 +225,3 @@ const FileManager = () => {
     </div>
   );
 };
-
-export default FileManager;
