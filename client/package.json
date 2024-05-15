@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start --port 5000",
-    "build": "react-scripts build && terser -c -m -o build/static/js/main.min.js -- build/static/js/main.js",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build && javascript-obfuscator build/static/js/*.js --output build/static/js/",
     "serve": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "javascript-obfuscator": "^4.1.0",
     "serve": "^14.2.3",
     "tailwindcss": "^3.4.1",
     "terser": "^5.31.0"
