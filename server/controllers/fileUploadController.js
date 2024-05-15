@@ -19,16 +19,6 @@ const uploadPodcast = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Calculate the size of the compressed image
-    const compressedImageSize = imageFile[0].buffer
-      ? imageFile[0].buffer.length
-      : 0;
-
-    // auido file size
-    const compressedAudioSize = audioFile[0].buffer
-      ? audioFile[0].buffer.length
-      : 0;
-
     // Create a single document for both audio and image
     const file = new File({
       title: title,
@@ -37,15 +27,15 @@ const uploadPodcast = async (req, res) => {
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
-        // size: req.files.audioFile[0].size,
-        compressedSize: compressedAudioSize,
+        size: req.files.audioFile[0].size,
+        // compressedSize: compressedAudioSize,
         mimetype: req.files.audioFile[0].mimetype,
       },
       image: {
         filename: `image_/${req.files.imageFile[0].key}`,
         url: req.files.imageFile[0].location,
-        // size: req.files.imageFile[0].size,
-        compressedSize: compressedImageSize,
+        size: req.files.imageFile[0].size,
+        // compressedSize: compressedImageSize,
         mimetype: req.files.imageFile[0].mimetype,
       },
     });

@@ -1,52 +1,57 @@
+// middleware/compressAudioMiddleware.js
 const ffmpeg = require("fluent-ffmpeg");
 const fs = require("fs");
 const path = require("path");
 
-const compressAudioMiddleware = async (req, res, next) => {
+const compressAudioMiddleware = (req, res, next) => {
+  console.log("Files received:", req.files); // Log received files
+
+  // Check if audioFile exists in req.files and if buffer is not empty
+  if (!req.files || !req.files.audioFile || !req.files.audioFile[0].buffer) {
+    console.error("No audio file found or empty buffer.");
+    return res
+      .status(400)
+      .json({ message: "Bad request: audio file is required" });
+  }
+
+  const audioFile = req.files.audioFile[0];
+
   try {
-    // Check if audio file exists and has data
-    if (!req.files || !req.files.audioFile || !req.files.audioFile[0].buffer) {
-      return next();
-    }
+    const originalPath = path.join(os.tmpdir(), audioFile.originalname);
+    const compressedPath = path.join(
+      os.tmpdir(),
+      `compressed_${audioFile.originalname}`
+    );
 
-    const audioFile = req.files.audioFile[0];
-    const audioBuffer = audioFile.buffer;
-    const audioPath = path.join(__dirname, audioFile.originalname);
+    console.log("Original path:", originalPath); // Log original path
+    console.log("Compressed path:", compressedPath); // Log compressed path
 
-    fs.writeFileSync(audioPath, audioBuffer);
+    fs.writeFileSync(originalPath, audioFile.buffer);
 
-    ffmpeg(audioPath)
-      .audioCodec("libopus") // Set the audio codec to Opus
-      .audioBitrate("64k") // Set the audio bitrate to 64 kbps (kilobits per second)
-      .format("ogg") // Set the output format to OGG (Opus files are often put in an OGG container)
+    ffmpeg(originalPath)
+      .audioCodec("libopus")
+      .audioBitrate(64)
+      .format("ogg")
       .on("end", () => {
-
-        // Read the compressed audio file and update the buffer in req.files.audioFile
-        const compressedAudioBuffer = fs.readFileSync(audioPath);
-        req.files.audioFile[0].buffer = compressedAudioBuffer; // Update the buffer in req.files.audioFile
-
-        // Delete the temporary audio file
-        fs.unlinkSync(audioPath);
-
+        const compressedBuffer = fs.readFileSync(compressedPath);
+        audioFile.buffer = compressedBuffer;
+        audioFile.compressedSize = compressedBuffer.length; // Set the compressedSize property
+        fs.unlinkSync(originalPath);
+        fs.unlinkSync(compressedPath);
         next();
       })
       .on("error", (err) => {
-        console.error("Error compressing audio:", err);
-        res
-          .status(500)
-          .json({
-            message: "Error compressing audio. Please try again later.",
-          });
+        console.error(`Error compressing audio file: ${err.message}`);
+        audioFile.compressedSize = audioFile.buffer.length; // Set compressedSize to original size in case of error
+        next();
       })
-      .save(audioPath);
-  } catch (err) {
-    console.error("Error in compressAudioMiddleware:", err);
-    res
+      .save(compressedPath);
+  } catch (error) {
+    console.error("Error processing audio file:", error);
+    return res
       .status(500)
-      .json({
-        message: "Error in compressAudioMiddleware. Please try again later.",
-      });
+      .json({ message: "Internal server error while processing audio file" });
   }
 };
 
-module.exports = compressAudioMiddleware;
+module.exports = { compressAudioMiddleware };

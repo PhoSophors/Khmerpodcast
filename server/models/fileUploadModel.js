@@ -24,7 +24,7 @@ const fileSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    compressedSize: {
+    size: {
       type: Number,
       required: true
     },
@@ -42,7 +42,7 @@ const fileSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    compressedSize: {
+    size: {
       type: Number,
       required: true
     },

@@ -4,8 +4,8 @@ const express = require("express");
 const router = express.Router();
 const fileUploadController = require("../controllers/fileUploadController");
 const { upload2S3 } = require("../middleware/fileUploadMiddleware");
-const compressImageMiddleware = require("../middleware/compressImageMiddleware");
-const compressAudioMiddleware = require("../middleware/compressAudioMiddleware");
+const { compressImageMiddleware } = require("../middleware/compressImageMiddleware");
+const { compressAudioMiddleware } = require("../middleware/compressAudioMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 const File = require("../models/fileUploadModel");
@@ -16,8 +16,8 @@ router.post(
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
   upload2S3,
-  compressImageMiddleware,
-  compressAudioMiddleware,
+  // compressImageMiddleware,
+  // compressAudioMiddleware,
   fileUploadController.uploadPodcast
 );
 

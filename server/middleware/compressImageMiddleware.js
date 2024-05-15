@@ -59,4 +59,4 @@ const compressImageMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = compressImageMiddleware;
+module.exports = { compressImageMiddleware };
