@@ -11,20 +11,22 @@ const searchRoutes = require("./routes/searchRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const authenticateToken = require("./middleware/authenticateToken");
 const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
-const allowedOrigins = ['http://localhost:3000', 'https://khmerpodcast.vercel.app'];
+const crypto = require("crypto");
 
-const crypto = require("crypto"); 
+// Allowed origins for CORS
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://khmerpodcast.vercel.app",
+];
 
 // Initialize express app
 const app = express();
 const port = process.env.PORT || 4000; // Set up port
 
-
 // Generate a random secret for session
 function generateRandomSecret(length = 32) {
   return crypto.randomBytes(length).toString("hex");
 }
-
 
 // Set up CORS
 app.use(
@@ -33,7 +35,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
@@ -42,6 +44,10 @@ app.use(
 
 // Set up middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(cookieParser());
+app.use(express.json());
+
 app.use(
   session({
     secret: generateRandomSecret(),
@@ -50,15 +56,10 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production", // Set secure to true in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Set sameSite to none in production
+      httpOnly: true, // Ensures the cookie is sent only over HTTP(S), not client JavaScript
     },
   })
 );
-
-app.use(express.json());
-
-// and fetch cookies credentials requirement
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // Connect to database
 connectDB();

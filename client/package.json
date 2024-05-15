@@ -57,6 +57,7 @@
     "javascript-obfuscator": "^4.1.0",
     "serve": "^14.2.3",
     "tailwindcss": "^3.4.1",
-    "terser": "^5.31.0"
+    "terser": "^5.31.0",
+    "terser-webpack-plugin": "^5.3.10"
   }
 }

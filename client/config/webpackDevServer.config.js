@@ -44,7 +44,7 @@ module.exports = function (proxy, allowedHost) {
     // Enable gzip compression of generated files.
     compress: true,
     static: {
-      // By default WebpackDevServer serves physical files from current directory
+    // By default WebpackDevServer serves physical files from current directory
       // in addition to all the virtual build products that it serves from memory.
       // This is confusing because those files won’t automatically be available in
       // production build folder unless we copy them. However, copying the whole
