@@ -25,6 +25,7 @@ function generateRandomSecret(length = 32) {
   return crypto.randomBytes(length).toString("hex");
 }
 
+
 // Set up CORS
 app.use(
   cors({
