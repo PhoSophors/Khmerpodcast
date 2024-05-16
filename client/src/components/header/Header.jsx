@@ -30,11 +30,10 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || "default"
   );
+  const authToken = Cookies.get("authToken");
+  const id = Cookies.get("id");
 
   useEffect(() => {
-    const authToken = Cookies.get("authToken");
-    const id = Cookies.get("id");
-
     if (authToken && id) {
       axios
         .get(`${api_url}/auths/user-data/${id}`, {
@@ -47,7 +46,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
           setIsLoggedIn(true);
         })
         .catch((error) => {
-          message.error("Error fetching user data");
+          // message.error("Error fetching user data");
         })
         .finally(() => {
           setIsLoading(false);
@@ -55,7 +54,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     } else {
       setIsLoading(false);
     }
-  }, []);
+  }, [authToken, id]);
 
   useEffect(() => {
     const storedLanguage = localStorage.getItem("language");

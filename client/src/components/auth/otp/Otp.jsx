@@ -34,8 +34,6 @@ const Otp = () => {
       } else {
         message.error("OTP verification failed. Please try again.");
       }
-    } catch (error) {
-      message.error("OTP verification failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -73,19 +71,14 @@ const Otp = () => {
       <BackBtn />
 
       <div className="flex flex-col w-full xl-min-w-96 items-center justify-center h-screen text-center p-5">
-        <Card
-          title="Please verify OTP!"
-          style={{ width: 350, float: "left" }}
-        >
+        <Card title="Please verify OTP!" style={{ width: 350, float: "left" }}>
           <div className="mt-10">
             <SafetyOutlined style={{ fontSize: "100px", color: "#4f46e5" }} />
           </div>
           <h1 className="mt-10">
             We have sent you an access code via email verification:
           </h1>
-          <h1 className="mb-10 font-bold">
-            {email}
-          </h1>
+          <h1 className="mb-10 font-bold">{email}</h1>
           <Row gutter={16}>
             {otpValues.map((value, index) => (
               <Col key={index} span={4}>

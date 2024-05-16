@@ -17,11 +17,10 @@ const Profile = () => {
   const [userPodcasts, setUserPodcasts] = useState([]);
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
-
   const id = Cookies.get("id");
+  const authToken = Cookies.get("authToken");
 
   useEffect(() => {
-    const authToken = Cookies.get("authToken");
     setIsLoading(true);
 
     if (authToken && id) {
@@ -70,7 +69,7 @@ const Profile = () => {
           setIsError(true);
         });
     }
-  }, [id]);
+  }, [authToken, id]);
 
   return (
     <div className="bg-white h-screen ">

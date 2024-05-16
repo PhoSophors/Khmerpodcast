@@ -61,7 +61,14 @@ const AudioControl = () => {
       if (isPlaying) {
         const playPromise = audio.play();
         if (playPromise !== undefined) {
-          playPromise.catch((error) => message.error("Error playing audio"));
+          playPromise.catch((error) => {
+            if (
+              error.name === "NotAllowedError" ||
+              error.name === "NotSupportedError"
+            ) {
+              message.error("Error playing audio");
+            }
+          });
         }
       } else {
         audio.pause();

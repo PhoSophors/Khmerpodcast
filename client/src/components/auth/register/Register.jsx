@@ -24,8 +24,8 @@ const Register = () => {
       const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
       if (!passwordRegex.test(values.password)) {
         notification.error({
-          message: 'Validation Error',
-          description: 'Password must contain at least one letter, one number.'
+          message: "Validation Error",
+          description: "Password must contain at least one letter, one number.",
         });
         setIsLoading(false); // Stop loading spinner
         return; // Exit the function
@@ -43,9 +43,10 @@ const Register = () => {
         Cookies.set("id", response.data.id);
 
         // Registration successful, navigate to /otp
-        message.success(
-          "Registration successful. Please check your email for the OTP to activate your account."
-        );
+        notification.success({
+          message: "Registration successful.",
+          description: "Please check your email for the OTP to activate your account.",
+        });
 
         // After successful registration, navigate to OTP verification page
         navigate("/otp", { state: { email: values.email } });
@@ -63,14 +64,14 @@ const Register = () => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
     if (!passwordRegex.test(value)) {
       notification.error({
-        message: 'Validation Error',
-        description: 'Password must contain at least one letter, one number.'
+        message: "Validation Error",
+        description: "Password must contain at least one letter, one number.",
       });
     }
   };
 
   return (
-    <div className="main-register"> 
+    <div className="main-register">
       <div className="register-backBtn">
         <BackBtn />
       </div>
@@ -124,7 +125,6 @@ const Register = () => {
                     required: true,
                     message: t("register.passwordRequired"),
                   },
-
                 ]}
               >
                 <Input.Password

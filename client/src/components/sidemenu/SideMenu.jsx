@@ -17,11 +17,10 @@ const SideMenu = ({ onSelectMenuItem }) => {
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const [, setIsLoading] = useState(false);
   const { t } = useTranslation();
+  const authToken = Cookies.get("authToken");
   const id = Cookies.get("id");
 
   useEffect(() => {
-    const authToken = Cookies.get("authToken");
-
     if (authToken) {
       setIsLoading(true);
       axios
@@ -38,13 +37,13 @@ const SideMenu = ({ onSelectMenuItem }) => {
           }
         })
         .catch((error) => {
-          message.error("Error fetching user data");
+          // message.error("Error fetching user data");
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [id]);
+  }, [authToken, id]);
 
   const handleAppClick = () => {
     window.location.reload();

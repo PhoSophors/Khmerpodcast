@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Spin, message } from "antd";
+import { Spin, notification } from "antd";
 import CustomCard from "../../card/CustomCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 // import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
@@ -28,7 +28,7 @@ const HomePage = () => {
       setError(false);
       setLoading(false);
     } catch (error) {
-      message.error("Error fetching files");
+      notification.error("Error fetching files");
       setLoading(false);
     }
   };

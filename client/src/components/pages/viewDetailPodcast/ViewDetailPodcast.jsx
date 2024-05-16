@@ -45,7 +45,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         if (response.data) {
           setUser(response.data);
         } else {
-          message.error("User data not found in response");
+          // message.error("User data not found in response");
         }
       } catch (error) {
         return 0;

@@ -28,12 +28,12 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [uploadProgress, setUploadProgress] = useState(0);
+  const authToken = Cookies.get("authToken");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true); // Set loading to true when fetching data
-        const authToken = Cookies.get("authToken");
 
         if (authToken && id) {
           const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
@@ -55,7 +55,7 @@ const EditProfile = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, [authToken, id]);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -139,7 +139,10 @@ const EditProfile = () => {
   return (
     <div className="bg-indigo-600">
       <div className="flex flex-col w-full items-center justify-center h-screen text-center">
-        <Card title="Edit Profile" className="p-2.5 h-4/6 edit-profile-card bg-slate-100" >
+        <Card
+          title="Edit Profile"
+          className="p-2.5 h-4/6 edit-profile-card bg-slate-100"
+        >
           <BackBtn />
           <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
             <Form.Item className="text-center flex justify-center">

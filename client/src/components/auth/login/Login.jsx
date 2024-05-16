@@ -13,7 +13,6 @@ const Login = ({ visible, onCancel }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-
   const handleCancel = () => {
     onCancel();
     document.body.classList.remove("modal-open");
@@ -28,24 +27,17 @@ const Login = ({ visible, onCancel }) => {
         },
         withCredentials: true,
       });
-  
       setIsLoading(false);
-  
+
       if (response.status === 200) {
         // Login successful
-  
         Cookies.set("authToken", response.data.authToken);
         Cookies.set("id", response.data.id);
-
         message.success("Login successful ");
-  
+
         // Close the modal
         handleCancel();
-  
-        // refresh the page
         window.location.reload();
-  
-        // Navigate to the home page after successful login
         navigate("/");
       }
     } catch (error) {

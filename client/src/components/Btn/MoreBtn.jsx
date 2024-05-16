@@ -61,10 +61,10 @@ const MoreBtn = ({ file }) => {
           }
         })
         .catch((error) => {
-          message.error("Error fetching user data");
+          
         })
         .finally(() => {
-          // Set loading to false after the request is completed
+          message.error("Error fetching user data");
         });
     }
   }, [authToken, id]);
