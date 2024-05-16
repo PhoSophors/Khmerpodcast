@@ -37,7 +37,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
           }
         })
         .catch((error) => {
-          // message.error("Error fetching user data");
+          message.error("Error fetching user data");
         })
         .finally(() => {
           setIsLoading(false);
