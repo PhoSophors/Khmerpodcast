@@ -93,16 +93,21 @@ const SideMenu = ({ onSelectMenuItem }) => {
           onClick={handleAppClick}
           className="flex items-center md:p-4 cursor-pointer"
         >
-          <img src={logo} alt="" className="logo-app mr-2" />
-          <div className=" flex flex-col">
-            <span className="app-name uppercase tracking-wide text-xl text-red-600 font-bold">
-              Khmer
+          {<img src={logo} alt="logo" className="logo-app" />}
+          <Menu.Item key="default" className="name-app">
+            <span onClick={() => handleMenuItemClick({ key: "default" })}>
+              <div className="flex flex-col">
+                <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
+                  Khmer
+                </span>
+                <span className="uppercase tracking-wide text-sm text-slate-300 font-semibold">
+                  Podcast
+                </span>
+              </div>
             </span>
-            <span className="app-name uppercase tracking-wide text-sm text-slate-300 font-semibold">
-              Podcast
-            </span>
-          </div>
+          </Menu.Item>
         </div>
+        {/* <img src={logo} alt="" className="logo-app mr-2" /> */}
 
         <Menu.Item key="/" icon={getIcon("/", selectedMenuItem)}>
           <span onClick={() => handleMenuItemClick({ key: "/" })}>

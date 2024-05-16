@@ -1,4 +1,4 @@
-
+import logo from "../assets/logo.jpg";
 import { 
   HomeFilled,
   HomeOutlined,
@@ -18,6 +18,7 @@ import {
  } from "@ant-design/icons";
 
 export const iconMapping = {
+  "default": <img src={logo} alt="logo" />,
   "/": { selected: <HomeFilled />, default: <HomeOutlined /> },
   "/search": { selected: <SearchOutlined />, default: <SearchOutlined /> },
   "/favorite": { selected: <HeartFilled />, default: <HeartOutlined /> },
@@ -45,11 +46,18 @@ export const iconMapping = {
   },
 };
 
+// export const getIcon = (key, selectedMenuItem) => {
+//   const icon = iconMapping[key];
+//   return icon
+//     ? selectedMenuItem === key
+//       ? icon.selected
+//       : icon.default
+//     : null;
+// };
 export const getIcon = (key, selectedMenuItem) => {
-  const icon = iconMapping[key];
-  return icon
-    ? selectedMenuItem === key
-      ? icon.selected
-      : icon.default
-    : null;
+  const iconSet = iconMapping[key];
+  if (!iconSet) return null; // Return null if there's no icon set for the key
+
+  // Return the selected icon if the key matches the selected menu item, otherwise return the default icon
+  return selectedMenuItem === key ? iconSet.selected : iconSet.default;
 };
