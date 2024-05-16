@@ -2,32 +2,33 @@ body {
   overflow: hidden;
 }
 
+.content-containers{
+  /* background-color: var(--slate-100); */
+  background-color: white;
+  padding: 10px;
+  height: 100vh;
+}
 
 .content-card {
   position: relative;
   background-color: white;
   min-height: calc(100vh - 110px);
   height: calc(100vh - 90px);
-  padding: 2px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  padding: 8px;
   overflow-y: auto; 
 }
 
-.content-containers{
-  background-color: var(--indigo-700);
-  padding: 10px;
-  height: 100vh;
-}
+
 
 /* set mobile screen pasdding 0 for content container */
 @media screen and (max-width: 768px) {
   .content-containers {
     padding: 0;
     height: 100vh;
+
   }
   .content-card {
+    height: calc(100vh - 60px);
     border-radius: 0;
-    height: calc(100vh - 40px);
   }
 }

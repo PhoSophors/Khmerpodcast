@@ -28,14 +28,12 @@ const uploadPodcast = async (req, res) => {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
         size: req.files.audioFile[0].size,
-        // compressedSize: compressedAudioSize,
         mimetype: req.files.audioFile[0].mimetype,
       },
       image: {
         filename: `image_/${req.files.imageFile[0].key}`,
         url: req.files.imageFile[0].location,
         size: req.files.imageFile[0].size,
-        // compressedSize: compressedImageSize,
         mimetype: req.files.imageFile[0].mimetype,
       },
     });

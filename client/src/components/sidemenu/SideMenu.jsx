@@ -100,14 +100,13 @@ const SideMenu = ({ onSelectMenuItem }) => {
                 <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
                   Khmer
                 </span>
-                <span className="uppercase tracking-wide text-sm text-slate-300 font-semibold">
+                <span className="uppercase tracking-wide text-sm text-slate-900 font-semibold">
                   Podcast
                 </span>
               </div>
             </span>
           </Menu.Item>
         </div>
-        {/* <img src={logo} alt="" className="logo-app mr-2" /> */}
 
         <Menu.Item key="/" icon={getIcon("/", selectedMenuItem)}>
           <span onClick={() => handleMenuItemClick({ key: "/" })}>

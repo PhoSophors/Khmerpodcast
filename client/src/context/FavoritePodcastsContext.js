@@ -1,30 +1,46 @@
-// FavoritePodcastsContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
-import Cookies from "js-cookie";
+import axios from "axios";
+const { api_url } = require("../api/config");
 
 const FavoritePodcastsContext = createContext();
 
 export const FavoritePodcastsProvider = ({ children }) => {
-  const [favoritePodcasts, setFavoritePodcasts] = useState(() => {
-    const cookie = Cookies.get("favoritePodcasts");
-    return cookie ? JSON.parse(cookie) : [];
-  });
+  const [favoritePodcasts, setFavoritePodcasts] = useState([]);
 
   useEffect(() => {
-    Cookies.set("favoritePodcasts", JSON.stringify(favoritePodcasts));
-  }, [favoritePodcasts]);
+    // Fetch the user's favorite podcasts when the component mounts
+    axios.get(`${api_url}/files/get-all-favorite`)
+      .then(response => {
+        setFavoritePodcasts(response.data.map(podcast => podcast.id)); // Adjust the response if needed
+      })
+      .catch(error => {
+        console.error('Error fetching favorite podcasts:', error);
+      });
+  }, []);
 
-  const togglePodcastInFavorites = (podcastId) => {
-    if (favoritePodcasts.includes(podcastId)) {
-      setFavoritePodcasts(favoritePodcasts.filter((id) => id !== podcastId));
-    } else {
-      setFavoritePodcasts([...favoritePodcasts, podcastId]);
+  const addPodcastToFavorites = async (podcastId) => {
+    try {
+      await axios.post(`${api_url}/files/favorite/${podcastId}`);
+      setFavoritePodcasts((prevFavorites) => [...prevFavorites, podcastId]);
+    } catch (error) {
+      console.error('Error adding podcast to favorites:', error);
+    }
+  };
+
+  const removePodcastFromFavorites = async (podcastId) => {
+    try {
+      await axios.post(`${api_url}/files/remove-favorite/${podcastId}`);
+      setFavoritePodcasts((prevFavorites) =>
+        prevFavorites.filter((id) => id !== podcastId)
+      );
+    } catch (error) {
+      console.error('Error removing podcast from favorites:', error);
     }
   };
 
   return (
     <FavoritePodcastsContext.Provider
-      value={{ favoritePodcasts, togglePodcastInFavorites }}
+      value={{ favoritePodcasts, addPodcastToFavorites, removePodcastFromFavorites }}
     >
       {children}
     </FavoritePodcastsContext.Provider>

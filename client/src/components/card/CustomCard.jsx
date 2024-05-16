@@ -31,11 +31,11 @@ const CustomCard = ({ file, handleViewPodcast }) => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <Card
-          hoverable
+          // hoverable
           style={{
             borderRadius: "20px",
-            boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
-            border: "none",
+            // boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
+            // border: "none",
           }}
           cover={
             <div

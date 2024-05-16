@@ -16,32 +16,32 @@
   font-size: 1rem;
   position: relative;
   top: 0;
-  background-color: var(--indigo-700);
+  background-color: var(--slate-100);
   border: none;
   padding-bottom: 20px;
 }
 .ant-layout-sider-children {
-  background-color: var(--indigo-700);
+  background-color: var(--slate-100);
 }
 
 /* style={{ display: 'flex', flexDirection: 'column', height: '100%' }} */
 
 .side-menu-container .ant-menu-item-selected {
   background: var(--sider-item-selected);
-  color: var(--white) !important;
+  color: var(--slate-900) !important;
   font-weight: bold;
 }
 
 .side-menu-container .ant-menu-item{
-  color: var(--slate-200);
+  color: var(--slate-900) !important;
 }
 .side-menu-container .ant-menu-item:hover{
-  color: var(--white) !important;
+  color: var(--slate-900) !important;
 }
 
 
 .ant-menu-submenu-title {
-  color: var(--slate-300) !important;
+  color: var(--slate-900) !important;
 }
 
 /* Styles for screens with a width of 768px or less */

@@ -4,6 +4,7 @@ import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
 import { api_url } from "../../api/config";
 import axios from "axios";
+import { useFavoritePodcasts } from "../../context/FavoritePodcastsContext";
 import {
   ShareAltOutlined,
   LinkOutlined,
@@ -32,16 +33,14 @@ const MoreBtn = ({ file }) => {
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [isAddedToFavorites, setIsAddedToFavorites] = useState(() => {
-    const cookie = Cookies.get(`favorite-${file._id}`);
-    return cookie ? JSON.parse(cookie) : false;
-  });
   const authToken = Cookies.get("authToken");
   const id = Cookies.get("id");
-
-  useEffect(() => {
-    Cookies.set(`favorite-${file._id}`, JSON.stringify(isAddedToFavorites));
-  }, [file._id, isAddedToFavorites]);
+  const {
+    favoritePodcasts,
+    addPodcastToFavorites,
+    removePodcastFromFavorites,
+  } = useFavoritePodcasts();
+  const isFavorite = favoritePodcasts.includes(file.id);
 
   useEffect(() => {
     if (authToken) {
@@ -62,49 +61,17 @@ const MoreBtn = ({ file }) => {
         })
         .catch((error) => {
           message.error("Error fetching user data");
-        })
-        .finally(() => {
-          // Set loading to false after the request is completed
         });
     }
   }, [authToken, id]);
 
-  const handleTogglePodcastInPlaylist = async () => {
-    try {
-      const authToken = Cookies.get("authToken");
-      let response;
-
-      if (isAddedToFavorites) {
-        response = await fetch(`${api_url}/files/remove-favorite/${file._id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-      } else {
-        response = await fetch(`${api_url}/files/favorite/${file._id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-      }
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Toggle the state after a successful request
-      setIsAddedToFavorites(!isAddedToFavorites);
-      message.success(
-        isAddedToFavorites
-          ? "Podcast removed from favorites"
-          : "Podcast added to favorites"
-      );
-    } catch (error) {
-      message.error("Error toggling podcast in favorites");
+  const handleToggleFavorite = async () => {
+    if (isFavorite) {
+      await removePodcastFromFavorites(file.id);
+      message.success("Podcast removed from favorites");
+    } else {
+      await addPodcastToFavorites(file.id);
+      message.success("Podcast added to favorites");
     }
   };
 
@@ -125,7 +92,6 @@ const MoreBtn = ({ file }) => {
     message.success("Link copied to clipboard");
   };
 
-  // Inside the shareMenu variable declaration
   const shareMenu = (
     <Menu style={{ width: "250px" }}>
       <Menu.Item key="0" onClick={showModal}>
@@ -138,8 +104,8 @@ const MoreBtn = ({ file }) => {
       </Menu.Item>
 
       {isLoggedIn && (
-        <Menu.Item key="2" onClick={handleTogglePodcastInPlaylist}>
-          {isAddedToFavorites ? (
+        <Menu.Item key="2" onClick={handleToggleFavorite}>
+          {isFavorite ? (
             <>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <svg
@@ -179,16 +145,9 @@ const MoreBtn = ({ file }) => {
         </Menu.Item>
       )}
 
-      {isLoggedIn && (
-        <Menu.Item key="3">
-          {
-            // Only show the edit option if the user is the owner of the podcast
-            user && user.id === file.user.id && (
-              <div onClick={handleToggleUpdateMode}>
-                <EditOutlined /> <span className="mx-2">Edit Podcast</span>
-              </div>
-            )
-          }
+      {isLoggedIn && user && user.id === file.user.id && (
+        <Menu.Item key="3" onClick={handleToggleUpdateMode}>
+          <EditOutlined /> <span className="mx-2">Edit Podcast</span>
         </Menu.Item>
       )}
     </Menu>
@@ -204,14 +163,9 @@ const MoreBtn = ({ file }) => {
 
   return (
     <div>
-      {/* bg-indigo-600  */}
-      <div className="p-3 text-white bg-amber-400   h-8 w-8 flex justify-center items-center rounded-full">
+      <div className="p-3 text-white bg-amber-400 h-8 w-8 flex justify-center items-center rounded-full">
         <Dropdown overlay={shareMenu} trigger={["click"]}>
-          <MoreOutlined
-            style={{
-              fontSize: "18px",
-            }}
-          />
+          <MoreOutlined style={{ fontSize: "18px" }} />
         </Dropdown>
       </div>
       <>
@@ -224,25 +178,21 @@ const MoreBtn = ({ file }) => {
         >
           <Card>
             <div className="text-center gab-5">
-              <FacebookShareButton
-                className="text-center"
-                url={shareUrl}
-                style={{ margin: "0 5px" }}
-              >
+              <FacebookShareButton url={shareUrl} style={{ margin: "0 5px" }}>
                 <FacebookIcon size={45} round />
                 <span>Facebook</span>
               </FacebookShareButton>
               <TwitterShareButton url={shareUrl} style={{ margin: "0 5px" }}>
                 <TwitterIcon size={45} round />
-                <span>Twiiter</span>
+                <span>Twitter</span>
               </TwitterShareButton>
               <LinkedinShareButton url={shareUrl} style={{ margin: "0 5px" }}>
                 <LinkedinIcon size={45} round />
-                <span>Linkedin</span>
+                <span>LinkedIn</span>
               </LinkedinShareButton>
               <TelegramShareButton url={shareUrl} style={{ margin: "0 5px" }}>
                 <TelegramIcon size={45} round />
-                <span>Telegran</span>
+                <span>Telegram</span>
               </TelegramShareButton>
               <FacebookMessengerShareButton
                 url={shareUrl}
@@ -250,11 +200,11 @@ const MoreBtn = ({ file }) => {
                 style={{ margin: "0 5px" }}
               >
                 <FacebookMessengerIcon size={45} round />
-                <span> Messenger</span>
+                <span>Messenger</span>
               </FacebookMessengerShareButton>
               <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px" }}>
                 <WhatsappIcon size={45} round />
-                <span> Whatapp</span>
+                <span>WhatsApp</span>
               </WhatsappShareButton>
             </div>
           </Card>
