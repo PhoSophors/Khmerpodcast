@@ -16,32 +16,32 @@
   font-size: 1rem;
   position: relative;
   top: 0;
-  background-color: var(--slate-100);
+  background-color: var(--indigo-600);
   border: none;
   padding-bottom: 20px;
 }
 .ant-layout-sider-children {
-  background-color: var(--slate-100);
+  background-color: var(--indigo-600);
 }
 
 /* style={{ display: 'flex', flexDirection: 'column', height: '100%' }} */
 
 .side-menu-container .ant-menu-item-selected {
   background: var(--sider-item-selected);
-  color: var(--slate-900) !important;
+  color: var(--slate-100) !important;
   font-weight: bold;
 }
 
 .side-menu-container .ant-menu-item{
-  color: var(--slate-900) !important;
+  color: var(--slate-100) !important;
 }
 .side-menu-container .ant-menu-item:hover{
-  color: var(--slate-900) !important;
+  color: var(--slate-100) !important;
 }
 
 
 .ant-menu-submenu-title {
-  color: var(--slate-900) !important;
+  color: var(--slate-100) !important;
 }
 
 /* Styles for screens with a width of 768px or less */
@@ -85,6 +85,10 @@
     top: 0;
   }
   
+  .side-menu-container .ant-menu-item{
+    color: var(--slate-900) !important;
+  }
+
   .logo-app {
     display: none;
   }

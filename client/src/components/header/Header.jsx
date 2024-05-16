@@ -143,7 +143,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
                   <span className="name-style tracking-wide text-xl text-red-600 font-bold">
                     Khmer
                   </span>
-                  <span className="name-style  tracking-wide text-sm text-slate-900 font-semibold">
+                  <span className="name-style  tracking-wide text-sm text-slate-200 font-semibold">
                     Podcast
                   </span>
                 </div>

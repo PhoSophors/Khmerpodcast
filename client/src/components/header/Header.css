@@ -7,9 +7,9 @@
   padding: 1rem;
   height: 70px;
   background-color: var(--white);
-  border-radius: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   border: 0.1px solid rgba(128, 128, 128, 0.205);
-
 }
 
 .modal-logout {
