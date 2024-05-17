@@ -58,7 +58,7 @@ router.delete(
 
 // POST route to add a Podcast to favorites
 router.post(
-  "/favorite/:id",
+  "/add-favorite/:id",
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
   fileUploadController.addPodcastToPlaylist

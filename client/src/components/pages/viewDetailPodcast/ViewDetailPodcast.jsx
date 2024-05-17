@@ -159,14 +159,12 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           {file.description}
         </p>
 
-
         {user && (
           <div className="mt-5">
             <p className="text-lg text-indigo-500 font-semibold">
-              {user.username} 
+              {user.username}
             </p>
             <p className="text-slate-500">{user.email}</p>
-            
           </div>
         )}
       </Card>

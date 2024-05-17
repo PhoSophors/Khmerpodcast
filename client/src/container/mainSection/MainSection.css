@@ -13,7 +13,6 @@ body {
   background-color: white;
   min-height: calc(100vh - 110px);
   height: calc(100vh - 90px);
-  padding: 8px;
   overflow-y: auto; 
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;

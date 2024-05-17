@@ -4,7 +4,6 @@ import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
 import { api_url } from "../../api/config";
 import axios from "axios";
-import { useFavoritePodcasts } from "../../context/FavoritePodcastsContext";
 import {
   ShareAltOutlined,
   LinkOutlined,
@@ -33,47 +32,101 @@ const MoreBtn = ({ file }) => {
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
   const authToken = Cookies.get("authToken");
   const id = Cookies.get("id");
-  const {
-    favoritePodcasts,
-    addPodcastToFavorites,
-    removePodcastFromFavorites,
-  } = useFavoritePodcasts();
-  const isFavorite = favoritePodcasts.includes(file.id);
 
   useEffect(() => {
-    if (authToken) {
-      // Fetch user data if user is logged in
-      axios
-        .get(`${api_url}/auths/user-data/${id}`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        })
-        .then((response) => {
+    const fetchData = async () => {
+      if (authToken) {
+        try {
+          const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
           const userData = response.data.user;
           if (userData) {
-            // Update user data only if valid data is received
             setUser(userData);
             setIsLoggedIn(true);
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           message.error("Error fetching user data");
-        });
-    }
+        }
+      }
+    };
+    fetchData();
   }, [authToken, id]);
 
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const response = await axios.get(`${api_url}/files/get-all-favorite`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+  
+        if (response.status === 200) {
+          const isFav = response.data.some(fav => fav.id === file.id);
+          setIsFavorite(isFav);
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
+      }
+      catch (error) {
+        console.error("Error fetching favorites:", error);
+      }
+    };
+    fetchFavorites();
+  }, [authToken, file.id]);
+
   const handleToggleFavorite = async () => {
-    if (isFavorite) {
-      await removePodcastFromFavorites(file.id);
-      message.success("Podcast removed from favorites");
-    } else {
-      await addPodcastToFavorites(file.id);
-      message.success("Podcast added to favorites");
+    try {
+      if (!authToken) {
+        message.error("Please login to add to favorites");
+        return;
+      }
+      if (!isFavorite) {
+        const response = await axios.post(
+          `${api_url}/files/add-favorite/${file._id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          setIsFavorite(true);
+          message.success("Added to favorites successfully.");
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
+      } else {
+        const response = await axios.post(
+          `${api_url}/files/remove-favorite/${file._id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          setIsFavorite(false);
+          message.success("Removed from favorites successfully.");
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
     }
   };
+  
+  
 
   const handleToggleUpdateMode = () => {
     setIsUpdateMode(!isUpdateMode);
@@ -82,6 +135,7 @@ const MoreBtn = ({ file }) => {
   const showModal = () => {
     setIsModalVisible(true);
   };
+
   const handleModalCancel = () => {
     setIsModalVisible(false);
   };
@@ -152,13 +206,8 @@ const MoreBtn = ({ file }) => {
       )}
     </Menu>
   );
-
   if (isUpdateMode) {
-    if (file) {
-      return <UpdatePodcast file={file} />;
-    } else {
-      return null;
-    }
+    return <UpdatePodcast file={file} />;
   }
 
   return (
