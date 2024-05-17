@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Spin, message, Breadcrumb } from "antd";
+import { Card, Spin, message, Breadcrumb, Avatar } from "antd";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
 import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
-import { LeftOutlined } from "@ant-design/icons";
+import { LeftOutlined, UserOutlined } from "@ant-design/icons";
+import Linkify from "react-linkify";
 
 const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
@@ -17,9 +18,12 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
     const fetchFile = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`/files/get-file/${file._id}`);
+        const response = await axios.get(
+          `${api_url}/files/get-file/${file._id}`
+        );
         if (response.data) {
           setLoading(false);
+          setUser(response.data.user);
         } else {
           message.error("File data not found in response");
         }
@@ -31,29 +35,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
       }
     };
 
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(
-          `${api_url}/get-file-by-user/${file.userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-
-        if (response.data) {
-          setUser(response.data);
-        } else {
-        }
-      } catch (error) {
-        return 0;
-      }
-    };
-
     fetchFile();
-    fetchUser();
-  }, [file._id, file.userId, authToken]);
+  }, [authToken, file._id]);
 
   if (loading) {
     return (
@@ -62,6 +45,12 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
       </div>
     );
   }
+
+  const linkDecorator = (href, text, key) => (
+    <a href={href} key={key} style={{ color: 'red' }} target="_blank" rel="noopener noreferrer">
+      {text}
+    </a>
+  );
 
   return (
     <div className=" min-w-full ">
@@ -154,18 +143,41 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         </div>
 
         <hr className="mt-5 mb-5" />
-        <p className="mt-2 text-slate-500 xl:w-6/12 md:w-6/12 w-full">
-          {file.description}
+        <p className="mt-2 tracking-wide text-slate-500 xl:w-6/12 md:w-6/12 w-full">
+          <Linkify componentDecorator={linkDecorator}>
+            {file.description}
+          </Linkify>
         </p>
 
-        {user && (
-          <div className="mt-5">
-            <p className="text-lg text-indigo-500 font-semibold">
-              {user.username}
-            </p>
-            <p className="text-slate-500">{user.email}</p>
+        {/* Information about Podcast Upload */}
+        <div className="mt-20">
+          <span className="text-indigo-500 font-semibold">Informatiom</span>
+
+          <div className="flex justify-between mt-5">
+            <div className="items-center flex gap-2">
+              <Avatar
+                src={user && user.profileImage}
+                style={{ border: "1px solid #6366f1" }}
+                size="large"
+                icon={<UserOutlined />}
+              />
+              <span class="uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
+                {user.username}
+              </span>
+            </div>
+
+            <div className="">
+              <span className="font-semibold text-indigo-500">Upload Date</span>
+              <div>
+                {new Date(user.createdAt).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </div>
+            </div>
           </div>
-        )}
+        </div>
       </Card>
     </div>
   );

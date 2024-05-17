@@ -181,7 +181,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             // Render the user's profile dropdown if the user is logged in
             <Dropdown overlay={menu} trigger={["click"]}>
               <div className=" items-center flex">
-                <div class="uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
+                <div class="username-header uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
                   {user && user.username}
                 </div>
                 &nbsp;

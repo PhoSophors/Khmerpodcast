@@ -137,7 +137,7 @@ const updateFile = async (req, res) => {
     }
 
     // Delete the old file from S3
-    await deleteOldFileFromS3(file); 
+    // await deleteOldFileFromS3(file); 
     
     // Update the file's properties
     file.title = title || file.title;
