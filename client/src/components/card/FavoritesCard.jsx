@@ -1,41 +1,17 @@
 import React, { useState } from "react";
-import { Spin, Card, message } from "antd"; // Import Button and message from antd
-import Cookies from "js-cookie";
+import { Spin, Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
-import { api_url } from "../../api/config";
+import { useFavorites } from "../../services/useFavorites";
 
 const FavoritesCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const { removePodcastFromFavorites } = useFavorites();
 
   const handleImageLoad = () => {
     setIsLoading(false);
-  };
-
-  const removePodcastFromFavorites = async () => {
-    const authToken = Cookies.get("authToken");
-
-    try {
-      let response;
-
-      response = await fetch(`${api_url}/files/remove-favorite/${file._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-
-      if (response.status === 200) {
-        message.success("Podcast removed from favorites");
-      } else {
-        throw new Error("Failed to remove podcast from favorites");
-      }
-    } catch (error) {
-      message.error("Error remove podcast in favorites");
-    }
   };
 
   const date = new Date(); // replace this with your date
@@ -124,7 +100,7 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
               </div>
 
               <div
-                onClick={removePodcastFromFavorites}
+                onClick={() => removePodcastFromFavorites(file._id)}
                 className="cursor-pointer"
               >
                 <svg

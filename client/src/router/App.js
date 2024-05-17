@@ -32,16 +32,22 @@ const App = () => {
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const authToken = Cookies.get("authToken");
-    if (authToken) {
-      const decodedToken = jwtDecode(authToken);
-      setUserRole(decodedToken.role);
+    // const authToken = Cookies.get("authToken");
+    const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+    if (authToken && authToken.split('.').length === 3) {
+      try {
+        const decodedToken = jwtDecode(authToken);
+        console.log('decodedToken:', decodedToken); // Add this line
+        setUserRole(decodedToken.role);
+      } catch (error) {
+        console.error('Error decoding authToken:', error);
+      }
     }
-
+    
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 200);
-
+    }, 400);
+    
     return () => clearTimeout(timeout);
   }, []);
 

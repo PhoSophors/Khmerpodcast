@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import React, { useState } from "react";
 import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
-import { api_url } from "../../api/config";
-import axios from "axios";
+import { useUser } from "../../services/useUser";
+import { useFavorites } from "../../services/useFavorites";
 import {
   ShareAltOutlined,
   LinkOutlined,
@@ -30,104 +29,13 @@ import {
 const MoreBtn = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const authToken = Cookies.get("authToken");
-  const id = Cookies.get("id");
-  const isUploader = isLoggedIn && user && user.id === file.user.id;
+  const { user, isLoggedIn } = useUser();
+  const { favorites, toggleFavorite } = useFavorites();
+  const isFavorite = favorites.some((fav) => fav._id === file._id);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (authToken) {
-        try {
-          const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          });
-          const userData = response.data.user;
-          if (userData) {
-            setUser(userData);
-            setIsLoggedIn(true);
-          }
-        } catch (error) {
-          message.error("Error fetching user data");
-        }
-      }
-    };
-    fetchData();
-  }, [authToken, id]);
-
-
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const response = await axios.get(`${api_url}/files/get-all-favorite`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-  
-        if (response.status === 200) {
-          const isFav = response.data.some(fav => fav._id === file._id);
-          setIsFavorite(isFav);
-        } else {
-          console.error("Unexpected response status:", response.status);
-        }
-      }
-      catch (error) {
-        console.error("Error fetching favorites:", error);
-      }
-    };
-    fetchFavorites();
-  }, [authToken, file._id]);
-
-  const handleToggleFavorite = async () => {
-    try {
-      if (!authToken) {
-        message.error("Please login to add to favorites");
-        return;
-      }
-      if (!isFavorite) {
-        const response = await axios.post(
-          `${api_url}/files/add-favorite/${file._id}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-        if (response.status === 200) {
-          setIsFavorite(true);
-          message.success("Added to favorites successfully.");
-        } else {
-          console.error("Unexpected response status:", response.status);
-        }
-      } else {
-        const response = await axios.post(
-          `${api_url}/files/remove-favorite/${file._id}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-        if (response.status === 200) {
-          setIsFavorite(false);
-          message.success("Removed from favorites successfully.");
-        } else {
-          console.error("Unexpected response status:", response.status);
-        }
-      }
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-    }
+  const handleToggleFavorite = () => {
+    toggleFavorite(file._id, isFavorite);
   };
-  
-  
 
   const handleToggleUpdateMode = () => {
     setIsUpdateMode(!isUpdateMode);
@@ -200,14 +108,14 @@ const MoreBtn = ({ file }) => {
         </Menu.Item>
       )}
 
-
-      {isLoggedIn && isUploader && (
+      {isLoggedIn && user && user.id === file.user._id && (
         <Menu.Item key="3" onClick={handleToggleUpdateMode}>
           <EditOutlined /> <span className="mx-2">Edit Podcast</span>
         </Menu.Item>
       )}
     </Menu>
   );
+
   if (isUpdateMode) {
     return <UpdatePodcast file={file} />;
   }
@@ -219,48 +127,46 @@ const MoreBtn = ({ file }) => {
           <MoreOutlined style={{ fontSize: "18px" }} />
         </Dropdown>
       </div>
-      <>
-        <Modal
-          title="Share"
-          visible={isModalVisible}
-          onCancel={handleModalCancel}
-          footer={null}
-          centered
-        >
-          <Card>
-            <div className="text-center gab-5">
-              <FacebookShareButton url={shareUrl} style={{ margin: "0 5px" }}>
-                <FacebookIcon size={45} round />
-                <span>Facebook</span>
-              </FacebookShareButton>
-              <TwitterShareButton url={shareUrl} style={{ margin: "0 5px" }}>
-                <TwitterIcon size={45} round />
-                <span>Twitter</span>
-              </TwitterShareButton>
-              <LinkedinShareButton url={shareUrl} style={{ margin: "0 5px" }}>
-                <LinkedinIcon size={45} round />
-                <span>LinkedIn</span>
-              </LinkedinShareButton>
-              <TelegramShareButton url={shareUrl} style={{ margin: "0 5px" }}>
-                <TelegramIcon size={45} round />
-                <span>Telegram</span>
-              </TelegramShareButton>
-              <FacebookMessengerShareButton
-                url={shareUrl}
-                appId="521270401588372"
-                style={{ margin: "0 5px" }}
-              >
-                <FacebookMessengerIcon size={45} round />
-                <span>Messenger</span>
-              </FacebookMessengerShareButton>
-              <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px" }}>
-                <WhatsappIcon size={45} round />
-                <span>WhatsApp</span>
-              </WhatsappShareButton>
-            </div>
-          </Card>
-        </Modal>
-      </>
+      <Modal
+        title="Share"
+        visible={isModalVisible}
+        onCancel={handleModalCancel}
+        footer={null}
+        centered
+      >
+        <Card>
+          <div className="text-center gab-5">
+            <FacebookShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <FacebookIcon size={45} round />
+              <span>Facebook</span>
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <TwitterIcon size={45} round />
+              <span>Twitter</span>
+            </TwitterShareButton>
+            <LinkedinShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <LinkedinIcon size={45} round />
+              <span>LinkedIn</span>
+            </LinkedinShareButton>
+            <TelegramShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <TelegramIcon size={45} round />
+              <span>Telegram</span>
+            </TelegramShareButton>
+            <FacebookMessengerShareButton
+              url={shareUrl}
+              appId="521270401588372"
+              style={{ margin: "0 5px" }}
+            >
+              <FacebookMessengerIcon size={45} round />
+              <span>Messenger</span>
+            </FacebookMessengerShareButton>
+            <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+              <WhatsappIcon size={45} round />
+              <span>WhatsApp</span>
+            </WhatsappShareButton>
+          </div>
+        </Card>
+      </Modal>
     </div>
   );
 };

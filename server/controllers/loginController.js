@@ -40,9 +40,7 @@ loginController.login = async (req, res, next) => {
     };
 
     // Generate a token
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "30d",
-    });
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
 
     // Save the token to the database
     user.authToken = token;

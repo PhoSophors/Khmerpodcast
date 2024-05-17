@@ -1,60 +1,28 @@
 import React, { useState, useEffect } from "react";
 import LanguageSwitcher from "../languageSwitcher/LanguageSwitcher";
 import Login from "../auth/login/Login";
-import axios from "axios";
-import Cookies from "js-cookie";
+import SideMenu from "../sidemenu/SideMenu";
+import AudioControl from "../audio/AudioControl";
+import { Drawer } from "antd";
+import { useUser } from "../../services/useUser";
 import "./Header.css";
-import { api_url } from "../../api/config";
 import logo from "../assets/logo.jpg";
 import { Avatar, Dropdown, Menu, Alert, Spin, message } from "antd";
 import {
   MenuOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
-  // CloseOutlined,
-  // LogoutOutlined,
 } from "@ant-design/icons";
-import SideMenu from "../sidemenu/SideMenu";
-import AudioControl from "../audio/AudioControl";
-import { Drawer } from "antd";
 
 const Header = ({ handleCollapse, onSelectMenuItem }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
   const [menuVisible, setMenuVisible] = useState(false);
+  const { user, isLoading, isLoggedIn } = useUser();
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || "default"
   );
-  const authToken = Cookies.get("authToken");
-  const id = Cookies.get("id");
-
-  useEffect(() => {
-    if (authToken && id) {
-      axios
-        .get(`${api_url}/auths/user-data/${id}`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        })
-        .then((response) => {
-          setUser(response.data.user);
-          setIsLoggedIn(true);
-        })
-        .catch((error) => {
-          // message.error("Error fetching user data");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-    }
-  }, [authToken, id]);
 
   useEffect(() => {
     const storedLanguage = localStorage.getItem("language");
@@ -68,7 +36,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
   };
 
   const handleSuccessfulLogin = () => {
-    setIsLoggedIn(true);
     setShowSuccessAlert(true);
 
     message.success("Login successful");

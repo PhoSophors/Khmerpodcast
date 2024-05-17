@@ -135,9 +135,7 @@ otpController.verifyOTP = async (req, res) => {
       email: user.email,
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "30d",
-    });
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
 
     // Create a SHA-256 hash of the authToken
     const hash = crypto.createHash("sha256");
@@ -153,7 +151,6 @@ otpController.verifyOTP = async (req, res) => {
     res.cookie("token", hashedAuthToken, {
       httpOnly: true,
       secure: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 
     // If the OTPs match and the OTP has not expired, the verification is successful

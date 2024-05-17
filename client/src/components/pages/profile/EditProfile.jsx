@@ -6,6 +6,7 @@ import ImgCrop from "antd-img-crop";
 import { useParams, useNavigate } from "react-router-dom";
 import { api_url } from "../../../api/config";
 import BackBtn from "../../Btn/BackBtn";
+import { useUser } from "../../../services/useUser";
 import {
   Form,
   Input,
@@ -20,42 +21,28 @@ import {
 const EditProfile = () => {
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  const [loading, setLoading] = useState(false); // Added loading state
   const [imageFileList, setImageFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
   const [uploadProgress, setUploadProgress] = useState(0);
-  const authToken = Cookies.get("authToken");
+  const { user, loading} = useUser();
+  const id = user ? user._id : null;
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true); // Set loading to true when fetching data
+    if (user) {
+      setUsername(user.username);
+      setProfileImage(user.profileImage);
+    }
+  }, [user]);
 
-        if (authToken && id) {
-          const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
-            baseURL: process.env.REACT_APP_PROXY,
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          });
+  console.log(user);
 
-          const userData = response.data.user;
-          setUsername(userData.username);
-          setProfileImage(userData.profileImage);
-        }
-      } catch (error) {
-        message.error("Failed to fetch user data. Please try again later.");
-      } finally {
-        setLoading(false); // Set loading to false when data fetching is done
-      }
-    };
-
-    fetchData();
-  }, [authToken, id]);
+  if (loading) {
+    return <div>Loading...</div>; // Render loading indicator
+  }
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -93,7 +80,7 @@ const EditProfile = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      setLoading(true); // Set loading to true during update
+      // setLoading(true); // Set loading to true during update
 
       const formData = new FormData();
       formData.append("username", username);
@@ -103,7 +90,6 @@ const EditProfile = () => {
         formData.append("profileImage", file);
       }
 
-      const authToken = Cookies.get("authToken");
       const response = await axios.put(
         `${api_url}/auths/user/update/${id}`,
         formData,
@@ -132,7 +118,7 @@ const EditProfile = () => {
     } catch (error) {
       message.error("Failed to update profile. Please try again later.");
     } finally {
-      setLoading(false); // Set loading to false after update
+      // setLoading(false); // Set loading to false after update
     }
   };
 

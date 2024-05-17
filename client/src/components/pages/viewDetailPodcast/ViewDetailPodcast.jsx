@@ -166,7 +166,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
               </span>
             </div>
 
-            <div className="">
+            <div className="text-center">
               <span className="font-semibold text-indigo-500">Upload Date</span>
               <div>
                 {new Date(user.createdAt).toLocaleDateString(undefined, {

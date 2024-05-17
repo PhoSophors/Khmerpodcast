@@ -1,49 +1,29 @@
-import { Form, Input, Button, Modal, message, Spin } from "antd";
-import React, { useState } from "react";
+import { Form, Input, Button, Modal, Spin } from "antd";
+import React from "react";
 import "./Login.css"; // Import your CSS file
 import { Link } from "react-router-dom";
 import SigninWithGoogle from "../signinWithGoogle/SignInWithGoogle";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
-import { api_url } from "../../../api/config";
+import { useLogin } from "../../../services/useLogin";
 
 const Login = ({ visible, onCancel }) => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
+  const { login, isLoading } = useLogin();
+
   const handleCancel = () => {
     onCancel();
     document.body.classList.remove("modal-open");
   };
 
   const onFinish = async (values) => {
-    try {
-      setIsLoading(true);
-      const response = await axios.post(`${api_url}/auths/login`, values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-      setIsLoading(false);
-
-      if (response.status === 200) {
-        // Login successful
-        Cookies.set("authToken", response.data.authToken);
-        Cookies.set("id", response.data.id);
-        message.success("Login successful ");
-
-        // Close the modal
-        handleCancel();
-        window.location.reload();
-        navigate("/");
-      }
-    } catch (error) {
-      setIsLoading(false);
-      // Show error message
-      message.error("Invalid username or password");
+    const success = await login(values);
+    if (success) {
+      // Close the modal
+      handleCancel();
+      window.location.reload();
+      navigate("/");
     }
   };
 
