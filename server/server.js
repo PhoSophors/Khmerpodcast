@@ -57,6 +57,7 @@ app.use(
       secure: process.env.NODE_ENV === "production", // Set secure to true in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Set sameSite to none in production
       httpOnly: true, // Ensures the cookie is sent only over HTTP(S), not client JavaScript
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     },
   })
 );
