@@ -61,11 +61,7 @@ const Profile = () => {
             setUserPodcasts(podcasts);
           }
         })
-        .catch((error) => {
-          message.error(
-            "Error fetching podcasts:",
-            error.response?.data?.message || error.message
-          );
+        .catch(() => {
           setIsError(true);
         });
     }

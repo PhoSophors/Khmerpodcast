@@ -45,7 +45,6 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         if (response.data) {
           setUser(response.data);
         } else {
-          // message.error("User data not found in response");
         }
       } catch (error) {
         return 0;
@@ -58,7 +57,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
 
   if (loading) {
     return (
-      <div className="p-10">
+      <div className="p-10 text-center">
         <Spin />
       </div>
     );

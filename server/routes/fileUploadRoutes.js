@@ -63,6 +63,7 @@ router.post(
   checkRoleMiddleware(["admin", "user"]),
   fileUploadController.addPodcastToPlaylist
 );
+
 // POST route to remove a Podcast from favorites
 router.post(
   "/remove-favorite/:id",

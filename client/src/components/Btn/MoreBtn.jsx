@@ -35,6 +35,7 @@ const MoreBtn = ({ file }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const authToken = Cookies.get("authToken");
   const id = Cookies.get("id");
+  const isUploader = isLoggedIn && user && user.id === file.user.id;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -199,7 +200,8 @@ const MoreBtn = ({ file }) => {
         </Menu.Item>
       )}
 
-      {isLoggedIn && user && user.id === file.user.id && (
+
+      {isLoggedIn && isUploader && (
         <Menu.Item key="3" onClick={handleToggleUpdateMode}>
           <EditOutlined /> <span className="mx-2">Edit Podcast</span>
         </Menu.Item>
