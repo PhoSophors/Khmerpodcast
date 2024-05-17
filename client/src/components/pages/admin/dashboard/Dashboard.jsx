@@ -24,7 +24,6 @@ import { api_url } from "../../../../api/config";
 import "../admin.css";
 
 Chart.register(ArcElement);
-// chart for bucket size
 Chart.register(
   LineController,
   LineElement,
@@ -44,6 +43,7 @@ const Dashboard = () => {
   const [storageData] = useState([]);
   const authToken = Cookies.get("authToken");
 
+
   useEffect(() => {
     const fetchCounts = async () => {
       try {
@@ -62,6 +62,7 @@ const Dashboard = () => {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
+            params: { date: selectedDate },
           });
           setFileCount(fileResponse.data.count);
 
@@ -118,6 +119,7 @@ const Dashboard = () => {
       setUserCount(0);
     }
   };
+  
 
   return (
     <>
@@ -204,7 +206,7 @@ const Dashboard = () => {
           className="dashboard-card col-span-2 w-full"
         >
           <div className="flex items-center justify-center">
-            <StorageLineChart data={storageData} />
+          {storageData && <StorageLineChart data={storageData} />}
           </div>
         </Card>
 

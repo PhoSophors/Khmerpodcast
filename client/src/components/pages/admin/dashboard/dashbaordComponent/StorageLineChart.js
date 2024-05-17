@@ -8,6 +8,7 @@ const StorageLineChart = ({ data }) => {
   const chartInstance = useRef(null);
 
   useEffect(() => {
+    
     if (chartRef.current) {
       if (chartInstance.current) {
         chartInstance.current.destroy();
@@ -52,7 +53,6 @@ const StorageLineChart = ({ data }) => {
       }
     };
   }, [data]);
-
   return <canvas ref={chartRef} />;
 };
 
