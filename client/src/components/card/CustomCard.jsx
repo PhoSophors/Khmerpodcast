@@ -34,7 +34,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
           style={{
             borderRadius: "20px",
             boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
-            border: "none",
+            // border: "none",
           }}
           cover={
             <div
@@ -70,7 +70,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
               <>
                 <img
                   onClick={handleViewPodcast}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover cursor-pointer"
                   alt={`.${file?._id}`}
                   src={file?.image?.url}
                   onLoad={handleImageLoad}

@@ -13,11 +13,10 @@
 }
 
 .view-podcast-card {
-  min-height: calc(100vh - 100px) !important;
+  min-height: calc(100vh - 120px) !important;
   overflow: hidden !important;
   border: none !important;
   padding: 0 !important;
-  /* background-color: rebeccapurple !important; */
 }
 
 @media screen and (max-width: 868px) {
@@ -36,4 +35,9 @@
     display: flex;
     justify-content: center !important;
   }
+
+  .view-podcast-card {
+    height: calc(100vh + 350px) !important;
+  }
+
 }

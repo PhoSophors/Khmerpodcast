@@ -127,8 +127,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           />
         </div>
 
-        <div className="justify-flex-between play-and-more-btn-mobile gap-3 mt-5">
-          <div className="tracking-wide text-xl text-start w-4/5 text-indigo-500 font-semibold">
+        <div className="justify-flex-between play-and-more-btn-mobile gap-3 mt-5 items-center">
+          <div className="tracking-wide text-md text-start w-4/5 text-indigo-500 font-semibold">
             {file.title}
           </div>
 
@@ -150,7 +150,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         </p>
 
         {/* Information about Podcast Upload */}
-        <div className="mt-20">
+        <div className="mt-20 mb-20">
           <span className="text-indigo-500 font-semibold">Informatiom</span>
 
           <div className="flex justify-between mt-5">
