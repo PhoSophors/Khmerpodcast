@@ -31,7 +31,6 @@ const CustomCard = ({ file, handleViewPodcast }) => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <Card
-          // hoverable
           style={{
             borderRadius: "20px",
             // boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
@@ -75,7 +74,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
                   alt={`.${file?._id}`}
                   src={file?.image?.url}
                   onLoad={handleImageLoad}
-                  style={{ borderRadius: "10px" }}
+                  style={{ borderRadius: "14px", boxSizing: "border-box" }}
                 />
               </>
               {(isMobile || isHovered) && (
