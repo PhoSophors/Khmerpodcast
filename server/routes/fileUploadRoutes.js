@@ -17,7 +17,7 @@ router.post(
   checkRoleMiddleware(["admin", "user"]),
   upload2S3,
   // compressImageMiddleware,
-  compressAudioMiddleware,
+  // compressAudioMiddleware,
   fileUploadController.uploadPodcast
 );
 

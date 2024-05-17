@@ -4,6 +4,51 @@
 const User = require("../models/userModel");
 const File = require("../models/fileUploadModel");
 const mongoose = require("mongoose");
+const ffmpeg = require('fluent-ffmpeg');
+const fs = require('fs');
+
+const compressAudio = async (audioFile) => {
+  try {
+    if (!req.files.audioFile[0]) {
+      return res.status(400).json({ message: "No audio file uploaded" });
+    }
+    if (!req.files.audioFile[0].mimetype.startsWith('audio/')) {
+      return res.status(400).json({ message: "Invalid audio file" });
+    }
+
+    const compressedAudioFilename = `compressed_${audioFile.originalname}`;
+
+    console.log("Audio file path:", audioFile.path); // Log audio file path
+
+    await new Promise((resolve, reject) => {
+      const inputStream = fs.createReadStream(audioFile);
+      
+      ffmpeg(inputStream)
+        .audioCodec('libmp3lame') 
+        .output(outputPath, { end: true })
+        .format('mp3')
+        .on('error', (err) => {
+          console.error("Error during compression:", err);
+          reject(err);
+        })
+        .on('end', () => {
+          console.log("Compression completed successfully");
+          resolve();
+        })
+        .save(compressedAudioFilename);
+    });
+
+    const compressedAudioStats = fs.statSync(compressedAudioFilename);
+
+    return {
+      filename: compressedAudioFilename,
+      size: compressedAudioStats.size,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 // Function to upload a file ================================================================
 const uploadPodcast = async (req, res) => {
@@ -19,6 +64,9 @@ const uploadPodcast = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    // Compress audio file
+    // const compressedAudio = await compressAudio(req.files.audioFile[0].path);
+
     // Create a single document for both audio and image
     const file = new File({
       title: title,
@@ -27,7 +75,7 @@ const uploadPodcast = async (req, res) => {
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
-        size: req.files.audioFile[0].size,
+        size: req.files.audioFile[0].size, // Store compressed audio size
         mimetype: req.files.audioFile[0].mimetype,
       },
       image: {
@@ -53,6 +101,7 @@ const uploadPodcast = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 // Function to get all files ================================================================
 const getAllFiles = async (req, res) => {

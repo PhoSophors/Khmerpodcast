@@ -23,7 +23,7 @@ const upload2S3 = multer({
       const uniqueKey = `${Date.now().toString()}.${fileExtension}`;
       cb(null, uniqueKey);
     },
-    contentType: multerS3.AUTO_CONTENT_TYPE, // Automatically set the content type based on file extension
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },

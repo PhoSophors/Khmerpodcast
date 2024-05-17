@@ -1,56 +1,64 @@
-//  middleware/compressionAuidoMiddleware.js
+// middleware/compressAudioMiddleware.js
 
-const ffmpeg = require('fluent-ffmpeg');
-const stream = require('stream');
-const util = require('util');
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const ffmpeg = require("fluent-ffmpeg");
+const { PassThrough } = require("stream");
 
-ffmpeg.setFfmpegPath('/opt/homebrew/bin/ffmpeg');
-ffmpeg.setFfprobePath('/opt/homebrew/bin/ffprobe');
-
-const { promisify } = util;
-const pipeline = util.promisify(stream.pipeline);
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+});
 
 const compressAudioMiddleware = async (req, res, next) => {
-  if (!req.files || !req.files.audioFile) {
-    return next();
-  }
-
   try {
+    if (!req.files || !req.files.audioFile) {
+      return res.status(400).json({ message: "No audio file uploaded" });
+    }
+
     const audioFile = req.files.audioFile[0];
-    const audioBuffer = audioFile.buffer;
-    const tempAudioBuffer = [];
+    const getParams = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: audioFile.key,
+    };
 
-    const audioStream = new stream.PassThrough();
-    audioStream.end(audioBuffer);
+    const { Body: audioStream } = await s3Client.send(
+      new GetObjectCommand(getParams)
+    );
 
-    const ffmpegCommand = ffmpeg(audioStream)
-      .audioCodec('libmp3lame')
-      .format('mp3')
-      .on('data', chunk => {
-        // Push chunks into the tempAudioBuffer array
-        tempAudioBuffer.push(chunk);
+    const compressedStream = new PassThrough();
+
+    // Compress the audio file
+    ffmpeg(audioStream)
+      .audioCodec("libmp3lame")
+      .format("mp3")
+      .on("error", (err) => {
+        console.error("Error compressing audio:", err);
+        return res.status(500).json({ message: "Error compressing audio" });
       })
-      .on('end', async () => {
-        console.log('Audio compression completed');
-        // Concatenate the chunks into a single compressed audio buffer
-        const compressedAudioBuffer = Buffer.concat(tempAudioBuffer);
-        // Update the request's audio file buffer and mimetype
-        req.files.audioFile[0].buffer = compressedAudioBuffer;
-        req.files.audioFile[0].mimetype = 'audio/mpeg'; // Update mimetype to audio/mpeg
-
-        // Call the next middleware in the chain
-        next();
+      .on("end", () => {
+        console.log("Compression completed successfully");
       })
-      .on('error', err => {
-        console.error('FFmpeg error:', err);
-        res.status(500).json({ message: 'Internal server error during audio compression' });
-      });
+      .pipe(compressedStream);
 
-    // Run the ffmpeg command
-    ffmpegCommand.run();
-  } catch (error) {
-    console.error('Error compressing audio:', error);
-    res.status(500).json({ message: 'Internal server error during audio compression' });
+    const uploadParams = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `compressed/${audioFile.key}`, // Store in a 'compressed' folder
+      Body: compressedStream,
+      ContentType: "audio/mpeg",
+    };
+
+    await s3Client.send(new PutObjectCommand(uploadParams));
+
+    req.files.audioFile[0].compressedS3Key = `compressed/${audioFile.key}`;
+    req.files.audioFile[0].mimetype = "audio/mpeg";
+
+    next();
+  } catch (err) {
+    console.error("Error in compressAudioMiddleware:", err);
+    next(err);
   }
 };
 
