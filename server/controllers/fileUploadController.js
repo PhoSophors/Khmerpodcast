@@ -4,51 +4,6 @@
 const User = require("../models/userModel");
 const File = require("../models/fileUploadModel");
 const mongoose = require("mongoose");
-const ffmpeg = require('fluent-ffmpeg');
-const fs = require('fs');
-
-const compressAudio = async (audioFile) => {
-  try {
-    if (!req.files.audioFile[0]) {
-      return res.status(400).json({ message: "No audio file uploaded" });
-    }
-    if (!req.files.audioFile[0].mimetype.startsWith('audio/')) {
-      return res.status(400).json({ message: "Invalid audio file" });
-    }
-
-    const compressedAudioFilename = `compressed_${audioFile.originalname}`;
-
-    console.log("Audio file path:", audioFile.path); // Log audio file path
-
-    await new Promise((resolve, reject) => {
-      const inputStream = fs.createReadStream(audioFile);
-      
-      ffmpeg(inputStream)
-        .audioCodec('libmp3lame') 
-        .output(outputPath, { end: true })
-        .format('mp3')
-        .on('error', (err) => {
-          console.error("Error during compression:", err);
-          reject(err);
-        })
-        .on('end', () => {
-          console.log("Compression completed successfully");
-          resolve();
-        })
-        .save(compressedAudioFilename);
-    });
-
-    const compressedAudioStats = fs.statSync(compressedAudioFilename);
-
-    return {
-      filename: compressedAudioFilename,
-      size: compressedAudioStats.size,
-    };
-  } catch (error) {
-    throw error;
-  }
-};
-
 
 // Function to upload a file ================================================================
 const uploadPodcast = async (req, res) => {
@@ -64,9 +19,6 @@ const uploadPodcast = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Compress audio file
-    // const compressedAudio = await compressAudio(req.files.audioFile[0].path);
-
     // Create a single document for both audio and image
     const file = new File({
       title: title,
@@ -75,7 +27,7 @@ const uploadPodcast = async (req, res) => {
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
-        size: req.files.audioFile[0].size, // Store compressed audio size
+        size: req.files.audioFile[0].size, 
         mimetype: req.files.audioFile[0].mimetype,
       },
       image: {
@@ -89,23 +41,34 @@ const uploadPodcast = async (req, res) => {
     // Save the new file to the database
     const savedFile = await file.save();
 
-    res
-      .status(201)
-      .json({
-        message: "File uploaded successfully",
-        fileId: file._id,
-        file: savedFile,
-      });
+    res.status(201).json({
+      message: "File uploaded successfully",
+      fileId: file._id,
+      file: savedFile,
+    });
   } catch (error) {
     console.error("Error uploading file:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
+const compressAudio = (inputPath, outputPath) => {
+  return new Promise((resolve, reject) => {
+    ffmpeg(inputPath)
+      .audioBitrate(128) // Set the desired bitrate for compression
+      .save(outputPath)
+      .on("end", () => {
+        resolve(outputPath);
+      })
+      .on("error", (err) => {
+        reject(err);
+      });
+  });
+};
 
 // Function to get all files ================================================================
 const getAllFiles = async (req, res) => {
-  const { date } = req.query; 
+  const { date } = req.query;
   try {
     let files;
     if (date) {
@@ -138,7 +101,6 @@ const getRandomFilesHomePage = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 // Function to get file count ================================================================
 const getFileCount = async (req, res) => {
@@ -184,26 +146,20 @@ const updateFile = async (req, res) => {
     // Check if audio file is updated
     if (req.files && req.files.audioFile) {
       const { audioFile } = req.files;
-      const compressedAudioSize = audioFile[0].buffer
-        ? audioFile[0].buffer.length
-        : 0;
-
       file.audio.filename = `audio_/${audioFile[0].key}`;
       file.audio.url = audioFile[0].location;
-      file.audio.compressedSize = compressedAudioSize;
+      file.audio.size = audioFile[0].size;
       file.audio.mimetype = audioFile[0].mimetype;
     }
 
     // Check if image file is updated
     if (req.files && req.files.imageFile) {
       const { imageFile } = req.files;
-      const compressedImageSize = imageFile[0].buffer
-        ? imageFile[0].buffer.length
-        : 0;
+  
 
       file.image.filename = `image_/${imageFile[0].key}`;
       file.image.url = imageFile[0].location;
-      file.image.compressedSize = compressedImageSize;
+      file.image.size = imageFile[0].size;
       file.image.mimetype = imageFile[0].mimetype;
     }
 
@@ -235,7 +191,7 @@ const deleteFile = async (req, res) => {
 
     // Check if the user who uploaded the file is the same user who is trying to delete it
     // or if the user is an admin
-    if (file.user.toString() !== user.id && user.role !== "admin") { 
+    if (file.user.toString() !== user.id && user.role !== "admin") {
       return res
         .status(403)
         .json({ message: "You do not have permission to delete this file" });
@@ -263,7 +219,6 @@ const getFileById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // Function to get files by user ID that user upload ================================================================
 const getFilesByUserId = async (req, res) => {
