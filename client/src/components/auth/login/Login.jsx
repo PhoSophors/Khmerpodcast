@@ -92,7 +92,7 @@ const Login = ({ visible, onCancel }) => {
 
           <Form.Item style={{ marginTop: "-20px" }}>
             <Link to="/forgotPassword">
-              <h1 className="text-end hover:underline hover:italic font-bold text-indigo-600 ">
+              <h1 className="text-end hover:underline font-bold text-indigo-600 ">
                 {t("login.forgotPassword")}
               </h1>
             </Link>
@@ -120,7 +120,7 @@ const Login = ({ visible, onCancel }) => {
           <h1 className="text-center mb-4 mt-5">
             <span className="text-black ">{t("login.notHaveAccount")}</span>
             <Link to="/register">
-              <span className="text-indigo-600 hover:underline hover:italic  font-bold">
+              <span className="text-indigo-600 hover:underline  font-bold">
                 {t("login.signUp")}
               </span>
             </Link>

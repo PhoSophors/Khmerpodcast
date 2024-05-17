@@ -182,7 +182,7 @@ const Register = () => {
                   {t("register.haveAccount")}{" "}
                 </span>
                 <Link to="/">
-                  <span className="text-indigo-600  hover:underline hover:italic  font-bold">
+                  <span className="text-indigo-600  hover:underline  font-bold">
                     {t("register.login")}{" "}
                   </span>
                 </Link>
