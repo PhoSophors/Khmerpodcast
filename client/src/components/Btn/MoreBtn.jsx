@@ -69,7 +69,7 @@ const MoreBtn = ({ file }) => {
         });
   
         if (response.status === 200) {
-          const isFav = response.data.some(fav => fav.id === file.id);
+          const isFav = response.data.some(fav => fav._id === file._id);
           setIsFavorite(isFav);
         } else {
           console.error("Unexpected response status:", response.status);
@@ -80,7 +80,7 @@ const MoreBtn = ({ file }) => {
       }
     };
     fetchFavorites();
-  }, [authToken, file.id]);
+  }, [authToken, file._id]);
 
   const handleToggleFavorite = async () => {
     try {
