@@ -27,8 +27,8 @@ router.put(
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
   upload2S3,
-  compressImageMiddleware,
-  compressAudioMiddleware,
+  // compressImageMiddleware,
+  // compressAudioMiddleware,
   fileUploadController.updateFile
 );
 
