@@ -1,4 +1,12 @@
 
+.create-card-bg {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+.upload-progress  {
+  background-color: var(--bg-color) !important;
+  color: var(--bg-color) !important;
+}
 .upload-button {
   display: flex; 
   justify-content: center;

@@ -11,7 +11,7 @@ const SideMenu = ({ onSelectMenuItem }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("/");
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const { t } = useTranslation();
-  const { user, isLoggedIn, handleConfirmLogout} = useUser();
+  const { user, isLoggedIn, handleConfirmLogout } = useUser();
 
   const handleAppClick = () => {
     window.location.reload();
@@ -21,7 +21,6 @@ const SideMenu = ({ onSelectMenuItem }) => {
     setSelectedMenuItem(menuItem.key);
     onSelectMenuItem(menuItem.key);
   };
-
 
   const handleCancelLogout = () => {
     setLogoutModalVisible(false);
@@ -41,12 +40,12 @@ const SideMenu = ({ onSelectMenuItem }) => {
       >
         <div
           onClick={handleAppClick}
-          className="flex items-center md:p-4 cursor-pointer"
+          className="flex items-center name-app md:p-4 cursor-pointer"
         >
           <img src={logo} alt="logo" className="logo-app" />
           <Menu.Item key="default" className="name-app">
             <span onClick={() => handleMenuItemClick({ key: "default" })}>
-              <div className="flex flex-col">
+              <div className="flex flex-col name-app">
                 <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
                   Khmer
                 </span>
@@ -78,7 +77,10 @@ const SideMenu = ({ onSelectMenuItem }) => {
                 {t("siderMenu.favorith")}
               </span>
             </Menu.Item>
-            <Menu.Item key="/create" icon={getIcon("/create", selectedMenuItem)}>
+            <Menu.Item
+              key="/create"
+              icon={getIcon("/create", selectedMenuItem)}
+            >
               <span onClick={() => handleMenuItemClick({ key: "/create" })}>
                 {t("siderMenu.create")}
               </span>
@@ -94,7 +96,9 @@ const SideMenu = ({ onSelectMenuItem }) => {
                   key="/dashboard"
                   icon={getIcon("/dashboard", selectedMenuItem)}
                 >
-                  <span onClick={() => handleMenuItemClick({ key: "/dashboard" })}>
+                  <span
+                    onClick={() => handleMenuItemClick({ key: "/dashboard" })}
+                  >
                     {t("siderMenu.dashboard")}
                   </span>
                 </Menu.Item>
@@ -102,7 +106,9 @@ const SideMenu = ({ onSelectMenuItem }) => {
                   key="/all-user"
                   icon={getIcon("/all-user", selectedMenuItem)}
                 >
-                  <span onClick={() => handleMenuItemClick({ key: "/all-user" })}>
+                  <span
+                    onClick={() => handleMenuItemClick({ key: "/all-user" })}
+                  >
                     {t("siderMenu.allUsers")}
                   </span>
                 </Menu.Item>
@@ -110,7 +116,11 @@ const SideMenu = ({ onSelectMenuItem }) => {
                   key="/all-user-upload"
                   icon={getIcon("/all-user-upload", selectedMenuItem)}
                 >
-                  <span onClick={() => handleMenuItemClick({ key: "/all-user-upload" })}>
+                  <span
+                    onClick={() =>
+                      handleMenuItemClick({ key: "/all-user-upload" })
+                    }
+                  >
                     {t("siderMenu.fileManager")}
                   </span>
                 </Menu.Item>
@@ -139,7 +149,9 @@ const SideMenu = ({ onSelectMenuItem }) => {
         footer={null}
         centered
         width={300}
-        closeIcon={<CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />}
+        closeIcon={
+          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
+        }
       >
         <div className="modal-logout mt-10 flex flex-col items-center">
           <img src={logo} alt="" />

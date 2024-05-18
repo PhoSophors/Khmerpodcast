@@ -1,10 +1,17 @@
 
 
 .dashboard-card {
-  /* box-shadow: 0 20px 37.6px rgba(0, 0, 0, 0.090); */
-  /* border: none; */
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
 }
-
+.all-user-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+.file-manager-container {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important; 
+}
  /* AllUser and FileManager =================================== */
 #user-podcast-table {
   font-family: Arial, Helvetica, sans-serif;
@@ -19,8 +26,6 @@
   padding: 7px;
 }
 
-/* #user-table tr:nth-child(even){background-color: #f2f2f2;} */
-
 #user-podcast-table tr:hover {
   background-color: var(--white);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
@@ -29,8 +34,8 @@
 #user-podcast-table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: var(--white);
-  color: var(--slate-500);
+  background-color: var(--contet-color);
+  color: var(--text-color);
 }
 .role {
   align-items: center;

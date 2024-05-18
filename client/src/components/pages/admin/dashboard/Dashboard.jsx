@@ -41,9 +41,9 @@ const Dashboard = () => {
     totalObjects: 0,
   });
   const [storageData] = useState([]);
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
-
-
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -120,7 +120,6 @@ const Dashboard = () => {
       setUserCount(0);
     }
   };
-  
 
   return (
     <>
@@ -130,7 +129,7 @@ const Dashboard = () => {
             <div className="p-3 flex justify-center bg-green-200 h text-gray-500 h-20 w-20 flex justify-center items-center rounded-full">
               <FontAwesomeIcon icon={faUsers} style={{ fontSize: "40px" }} />
             </div>
-            <h1 className="text-3xl font-semibold text-gray-600">
+            <h1 className="text-3xl font-semibold text-gray-600 dark:text-slate-100 ">
               {userCount}
             </h1>
           </div>
@@ -150,7 +149,7 @@ const Dashboard = () => {
               <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-gray-600">
+            <h1 className="text-3xl font-semibold text-gray-600 dark:text-slate-100 ">
               {fileCount}
             </h1>
           </div>
@@ -165,7 +164,7 @@ const Dashboard = () => {
               <FontAwesomeIcon icon={faDatabase} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-xl font-semibold text-gray-600">
+            <h1 className="text-xl font-semibold text-gray-600 dark:text-slate-100 ">
               {storageInfo && (
                 <>{(storageInfo.totalSize / 1048576).toFixed(2)} MB</>
               )}
@@ -182,7 +181,7 @@ const Dashboard = () => {
               <FontAwesomeIcon icon={faFile} style={{ fontSize: "40px" }} />
             </div>
             {/* Any additional content you want to put on the right */}
-            <h1 className="text-3xl font-semibold text-gray-600">
+            <h1 className="text-3xl font-semibold text-gray-600 dark:text-slate-100 ">
               {storageInfo && <>{storageInfo.totalObjects}</>}
             </h1>
           </div>
@@ -207,7 +206,7 @@ const Dashboard = () => {
           className="dashboard-card col-span-2 w-full"
         >
           <div className="flex items-center justify-center">
-          {storageData && <StorageLineChart data={storageData} />}
+            {storageData && <StorageLineChart data={storageData} />}
           </div>
         </Card>
 

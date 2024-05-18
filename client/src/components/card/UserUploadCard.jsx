@@ -5,7 +5,6 @@ import PlayBtn from "../Btn/PlayBtn";
 import DeletePodcastBtn from "../Btn/DeletePodcastBtn";
 import "./card.css";
 
-
 const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -14,14 +13,14 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
     setIsLoading(false);
   };
 
-
   return (
     <div
       className="w-full p-1 justify-flex-between"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Card className="card-hover"
+      <Card
+        className="card-hover card-bg"
         style={{
           borderRadius: "20px",
         }}
@@ -83,11 +82,12 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
                 >
                   {file.title}
                 </div>
-                <p className="mt-2 text-slate-500 ">{file.description}</p>
+                <p className="mt-2 text-slate-500 dark:text-slate-100">
+                  {file.description}
+                </p>
               </div>
             </div>
 
-          
             <div className="flex items-center xl:gap-10 md:gap-10 gap-2">
               <div className="items-center">
                 <div className="w-24 date-element text-end text-slate-500">
@@ -100,7 +100,7 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
               </div>
               <DeletePodcastBtn file={file} />
               <>
-                <MoreBtn file={file} userId={userId}/>
+                <MoreBtn file={file} userId={userId} />
               </>
             </div>
           </div>

@@ -76,7 +76,7 @@ const Register = () => {
         <BackBtn />
       </div>
 
-      <div className="register-form bg-indigo-600 mx-auto flex p-0 overflow-auto">
+      <div className="register-form mx-auto flex p-0 overflow-auto">
         <Card className="register-card ">
           <div className="items-center p-4">
             <h1 className="text-center mb-4 ">

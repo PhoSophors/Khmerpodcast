@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Spin } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
+import "./card.css";
 
 const CustomCard = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
@@ -30,11 +31,9 @@ const CustomCard = ({ file, handleViewPodcast }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <Card
+        <Card className="card-bg"
           style={{
-            borderRadius: "20px",
-            boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
-            // border: "none",
+            // boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
           }}
           cover={
             <div

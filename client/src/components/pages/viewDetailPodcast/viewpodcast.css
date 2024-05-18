@@ -2,6 +2,10 @@
   justify-content: space-between;
 }
 
+.back-btn-view-podcast {
+  background-color: var(--back-btn-view-podcast);
+} 
+
 .play-and-more-btn-mobile  {
   display: none;
 }
@@ -17,6 +21,7 @@
   overflow: hidden !important;
   border: none !important;
   padding: 0 !important;
+  background-color: var(--content-bg) !important;
 }
 
 @media screen and (max-width: 868px) {

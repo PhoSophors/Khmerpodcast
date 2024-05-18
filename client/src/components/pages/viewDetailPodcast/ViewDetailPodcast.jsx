@@ -12,7 +12,9 @@ import Linkify from "react-linkify";
 const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
 
   useEffect(() => {
     const fetchFile = async () => {
@@ -47,23 +49,31 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   }
 
   const linkDecorator = (href, text, key) => (
-    <a href={href} key={key} style={{ color: 'red' }} target="_blank" rel="noopener noreferrer">
+    <a
+      href={href}
+      key={key}
+      style={{ color: "red" }}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {text}
     </a>
   );
 
   return (
-    <div className=" min-w-full ">
+    <div className="min-w-full ">
       <Card className="view-podcast-card">
-        <Breadcrumb className="w-full bg-slate-100 p-3 rounded-xl">
+        <Breadcrumb className="w-full back-btn-view-podcast p-3 rounded-xl">
           <Breadcrumb.Item
             onClick={handleViewPodcast}
             className="cursor-pointer"
           >
             <LeftOutlined style={{ fontWeight: "bold" }} />
-            <span>Back</span>
+            <span className="dark:text-slate-200">Back</span>
           </Breadcrumb.Item>
-          <Breadcrumb.Item>View Podcast</Breadcrumb.Item>
+          <Breadcrumb.Item className="dark:text-slate-100">
+            View Podcast
+          </Breadcrumb.Item>
         </Breadcrumb>
 
         <div className="w-full container-view-podcast mt-5">
@@ -142,8 +152,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
           </div>
         </div>
 
-        <hr className="mt-5 mb-5" />
-        <p className="mt-2 tracking-wide text-slate-500 xl:w-6/12 md:w-6/12 w-full">
+        <hr className="mt-5 mb-5 dark:bg-gray-600" />
+        <p className="mt-2 tracking-wide text-slate-500 dark:text-slate-100 xl:w-6/12 md:w-6/12 w-full">
           <Linkify componentDecorator={linkDecorator}>
             {file.description}
           </Linkify>
@@ -168,7 +178,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
 
             <div className="text-center">
               <span className="font-semibold text-indigo-500">Upload Date</span>
-              <div>
+              <div className="dark:text-gray-100">
                 {new Date(user.createdAt).toLocaleDateString(undefined, {
                   year: "numeric",
                   month: "long",

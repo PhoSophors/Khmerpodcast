@@ -13,6 +13,7 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import Theme from "../theme/Theme";
 
 const Header = ({ handleCollapse, onSelectMenuItem }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
@@ -74,7 +75,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
 
   return (
     <header className="header-container">
-      <div className="p-1 bg-slate-100 h-full flex justify-center items-center rounded-full">
+      <div className="p-1 header-toggle-bg h-full flex justify-center items-center rounded-full">
         <div className="p-3 bg-indigo-600 h-full flex justify-center items-center rounded-full">
           {isMobileDevice ? (
             <div onClick={handleMenuClick}>
@@ -129,7 +130,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             <SideMenu onSelectMenuItem={onSelectMenuItem} />
           </Drawer>
         </div>
-        <div className="p-3 bg-slate-100 h-full flex justify-center items-center rounded-full">
+        <div className="p-3 dark:text-slate-100 h-full flex justify-center items-center rounded-full">
           <LanguageSwitcher />
         </div>
       </div>
@@ -138,6 +139,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
         <AudioControl />
       </div>
 
+      <Theme />
       {/* flex-row-reverse */}
       <div className="flex gap-3">
         <div className="user-profile">

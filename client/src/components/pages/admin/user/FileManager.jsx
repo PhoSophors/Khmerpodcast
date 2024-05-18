@@ -113,7 +113,7 @@ const FileManager = () => {
   return (
     <div className="xl:p-5 md:p-5 p-0 ">
       {/* File Manager Card */}
-      <Card title="File Manager" className="w-full">
+      <Card title="File Manager" className="w-full file-manager-container">
         {/* Search Input */}
         <Space direction="vertical" style={{ width: "100%" }}>
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
@@ -166,17 +166,25 @@ const FileManager = () => {
                   {/* Map through paginatedFiles and display in table */}
                   {paginatedFiles.map((file, index) => (
                     <tr key={file._id}>
-                      <td className="text-center">
+                      <td className="text-center dark:text-slate-100">
                         {(currentPage - 1) * cardsPerPage + index + 1}
                       </td>
                       <td className="text-center">
                         <Avatar size="large" src={file.image.url} />
                       </td>
-                      <td>{file.title.substring(0, 30)}</td>
-                      <td>{file.description.substring(0, 30)}</td>
-                      <td className="text-center">{file.audio.mimetype}</td>
-                      <td className="text-center">{file.image.mimetype}</td>
-                      <td className="text-center">
+                      <td className="dark:text-slate-100">
+                        {file.title.substring(0, 30)}
+                      </td>
+                      <td className="dark:text-slate-100">
+                        {file.description.substring(0, 30)}
+                      </td>
+                      <td className="text-center dark:text-slate-100">
+                        {file.audio.mimetype}
+                      </td>
+                      <td className="text-center dark:text-slate-100">
+                        {file.image.mimetype}
+                      </td>
+                      <td className="text-center dark:text-slate-100">
                         {new Date(file.uploadDate).toLocaleDateString(
                           undefined,
                           {
@@ -211,7 +219,7 @@ const FileManager = () => {
             size={5}
             icon={<StepBackwardFilled />}
           >
-            Previous
+            <span className="dark:text-slate-100">Previous</span>
           </Button>
           <Button
             onClick={handleNext}
@@ -220,7 +228,7 @@ const FileManager = () => {
             size={5}
             icon={<StepForwardFilled />}
           >
-            Next
+            <span className="dark:text-slate-100">Next</span>
           </Button>
         </div>
       </Card>

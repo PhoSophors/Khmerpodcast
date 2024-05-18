@@ -69,8 +69,11 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex justify-center text-center items-center h-screen bg-indigo-600">
-      <Card title={t("forgotPassword.title")} className="forgot-password-card xl:w-1/3 md:w-1/2 w-1/2 p-2">
+    <div className="forgotpassword-container flex justify-center text-center items-center h-screen ">
+      <Card
+        title={t("forgotPassword.title")}
+        className="forgot-password-card xl:w-1/3 md:w-1/2 w-1/2 p-2"
+      >
         <BackBtn />
         <Form layout="vertical">
           {currentStep === 1 && (
@@ -79,14 +82,18 @@ const ForgotPassword = () => {
                 <img src={logo} alt="logo" className="logo" />
               </div>
 
-              <p className="text-center mb-4">
+              <p className="text-center mb-4 dark:text-slate-100">
                 {t("forgotPassword.description")}
               </p>
               <Form.Item
+                className="dark:text-slate-100"
                 label={t("forgotPassword.email")}
                 name="email"
                 rules={[
-                  { required: true, message: t("forgotPassword.emailRequired") },
+                  {
+                    required: true,
+                    message: t("forgotPassword.emailRequired"),
+                  },
                 ]}
               >
                 <Input
@@ -119,10 +126,11 @@ const ForgotPassword = () => {
                 <img src={logo} alt="logo" className="logo" />
               </div>
 
-              <p className="text-center mb-4">
+              <p className="text-center mb-4 dark:text-slate-100">
                 Please enter the OTP sent to your email to verify your identity.
               </p>
               <Form.Item
+                className="dark:text-slate-100"
                 label="OTP"
                 name="otp"
                 rules={[
@@ -156,11 +164,12 @@ const ForgotPassword = () => {
               <div className="flex justify-center items-center text-center mb-4">
                 <img src={logo} alt="logo" className="logo" />
               </div>
-              <p className="text-center mb-4">
+              <p className="text-center mb-4 dark:text-slate-100">
                 Please enter your new password below. Make sure it's strong and
                 secure.
               </p>
               <Form.Item
+                className="dark:text-slate-100"
                 label="New Password"
                 name="newPassword"
                 rules={[
@@ -179,7 +188,7 @@ const ForgotPassword = () => {
               </Form.Item>
               {error && <Alert message={error} type="error" />}
               <Button
-                  className="mt-5 bg-indigo-600 text-white w-36 h-12 rounded-full hover:none"
+                className="mt-5 bg-indigo-600 text-white w-36 h-12 rounded-full hover:none"
                 onClick={handleResetPassword}
                 loading={loading}
                 style={{ float: "right" }}

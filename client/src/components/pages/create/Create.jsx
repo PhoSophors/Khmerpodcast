@@ -21,9 +21,11 @@ const Create = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
-  const id = Cookies.get('id') ? atob(Cookies.get('id')) : null;
-  
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
+  const id = Cookies.get("id") ? atob(Cookies.get("id")) : null;
+
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
     fileList = fileList.slice(-1);
@@ -166,11 +168,11 @@ const Create = () => {
                 <div className="mt-5  text-start  font-semibold text-gray-500 uppercase tracking-wide">
                   Audio Supported file types:
                 </div>
-                <div className="text-gray-500 text-start ">
+                <div className="text-gray-500 text-start">
                   Audio files: aac, mp3
                 </div>
                 {/* upload audio */}
-                <Card className="mt-5">
+                <Card className="mt-5 create-card-bg">
                   {fileList.length > 0 ? (
                     <div className="audio-preview">
                       <div className="flex items-center">
@@ -205,7 +207,9 @@ const Create = () => {
                         accept=".aac, .mp3, .ogg "
                         showUploadList={false}
                       >
-                        <div>{"Upload Audio"}</div>
+                        <div className="dark:text-slate-100">
+                          {"Upload Audio"}
+                        </div>
                       </Upload>
                     </div>
                   )}
@@ -220,18 +224,23 @@ const Create = () => {
                 <div className="text-gray-500 text-start ">
                   Thumnaill files: .jpeg, .jpg
                 </div>
-                <Card className="mt-5">
+                <Card className="mt-5 items-center create-card-bg">
                   <ImgCrop>
-                    <Upload
-                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                      listType="picture-card"
-                      fileList={imageFileList}
-                      accept=".jpg, .jpeg"
-                      onChange={handleChange}
-                      onPreview={handlePreview}
-                    >
-                      {imageFileList.length === 0 && "Upload Thumnaill"}
-                    </Upload>
+                    <div className="upload-container">
+                      <Upload
+                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                        listType="picture-card"
+                        fileList={imageFileList}
+                        accept=".jpg, .jpeg"
+                        onChange={handleChange}
+                        onPreview={handlePreview}
+                      >
+                        {imageFileList.length === 0 && ""}
+                        <div className="dark:text-slate-100">
+                          {"Upload Thumnaill"}
+                        </div>
+                      </Upload>
+                    </div>
                   </ImgCrop>
                   <Modal
                     open={previewOpen}
@@ -250,7 +259,7 @@ const Create = () => {
             </div>
 
             {/* input form */}
-            <Card className="mt-5 create-card">
+            <Card className="mt-5 create-card-bg">
               <Form variant="filled">
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
@@ -258,7 +267,7 @@ const Create = () => {
                       Title *
                     </p>
                     <Input.TextArea
-                      className="mt-5 caret-pink-500 "
+                      className="mt-5 caret-pink-500 dark:text-slate-100 "
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Input title"
@@ -272,7 +281,7 @@ const Create = () => {
                       Description *
                     </p>
                     <Input.TextArea
-                      className="mt-5 caret-pink-500 "
+                      className="mt-5 caret-pink-500 dark:text-slate-100"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Input description"
@@ -288,14 +297,14 @@ const Create = () => {
                   className="mt-10"
                   disabled={!title && !description}
                 >
-                  Reset
+                  <span className="dark:text-slate-100">Reset</span>
                 </Button>
               </Form>
             </Card>
 
             <div class="w-full mt-5 bg-white rounded-full">
               <div
-                class="bg-indigo-500 text-xs font-medium text-white text-center p-0 leading-none rounded-full"
+                class="upload-progress text-xs font-medium text-center p-0 leading-none rounded-full"
                 style={{ width: `${uploadProgress}%` }}
               >
                 {" "}

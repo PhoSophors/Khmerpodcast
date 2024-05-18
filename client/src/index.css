@@ -2,25 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* Roboto font  */
-/* 
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css'; */
-
 :root {
-  --main-color: #f8fafc;
-  --sider-bg: #3730a3;
-  --sider-text-color: #fff;
-  --sider-item-selected: #1f1e1e35;
-  
+  --bg-color: #4f46e5;
+  --sidemenu-mobile-bg: #fff;
+  --content-bg: #fff;
+  --header-bg: #fff;
+  --card-bg: #fff;
+  --text-color: #000;
+  --forgot-password-bg: #4f46e5;
+  --forgot-password-card: #f1f5f9 ;
+  --back-btn-view-podcast: #f8fafc; 
+  --card-hover: #f4f5f7;
+  --border-color: #f1f5f9;
 
   --white: #fff;
+  --sider-item-selected: #1f1e1e35;
 
-  --play-bg: #3830a368;
 
+  
   --indigo-500: #6366f1;
   --indigo-600: #4f46e5;
   --indigo-700: #4338ca;
@@ -43,7 +42,7 @@ import '@fontsource/roboto/700.css'; */
   --amber-300: #fcd34d;
   --amber-400: #fbbf24;
   --amber-500: #f59e0b;
-  
+
   --gray-50: #f9fafb;
   --gray-100: #f4f5f7;
   --gray-200: #e5e7eb;
@@ -65,7 +64,21 @@ import '@fontsource/roboto/700.css'; */
   --pink-700: #be185d;
   --pink-800: #9d174d;
   --pink-900: #781a61;
-
 }
 
+.dark {
+  --bg-color: #282828;
+  --sidemenu-mobile-bg: #282828;
+  --content-bg: #171717;;
+  --header-bg: #171717;;
+  --card-bg: #282828;
+  --text-color: #f1f5f9;
+  --forgot-password-bg: #282828;
+  --forgot-password-card: #171717 ;
+  --back-btn-view-podcast: #282828; 
+  --card-hover: #171717;
+  --border-color: #282828;
 
+
+  --sider-item-selected: #171717;
+}

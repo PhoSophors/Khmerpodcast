@@ -15,7 +15,7 @@ const Profile = () => {
   const id = user ? user._id : null;
 
   return (
-    <div className="bg-white h-screen">
+    <div className="profile-container h-screen">
       {isViewPodcast && selectedPodcast ? (
         <ViewDetailPodcast
           file={selectedPodcast}
@@ -45,16 +45,16 @@ const Profile = () => {
                   />
                 </Spin>
 
-                <h1 className="text-2xl text-center text-gray-600 font-bold">
+                <h1 className="text-2xl text-center text-gray-600 dark:text-slate-100 font-bold">
                   {user && user.username}
                 </h1>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h1 className="text-gray-500 mt- mx-7 text-center text-lg">
+                  <h1 className="text-gray-500  dark:text-slate-100 mt- mx-7 text-center text-lg">
                     {user && user.email}
                   </h1>
                   <span
-                    className="text-gray-500 bg-white absolute"
+                    className="text-gray-500 dark:text-slate-100 bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
                       padding: "0 5px",
@@ -65,11 +65,11 @@ const Profile = () => {
                 </div>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h1 className="text-gray-500 mt- mx-7 text-center text-lg">
+                  <h1 className="text-gray-500  dark:text-slate-100 mt- mx-7 text-center text-lg">
                     {user && user.role}
                   </h1>
                   <span
-                    className="text-gray-500 bg-white absolute"
+                    className="text-gray-500  dark:text-slate-100 bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
                       padding: "0 5px",
@@ -80,7 +80,10 @@ const Profile = () => {
                 </div>
 
                 <Link to={`/edit-profile/${id}`}>
-                  <Button className="mt-10 w-full" size="large">
+                  <Button
+                    className="mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-xl"
+                    size="large"
+                  >
                     Edit profile
                   </Button>
                 </Link>
@@ -96,7 +99,7 @@ const Profile = () => {
                 </div>
               ) : userFiles.length === 0 ? (
                 <div className="spin-container">
-                  <p className="font-semibold text-gray-500 uppercase top-0">
+                  <p className="font-semibold text-gray-500 dark:text-slate-100 uppercase top-0">
                     No Podcasts!
                   </p>
                 </div>

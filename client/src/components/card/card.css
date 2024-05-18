@@ -1,8 +1,14 @@
-
+.card-bg {
+  background-color: var(--card-bg);
+  /* padding: 10px; */
+  border-radius: 20px;
+  margin: 2px;
+  border-color:  var(--border-color) !important;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
 
 .card-hover:hover {
-  background-color: var(--gray-100);
-  /* border: none !important; */
+  background-color: var(--card-hover);
 }
 
 @media (max-width: 868px) {

@@ -6,6 +6,7 @@ import { initReactI18next } from "react-i18next";
 import i18next from "i18next";
 import Cookies from "js-cookie";
 import { AudioProvider } from "./context/AudioContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 // Import translation files
 import translationEN from "./components/languages/en.json";
@@ -30,9 +31,11 @@ i18next
 
     root.render(
       <React.StrictMode>
+        <ThemeProvider>
           <AudioProvider>
             <App />
           </AudioProvider>
+        </ThemeProvider>
       </React.StrictMode>,
       document.getElementById("root")
     );

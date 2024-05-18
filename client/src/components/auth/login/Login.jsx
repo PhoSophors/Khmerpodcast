@@ -28,7 +28,7 @@ const Login = ({ visible, onCancel }) => {
   };
 
   return (
-    <Modal
+    <Modal id="login-modal-bg"
       visible={visible}
       maskClosable={true}
       footer={null}

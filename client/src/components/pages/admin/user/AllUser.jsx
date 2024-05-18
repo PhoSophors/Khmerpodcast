@@ -29,8 +29,9 @@ const AllUser = () => {
   const [dateRange, setDateRange] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 15;
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
-
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
 
   useEffect(() => {
     const fetchAllUser = async () => {
@@ -104,7 +105,7 @@ const AllUser = () => {
 
   return (
     <div className="xl:p-5 md:p-5 p-0 ">
-      <Card title="All Users" className="w-full">
+      <Card title="All Users" className="w-full all-user-card">
         <Space direction="vertical" style={{ width: "100%" }}>
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
             <div className="w-full sm:w-1/2">
@@ -151,19 +152,19 @@ const AllUser = () => {
                 <tbody>
                   {paginatedUsers.map((user, index) => (
                     <tr key={user._id}>
-                      <td className="text-center">
+                      <td className="text-center dark:text-slate-200">
                         {(currentPage - 1) * cardsPerPage + index + 1}
                       </td>
-                      <td className="text-center">
+                      <td className="text-center  dark:text-slate-200">
                         <Avatar
                           src={user && user.profileImage}
                           size="large"
                           icon={<UserOutlined />}
                         />
                       </td>
-                      <td>{user.username}</td>
-                      <td>{user.email}</td>
-                      <td className="text-center">
+                      <td className=" dark:text-slate-200">{user.username}</td>
+                      <td className=" dark:text-slate-200">{user.email}</td>
+                      <td className="text-center  dark:text-slate-200">
                         <div
                           className={`text-white h-8 w-14 flex justify-center items-center rounded-xl ${
                             user.role === "admin"
@@ -183,7 +184,7 @@ const AllUser = () => {
                           {user.emailVerified ? "True" : "False"}
                         </div>
                       </td>
-                      <td className="text-center">
+                      <td className="text-center  dark:text-slate-200">
                         {new Date(user.createdAt).toLocaleDateString(
                           undefined,
                           {
@@ -218,7 +219,7 @@ const AllUser = () => {
             size={5}
             icon={<StepBackwardFilled />}
           >
-            Previous
+            <span className="dark:text-slate-100">Previous</span>
           </Button>
           <Button
             onClick={handleNext}
@@ -227,7 +228,7 @@ const AllUser = () => {
             size={5}
             icon={<StepForwardFilled />}
           >
-            Next
+            <span className="dark:text-slate-100">Next</span>
           </Button>
         </div>
       </Card>

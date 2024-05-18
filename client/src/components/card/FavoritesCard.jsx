@@ -28,7 +28,7 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <Card
-        className="card-hover"
+        className="card-hover card-bg"
         style={{
           borderRadius: "20px",
         }}
@@ -88,7 +88,9 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
                 >
                   {file.title}
                 </div>
-                <p className="mt-2 text-slate-500 ">{file.description}</p>
+                <p className="mt-2 text-slate-500 dark:text-slate-100">
+                  {file.description}
+                </p>
               </div>
             </div>
 

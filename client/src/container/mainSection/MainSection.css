@@ -3,14 +3,14 @@ body {
 }
 
 .content-containers{
-  background-color: var(--indigo-600);
+  background-color: var(--bg-color);
   padding: 10px;
   height: 100vh;
 }
 
 .content-card {
   position: relative;
-  background-color: white;
+  background-color: var(--content-bg);
   min-height: calc(100vh - 110px);
   height: calc(100vh - 90px);
   overflow-y: auto; 
