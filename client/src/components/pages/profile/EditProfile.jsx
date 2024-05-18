@@ -38,8 +38,6 @@ const EditProfile = () => {
     }
   }, [user]);
 
-  console.log(user);
-
   if (loading) {
     return <div>Loading...</div>; // Render loading indicator
   }
