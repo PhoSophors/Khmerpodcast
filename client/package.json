@@ -29,10 +29,10 @@
     "react-share": "^5.1.0"
   },
   "scripts": {
-    "start": "react-scripts start --port 5000",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start --port 5000",
+    "build": "react-app-rewired build",
     "serve": "serve -s build",
-    "test": "react-scripts test",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -55,10 +55,13 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "customize-cra": "^1.0.0",
     "javascript-obfuscator": "^4.1.0",
+    "react-app-rewired": "^2.2.1",
     "serve": "^14.2.3",
     "tailwindcss": "^3.4.1",
     "terser": "^5.31.0",
-    "terser-webpack-plugin": "^5.3.10"
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack-obfuscator": "^3.5.1"
   }
 }

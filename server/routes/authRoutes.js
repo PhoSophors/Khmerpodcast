@@ -5,7 +5,6 @@ const router = express.Router();
 const registerController = require("../controllers/registerController");
 const loginController = require("../controllers/loginController");
 const forgotPasswordController = require("../controllers/forgotPasswordController");
-// const { verifyOTP } = require("../controllers/otpController");
 const userController = require("../controllers/userController");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 const verifyToken = require("../middleware/authenticateToken");

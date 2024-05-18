@@ -150,8 +150,8 @@ otpController.verifyOTP = async (req, res) => {
     // If the OTPs match and the OTP has not expired, the verification is successful
     return res.status(200).json({
       message: "OTP verified successfully",
-      authToken: token,
-      id: user._id,
+      authToken: token, 
+      id: user._id, 
     });
   } catch (error) {
     console.error("Error verifying OTP:", error);

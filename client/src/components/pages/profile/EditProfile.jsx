@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import "./Profile.css";
 import ImgCrop from "antd-img-crop";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api_url } from "../../../api/config";
 import BackBtn from "../../Btn/BackBtn";
 import { useUser } from "../../../services/useUser";
