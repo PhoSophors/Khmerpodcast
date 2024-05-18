@@ -7,7 +7,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 import MainSection from "../container/mainSection/MainSection";
 import Favorith from "../components/pages/favorite/Favorith";
 import Search from "../components/pages/search/Search";
@@ -30,15 +29,12 @@ import EditProfile from "../components/pages/profile/EditProfile";
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
 
   useEffect(() => {
-    // const authToken = Cookies.get("authToken");
-    const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
     if (authToken && authToken.split('.').length === 3) {
       try {
-        const decodedToken = jwtDecode(authToken);
-        console.log('decodedToken:', decodedToken); // Add this line
-        setUserRole(decodedToken.role);
+        setUserRole(authToken.role);
       } catch (error) {
         console.error('Error decoding authToken:', error);
       }
@@ -49,7 +45,8 @@ const App = () => {
     }, 400);
     
     return () => clearTimeout(timeout);
-  }, []);
+  }, [authToken]);
+
 
   return (
     <Router>

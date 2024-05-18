@@ -18,6 +18,7 @@ export const useUser = () => {
     window.location.reload();
   }
 
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -52,7 +53,7 @@ export const useUser = () => {
     };
 
     fetchData();
-  }, [authToken, id]);
+  }, [id, authToken]);
 
   return { user, isLoading, isLoggedIn, userFiles, handleConfirmLogout };
 };

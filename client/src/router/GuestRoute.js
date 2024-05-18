@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 const GuestRoute = ({ children }) => {
   const location = useLocation();
-  const authToken = Cookies.get("authToken");
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
 
   return !authToken ? children : <Navigate to="/" state={{ from: location }} />;
 };

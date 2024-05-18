@@ -11,7 +11,6 @@ import { api_url } from "../../../api/config";
 const Create = () => {
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [notification, setNotification] = useState("");
   const [, setNotification] = useState("");
   // Image state
   const [imageFileList, setImageFileList] = useState([]);
@@ -21,10 +20,10 @@ const Create = () => {
   // Form state
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const authToken = Cookies.get("authToken");
-  const id = Cookies.get("id");
   const [uploadProgress, setUploadProgress] = useState(0);
-
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+  const id = Cookies.get('id') ? atob(Cookies.get('id')) : null;
+  
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
     fileList = fileList.slice(-1);

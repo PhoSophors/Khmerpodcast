@@ -10,7 +10,6 @@ import { api_url } from "../../../api/config";
 const UpdatePodcast = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [loading, setLoading] = useState(false);
-  const authToken = Cookies.get("authToken");
   const [form] = Form.useForm();
   const [audioFile, setAudioFile] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -19,6 +18,7 @@ const UpdatePodcast = ({ file }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
 
   const handleUpdate = async (values) => {
     try {

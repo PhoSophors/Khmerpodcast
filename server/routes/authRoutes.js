@@ -5,10 +5,11 @@ const router = express.Router();
 const registerController = require("../controllers/registerController");
 const loginController = require("../controllers/loginController");
 const forgotPasswordController = require("../controllers/forgotPasswordController");
-const { verifyOTP } = require("../controllers/otpController");
+// const { verifyOTP } = require("../controllers/otpController");
 const userController = require("../controllers/userController");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
+const otpController = require("../controllers/otpController");
 
 router.get(
   "/verify-token",
@@ -20,7 +21,7 @@ router.post("/register", registerController.register);
 router.post("/login", loginController.login);
 
 // sent OTP
-router.post("/user/verify-otp", verifyOTP);
+router.post("/user/verify-otp", otpController.verifyOTP);
 
 // Define routes for initiating password reset, resetting password, and verifying OTP
 router.post("/forgot-password", forgotPasswordController.forgotPassword);

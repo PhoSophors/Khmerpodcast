@@ -41,7 +41,8 @@ const Dashboard = () => {
     totalObjects: 0,
   });
   const [storageData] = useState([]);
-  const authToken = Cookies.get("authToken");
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+
 
 
   useEffect(() => {

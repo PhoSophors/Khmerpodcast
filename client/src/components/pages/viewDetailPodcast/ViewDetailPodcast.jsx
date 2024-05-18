@@ -12,7 +12,7 @@ import Linkify from "react-linkify";
 const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const authToken = Cookies.get("authToken");
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
 
   useEffect(() => {
     const fetchFile = async () => {

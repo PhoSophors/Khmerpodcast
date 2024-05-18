@@ -6,12 +6,13 @@ import { CloseOutlined, DeleteFilled } from "@ant-design/icons";
 import { api_url } from "../../api/config";
 
 const DeletePodcastBtn = ({ file }) => {
-  const authToken = Cookies.get("authToken");
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [deleteFileId, setDeleteFileId] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState("");
   const [title, setTitle] = useState("");
   const filename = title.split(" ")[0];
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+
 
   // Function to handle delete podcast
   const handleDeletePodcast = async () => {

@@ -29,7 +29,8 @@ const AllUser = () => {
   const [dateRange, setDateRange] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 15;
-  const authToken = Cookies.get("authToken");
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+
 
   useEffect(() => {
     const fetchAllUser = async () => {

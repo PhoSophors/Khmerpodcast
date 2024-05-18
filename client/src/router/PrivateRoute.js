@@ -7,7 +7,7 @@ import { jwtDecode } from "jwt-decode";
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
-  const authToken = Cookies.get("authToken");
+  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
 
   if (!authToken) {
     return <Navigate to="/register" state={{ from: location }} />;

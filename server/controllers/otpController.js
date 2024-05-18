@@ -137,18 +137,12 @@ otpController.verifyOTP = async (req, res) => {
 
     const token = jwt.sign(payload, process.env.JWT_SECRET);
 
-    // Create a SHA-256 hash of the authToken
-    const hash = crypto.createHash("sha256");
-    hash.update(token);
-    const hashedAuthToken = hash.digest("hex");
-
     // Save the authToken to the user
-    user.authToken = hashedAuthToken;
-
-    await user.save();
+    user.authToken = token;
+    await user.save(); // Save the user with the authToken
 
     // Set the JWT token in an HTTPOnly cookie
-    res.cookie("token", hashedAuthToken, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true,
     });
@@ -157,6 +151,7 @@ otpController.verifyOTP = async (req, res) => {
     return res.status(200).json({
       message: "OTP verified successfully",
       authToken: token,
+      id: user._id,
     });
   } catch (error) {
     console.error("Error verifying OTP:", error);

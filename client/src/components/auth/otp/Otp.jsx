@@ -25,8 +25,11 @@ const Otp = () => {
 
       if (response.status === 200) {
         // OTP verified successfully, set the authToken cookie
-        Cookies.set("authToken", response.data.authToken);
-        Cookies.set("id", response.data.id);
+        const encodedToken = btoa(response.data.authToken);
+        const encodedId = btoa(response.data.id);
+        Cookies.set("authToken", encodedToken, { expires: 365 * 100 });
+        Cookies.set("id", encodedId, { expires: 365 * 100 });
+
 
         // Navigate to home page
         message.success("OTP verified successfully");
