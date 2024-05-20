@@ -59,7 +59,7 @@ const RightSection = ({ selectedMenuItem, onPodcastSelected, file }) => {
   }
 
   return (
-    <div className="right-section md:p-0 h-full">
+    <div className="right-section md:p-0">
       <div className="content-container">{content}</div>
     </div>
   );

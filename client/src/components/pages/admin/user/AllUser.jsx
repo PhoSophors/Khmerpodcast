@@ -157,6 +157,7 @@ const AllUser = () => {
                       </td>
                       <td className="text-center  dark:text-gray-300">
                         <Avatar
+                          className="avatar"
                           src={user && user.profileImage}
                           size="large"
                           icon={<UserOutlined />}

@@ -166,19 +166,20 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             <Dropdown overlay={menu} trigger={["click"]}>
               <div className=" items-center flex">
                 <div class="username-header cursor-pointer uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
-                  {user && user.username}
+                  {user && user.username.split(" ")[0]}
                 </div>
-                &nbsp;
-                <Avatar
-                  src={user && user.profileImage}
-                  style={{ cursor: "pointer", border: "1px solid #6366f1" }}
-                  size="large"
-                  icon={<UserOutlined />}
-                />
                 &nbsp;
                 <DownOutlined
                   className="text-indigo-500"
                   style={{ fontSize: "10px" }}
+                />
+                &nbsp;
+                <Avatar
+                  className="avatar"
+                  src={user && user.profileImage}
+                  style={{ cursor: "pointer", border: "1px solid #6366f1" }}
+                  size="large"
+                  icon={<UserOutlined />}
                 />
               </div>
             </Dropdown>

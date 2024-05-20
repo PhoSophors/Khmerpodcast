@@ -50,8 +50,7 @@ const HomePage = () => {
           </div>
         ) : (
           <>
-            {/* <Banner/> */}
-            <div className="flex sm:p-0 md:p-0 flex-wrap justify-center items-center">
+            <div className="flex sm:p-0 md:p-0 flex-wrap justify-center items-center home-container">
               {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
               {isViewPodcast ? (
                 <ViewDetailPodcast
@@ -72,14 +71,17 @@ const HomePage = () => {
               )}
             </div>
             {error && (
-              <div className="mt-10 text-red-500">
-                <p className="text-center font-semebold ">Srver Error..!</p>
+              <div className="mt-10">
+                <p className="text-center  text-red-500 font-semebold">
+                  Srver Error..!
+                </p>
               </div>
             )}
           </>
         )}
+
+        <div className="dot">.</div>
       </div>
-      <div className="mt-20 text-white">.</div>
     </>
   );
 };

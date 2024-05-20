@@ -45,17 +45,12 @@
 
 /* edit profile */
 .saveBtn {
-  background-color: var(--indigo-600);
-  color: var(--white);
+  color: var(--gray-300);
   border: none;
   border-radius: 10px;
   width: 100%;
   cursor: pointer;
   bottom: -10px;
-}
-.saveBtn:hover {
-  background-color: var(--indigo-600) !important;
-  color: var(--white) !important;
 }
 @media screen and (max-width: 768px) {
   .edit-profile-card {

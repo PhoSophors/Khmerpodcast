@@ -8,7 +8,7 @@ import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import UserUploadCard from "../../card/UserUploadCard";
 import { useUser } from "../../../services/useUser";
 
-const Profile = () => {
+const PublicProfile = () => {
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
   const { user, userFiles, isLoading } = useUser();
@@ -35,7 +35,6 @@ const Profile = () => {
               <div className="profile-content mt-5">
                 <Spin spinning={isLoading || !user}>
                   <Avatar
-                    className="avatar"
                     size={140}
                     icon={<UserOutlined />}
                     src={user && user.profileImage}
@@ -126,4 +125,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default PublicProfile;

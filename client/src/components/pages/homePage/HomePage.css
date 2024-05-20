@@ -4,3 +4,8 @@
   align-items: center;
   height: 100vh; 
 }
+
+.dot {
+  background-color: var(--content-bg) !important;
+  margin-top: 50px !important;
+} 

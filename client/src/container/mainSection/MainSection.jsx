@@ -124,9 +124,9 @@ class MainSection extends Component {
                 />
               )}
             </div>
+            <Footer />
           </Content>
         </Layout>
-        <Footer />
       </Layout>
     );
   }

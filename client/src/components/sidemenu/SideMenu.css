@@ -48,7 +48,7 @@
 .menu-item-wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .menu-item-wrapper.collapsed .logo-app {

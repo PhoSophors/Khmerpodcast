@@ -116,9 +116,9 @@ const AudioControl = () => {
 
   return (
     <div className="audio-container">
-      <div className="p-1 xl:w-96 md:w-96 w-96">
+      <div className="xl:w-96 md:w-96 w-96 items-center justify-center">
         <div className="play-back-container">
-          <div className="play-back-btn gap-5 p-2">
+          <div className="play-back-btn gap-5">
             <StepBackwardFilled
               onClick={handlePrevious}
               style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
@@ -164,14 +164,17 @@ const AudioControl = () => {
             />
           </div>
         </div>
-        <div className="time-count">
+        {/* <div className="time-count">
           <span
             style={{ fontSize: "0.7rem", color: "#6b7280", float: "right" }}
           >
             {formatTime(currentTime)} / -{formatTime(duration - currentTime)}
           </span>
-        </div>
+        </div> */}
         <div className="time-control">
+          <span style={{ fontSize: "0.7rem", color: "#6b7280", float: "left" }}>
+            {formatTime(currentTime)}
+          </span>
           <input
             type="range"
             min="0"
@@ -181,6 +184,11 @@ const AudioControl = () => {
             onMouseDown={handleSeekStart}
             onMouseUp={handleSeekEnd}
           />
+          <span
+            style={{ fontSize: "0.7rem", color: "#6b7280", float: "right" }}
+          >
+            -{formatTime(duration - currentTime)}
+          </span>
         </div>
       </div>
     </div>

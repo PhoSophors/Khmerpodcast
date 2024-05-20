@@ -23,11 +23,11 @@ body {
 @media screen and (max-width: 768px) {
   .content-containers {
     padding: 0;
-    height: 100vh;
+    height: auto;
 
   }
   .content-card {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 70px);
     border-radius: 0;
   }
 }

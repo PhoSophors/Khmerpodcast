@@ -27,7 +27,7 @@ const uploadPodcast = async (req, res) => {
       audio: {
         filename: `audio_/${req.files.audioFile[0].key}`,
         url: req.files.audioFile[0].location,
-        size: req.files.audioFile[0].size, 
+        size: req.files.audioFile[0].size,
         mimetype: req.files.audioFile[0].mimetype,
       },
       image: {
@@ -120,7 +120,7 @@ const updateFile = async (req, res) => {
     const { id } = req.params;
 
     // set user id from token
-    const userId = req.user.id;
+    const user = req.user.id;
 
     // Find the file in the database
     let file = await File.findById(id);
@@ -130,15 +130,15 @@ const updateFile = async (req, res) => {
     }
 
     // Check if the user is the uploader of the file
-    if (file.user.toString() !== userId) {
+    if (file.user.toString() !== user) {
       return res
         .status(403)
         .json({ message: "You are not authorized to update this podacst" });
     }
 
     // Delete the old file from S3
-    // await deleteOldFileFromS3(file); 
-    
+    // await deleteOldFileFromS3(file);
+
     // Update the file's properties
     file.title = title || file.title;
     file.description = description || file.description;
@@ -155,7 +155,6 @@ const updateFile = async (req, res) => {
     // Check if image file is updated
     if (req.files && req.files.imageFile) {
       const { imageFile } = req.files;
-  
 
       file.image.filename = `image_/${imageFile[0].key}`;
       file.image.url = imageFile[0].location;

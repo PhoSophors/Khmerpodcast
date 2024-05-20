@@ -25,28 +25,30 @@ import FileManager from "../components/pages/admin/user/FileManager";
 import UserCard from "../components/card/UserCard";
 import UpdatePodcast from "../components/pages/create/UpdatePodcast";
 import EditProfile from "../components/pages/profile/EditProfile";
+import PublicProfile from "../components/pages/profile/PublicProfile";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
 
   useEffect(() => {
-    if (authToken && authToken.split('.').length === 3) {
+    if (authToken && authToken.split(".").length === 3) {
       try {
         setUserRole(authToken.role);
       } catch (error) {
-        console.error('Error decoding authToken:', error);
+        console.error("Error decoding authToken:", error);
       }
     }
-    
+
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 400);
-    
+
     return () => clearTimeout(timeout);
   }, [authToken]);
-
 
   return (
     <Router>
@@ -60,6 +62,7 @@ const App = () => {
             <Route path="/usercard" element={<UserCard />} />
             <Route path="/update-podcast" element={<UpdatePodcast />} />
             <Route path="/edit-profile/:id" element={<EditProfile />} />
+            <Route path="/public-profile/:id" element={<PublicProfile />} />
 
             {/* Admin Routes */}
             {userRole === "admin" ? (

@@ -1,23 +1,24 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { message } from 'antd';
-import { api_url } from '../api/config';
-import Cookies from 'js-cookie';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { message } from "antd";
+import { api_url } from "../api/config";
+import Cookies from "js-cookie";
 
 export const useUser = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userFiles, setUserFiles] = useState([]);
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
-  const id = Cookies.get('id') ? atob(Cookies.get('id')) : null;
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
+  const id = Cookies.get("id") ? atob(Cookies.get("id")) : null;
 
   const handleConfirmLogout = () => {
-    Cookies.remove('authToken');
-    Cookies.remove('id');
+    Cookies.remove("authToken");
+    Cookies.remove("id");
     window.location.reload();
-  }
-
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,19 +32,31 @@ export const useUser = () => {
             },
           });
           const userData = response.data.user;
+
           if (userData) {
             setUser(userData);
             setIsLoggedIn(true);
+          } else {
+            setUser(null);
+            setIsLoggedIn(false);
           }
 
-          const filesResponse = await axios.get(`${api_url}/files/get-file-by-user/${id}`, {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          });
-          setUserFiles(filesResponse.data);
+          const filesResponse = await axios.get(
+            `${api_url}/files/get-file-by-user/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          if (filesResponse.data && filesResponse.data.length > 0) {
+            setUserFiles(filesResponse.data);
+          } else {
+            setUserFiles([]);
+          }
         } catch (error) {
-          message.error("Error fetching user data");
+          // message.error("Error fetching user data");
         } finally {
           setIsLoading(false);
         }

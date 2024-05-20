@@ -16,7 +16,7 @@ const LanguageSwitcher = () => {
     Cookies.set("language", languageCode);
     setSelectedLanguage(languageCode); // Update selected language
     message.success(t("Language changed successfully"));
-    window.location.reload(); 
+    window.location.reload();
     setModalVisible(false); // Close the language selection modal
   };
 
@@ -31,6 +31,7 @@ const LanguageSwitcher = () => {
     <div>
       <div className="language-switcher" onClick={() => setModalVisible(true)}>
         <GlobalOutlined />
+        &nbsp;
         {supportedLanguages
           .filter((language) => language.code === selectedLanguage)
           .map((language) => (

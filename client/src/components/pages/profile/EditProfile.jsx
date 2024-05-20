@@ -27,9 +27,11 @@ const EditProfile = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const navigate = useNavigate();
   const [uploadProgress, setUploadProgress] = useState(0);
-  const { user, loading} = useUser();
+  const { user, loading } = useUser();
   const id = user ? user._id : null;
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
 
   useEffect(() => {
     if (user) {
@@ -178,7 +180,7 @@ const EditProfile = () => {
             <Form.Item>
               <Button
                 onClick={() => handleUpdateProfile(true)}
-                className="saveBtn"
+                className="saveBtn mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4"
                 size="large"
                 loading={loading} // Use loading state for the Button component
               >

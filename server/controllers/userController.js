@@ -39,7 +39,7 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Handle file upload using multer
+    // Handle file upload using multers
     upload(req, res, async (err) => {
       if (err) {
         return res

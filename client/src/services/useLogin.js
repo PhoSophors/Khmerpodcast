@@ -1,10 +1,10 @@
 // service/useLogin.js
 
-import { useState } from 'react';
-import axios from 'axios';
-import { message } from 'antd';
-import { api_url } from '../api/config';
-import Cookies from 'js-cookie';
+import { useState } from "react";
+import axios from "axios";
+import { message } from "antd";
+import { api_url } from "../api/config";
+import Cookies from "js-cookie";
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,9 +24,9 @@ export const useLogin = () => {
         // Login successful
         const encodedToken = btoa(response.data.authToken);
         const encodedId = btoa(response.data.id);
-        Cookies.set("authToken", encodedToken, { expires: 365 * 100});
-        Cookies.set("id", encodedId, { expires: 365 * 100 });
-        
+        Cookies.set("authToken", encodedToken, { expires: 365 * 100 }); // Expires in 100 years
+        Cookies.set("id", encodedId, { expires: 365 * 100 }); // Expires in 100 years
+
         message.success("Login successful ");
         return true;
       }

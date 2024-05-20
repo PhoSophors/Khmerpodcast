@@ -4,3 +4,7 @@
 body {
   font-family: 'Noto Sans Khmer', sans-serif;
 }
+
+.avatar {
+  background-color: var(--avatar-bg);
+}
