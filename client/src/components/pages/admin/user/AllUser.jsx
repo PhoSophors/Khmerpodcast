@@ -152,19 +152,19 @@ const AllUser = () => {
                 <tbody>
                   {paginatedUsers.map((user, index) => (
                     <tr key={user._id}>
-                      <td className="text-center dark:text-slate-200">
+                      <td className="text-center dark:text-gray-300">
                         {(currentPage - 1) * cardsPerPage + index + 1}
                       </td>
-                      <td className="text-center  dark:text-slate-200">
+                      <td className="text-center  dark:text-gray-300">
                         <Avatar
                           src={user && user.profileImage}
                           size="large"
                           icon={<UserOutlined />}
                         />
                       </td>
-                      <td className=" dark:text-slate-200">{user.username}</td>
-                      <td className=" dark:text-slate-200">{user.email}</td>
-                      <td className="text-center  dark:text-slate-200">
+                      <td className=" dark:text-gray-300">{user.username}</td>
+                      <td className=" dark:text-gray-300">{user.email}</td>
+                      <td className="text-center  dark:text-gray-300">
                         <div
                           className={`text-white h-8 w-14 flex justify-center items-center rounded-xl ${
                             user.role === "admin"
@@ -184,7 +184,7 @@ const AllUser = () => {
                           {user.emailVerified ? "True" : "False"}
                         </div>
                       </td>
-                      <td className="text-center  dark:text-slate-200">
+                      <td className="text-center dark:text-gray-300">
                         {new Date(user.createdAt).toLocaleDateString(
                           undefined,
                           {
@@ -219,7 +219,7 @@ const AllUser = () => {
             size={5}
             icon={<StepBackwardFilled />}
           >
-            <span className="dark:text-slate-100">Previous</span>
+            <span className="dark:text-gray-300">Previous</span>
           </Button>
           <Button
             onClick={handleNext}
@@ -228,7 +228,7 @@ const AllUser = () => {
             size={5}
             icon={<StepForwardFilled />}
           >
-            <span className="dark:text-slate-100">Next</span>
+            <span className="dark:text-gray-300">Next</span>
           </Button>
         </div>
       </Card>

@@ -44,7 +44,7 @@
   padding: 0;
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--gray-200);
+  background-color: var(--audio-icon);
 }
 
 .volume-control input::-webkit-slider-thumb {
@@ -53,13 +53,13 @@
   width: 10px;
   height: 10px;
   border-radius: 20px;
-  background: var(--gray-600);
+  background: var(--audio-icon);
   cursor: pointer;
 }
 
 .volume-icon-style {
   font-size: 12px;
-  color: var(--gray-600);
+  color: var(--audio-icon);
 
 }
 
@@ -81,7 +81,7 @@
   padding: 0;
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--gray-200);
+  background-color: var(--audio-icon);
 }
 
 .time-control input::-webkit-slider-thumb {
@@ -90,7 +90,7 @@
   width: 10px;
   height: 10px;
   border-radius: 20px;
-  background: var(--gray-600);
+  background: var(--audio-icon);
   cursor: pointer;
 }
 

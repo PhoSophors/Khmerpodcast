@@ -2,7 +2,7 @@
 .main-register {
   justify-content: center;
   align-items: center;
-  /* background-color: var(--content-bg) !important; */
+  background-color: #4f46e5 !important;
   height: 100vh;
   overflow: auto;
 }
@@ -17,9 +17,6 @@
   overflow: auto;
 }
 
-.register-card  {
-  /* background-color: var(--content-bg) !important; */
-}
 
 
 @media (max-width: 600px) {

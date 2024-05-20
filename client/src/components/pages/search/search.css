@@ -14,13 +14,16 @@
   max-width: 400px;
   border-radius: 15px;
   border: 0;
-  background-color: var(--slate-100);
+  background-color: var(--search-input-bg);
+}
+.search-input .ant-input::placeholder {
+  color: var(--text-color) !important;
 }
 
 .search-input:hover {
   border: none;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
-  background-color: var(--white);
+  /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15); */
+  background-color: var(--search-input-bg);
 }
 
 

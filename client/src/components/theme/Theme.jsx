@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon as solidMoon } from "@fortawesome/free-solid-svg-icons";
-import { faSun as solidSun } from "@fortawesome/free-solid-svg-icons";
+import { MoonOutlined, MoonFilled } from "@ant-design/icons";
 import ThemeContext from "../../context/ThemeContext";
 
 const Theme = () => {
@@ -9,9 +7,12 @@ const Theme = () => {
 
   return (
     <div>
-      <button onClick={toggleTheme} className="text-indigo-600">
-        <span className="text-indigo-600">Theme </span>
-        <FontAwesomeIcon icon={theme === "light" ? solidSun : solidMoon} />
+      <button
+        className="text-indigo-600 dark:text-slate-100 gap-2"
+        onClick={toggleTheme}
+      >
+        <span>Theme</span>
+        {theme === "light" ? <MoonOutlined /> : <MoonFilled />}
       </button>
     </div>
   );

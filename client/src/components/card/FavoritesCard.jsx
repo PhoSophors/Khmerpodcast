@@ -3,12 +3,12 @@ import { Spin, Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
-import { useFavorites } from "../../services/useFavorites";
+// import { useFavorites } from "../../services/useFavorites";
 
 const FavoritesCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const { removePodcastFromFavorites } = useFavorites();
+  // const { removePodcastFromFavorites } = useFavorites();
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -88,7 +88,7 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
                 >
                   {file.title}
                 </div>
-                <p className="mt-2 text-slate-500 dark:text-slate-100">
+                <p className="mt-2 text-slate-500 dark:text-gray-300">
                   {file.description}
                 </p>
               </div>
@@ -96,12 +96,12 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
 
             <div className="flex items-center gap-10">
               <div className="flex items-center">
-                <div className="w-24 date-element text-end text-slate-500">
+                <div className="w-24 date-element text-end text-slate-500 dark:text-gray-300">
                   {formattedDate}
                 </div>
               </div>
 
-              <div
+              {/* <div
                 onClick={() => removePodcastFromFavorites(file._id)}
                 className="cursor-pointer"
               >
@@ -114,7 +114,7 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
                 >
                   <path d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
                 </svg>
-              </div>
+              </div> */}
 
               <>
                 <MoreBtn file={file} />

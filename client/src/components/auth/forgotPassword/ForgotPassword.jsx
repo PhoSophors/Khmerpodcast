@@ -82,11 +82,10 @@ const ForgotPassword = () => {
                 <img src={logo} alt="logo" className="logo" />
               </div>
 
-              <p className="text-center mb-4 dark:text-slate-100">
+              <p className="text-center mb-4">
                 {t("forgotPassword.description")}
               </p>
               <Form.Item
-                className="dark:text-slate-100"
                 label={t("forgotPassword.email")}
                 name="email"
                 rules={[
@@ -126,11 +125,10 @@ const ForgotPassword = () => {
                 <img src={logo} alt="logo" className="logo" />
               </div>
 
-              <p className="text-center mb-4 dark:text-slate-100">
+              <p className="text-center mb-4">
                 Please enter the OTP sent to your email to verify your identity.
               </p>
               <Form.Item
-                className="dark:text-slate-100"
                 label="OTP"
                 name="otp"
                 rules={[
@@ -164,12 +162,11 @@ const ForgotPassword = () => {
               <div className="flex justify-center items-center text-center mb-4">
                 <img src={logo} alt="logo" className="logo" />
               </div>
-              <p className="text-center mb-4 dark:text-slate-100">
+              <p className="text-center mb-4">
                 Please enter your new password below. Make sure it's strong and
                 secure.
               </p>
               <Form.Item
-                className="dark:text-slate-100"
                 label="New Password"
                 name="newPassword"
                 rules={[

@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import "./MainSection.css";
-import LeftSection from "../leftSection/LeftSection";
+import LeftSection from "../leftSection/LeftSection"; // Ensure this imports the correct SideMenu component
 import RightSection from "../rightSection/RightSection";
 import Layout, { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
@@ -95,6 +95,7 @@ class MainSection extends Component {
           <Sider collapsed={collapsed} breakpoint="md">
             <LeftSection
               onSelectMenuItem={this.handleSelectMenuItem}
+              collapsed={collapsed}
             />
           </Sider>
         )}

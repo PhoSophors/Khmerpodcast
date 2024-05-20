@@ -31,10 +31,13 @@ const CustomCard = ({ file, handleViewPodcast }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <Card className="card-bg"
-          style={{
-            // boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
-          }}
+        <Card
+          className="card-bg"
+          style={
+            {
+              // boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
+            }
+          }
           cover={
             <div
               style={{
@@ -119,7 +122,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
             <div className="mt-1 tracking-wide truncate text-sm text-indigo-500 font-semibold">
               {file.title}
             </div>
-            <p className="mt-1 mb-0 truncate text-slate-500">
+            <p className="mt-1 mb-0 truncate text-slate-500 dark:text-gray-300">
               {file.description}
             </p>
           </div>

@@ -121,22 +121,22 @@ const AudioControl = () => {
           <div className="play-back-btn gap-5 p-2">
             <StepBackwardFilled
               onClick={handlePrevious}
-              style={{ fontSize: "2rem", color: "#4b5563" }}
+              style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
             />
             {isPlaying ? (
               <PauseCircleFilled
                 onClick={toggleAudio}
-                style={{ fontSize: "2rem", color: "#4b5563" }}
+                style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
               />
             ) : (
               <PlayCircleFilled
                 onClick={toggleAudio}
-                style={{ fontSize: "2rem", color: "#4b5563" }}
+                style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
               />
             )}
             <StepForwardOutlined
               onClick={handleNext}
-              style={{ fontSize: "2rem", color: "#4b5563" }}
+              style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
             />
           </div>
           <div className="image-control">

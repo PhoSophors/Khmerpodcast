@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+// SideMenu.jsx
+
+import React, { useState, useContext } from "react";
 import "./SideMenu.css";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
-import { Menu, Modal } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { Menu } from "antd";
 import { useUser } from "../../services/useUser";
+import ThemeContext from "../../context/ThemeContext";
 
-const SideMenu = ({ onSelectMenuItem }) => {
+const SideMenu = ({ onSelectMenuItem, collapsed }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState("/");
-  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const { t } = useTranslation();
-  const { user, isLoggedIn, handleConfirmLogout } = useUser();
+  const { user, isLoggedIn } = useUser();
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const handleAppClick = () => {
     window.location.reload();
@@ -20,14 +22,6 @@ const SideMenu = ({ onSelectMenuItem }) => {
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem.key);
     onSelectMenuItem(menuItem.key);
-  };
-
-  const handleCancelLogout = () => {
-    setLogoutModalVisible(false);
-  };
-
-  const handleLogout = () => {
-    setLogoutModalVisible(true);
   };
 
   return (
@@ -40,21 +34,21 @@ const SideMenu = ({ onSelectMenuItem }) => {
       >
         <div
           onClick={handleAppClick}
-          className="flex items-center name-app md:p-4 cursor-pointer"
+          className={
+            "flex items-center md:p-4 cursor-pointer menu-item-wrapper"
+          }
         >
           <img src={logo} alt="logo" className="logo-app" />
-          <Menu.Item key="default" className="name-app">
-            <span onClick={() => handleMenuItemClick({ key: "default" })}>
-              <div className="flex flex-col name-app">
-                <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
-                  Khmer
-                </span>
-                <span className="uppercase tracking-wide text-sm text-slate-200 font-semibold">
-                  Podcast
-                </span>
-              </div>
-            </span>
-          </Menu.Item>
+          {collapsed && (
+            <div className="flex flex-col">
+              <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
+                Khmer
+              </span>
+              <span className="uppercase tracking-wide text-sm text-slate-200 font-semibold">
+                Podcast
+              </span>
+            </div>
+          )}
         </div>
 
         <Menu.Item key="/" icon={getIcon("/", selectedMenuItem)}>
@@ -136,44 +130,21 @@ const SideMenu = ({ onSelectMenuItem }) => {
                 {t("siderMenu.profile")}
               </span>
             </Menu.Item>
-            <Menu.Item onClick={handleLogout} icon={getIcon("/logout")}>
-              <span>{t("siderMenu.logout")}</span>
-            </Menu.Item>
           </>
         )}
+
+        <Menu.Item
+          onClick={toggleTheme}
+          key="/theme"
+          icon={getIcon("/theme", selectedMenuItem, theme)}
+        >
+          <span>
+            {theme === "light"
+              ? t("siderMenu.darkTheme")
+              : t("siderMenu.whiteTheme")}
+          </span>
+        </Menu.Item>
       </Menu>
-
-      <Modal
-        visible={logoutModalVisible}
-        onCancel={handleCancelLogout}
-        footer={null}
-        centered
-        width={300}
-        closeIcon={
-          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
-        }
-      >
-        <div className="modal-logout mt-10 flex flex-col items-center">
-          <img src={logo} alt="" />
-          <h1 className="text-center text-xl text-indigo-500 font-semibold mb-4 mt-5">
-            Are you sure you want to logout your account?
-          </h1>
-
-          <button
-            onClick={handleConfirmLogout}
-            className="bg-indigo-600 w-32 hover:bg-red-500 text-white p-10 font-bold py-2 px-4 rounded-3xl mt-5"
-          >
-            Logout
-          </button>
-
-          <button
-            onClick={handleCancelLogout}
-            className="text-slate-600 hover:text-indigo-600 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
-          >
-            Cancel
-          </button>
-        </div>
-      </Modal>
     </>
   );
 };

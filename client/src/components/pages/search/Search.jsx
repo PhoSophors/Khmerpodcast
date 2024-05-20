@@ -27,7 +27,7 @@ const Search = () => {
 
           <div className="search-results mt-5 flex flex-wrap justify-center items-center">
             {searchPerformed && searchResults.length === 0 ? (
-              <p className="font-semibold text-gray-500 uppercase text-center mt-5">
+              <p className="font-semibold text-gray-500 dark:text-gray-300 uppercase text-center mt-5">
                 Podcast not found
               </p>
             ) : (
@@ -45,7 +45,7 @@ const Search = () => {
           </div>
         </div>
       )}
-          <div className="mt-20 text-white">.</div>
+      <div className="mt-20 text-white">.</div>
     </>
   );
 };

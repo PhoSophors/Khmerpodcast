@@ -68,10 +68,12 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
             onClick={handleViewPodcast}
             className="cursor-pointer"
           >
-            <LeftOutlined style={{ fontWeight: "bold" }} />
-            <span className="dark:text-slate-200">Back</span>
+            <LeftOutlined
+              style={{ fontWeight: "bold", color: `var(--gray-300)` }}
+            />
+            <span className="dark:text-gray-300">Back</span>
           </Breadcrumb.Item>
-          <Breadcrumb.Item className="dark:text-slate-100">
+          <Breadcrumb.Item className="dark:text-gray-300">
             View Podcast
           </Breadcrumb.Item>
         </Breadcrumb>
@@ -95,7 +97,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
                 }}
               >
                 <div style={{ display: "flex", gap: "10px" }}>
-                  <div>
+                  <div className="thumnaill">
                     <img
                       className="object-cover image-view-podcast"
                       src={file.image.url}
@@ -153,7 +155,7 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
         </div>
 
         <hr className="mt-5 mb-5 dark:bg-gray-600" />
-        <p className="mt-2 tracking-wide text-slate-500 dark:text-slate-100 xl:w-6/12 md:w-6/12 w-full">
+        <p className="mt-2 tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
           <Linkify componentDecorator={linkDecorator}>
             {file.description}
           </Linkify>
@@ -178,8 +180,8 @@ const ViewDetailPodcast = ({ file, handleViewPodcast }) => {
 
             <div className="text-center">
               <span className="font-semibold text-indigo-500">Upload Date</span>
-              <div className="dark:text-gray-100">
-                {new Date(user.createdAt).toLocaleDateString(undefined, {
+              <div className="dark:text-gray-300">
+                {new Date(file.uploadDate).toLocaleDateString(undefined, {
                   year: "numeric",
                   month: "long",
                   day: "numeric",

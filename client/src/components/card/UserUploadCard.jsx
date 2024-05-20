@@ -82,7 +82,7 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
                 >
                   {file.title}
                 </div>
-                <p className="mt-2 text-slate-500 dark:text-slate-100">
+                <p className="mt-2 text-slate-500 dark:text-gray-300">
                   {file.description}
                 </p>
               </div>
@@ -90,7 +90,7 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
 
             <div className="flex items-center xl:gap-10 md:gap-10 gap-2">
               <div className="items-center">
-                <div className="w-24 date-element text-end text-slate-500">
+                <div className="w-24 date-element text-end text-slate-500 dark:text-gray-300">
                   {new Date(file.uploadDate).toLocaleDateString(undefined, {
                     year: "numeric",
                     month: "long",

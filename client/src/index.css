@@ -8,25 +8,30 @@
   --content-bg: #fff;
   --header-bg: #fff;
   --card-bg: #fff;
-  --text-color: #000;
+  --text-color: #374151;
   --forgot-password-bg: #4f46e5;
   --forgot-password-card: #f1f5f9 ;
   --back-btn-view-podcast: #f8fafc; 
   --card-hover: #f4f5f7;
-  --border-color: #f1f5f9;
+  --border-color: #e2e8f0;
+  --input-bg: #fff;
+  --input-focus: #4f46e5;
+  --search-input-bg: #f1f5f9;
+
+  --audio-icon: #4f46e5;
 
   --white: #fff;
   --sider-item-selected: #1f1e1e35;
 
-
-  
-  --indigo-500: #6366f1;
+  --slate-100: #f1f5f9;
+  --gray-300: #d2d6dc;
+  /* --indigo-500: #6366f1;
   --indigo-600: #4f46e5;
   --indigo-700: #4338ca;
   --indigo-800: #3730a3;
 
   --slate-50: #f8fafc;
-  --slate-100: #f1f5f9;
+ 
   --slate-200: #e2e8f0;
   --slate-300: #cbd5e1;
   --slate-400: #94a3b8;
@@ -63,22 +68,26 @@
   --pink-600: #db2777;
   --pink-700: #be185d;
   --pink-800: #9d174d;
-  --pink-900: #781a61;
+  --pink-900: #781a61; */
 }
 
 .dark {
   --bg-color: #282828;
   --sidemenu-mobile-bg: #282828;
-  --content-bg: #171717;;
-  --header-bg: #171717;;
+  --content-bg: #1C1C1C;;
+  --header-bg: #1C1C1C;;
   --card-bg: #282828;
   --text-color: #f1f5f9;
   --forgot-password-bg: #282828;
-  --forgot-password-card: #171717 ;
+  --forgot-password-card: #1C1C1C ;
   --back-btn-view-podcast: #282828; 
-  --card-hover: #171717;
+  --card-hover: #1C1C1C;
   --border-color: #282828;
+  --audio-icon: #d2d6dc;
+  --input-bg: #282828;
+  --input-focus: #4f46e5;
+  --search-input-bg: #282828;
 
 
-  --sider-item-selected: #171717;
+  --sider-item-selected: #1C1C1C;
 }

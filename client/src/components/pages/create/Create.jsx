@@ -117,7 +117,9 @@ const Create = () => {
 
   // Function to handleChange thumnail
   const handleChange = ({ fileList: newFileList }) => {
-    // Update the imageFileList with the new file list
+    if (newFileList.length > 1) {
+      newFileList = [newFileList.pop()];
+    }
     setImageFileList(newFileList);
   };
 
@@ -157,7 +159,7 @@ const Create = () => {
           <div className="uppercase xl:text-start md:text-start text-ceter tracking-wide text-xl md:mt-3 mt-3 text-indigo-500 font-semibold">
             Create Podcast
           </div>
-          <div className="tracking-wide text-start md:text-start text-ceter text-sm text-gray-500">
+          <div className="tracking-wide text-start md:text-start text-ceter text-sm text-gray-500 dark:text-gray-300">
             Create an Podcast episode in a few simple steps.
           </div>
 
@@ -165,10 +167,10 @@ const Create = () => {
             <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5">
               {/* set two colum */}
               <div className="w-full sm:w-1/2">
-                <div className="mt-5  text-start  font-semibold text-gray-500 uppercase tracking-wide">
+                <div className="mt-5  text-start  font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-300">
                   Audio Supported file types:
                 </div>
-                <div className="text-gray-500 text-start">
+                <div className="text-gray-500 text-start dark:text-gray-300">
                   Audio files: aac, mp3
                 </div>
                 {/* upload audio */}
@@ -207,7 +209,7 @@ const Create = () => {
                         accept=".aac, .mp3, .ogg "
                         showUploadList={false}
                       >
-                        <div className="dark:text-slate-100">
+                        <div className="dark:text-gray-300">
                           {"Upload Audio"}
                         </div>
                       </Upload>
@@ -218,29 +220,28 @@ const Create = () => {
 
               {/* upload  thumbnail */}
               <div className="w-full sm:w-1/2 ">
-                <div className="mt-5 text-start  font-semibold text-gray-500 uppercase tracking-wide">
+                <div className="mt-5 text-start  font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                   Thumnaill upported file types:
                 </div>
-                <div className="text-gray-500 text-start ">
+                <div className="text-gray-500 dark:text-gray-300 text-start ">
                   Thumnaill files: .jpeg, .jpg
                 </div>
-                <Card className="mt-5 items-center create-card-bg">
+                <Card className="mt-5 items-center flex justify-center create-card-bg">
                   <ImgCrop>
-                    <div className="upload-container">
-                      <Upload
-                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                        listType="picture-card"
-                        fileList={imageFileList}
-                        accept=".jpg, .jpeg"
-                        onChange={handleChange}
-                        onPreview={handlePreview}
-                      >
-                        {imageFileList.length === 0 && ""}
-                        <div className="dark:text-slate-100">
-                          {"Upload Thumnaill"}
-                        </div>
-                      </Upload>
-                    </div>
+                    <Upload
+                      // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      action={null}
+                      listType="picture-card"
+                      fileList={imageFileList ? imageFileList : []}
+                      accept=".jpg, .jpeg"
+                      onChange={handleChange}
+                      onPreview={handlePreview}
+                    >
+                      {imageFileList.length === 0 && ""}
+                      <div className="dark:text-gray-300">
+                        {"Upload Thumnaill"}
+                      </div>
+                    </Upload>
                   </ImgCrop>
                   <Modal
                     open={previewOpen}
@@ -263,7 +264,7 @@ const Create = () => {
               <Form variant="filled">
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
-                    <p className="font-semibold  text-start text-gray-500 uppercase tracking-wide">
+                    <p className="font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                       Title *
                     </p>
                     <Input.TextArea
@@ -277,7 +278,7 @@ const Create = () => {
                     />
                   </div>
                   <div className="w-full sm:w-3/5">
-                    <p className="font-semibold text-start text-gray-500 uppercase tracking-wide">
+                    <p className="font-semibold text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                       Description *
                     </p>
                     <Input.TextArea
@@ -304,11 +305,10 @@ const Create = () => {
 
             <div class="w-full mt-5 bg-white rounded-full">
               <div
-                class="upload-progress text-xs font-medium text-center p-0 leading-none rounded-full"
+                class="text-xs bg-indigo-600 font-medium text-center p-0 leading-none rounded-full"
                 style={{ width: `${uploadProgress}%` }}
               >
-                {" "}
-                {uploadProgress}%
+                <span className="text-white ">{uploadProgress}%</span>
               </div>
             </div>
 

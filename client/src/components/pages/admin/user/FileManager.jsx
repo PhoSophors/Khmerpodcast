@@ -166,25 +166,25 @@ const FileManager = () => {
                   {/* Map through paginatedFiles and display in table */}
                   {paginatedFiles.map((file, index) => (
                     <tr key={file._id}>
-                      <td className="text-center dark:text-slate-100">
+                      <td className="text-center dark:text-gray-300">
                         {(currentPage - 1) * cardsPerPage + index + 1}
                       </td>
                       <td className="text-center">
                         <Avatar size="large" src={file.image.url} />
                       </td>
-                      <td className="dark:text-slate-100">
+                      <td className="dark:text-gray-300">
                         {file.title.substring(0, 30)}
                       </td>
-                      <td className="dark:text-slate-100">
+                      <td className="dark:text-gray-300">
                         {file.description.substring(0, 30)}
                       </td>
-                      <td className="text-center dark:text-slate-100">
+                      <td className="text-center dark:text-gray-300">
                         {file.audio.mimetype}
                       </td>
-                      <td className="text-center dark:text-slate-100">
+                      <td className="text-center dark:text-gray-300">
                         {file.image.mimetype}
                       </td>
-                      <td className="text-center dark:text-slate-100">
+                      <td className="text-center dark:text-gray-300">
                         {new Date(file.uploadDate).toLocaleDateString(
                           undefined,
                           {
@@ -219,7 +219,7 @@ const FileManager = () => {
             size={5}
             icon={<StepBackwardFilled />}
           >
-            <span className="dark:text-slate-100">Previous</span>
+            <span className="dark:text-gray-300">Previous</span>
           </Button>
           <Button
             onClick={handleNext}
@@ -228,7 +228,7 @@ const FileManager = () => {
             size={5}
             icon={<StepForwardFilled />}
           >
-            <span className="dark:text-slate-100">Next</span>
+            <span className="dark:text-gray-300">Next</span>
           </Button>
         </div>
       </Card>

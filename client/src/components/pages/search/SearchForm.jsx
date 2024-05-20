@@ -57,7 +57,10 @@ const SearchForm = ({ handleSearchSubmit }) => {
         value={searchQuery}
         onChange={handleInputChange}
         suffix={
-          <SearchOutlined style={{ color: "rgba(0,0,0,.45)" }} spin={loading} />
+          <SearchOutlined
+            style={{ color: `var(--text-color)` }}
+            spin={loading}
+          />
         }
       />
     </form>

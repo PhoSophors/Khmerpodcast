@@ -28,7 +28,10 @@ const HomePage = () => {
       setError(false);
       setLoading(false);
     } catch (error) {
-      notification.error("Error fetching files");
+      notification.error({
+        message: "Error fetching Podcasts.",
+        description: "Please wait a minute and try again.",
+      });
       setLoading(false);
     }
   };

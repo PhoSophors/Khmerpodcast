@@ -45,16 +45,16 @@ const Profile = () => {
                   />
                 </Spin>
 
-                <h1 className="text-2xl text-center text-gray-600 dark:text-slate-100 font-bold">
+                <h1 className="text-2xl text-center text-gray-600 dark:text-gray-300  font-bold">
                   {user && user.username}
                 </h1>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h1 className="text-gray-500  dark:text-slate-100 mt- mx-7 text-center text-lg">
+                  <h1 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
                     {user && user.email}
                   </h1>
                   <span
-                    className="text-gray-500 dark:text-slate-100 bg-profile-text-field absolute"
+                    className="text-gray-500 dark:text-gray-300  bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
                       padding: "0 5px",
@@ -65,11 +65,11 @@ const Profile = () => {
                 </div>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h1 className="text-gray-500  dark:text-slate-100 mt- mx-7 text-center text-lg">
+                  <h1 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
                     {user && user.role}
                   </h1>
                   <span
-                    className="text-gray-500  dark:text-slate-100 bg-profile-text-field absolute"
+                    className="text-gray-500  dark:text-gray-300  bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
                       padding: "0 5px",
@@ -81,7 +81,7 @@ const Profile = () => {
 
                 <Link to={`/edit-profile/${id}`}>
                   <Button
-                    className="mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-xl"
+                    className="mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-xl"
                     size="large"
                   >
                     Edit profile

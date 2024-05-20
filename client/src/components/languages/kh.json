@@ -6,11 +6,13 @@
     "create" : "បង្កើត",
     "setting": "ការកំណត់",
     "profile": "គណនី",
-    "admin": "Admin",
-    "dashboard": "Dashboard",
-    "allUsers": "All Users",
-    "fileManager": "File Manager",
-    "logout": "ចាកចេញ"
+    "admin": "អ្នកគ្រប់គ្រង",
+    "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "allUsers": "​គ្រប់​គ្រង​អ្នក​ប្រើ​",
+    "fileManager": "​គ្រប់​គ្រង​ឯកសារ",
+    "logout": "ចាកចេញ",
+    "whiteTheme": "ផ្ទៃពណ៌ស", 
+    "darkTheme": "ផ្ទៃពណ៌ខ្មៅ"
   },
 
   "login" : {

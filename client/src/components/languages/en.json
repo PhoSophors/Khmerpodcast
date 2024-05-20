@@ -9,9 +9,11 @@
     "profile": "Profile",
     "admin": "Admin",
     "dashboard": "Dashboard",
-    "allUsers": "All Users",
-    "fileManager": "File Manager",
-    "logout": "Logout"
+    "allUsers": "Users",
+    "fileManager": "Files",
+    "logout": "Logout",
+    "whiteTheme": "White Theme", 
+    "darkTheme": "Dark Theme"
   },
 
   "login" : {

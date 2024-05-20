@@ -1,23 +1,23 @@
-#login-modal-bg {
+/* .login-modal-bg {
   background-color: var(--content-bg) !important;
-}
+} */
 
 .title {
-  color: #333333; 
   font-size: 30px; 
   font-weight: bold; 
 }
 
 .input-field {
   border-radius: 10px;
-  border: 1px solid var(--indigo-600);
+  border: 1px solid var(--input-focus);
+  /* background-color: var(--input-bg) !important; */
   padding: 13px;
   width: 100%;
   box-sizing: border-box; 
   background-color: #fff;
 }
 .input-field:focus {
-  border-color: var(--indigo-600);
+  border-color: var(--input-focus);
 }
 
 .required-label label::after {

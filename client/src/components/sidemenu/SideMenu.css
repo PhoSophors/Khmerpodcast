@@ -1,3 +1,5 @@
+/* SideMenu.css */
+
 .logo-app {
   width: 4rem;
   height: auto;
@@ -20,26 +22,47 @@
   border: none;
   padding-bottom: 20px;
 }
+
 .ant-layout-sider-children {
   background-color: var(--bg-color);
 }
 
 .side-menu-container .ant-menu-item-selected {
   background: var(--sider-item-selected);
-  color: var(--slate-100) !important;
+  color: var(--gray-300) !important;
   font-weight: bold;
 }
 
-.side-menu-container .ant-menu-item{
-  color: var(--slate-100) !important;
-}
-.side-menu-container .ant-menu-item:hover{
-  color: var(--slate-100) !important;
+.side-menu-container .ant-menu-item {
+  color: var(--gray-300) !important;
 }
 
+.side-menu-container .ant-menu-item:hover {
+  color: var(--gray-300) !important;
+}
 
 .ant-menu-submenu-title {
-  color: var(--slate-100) !important;
+  color: var(--gray-300) !important;
+}
+
+.menu-item-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-item-wrapper.collapsed .logo-app {
+  width: 4rem;
+  height: auto;
+}
+
+.menu-item-wrapper.collapsed .ant-menu-item {
+  display: none !important;
+}
+
+/* Optional: Adjust the styling for the app name */
+.menu-item-wrapper.collapsed .flex {
+  display: none !important;
 }
 
 /* Styles for screens with a width of 768px or less */
@@ -62,35 +85,23 @@
     font-weight: bold;
   }
   
-  .side-menu-container .ant-menu-item{
+  .side-menu-container .ant-menu-item {
     color: var(--text-color);
-    /* background-color: var(--content-bg); ; */
-    top: 0;
   }
 
-  /* .side-menu-container .ant-menu-submenu-title {
-    background-color: var(--content-bg) !important;
-  } */
-  
-  .side-menu-container .ant-menu-item:hover{
+  .side-menu-container .ant-menu-item:hover {
     color: var(--text-color) !important;
-    top: 0;
   }
-  
-  
+
   .ant-menu-submenu-title {
     color: var(--text-color) !important;
-    top: 0;
   }
-  
-  .side-menu-container .ant-menu-item{
+
+  .side-menu-container .ant-menu-item {
     color: var(--text-color) !important;
   }
 
-  .logo-app {
-    display: none;
-  }
-  .name-app {
-    display: none;
+  .menu-item-wrapper {
+    display: none !important;
   }
 }

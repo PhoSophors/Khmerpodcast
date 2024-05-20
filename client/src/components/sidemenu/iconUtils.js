@@ -1,5 +1,5 @@
 import logo from "../assets/logo.jpg";
-import { 
+import {
   HomeFilled,
   HomeOutlined,
   SearchOutlined,
@@ -15,10 +15,11 @@ import {
   FileTextFilled,
   FileTextOutlined,
   LogoutOutlined,
- } from "@ant-design/icons";
+  MoonOutlined,
+  MoonFilled,
+} from "@ant-design/icons";
 
 export const iconMapping = {
-  "default": <img src={logo} alt="logo" />,
   "/": { selected: <HomeFilled />, default: <HomeOutlined /> },
   "/search": { selected: <SearchOutlined />, default: <SearchOutlined /> },
   "/favorite": { selected: <HeartFilled />, default: <HeartOutlined /> },
@@ -37,27 +38,30 @@ export const iconMapping = {
     default: <UserOutlined />,
   },
   "/all-user-upload": {
-    selected:  <FileTextFilled />,
-    default: < FileTextOutlined />
+    selected: <FileTextFilled />,
+    default: <FileTextOutlined />,
   },
   "/logout": {
-    selected:  <LogoutOutlined />,
-    default: < LogoutOutlined />
+    selected: <LogoutOutlined />,
+    default: <LogoutOutlined />,
   },
+  "/theme": { selected: <MoonFilled />, default: <MoonOutlined /> },
+  "/app-logo": {
+    selected: <></>,
+    default: <></>,
+  },
+
+  default: <HomeOutlined />,
 };
 
-// export const getIcon = (key, selectedMenuItem) => {
-//   const icon = iconMapping[key];
-//   return icon
-//     ? selectedMenuItem === key
-//       ? icon.selected
-//       : icon.default
-//     : null;
-// };
-export const getIcon = (key, selectedMenuItem) => {
+export const getIcon = (key, selectedMenuItem, theme) => {
   const iconSet = iconMapping[key];
   if (!iconSet) return null; // Return null if there's no icon set for the key
 
   // Return the selected icon if the key matches the selected menu item, otherwise return the default icon
-  return selectedMenuItem === key ? iconSet.selected : iconSet.default;
+  return selectedMenuItem === key
+    ? iconSet.selected
+    : iconSet.default && theme === "dark"
+    ? iconSet.selected
+    : iconSet.default;
 };

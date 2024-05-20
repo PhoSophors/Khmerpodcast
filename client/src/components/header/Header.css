@@ -6,7 +6,7 @@
   align-items: center;
   padding: 1rem;
   height: 70px;
-  background-color: var(--header-bg);
+  background-color: var(--content-bg);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border: 0.1px solid rgba(128, 128, 128, 0.205);
@@ -37,7 +37,7 @@
   right: 0;
   position: absolute;
   display: block;
-  background-color: var(--bg-color) !important;
+  background-color: var(--sidemenu-mobile-bg) !important;
 }
 
 .name-style {
@@ -75,6 +75,11 @@
 @media screen and (max-width: 820px) {
   .username-header {
     display: none;
+  }
+}
+@media screen and (max-width: 700px) {
+  .username-header {
+    display: block;
   }
 }
 
