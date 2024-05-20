@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100..900&display=swap');
+
+body {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400; /* Example: Normal weight */
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
+
 :root {
   --bg-color: #4f46e5;
   --sidemenu-mobile-bg: #fff;
@@ -17,6 +30,7 @@
   --input-bg: #fff;
   --input-focus: #4f46e5;
   --search-input-bg: #f1f5f9;
+  --avatar-bg: #9f9f9f;
 
   --audio-icon: #4f46e5;
 
@@ -25,6 +39,7 @@
 
   --slate-100: #f1f5f9;
   --gray-300: #d2d6dc;
+  
   /* --indigo-500: #6366f1;
   --indigo-600: #4f46e5;
   --indigo-700: #4338ca;
@@ -81,12 +96,13 @@
   --forgot-password-bg: #282828;
   --forgot-password-card: #1C1C1C ;
   --back-btn-view-podcast: #282828; 
-  --card-hover: #1C1C1C;
+  --card-hover: #373737;;
   --border-color: #282828;
   --audio-icon: #d2d6dc;
   --input-bg: #282828;
   --input-focus: #4f46e5;
   --search-input-bg: #282828;
+  --avatar-bg: #9f9f9f;
 
 
   --sider-item-selected: #1C1C1C;
