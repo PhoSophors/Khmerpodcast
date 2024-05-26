@@ -8,6 +8,15 @@
   color: var(--bg-color) !important;
 }
 
+:where(.create-textarea.css-dev-only-do-not-override-1r287do).ant-input-textarea-affix-wrapper.ant-input-affix-wrapper >textarea.ant-input {
+  font-size: inherit;
+  border: none !important;
+  outline: none !important;
+  border-radius: 5px !important;
+  background: var(--text-area-bg);
+}
+
+
 .upload-button {
   display: flex; 
   justify-content: center;

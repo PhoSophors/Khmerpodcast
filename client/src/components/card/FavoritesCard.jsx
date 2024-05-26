@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Spin, Card } from "antd";
+import { Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
@@ -45,7 +45,9 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
             }}
           >
             <div style={{ display: "flex", gap: "10px" }}>
-              {isLoading && <Spin />}
+              {isLoading && (
+                <div className="custom-card-loading-overlay animate-pulse"></div>
+              )}
               <div>
                 <img
                   className="thumnaill-card object-cover"

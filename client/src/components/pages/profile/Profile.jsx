@@ -33,18 +33,28 @@ const Profile = () => {
               }}
             >
               <div className="profile-content mt-5">
-                <Spin spinning={isLoading || !user}>
-                  <Avatar
-                    className="avatar"
-                    size={140}
-                    icon={<UserOutlined />}
-                    src={user && user.profileImage}
-                    style={{
-                      marginBottom: "16px",
-                      border: "1px solid #6366f1",
-                    }}
-                  />
-                </Spin>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "140px",
+                    height: "140px",
+                    marginBottom: "16px",
+                    border: "1px solid #6366f1",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Spin spinning={isLoading || !user}>
+                    <Avatar
+                      className="avatar"
+                      size={140}
+                      icon={<UserOutlined />}
+                      src={user && user.profileImage}
+                    />
+                  </Spin>
+                </div>
 
                 <h1 className="text-2xl text-center text-gray-600 dark:text-gray-300  font-bold">
                   {user && user.username}

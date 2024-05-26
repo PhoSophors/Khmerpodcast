@@ -37,7 +37,9 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
             }}
           >
             <div style={{ display: "flex", gap: "10px" }}>
-              {isLoading && <Spin />}
+              {isLoading && (
+                <div className="custom-card-loading-overlay animate-pulse"></div>
+              )}
               <div>
                 <img
                   className="object-cover"

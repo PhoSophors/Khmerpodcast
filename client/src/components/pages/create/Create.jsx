@@ -268,7 +268,7 @@ const Create = () => {
                       Title *
                     </p>
                     <Input.TextArea
-                      className="mt-5 caret-pink-500 dark:text-slate-100 "
+                      className="create-textarea mt-5 caret-pink-500 dark:text-slate-100 "
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Input title"
@@ -282,7 +282,7 @@ const Create = () => {
                       Description *
                     </p>
                     <Input.TextArea
-                      className="mt-5 caret-pink-500 dark:text-slate-100"
+                      className="create-textarea mt-5 caret-pink-500 dark:text-slate-100"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Input description"

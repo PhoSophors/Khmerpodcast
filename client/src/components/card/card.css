@@ -1,15 +1,51 @@
 .card-bg {
   background-color: var(--card-bg);
-  /* padding: 10px; */
   border-radius: 20px;
   margin: 2px;
-  border-color:  var(--border-color) !important;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  border-color: var(--border-color) !important;
 }
 
 .card-hover:hover {
   background-color: var(--card-hover);
 }
+
+.custom-card .ant-card-cover {
+  margin-top: -1px;
+  margin-inline-start: -1px;
+  padding: 10px;
+  margin-inline-end: -1px;
+  position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-card .ant-card-body {
+  padding: 10px;
+  padding-top: 0px;
+  margin-bottom: 5px;
+  border-radius: 0 0 8px 8px;
+}
+
+
+.custom-card-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--loading-overlay);
+  z-index: 10;
+  border-radius: 20px;
+  border-color: var(--border-color) !important;
+}
+
+
 
 @media (max-width: 868px) {
   .date-element {

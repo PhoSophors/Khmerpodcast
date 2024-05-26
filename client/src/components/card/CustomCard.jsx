@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Spin } from "antd";
+import { Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
@@ -25,60 +25,29 @@ const CustomCard = ({ file, handleViewPodcast }) => {
   }, []);
 
   return (
-    <>
-      <div
-        className="sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/6 w-1/2 p-1"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+    <div
+      className="sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/6 w-1/2 p-1"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative">
+        {loading && (
+          <div className="custom-card-loading-overlay animate-pulse ">
+            {/* Loading Spinner or other content can go here */}
+          </div>
+        )}
         <Card
-          className="card-bg"
-          style={
-            {
-              // boxShadow: "0 20px 37.6px rgba(0,0,0,0.090)",
-            }
-          }
+          className="card-bg custom-card"
           cover={
-            <div
-              style={{
-                padding: "10px",
-                position: "relative",
-                aspectRatio: "1/1",
-                overflow: "hidden",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {loading && (
-                <div
-                  className="animate-pulse bg-gray-100 rounded-xl w-full h-full object-cover"
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    background: "rgba(255, 255, 255, 1.5)",
-                    zIndex: 1,
-                  }}
-                >
-                  <Spin />
-                </div>
-              )}
-              <>
-                <img
-                  onClick={handleViewPodcast}
-                  className="w-full h-full object-cover cursor-pointer"
-                  alt={`.${file?._id}`}
-                  src={file?.image?.url}
-                  onLoad={handleImageLoad}
-                  style={{ borderRadius: "14px", boxSizing: "border-box" }}
-                />
-              </>
+            <div className="relative">
+              <img
+                onClick={handleViewPodcast}
+                className="w-full h-full object-cover cursor-pointer"
+                alt={`.${file?._id}`}
+                src={file?.image?.url}
+                onLoad={handleImageLoad}
+                style={{ borderRadius: "14px", boxSizing: "border-box" }}
+              />
               {(isMobile || isHovered) && (
                 <div className="flex grid sm:grid-cols-2 sm:flex sm:gap-5">
                   {!isMobile && (
@@ -86,19 +55,19 @@ const CustomCard = ({ file, handleViewPodcast }) => {
                       <div
                         style={{
                           position: "absolute",
-                          bottom: "15px",
-                          right: "15px",
+                          bottom: "5px",
+                          right: "5px",
                           zIndex: 2,
                         }}
                       >
                         <PlayBtn file={file} />
                       </div>
                       <div
-                        className=" w-full sm:w-1/2"
+                        className="w-full sm:w-1/2"
                         style={{
                           position: "absolute",
-                          bottom: "17px",
-                          left: "15px",
+                          bottom: "7px",
+                          left: "5px",
                           zIndex: 2,
                         }}
                       >
@@ -111,14 +80,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
             </div>
           }
         >
-          <div
-            style={{
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              margin: "-30px 0px 5px",
-            }}
-          >
+          <div>
             <div className="mt-1 tracking-wide truncate text-sm text-indigo-500 font-semibold">
               {file.title}
             </div>
@@ -128,7 +90,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
           </div>
         </Card>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -31,6 +31,8 @@ body {
   --input-focus: #4f46e5;
   --search-input-bg: #f1f5f9;
   --avatar-bg: #9f9f9f;
+  --loading-overlay: rgb(236, 233, 233);
+  --text-area-bg: #f1f5f9;
 
   --audio-icon: #4f46e5;
 
@@ -103,6 +105,8 @@ body {
   --input-focus: #4f46e5;
   --search-input-bg: #282828;
   --avatar-bg: #9f9f9f;
+  --loading-overlay: #282828;
+  --text-area-bg: #373737;
 
 
   --sider-item-selected: #1C1C1C;

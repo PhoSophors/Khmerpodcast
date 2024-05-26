@@ -142,7 +142,11 @@ const EditProfile = () => {
                   onPreview={handlePreview}
                 >
                   {imageFileList.length === 0 && (
-                    <Avatar src={profileImage} size={100} />
+                    <Avatar
+                      style={{ borderRadius: "10px" }}
+                      src={profileImage}
+                      size={100}
+                    />
                   )}
                 </Upload>
               </ImgCrop>
