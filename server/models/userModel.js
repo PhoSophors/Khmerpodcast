@@ -22,10 +22,15 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+    enum: ["user", "admin"],
+    default: "user",
   },
-  files: [{ type: Schema.Types.ObjectId, ref: "File" }],
+  files: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+    },
+  ],
   favorites: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -46,7 +51,6 @@ const userSchema = new Schema({
       return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     },
   },
-
 });
 
 module.exports = mongoose.model("User", userSchema);

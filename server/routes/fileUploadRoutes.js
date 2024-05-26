@@ -3,12 +3,12 @@
 const express = require("express");
 const router = express.Router();
 const fileUploadController = require("../controllers/fileUploadController");
-const { upload2S3 } = require("../middleware/fileUploadMiddleware");
-// const { compressAudioMiddleware } = require("../middleware/compressAudioMiddleware");
-// const { compressImageMiddleware } = require("../middleware/compressImageMiddleware");
+const {
+  upload2S3,
+  handleUploadError,
+} = require("../middleware/fileUploadMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
-const File = require("../models/fileUploadModel");
 
 // POST route to handle Podcast uploads
 router.post(
@@ -16,9 +16,19 @@ router.post(
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
   upload2S3,
-  // compressImageMiddleware,
-  // compressAudioMiddleware,
+  handleUploadError,
   fileUploadController.uploadPodcast
+);
+
+router.post(
+  "/test-upload",
+  verifyToken,
+  checkRoleMiddleware(["admin", "user"]),
+  upload2S3,
+  (req, res) => {
+    console.log("Uploaded files after upload2S3:", req.files);
+    res.json({ message: "Upload successful (for testing)" });
+  }
 );
 
 // PUT route to update a Podcast by ID
@@ -27,8 +37,6 @@ router.put(
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
   upload2S3,
-  // compressImageMiddleware,
-  // compressAudioMiddleware,
   fileUploadController.updateFile
 );
 
@@ -80,9 +88,11 @@ router.get(
 );
 
 //
-router.get("/get-file-by-user/:id", 
-verifyToken,
-checkRoleMiddleware(["admin", "user"]),
-fileUploadController.getFilesByUserId);
+router.get(
+  "/get-file-by-user/:id",
+  verifyToken,
+  checkRoleMiddleware(["admin", "user"]),
+  fileUploadController.getFilesByUserId
+);
 
 module.exports = router;

@@ -3,6 +3,7 @@
 const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
+const path = require("path");
 
 // Configure AWS S3 client
 const s3Client = new S3Client({
@@ -19,7 +20,7 @@ const upload2S3 = multer({
     s3: s3Client,
     bucket: process.env.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
-      const fileExtension = file.mimetype.split("/")[1];
+      const fileExtension = path.extname(file.originalname);
       const uniqueKey = `${Date.now().toString()}.${fileExtension}`;
       cb(null, uniqueKey);
     },

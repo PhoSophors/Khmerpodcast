@@ -45,7 +45,8 @@ const Register = () => {
         // Registration successful, navigate to /otp
         notification.success({
           message: "Registration successful.",
-          description: "Please check your email for the OTP to activate your account.",
+          description:
+            "Please check your email for the OTP to activate your account.",
         });
 
         // After successful registration, navigate to OTP verification page
@@ -175,7 +176,7 @@ const Register = () => {
 
               <h1 className="text-center mb-4">{t("register.or")}</h1>
 
-              <SigninWithGoogles />
+              {/* <SigninWithGoogles /> */}
 
               <h1 className="text-center mb-4 mt-5">
                 <span className="text-black ">

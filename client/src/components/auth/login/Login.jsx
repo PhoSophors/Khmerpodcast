@@ -95,7 +95,7 @@ const Login = ({ visible, onCancel }) => {
 
           <h1 className="text-center mb-4">{t("login.or")}</h1>
 
-          <SigninWithGoogle />
+          {/* <SigninWithGoogle /> */}
 
           <h1 className="text-center mb-4 mt-5">
             <span className="text-black ">{t("login.notHaveAccount")}</span>
