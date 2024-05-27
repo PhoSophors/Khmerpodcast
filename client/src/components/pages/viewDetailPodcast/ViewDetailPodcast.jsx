@@ -24,7 +24,7 @@ const ViewDetailPodcast = () => {
 
   if (!fileData) {
     message.error("File data not found");
-    return null;
+    return <div className="p-10 text-center">File data not found</div>; // Display a message if fileData is not found
   }
 
   const handleCloseDetailPodcast = () => {

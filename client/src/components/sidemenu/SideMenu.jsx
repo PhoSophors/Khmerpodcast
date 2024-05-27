@@ -1,26 +1,32 @@
 import React, { useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Menu } from "antd";
 import "./SideMenu.css";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
+import { useUser } from "../../services/useUser";
 import ThemeContext from "../../context/ThemeContext";
+import { useLocation } from "react-router-dom";
 
-const SideMenu = ({ collapsed, user, isLoggedIn }) => {
+const SideMenu = ({ collapsed }) => {
   const location = useLocation();
   const { t } = useTranslation();
+  const { user, isLoggedIn } = useUser();
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  const selectedMenuItem = useMemo(() => location.pathname, [location.pathname]);
+  const selectedMenuItem = useMemo(
+    () => location.pathname,
+    [location.pathname]
+  );
 
   const handleAppClick = () => {
     window.location.reload();
   };
 
   const handleMenuItemClick = (menuItem) => {
-    navigate(menuItem.key);
+    navigate(menuItem.key); // Use navigate to update the URL path
   };
 
   return (
@@ -61,10 +67,16 @@ const SideMenu = ({ collapsed, user, isLoggedIn }) => {
 
         {isLoggedIn && (
           <>
-            <Menu.Item key="/favorite" icon={getIcon("/favorite", selectedMenuItem)}>
+            <Menu.Item
+              key="/favorite"
+              icon={getIcon("/favorite", selectedMenuItem)}
+            >
               <span>{t("siderMenu.favorith")}</span>
             </Menu.Item>
-            <Menu.Item key="/create" icon={getIcon("/create", selectedMenuItem)}>
+            <Menu.Item
+              key="/create"
+              icon={getIcon("/create", selectedMenuItem)}
+            >
               <span>{t("siderMenu.create")}</span>
             </Menu.Item>
 
@@ -76,20 +88,28 @@ const SideMenu = ({ collapsed, user, isLoggedIn }) => {
                 icon={getIcon("/all-user")}
                 title={t("siderMenu.admin")}
               >
-                <Menu.Item key="/dashboard" icon={getIcon("/dashboard", selectedMenuItem)}>
+                <Menu.Item
+                  key="/dashboard"
+                  icon={getIcon("/dashboard", selectedMenuItem)}
+                >
                   <span>{t("siderMenu.dashboard")}</span>
                 </Menu.Item>
-                <Menu.Item key="/all-user" icon={getIcon("/all-user", selectedMenuItem)}>
+                <Menu.Item
+                  key="/all-user"
+                  icon={getIcon("/all-user", selectedMenuItem)}
+                >
                   <span>{t("siderMenu.allUsers")}</span>
                 </Menu.Item>
-                <Menu.Item key="/all-user-upload" icon={getIcon("/all-user-upload", selectedMenuItem)}>
+                <Menu.Item
+                  key="/all-user-upload"
+                  icon={getIcon("/all-user-upload", selectedMenuItem)}
+                >
                   <span>{t("siderMenu.fileManager")}</span>
                 </Menu.Item>
               </Menu.SubMenu>
             )}
           </>
         )}
-
         <div style={{ bottom: "0", marginBottom: "auto" }}></div>
         {isLoggedIn && (
           <>
@@ -99,7 +119,11 @@ const SideMenu = ({ collapsed, user, isLoggedIn }) => {
           </>
         )}
 
-        <Menu.Item onClick={toggleTheme} key="/theme" icon={getIcon("/theme", selectedMenuItem, theme)}>
+        <Menu.Item
+          onClick={toggleTheme}
+          key="/theme"
+          icon={getIcon("/theme", selectedMenuItem, theme)}
+        >
           <span>
             {theme === "light"
               ? t("siderMenu.darkTheme")
