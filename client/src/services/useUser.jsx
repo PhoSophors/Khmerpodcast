@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { message } from "antd";
 import { api_url } from "../api/config";
 import Cookies from "js-cookie";
 

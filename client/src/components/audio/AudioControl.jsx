@@ -115,7 +115,7 @@ const AudioControl = () => {
   };
 
   return (
-    <div className="audio-container">
+    <div className="audio-container mt-3">
       <div className="xl:w-96 md:w-96 w-96 items-center justify-center">
         <div className="play-back-container">
           <div className="play-back-btn gap-5">
@@ -197,6 +197,10 @@ const AudioControl = () => {
 
 // Function to format time in MM:SS format
 const formatTime = (time) => {
+  if (isNaN(time)) {
+    return "00:00";
+  }
+
   const hours = Math.floor(time / 3600);
   const minutes = Math.floor((time % 3600) / 60);
   const seconds = Math.floor(time % 60);
@@ -205,5 +209,4 @@ const formatTime = (time) => {
     seconds < 10 ? "0" : ""
   }${seconds}`;
 };
-
 export default AudioControl;

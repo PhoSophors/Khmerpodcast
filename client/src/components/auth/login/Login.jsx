@@ -1,8 +1,8 @@
-import { Form, Input, Button, Modal, Spin } from "antd";
 import React from "react";
+import { Form, Input, Button, Modal, Spin } from "antd";
 import "./Login.css"; // Import your CSS file
 import { Link } from "react-router-dom";
-import SigninWithGoogle from "../signinWithGoogle/SignInWithGoogle";
+// import SigninWithGoogle from "../signinWithGoogle/SignInWithGoogle";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLogin } from "../../../services/useLogin";
