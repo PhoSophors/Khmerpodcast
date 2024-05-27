@@ -1,5 +1,6 @@
-// RightSection component
-import React from "react";
+// RightSection.jsx
+
+import React, { useEffect, useState } from "react";
 import Favorith from "../../components/pages/favorite/Favorith";
 import HomePage from "../../components/pages/homePage/HomePage";
 import Setting from "../../components/pages/setting/Setting";
@@ -11,53 +12,53 @@ import AllUser from "../../components/pages/admin/user/AllUser";
 import FileManager from "../../components/pages/admin/user/FileManager";
 import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import UpdatePodcast from "../../components/pages/create/UpdatePodcast";
+import { useLocation } from "react-router-dom";
 
-const RightSection = ({ selectedMenuItem, onPodcastSelected, file }) => {
-  let content = "";
+const RightSection = ({ onPodcastSelected , file}) => {
+  // let content;
+  const location = useLocation();
+  const [content, setContent] = useState(null);
 
-  // Render different content based on the selected menu item
-  switch (selectedMenuItem) {
+  useEffect(() => { 
+
+  switch (location.pathname) {
     case "/":
-      content = <HomePage onPodcastSelected={onPodcastSelected} />;
+      setContent (<HomePage onPodcastSelected={onPodcastSelected} />) 
       break;
     case "/search":
-      content = <Search onPodcastSelected={onPodcastSelected} />;
+      setContent (<Search onPodcastSelected={onPodcastSelected} />)
       break;
     case "/favorite":
-      content = <Favorith onPodcastSelected={onPodcastSelected} />;
+      setContent (<Favorith onPodcastSelected={onPodcastSelected} />)
       break;
     case "/create":
-      content = <Create />;
+      setContent (<Create />)
       break;
     case "/profile":
-      content = <Profile onPodcastSelected={onPodcastSelected} />;
+      setContent (<Profile onPodcastSelected={onPodcastSelected} />)
       break;
     case "/setting":
-      content = <Setting />;
+      setContent (<Setting />)
       break;
     case "/dashboard":
-      content = <Dashboard />;
+      setContent (<Dashboard />)
       break;
     case "/all-user":
-      content = <AllUser />;
+      setContent (<AllUser />)
       break;
     case "/all-user-upload":
-      content = <FileManager />;
+      setContent (<FileManager />)
       break;
-    case "/viewdetail-podcast":
-      content = <ViewDetailPodcast onPodcastSelected={onPodcastSelected} />;
+    case "/watch-podcast":
+      setContent (<ViewDetailPodcast file={file} onPodcastSelected={onPodcastSelected} />)
       break;
     case "/update-podcast":
-      content = (
-        <UpdatePodcast file={file} onPodcastSelected={onPodcastSelected} />
-      );
+      setContent (<UpdatePodcast file={file} onPodcastSelected={onPodcastSelected} />)
       break;
-
     default:
-      // content = "No Content";
-      content = <HomePage onPodcastSelected={onPodcastSelected} />;
+      setContent (<HomePage onPodcastSelected={onPodcastSelected} />)
   }
-
+}, [location.pathname, file, onPodcastSelected]);
   return (
     <div className="right-section md:p-0">
       <div className="content-container">{content}</div>

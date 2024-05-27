@@ -6,7 +6,7 @@ import { message } from "antd";
 import { api_url } from "../api/config";
 import Cookies from "js-cookie";
 
-export const useLogin = () => {
+export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const login = async (values) => {

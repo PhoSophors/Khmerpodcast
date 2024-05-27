@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 // import SigninWithGoogle from "../signinWithGoogle/SignInWithGoogle";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useLogin } from "../../../services/useLogin";
+import { useAuth } from "../../../services/useAuth";
 
 const Login = ({ visible, onCancel }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { login, isLoading } = useLogin();
+  const { login, isLoading } = useAuth();
 
   const handleCancel = () => {
     onCancel();

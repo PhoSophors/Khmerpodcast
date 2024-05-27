@@ -3,12 +3,10 @@ import { Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
-// import { useFavorites } from "../../services/useFavorites";
 
 const FavoritesCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  // const { removePodcastFromFavorites } = useFavorites();
 
   const handleImageLoad = () => {
     setIsLoading(false);

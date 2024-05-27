@@ -7,12 +7,14 @@ import "./Profile.css";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import UserUploadCard from "../../card/UserUploadCard";
 import { useUser } from "../../../services/useUser";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
   const { user, userFiles, isLoading } = useUser();
   const id = user ? user._id : null;
+  const navigate = useNavigate();
 
   return (
     <div className="profile-container h-screen">
@@ -123,6 +125,7 @@ const Profile = () => {
                       handleViewPodcast={() => {
                         setIsViewPodcast(true);
                         setSelectedPodcast(file);
+                        navigate(`/watch-podcast/${file._id}`);
                       }}
                     />
                   ))}

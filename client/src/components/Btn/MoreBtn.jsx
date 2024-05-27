@@ -49,7 +49,8 @@ const MoreBtn = ({ file }) => {
     setIsModalVisible(false);
   };
 
-  const shareUrl = `https://khmerpodcast.vercel.app/${file._id}`;
+  const shareUrl = `https://khmerpodcast.vercel.app/watch-podcast/${file._id}`;
+  // const shareUrl = `http://localhost:5173/watch-podcast/${file._id}`;
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     message.success("Link copied to clipboard");
@@ -57,17 +58,17 @@ const MoreBtn = ({ file }) => {
 
   const shareMenu = (
     <Menu style={{ width: "250px" }}>
-      <Menu.Item key="0" onClick={showModal}>
+      <Menu.Item onClick={showModal}>
         <ShareAltOutlined />
         <span className="mx-2">Share</span>
       </Menu.Item>
-      <Menu.Item key="1" onClick={handleCopyLink}>
+      <Menu.Item onClick={handleCopyLink}>
         <LinkOutlined />
         <span className="mx-2">Copy Link</span>
       </Menu.Item>
 
       {isLoggedIn && (
-        <Menu.Item key="2" onClick={handleToggleFavorite}>
+        <Menu.Item onClick={handleToggleFavorite}>
           {isFavorite ? (
             <div style={{ display: "flex", alignItems: "center" }}>
               <svg
@@ -105,7 +106,7 @@ const MoreBtn = ({ file }) => {
       )}
 
       {isLoggedIn && user && user.id === file.user._id && (
-        <Menu.Item key="3" onClick={handleToggleUpdateMode}>
+        <Menu.Item onClick={handleToggleUpdateMode}>
           <EditOutlined /> <span className="mx-2">Edit Podcast</span>
         </Menu.Item>
       )}

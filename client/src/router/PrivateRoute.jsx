@@ -15,7 +15,7 @@ const PrivateRoute = ({ children }) => {
 
   const decodedToken = jwtDecode(authToken);
 
-  return decodedToken.role === 'admin' ? children : <Navigate to="/register" state={{ from: location }} />;
+  return (decodedToken.role === 'admin' || decodedToken.role === 'user') ? children : <Navigate to="/register" state={{ from: location }} />;
 };
 
 export default PrivateRoute;

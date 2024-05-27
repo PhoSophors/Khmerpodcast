@@ -303,9 +303,9 @@ const Create = () => {
               </Form>
             </Card>
 
-            <div class="w-full mt-5 bg-white rounded-full">
+            <div className="w-full mt-5 bg-white rounded-full">
               <div
-                class="text-xs bg-indigo-600 font-medium text-center p-0 leading-none rounded-full"
+                className="text-xs bg-indigo-600 font-medium text-center p-0 leading-none rounded-full"
                 style={{ width: `${uploadProgress}%` }}
               >
                 <span className="text-white ">{uploadProgress}%</span>

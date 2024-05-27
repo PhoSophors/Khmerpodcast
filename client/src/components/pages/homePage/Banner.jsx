@@ -19,7 +19,7 @@ const Banner = () => {
             <span className="text-4xl text-center text-slate-100 font-semibold overflow-hidden">
               {t("banner.title")}
             </span>
-            <p class=" text-lg text-slate-300 mt-3 overflow-hidden">
+            <p className=" text-lg text-slate-300 mt-3 overflow-hidden">
               {t("banner.description")}
             </p>
           </div>

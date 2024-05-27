@@ -111,7 +111,7 @@ const EditProfile = () => {
 
       if (response.status === 200) {
         message.success("Profile updated successfully");
-        navigate(`/`);
+        navigate(`/profile`);
       } else {
         message.error("Failed to update profile. Please try again later.");
       }
@@ -171,9 +171,9 @@ const EditProfile = () => {
               />
             </Form.Item>
 
-            <div class="w-full mt-5 bg-slate-100 rounded-full">
+            <div className="w-full mt-5 bg-slate-100 rounded-full">
               <div
-                class="bg-indigo-500 text-xs font-medium text-slate-100 text-center p-0 leading-none rounded-full"
+                className="bg-indigo-500 text-xs font-medium text-slate-100 text-center p-0 leading-none rounded-full"
                 style={{ width: `${uploadProgress}%` }}
               >
                 {" "}

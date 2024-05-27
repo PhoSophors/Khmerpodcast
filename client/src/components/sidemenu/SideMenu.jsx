@@ -1,27 +1,26 @@
-// SideMenu.jsx
-
-import React, { useState, useContext } from "react";
-import "./SideMenu.css";
+import React, { useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Menu } from "antd";
+import "./SideMenu.css";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
-import { Menu } from "antd";
-import { useUser } from "../../services/useUser";
 import ThemeContext from "../../context/ThemeContext";
 
-const SideMenu = ({ onSelectMenuItem, collapsed }) => {
-  const [selectedMenuItem, setSelectedMenuItem] = useState("/");
+const SideMenu = ({ collapsed, user, isLoggedIn }) => {
+  const location = useLocation();
   const { t } = useTranslation();
-  const { user, isLoggedIn } = useUser();
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+
+  const selectedMenuItem = useMemo(() => location.pathname, [location.pathname]);
 
   const handleAppClick = () => {
     window.location.reload();
   };
 
   const handleMenuItemClick = (menuItem) => {
-    setSelectedMenuItem(menuItem.key);
-    onSelectMenuItem(menuItem.key);
+    navigate(menuItem.key);
   };
 
   return (
@@ -29,14 +28,16 @@ const SideMenu = ({ onSelectMenuItem, collapsed }) => {
       <Menu
         className="side-menu-container"
         mode="inline"
-        selectedKeys={[selectedMenuItem]}
+        selectedKeys={
+          selectedMenuItem.includes("/admin")
+            ? [selectedMenuItem, "/admin"]
+            : [selectedMenuItem]
+        }
         onClick={handleMenuItemClick}
       >
         <div
           onClick={handleAppClick}
-          className={
-            "flex items-center md:p-4 cursor-pointer menu-item-wrapper"
-          }
+          className="flex items-center md:p-4 cursor-pointer menu-item-wrapper"
         >
           <img src={logo} alt="logo" className="logo-app" />
           {collapsed && (
@@ -52,33 +53,22 @@ const SideMenu = ({ onSelectMenuItem, collapsed }) => {
         </div>
 
         <Menu.Item key="/" icon={getIcon("/", selectedMenuItem)}>
-          <span onClick={() => handleMenuItemClick({ key: "/" })}>
-            {t("siderMenu.home")}
-          </span>
+          <span>{t("siderMenu.home")}</span>
         </Menu.Item>
         <Menu.Item key="/search" icon={getIcon("/search", selectedMenuItem)}>
-          <span onClick={() => handleMenuItemClick({ key: "/search" })}>
-            {t("siderMenu.search")}
-          </span>
+          <span>{t("siderMenu.search")}</span>
         </Menu.Item>
+
         {isLoggedIn && (
           <>
-            <Menu.Item
-              key="/favorite"
-              icon={getIcon("/favorite", selectedMenuItem)}
-            >
-              <span onClick={() => handleMenuItemClick({ key: "/favorite" })}>
-                {t("siderMenu.favorith")}
-              </span>
+            <Menu.Item key="/favorite" icon={getIcon("/favorite", selectedMenuItem)}>
+              <span>{t("siderMenu.favorith")}</span>
             </Menu.Item>
-            <Menu.Item
-              key="/create"
-              icon={getIcon("/create", selectedMenuItem)}
-            >
-              <span onClick={() => handleMenuItemClick({ key: "/create" })}>
-                {t("siderMenu.create")}
-              </span>
+            <Menu.Item key="/create" icon={getIcon("/create", selectedMenuItem)}>
+              <span>{t("siderMenu.create")}</span>
             </Menu.Item>
+
+            <Menu.Divider className="divider" />
 
             {user.role === "admin" && (
               <Menu.SubMenu
@@ -86,58 +76,30 @@ const SideMenu = ({ onSelectMenuItem, collapsed }) => {
                 icon={getIcon("/all-user")}
                 title={t("siderMenu.admin")}
               >
-                <Menu.Item
-                  key="/dashboard"
-                  icon={getIcon("/dashboard", selectedMenuItem)}
-                >
-                  <span
-                    onClick={() => handleMenuItemClick({ key: "/dashboard" })}
-                  >
-                    {t("siderMenu.dashboard")}
-                  </span>
+                <Menu.Item key="/dashboard" icon={getIcon("/dashboard", selectedMenuItem)}>
+                  <span>{t("siderMenu.dashboard")}</span>
                 </Menu.Item>
-                <Menu.Item
-                  key="/all-user"
-                  icon={getIcon("/all-user", selectedMenuItem)}
-                >
-                  <span
-                    onClick={() => handleMenuItemClick({ key: "/all-user" })}
-                  >
-                    {t("siderMenu.allUsers")}
-                  </span>
+                <Menu.Item key="/all-user" icon={getIcon("/all-user", selectedMenuItem)}>
+                  <span>{t("siderMenu.allUsers")}</span>
                 </Menu.Item>
-                <Menu.Item
-                  key="/all-user-upload"
-                  icon={getIcon("/all-user-upload", selectedMenuItem)}
-                >
-                  <span
-                    onClick={() =>
-                      handleMenuItemClick({ key: "/all-user-upload" })
-                    }
-                  >
-                    {t("siderMenu.fileManager")}
-                  </span>
+                <Menu.Item key="/all-user-upload" icon={getIcon("/all-user-upload", selectedMenuItem)}>
+                  <span>{t("siderMenu.fileManager")}</span>
                 </Menu.Item>
               </Menu.SubMenu>
             )}
           </>
         )}
+
         <div style={{ bottom: "0", marginBottom: "auto" }}></div>
         {isLoggedIn && (
           <>
             <Menu.Item key="/profile" icon={getIcon("/profile")}>
-              <span onClick={() => handleMenuItemClick({ key: "/profile" })}>
-                {t("siderMenu.profile")}
-              </span>
+              <span>{t("siderMenu.profile")}</span>
             </Menu.Item>
           </>
         )}
 
-        <Menu.Item
-          onClick={toggleTheme}
-          key="/theme"
-          icon={getIcon("/theme", selectedMenuItem, theme)}
-        >
+        <Menu.Item onClick={toggleTheme} key="/theme" icon={getIcon("/theme", selectedMenuItem, theme)}>
           <span>
             {theme === "light"
               ? t("siderMenu.darkTheme")

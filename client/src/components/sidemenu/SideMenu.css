@@ -9,6 +9,9 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.divider {
+  border-color: #9fa6b2 !important;
+}
 .side-menu-container {
   flex: 1;
   width: auto;
@@ -21,6 +24,11 @@
   background-color: var(--bg-color);
   border: none;
   padding-bottom: 20px;
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-menu .ant-menu-item .ant-menu-item-icon >*, :where(.css-dev-only-do-not-override-17seli4).ant-menu .ant-menu-submenu-title .ant-menu-item-icon >* {
+  line-height: 1;
+  font-size: 1rem;
 }
 
 .ant-layout-sider-children {

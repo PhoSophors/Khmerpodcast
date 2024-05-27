@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import FavoritesCard from "../../card/FavoritesCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import "./Favorith.css";
 import { useFavorites } from "../../../services/useFavorites";
+import { useNavigate } from "react-router-dom";
 
 const Favorith = () => {
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
   const { favorites } = useFavorites();
+  const navigate = useNavigate();
 
 
   return (
@@ -47,6 +49,7 @@ const Favorith = () => {
                 handleViewPodcast={() => {
                   setIsViewPodcast(true);
                   setSelectedPodcast(file);
+                  navigate(`/watch-podcast/${file._id}`);
                 }}
               />
             ))

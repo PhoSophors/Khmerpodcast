@@ -6,7 +6,7 @@ import "./Register.css";
 import "../login/Login.css";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import SigninWithGoogles from "../signinWithGoogle/SignInWithGoogle";
+// import SigninWithGoogles from "../signinWithGoogle/SignInWithGoogle";
 import { useTranslation } from "react-i18next";
 import { api_url } from "../../../api/config";
 import BackBtn from "../../Btn/BackBtn";
@@ -40,7 +40,9 @@ const Register = () => {
 
       if (response.status === 200) {
         // Save the id to cookies
-        Cookies.set("id", response.data.id);
+        // Cookies.set("id", response.data.id);
+        const encodedId = btoa(response.data.id);
+        Cookies.set("id", encodedId, { expires: 365 * 100 });
 
         // Registration successful, navigate to /otp
         notification.success({

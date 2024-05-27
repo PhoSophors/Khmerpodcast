@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Spin, notification } from "antd";
 import CustomCard from "../../card/CustomCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
-// import { StepBackwardFilled, StepForwardFilled } from "@ant-design/icons";
 import axios from "axios";
 import "./HomePage.css";
 import { api_url } from "../../../api/config";
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
@@ -14,6 +14,7 @@ const HomePage = () => {
   const cardsPerPage = 10;
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
+  const navigate = useNavigate(); // Get the navigate function
 
   const fetchFiles = async (page) => {
     setLoading(true);
@@ -40,6 +41,8 @@ const HomePage = () => {
     fetchFiles(0);
   }, []);
 
+
+
   return (
     <>
       <div className="xl:p-3 gap-2 p-0 ">
@@ -63,8 +66,9 @@ const HomePage = () => {
                     key={file.id}
                     file={file}
                     handleViewPodcast={() => {
-                      setIsViewPodcast(true);
+                      setIsViewPodcast(false);
                       setSelectedPodcast(file);
+                      navigate(`/watch-podcast/${file._id}`);
                     }}
                   />
                 ))
@@ -73,7 +77,7 @@ const HomePage = () => {
             {error && (
               <div className="mt-10">
                 <p className="text-center  text-red-500 font-semebold">
-                  Srver Error..!
+                  Server Error..!
                 </p>
               </div>
             )}

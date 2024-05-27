@@ -67,7 +67,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
 
   const menu = (
     <Menu style={{ width: "250px" }} className="profile-dropdown-menu">
-      <Menu.Item key="1">
+      <Menu.Item>
         <LanguageSwitcher />
       </Menu.Item>
       <Menu.Item onClick={handleLogout} icon={getIcon("/logout")}>
@@ -146,9 +146,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             <SideMenu onSelectMenuItem={onSelectMenuItem} />
           </Drawer>
         </div>
-        {/* <div className="p-3 dark:text-slate-100 h-full flex justify-center items-center rounded-full">
-          <LanguageSwitcher />
-        </div> */}
       </div>
 
       <div className="audio-control">
@@ -165,7 +162,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             // Render the user's profile dropdown if the user is logged in
             <Dropdown overlay={menu} trigger={["click"]}>
               <div className=" items-center flex">
-                <div class="username-header cursor-pointer uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
+                <div className="username-header cursor-pointer uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
                   {user && user.username.split(" ")[0]}
                 </div>
                 &nbsp;

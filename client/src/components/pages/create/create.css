@@ -13,7 +13,7 @@
   border: none !important;
   outline: none !important;
   border-radius: 5px !important;
-  background: var(--text-area-bg);
+  background-color: var(--text-area-bg) !important;
 }
 
 
