@@ -8,9 +8,11 @@ export default defineConfig({
     fs: {
       strict: true,
     },
-    // Set the `base` to be the root
     base: '/',
-    // Enable the history API fallback
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [
+        { from: /\/.*/, to: '/' }
+      ]
+    },
   },
 })
