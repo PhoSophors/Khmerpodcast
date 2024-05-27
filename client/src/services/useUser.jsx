@@ -20,20 +20,14 @@ export const useUser = (fileId) => {
   };
 
   useEffect(() => {
-    if (authToken) {
-      try {
-        const decodedToken = JSON.parse(atob(authToken.split(".")[1]));
-        setUserRole(decodedToken.role);
-      } catch (error) {
-        console.error("Error decoding authToken:", error);
-      }
-    }
-
     const fetchData = async () => {
       setIsLoading(true);
 
       if (authToken) {
         try {
+          const decodedToken = JSON.parse(atob(authToken.split(".")[1]));
+          setUserRole(decodedToken.role);
+
           const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -70,11 +64,12 @@ export const useUser = (fileId) => {
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
-          setFileData(null); // Set fileData to null if there's an error
+          setFileData(null); 
         } finally {
           setIsLoading(false);
         }
       } else {
+        // setIsLoggedIn(false);
         setIsLoading(false);
       }
     };

@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Layout } from "antd";
 import "./MainSection.css";
-import LeftSection from "../leftSection/LeftSection";
 import RightSection from "../rightSection/RightSection";
 import Header from "../../components/header/Header";
 import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import Footer from "../../components/footer/Footer";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { api_url } from "../../api/config";
 import { message } from "antd";
+import SideMenu from "../../components/sidemenu/SideMenu";
 
 const { Content, Sider } = Layout;
 
@@ -23,12 +22,8 @@ const MainSection = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const selectedMenuItem = useMemo(
-    () => location.pathname,
-    [location.pathname]
-  );
+  const selectedMenuItem = useMemo(() => location.pathname, [location.pathname]);
 
-  
   useEffect(() => {
     const fetchPodcast = async () => {
       if (id) {
@@ -51,19 +46,20 @@ const MainSection = () => {
   }, [id]);
 
   useEffect(() => {
+    const handleWindowResize = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
     window.addEventListener("resize", handleWindowResize);
     handleWindowResize();
+
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
 
-  const handleWindowResize = () => {
-    setIsMobileView(window.innerWidth <= 768);
-  };
-
   const handleSelectMenuItem = (menuItem) => {
-    selectedMenuItem(menuItem);
+    navigate(menuItem.key);
   };
 
   const handleCollapse = () => {
@@ -71,22 +67,20 @@ const MainSection = () => {
   };
 
   const handlePodcastSelected = (file) => {
-    setSelectedPodcast(file);
     navigate(`/watch-podcast/${file._id}`);
   };
 
   const handleCloseDetailPodcast = () => {
-    setSelectedPodcast(null);
-    navigate(location.pathname);
+    navigate("/");
   };
 
   return (
     <Layout>
       {!isMobileView && (
         <Sider collapsed={collapsed} breakpoint="md">
-          <LeftSection
-            onSelectMenuItem={handleSelectMenuItem}
+          <SideMenu
             collapsed={collapsed}
+            onSelectMenuItem={handleSelectMenuItem}
           />
         </Sider>
       )}
@@ -105,8 +99,6 @@ const MainSection = () => {
                 id={id}
                 file={selectedPodcast}
                 onClose={handleCloseDetailPodcast}
-                selectedMenuItem={selectedMenuItem}
-                handleCloseDetailPodcast={handleCloseDetailPodcast}
               />
             ) : (
               <RightSection

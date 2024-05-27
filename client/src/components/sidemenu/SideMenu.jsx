@@ -80,7 +80,7 @@ const SideMenu = ({ collapsed }) => {
               <span>{t("siderMenu.create")}</span>
             </Menu.Item>
 
-            <Menu.Divider className="divider" />
+            {/* <Menu.Divider className="divider" /> */}
 
             {user.role === "admin" && (
               <Menu.SubMenu

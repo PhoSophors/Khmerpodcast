@@ -1,67 +1,69 @@
-// RightSection.jsx
-
-import React, { useEffect, useState } from "react";
-import Favorith from "../../components/pages/favorite/Favorith";
-import HomePage from "../../components/pages/homePage/HomePage";
-import Setting from "../../components/pages/setting/Setting";
-import Profile from "../../components/pages/profile/Profile";
-import Search from "../../components/pages/search/Search";
-import Create from "../../components/pages/create/Create";
-import Dashboard from "../../components/pages/admin/dashboard/Dashboard";
-import AllUser from "../../components/pages/admin/user/AllUser";
-import FileManager from "../../components/pages/admin/user/FileManager";
-import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
-import UpdatePodcast from "../../components/pages/create/UpdatePodcast";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 
-const RightSection = ({ onPodcastSelected , file}) => {
-  // let content;
+const Favorith = lazy(() => import("../../components/pages/favorite/Favorith"));
+const HomePage = lazy(() => import("../../components/pages/homePage/HomePage"));
+const Setting = lazy(() => import("../../components/pages/setting/Setting"));
+const Profile = lazy(() => import("../../components/pages/profile/Profile"));
+const Search = lazy(() => import("../../components/pages/search/Search"));
+const Create = lazy(() => import("../../components/pages/create/Create"));
+const Dashboard = lazy(() => import("../../components/pages/admin/dashboard/Dashboard"));
+const AllUser = lazy(() => import("../../components/pages/admin/user/AllUser"));
+const FileManager = lazy(() => import("../../components/pages/admin/user/FileManager"));
+const UpdatePodcast = lazy(() => import("../../components/pages/create/UpdatePodcast"));
+const ViewDetailPodcast = lazy(() => import("../../components/pages/viewDetailPodcast/ViewDetailPodcast"));
+
+const RightSection = ({ onPodcastSelected, file }) => {
   const location = useLocation();
   const [content, setContent] = useState(null);
 
-  useEffect(() => { 
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
+        break;
+      case "/search":
+        setContent(<Search onPodcastSelected={onPodcastSelected} />);
+        break;
+      case "/favorite":
+        setContent(<Favorith onPodcastSelected={onPodcastSelected} />);
+        break;
+      case "/create":
+        setContent(<Create />);
+        break;
+      case "/profile":
+        setContent(<Profile onPodcastSelected={onPodcastSelected} />);
+        break;
+      case "/setting":
+        setContent(<Setting />);
+        break;
+      case "/dashboard":
+        setContent(<Dashboard />);
+        break;
+      case "/all-user":
+        setContent(<AllUser />);
+        break;
+      case "/all-user-upload":
+        setContent(<FileManager />);
+        break;
+      case `/watch-podcast/${file?._id}`:
+        setContent(<ViewDetailPodcast file={file} onPodcastSelected={onPodcastSelected} />);
+        break;
+      case "/update-podcast":
+        setContent(<UpdatePodcast file={file} onPodcastSelected={onPodcastSelected} />);
+        break;
+      default:
+        setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
+    }
+  }, [location.pathname, file, onPodcastSelected]);
 
-  switch (location.pathname) {
-    case "/":
-      setContent (<HomePage onPodcastSelected={onPodcastSelected} />) 
-      break;
-    case "/search":
-      setContent (<Search onPodcastSelected={onPodcastSelected} />)
-      break;
-    case "/favorite":
-      setContent (<Favorith onPodcastSelected={onPodcastSelected} />)
-      break;
-    case "/create":
-      setContent (<Create />)
-      break;
-    case "/profile":
-      setContent (<Profile onPodcastSelected={onPodcastSelected} />)
-      break;
-    case "/setting":
-      setContent (<Setting />)
-      break;
-    case "/dashboard":
-      setContent (<Dashboard />)
-      break;
-    case "/all-user":
-      setContent (<AllUser />)
-      break;
-    case "/all-user-upload":
-      setContent (<FileManager />)
-      break;
-    case "/watch-podcast":
-      setContent (<ViewDetailPodcast file={file} onPodcastSelected={onPodcastSelected} />)
-      break;
-    case "/update-podcast":
-      setContent (<UpdatePodcast file={file} onPodcastSelected={onPodcastSelected} />)
-      break;
-    default:
-      setContent (<HomePage onPodcastSelected={onPodcastSelected} />)
-  }
-}, [location.pathname, file, onPodcastSelected]);
   return (
     <div className="right-section md:p-0">
-      <div className="content-container">{content}</div>
+      <div className="content-container">
+        <Suspense fallback={<div>Loading...</div>}>
+          {content}
+        </Suspense>
+      </div>
     </div>
   );
 };
