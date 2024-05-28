@@ -6,7 +6,7 @@ import ImgCrop from "antd-img-crop";
 import { useNavigate } from "react-router-dom";
 import { api_url } from "../../../api/config";
 import BackBtn from "../../Btn/BackBtn";
-import { useUser } from "../../../services/useUser";
+import { useUser } from "../../../context/UserContext";
 import {
   Form,
   Input,
@@ -16,6 +16,7 @@ import {
   Avatar,
   Modal,
   Card,
+  Spin,
 } from "antd";
 
 const EditProfile = () => {
@@ -27,7 +28,7 @@ const EditProfile = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const navigate = useNavigate();
   const [uploadProgress, setUploadProgress] = useState(0);
-  const { user, loading } = useUser();
+  const { user, isLoading } = useUser();
   const id = user ? user._id : null;
   const authToken = Cookies.get("authToken")
     ? atob(Cookies.get("authToken"))
@@ -40,8 +41,12 @@ const EditProfile = () => {
     }
   }, [user]);
 
-  if (loading) {
-    return <div>Loading...</div>; // Render loading indicator
+  if (isLoading) {
+    return (
+      <div className="p-10 text-center items-center spin-loading bg-indigo-600 ">
+        <Spin />
+      </div>
+    );
   }
 
   const handleUsernameChange = (e) => {
@@ -80,8 +85,6 @@ const EditProfile = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      // setLoading(true); // Set loading to true during update
-
       const formData = new FormData();
       formData.append("username", username);
 
@@ -117,8 +120,6 @@ const EditProfile = () => {
       }
     } catch (error) {
       message.error("Failed to update profile. Please try again later.");
-    } finally {
-      // setLoading(false); // Set loading to false after update
     }
   };
 
@@ -186,7 +187,7 @@ const EditProfile = () => {
                 onClick={() => handleUpdateProfile(true)}
                 className="saveBtn mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4"
                 size="large"
-                loading={loading} // Use loading state for the Button component
+                loading={isLoading} // Use loading state for the Button component
               >
                 Save Changes
               </Button>

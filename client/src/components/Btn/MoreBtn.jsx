@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
-import { useUser } from "../../services/useUser";
+import { useUser } from "../../context/UserContext";
 import { useFavorites } from "../../services/useFavorites";
 import {
   ShareAltOutlined,

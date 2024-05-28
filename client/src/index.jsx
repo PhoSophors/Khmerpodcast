@@ -8,6 +8,7 @@ import i18next from "i18next";
 import Cookies from "js-cookie";
 import { AudioProvider } from "./context/AudioContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { UserProvider } from "./context/UserContext";
 
 // Import translation files
 import translationEN from "./components/languages/en.json";
@@ -39,7 +40,9 @@ i18next
         <React.StrictMode>
           <ThemeProvider>
             <AudioProvider>
-              <App />
+              <UserProvider>
+                <App />
+              </UserProvider>
             </AudioProvider>
           </ThemeProvider>
         </React.StrictMode>

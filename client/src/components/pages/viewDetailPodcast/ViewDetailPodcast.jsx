@@ -6,17 +6,19 @@ import "./viewpodcast.css";
 import { LeftOutlined, UserOutlined } from "@ant-design/icons";
 import Linkify from "react-linkify";
 import { useParams } from "react-router-dom";
-import { useUser } from "../../../services/useUser";
-import { useNavigate } from 'react-router-dom';
+import { useUser } from "../../../context/UserContext";
+import { useFileData } from "../../../services/useFileData"; // Import the new useFileData hook
+import { useNavigate } from "react-router-dom";
 
 const ViewDetailPodcast = () => {
   const { id } = useParams();
-  const { isLoading, fileData } = useUser(id);
+  const { isLoading: userLoading, isLoggedIn } = useUser(); // Use useUser hook for user-related data
+  const { isLoading: fileLoading, fileData } = useFileData(id); // Use useFileData hook for file-related data
   const navigate = useNavigate();
 
-  if (isLoading) {
+  if (userLoading || fileLoading) {
     return (
-      <div className="p-10 text-center spin-loading">
+      <div className="p-10 mt-20 text-center spin-loading">
         <Spin />
       </div>
     );
@@ -173,6 +175,13 @@ const ViewDetailPodcast = () => {
             </div>
           </div>
         </div>
+
+        {isLoggedIn && (
+          <div className="additional-info">
+            <h2>Additional Information</h2>
+            {/* Add any additional information here */}
+          </div>
+        )}
       </Card>
     </div>
   );

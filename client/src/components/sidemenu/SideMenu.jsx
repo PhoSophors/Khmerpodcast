@@ -5,7 +5,7 @@ import { Menu } from "antd";
 import "./SideMenu.css";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
-import { useUser } from "../../services/useUser";
+import { useUser } from "../../context/UserContext";
 import ThemeContext from "../../context/ThemeContext";
 import { useLocation } from "react-router-dom";
 

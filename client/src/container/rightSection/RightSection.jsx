@@ -13,12 +13,13 @@ const FileManager = lazy(() => import("../../components/pages/admin/user/FileMan
 const UpdatePodcast = lazy(() => import("../../components/pages/create/UpdatePodcast"));
 const ViewDetailPodcast = lazy(() => import("../../components/pages/viewDetailPodcast/ViewDetailPodcast"));
 
+
 const RightSection = ({ onPodcastSelected, file }) => {
   const location = useLocation();
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    switch (location.pathname) {
+    switch ( location.pathname ) {
       case "/":
         setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
         break;
@@ -54,6 +55,7 @@ const RightSection = ({ onPodcastSelected, file }) => {
         break;
       default:
         setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
+        break;
     }
   }, [location.pathname, file, onPodcastSelected]);
 

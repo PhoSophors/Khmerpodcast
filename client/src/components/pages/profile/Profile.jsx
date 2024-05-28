@@ -6,7 +6,7 @@ import { Avatar } from "antd";
 import "./Profile.css";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import UserUploadCard from "../../card/UserUploadCard";
-import { useUser } from "../../../services/useUser";
+import { useUser } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {

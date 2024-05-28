@@ -1,7 +1,7 @@
 import React, { lazy } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useUser } from "../services/useUser";
+import { useUser } from "../context/UserContext";
 import AppLoading from "../components/apploading/AppLoading";
 import PrivateRoute from "./PrivateRoute";
 import GuestRoute from "./GuestRoute";
@@ -43,7 +43,7 @@ const App = () => {
           {/* Auth routes */}
           <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
           <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-          <Route path="/otp" element={<GuestRoute><Otp /></GuestRoute>} />
+          <Route path="/otp" element={<GuestRoute><Otp /></GuestRoute>} /> 
           <Route path="/forgotPassword" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
 
           {/* Protected routes */}
