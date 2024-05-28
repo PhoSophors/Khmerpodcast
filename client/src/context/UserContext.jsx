@@ -7,6 +7,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null); // Add currentUser state
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userFiles, setUserFiles] = useState([]);
@@ -38,9 +39,11 @@ export const UserProvider = ({ children }) => {
 
           if (userData) {
             setUser(userData);
+            setCurrentUser(userData); // Set currentUser when user data is fetched
             setIsLoggedIn(true);
           } else {
             setUser(null);
+            setCurrentUser(null); // Set currentUser to null if user data is not available
             setIsLoggedIn(false);
           }
 
@@ -71,7 +74,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, isLoading, isLoggedIn, userFiles, userRole, handleConfirmLogout }}
+      value={{ user, isLoading, isLoggedIn, userFiles, userRole, currentUser, handleConfirmLogout }} // Include currentUser in the context value
     >
       {children}
     </UserContext.Provider>

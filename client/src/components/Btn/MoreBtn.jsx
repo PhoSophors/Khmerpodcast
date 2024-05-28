@@ -29,9 +29,10 @@ import {
 const MoreBtn = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const { user, isLoggedIn } = useUser();
   const { favorites, toggleFavorite } = useFavorites();
   const isFavorite = favorites.some((fav) => fav._id === file._id);
+  const { isLoggedIn, currentUser } = useUser(); // Assuming you have access to the current user
+  const isUploader = file.user === currentUser._id; // Assuming `file.user` contains the ID of the uploader
 
   const handleToggleFavorite = () => {
     toggleFavorite(file._id, isFavorite);
@@ -49,8 +50,8 @@ const MoreBtn = ({ file }) => {
     setIsModalVisible(false);
   };
 
-  // const shareUrl = `https://khmerpodcast.vercel.app/watch-podcast/${file._id}`;
-  const shareUrl = `http://localhost:5173/watch-podcast/${file._id}`;
+  const shareUrl = `https://khmerpodcast.vercel.app/watch-podcast/${file._id}`;
+  // const shareUrl = `http://localhost:5173/watch-podcast/${file._id}`;
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     message.success("Link copied to clipboard");
@@ -105,7 +106,7 @@ const MoreBtn = ({ file }) => {
         </Menu.Item>
       )}
 
-      {isLoggedIn && user && user.id === file.user._id && (
+      {isUploader && (
         <Menu.Item onClick={handleToggleUpdateMode}>
           <EditOutlined /> <span className="mx-2">Edit Podcast</span>
         </Menu.Item>

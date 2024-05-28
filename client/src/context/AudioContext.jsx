@@ -24,7 +24,7 @@ export function AudioProvider({ children }) {
         audioRef,
         podcasts,
         currentPodcastIndex,
-        setCurrentPodcastIndex
+        setCurrentPodcastIndex,
       }}
     >
       {children}

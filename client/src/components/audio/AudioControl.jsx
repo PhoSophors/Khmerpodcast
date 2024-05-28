@@ -22,10 +22,10 @@ const AudioControl = () => {
     audioRef,
   } = useAudio();
 
-  const [volume, setVolume] = useState(50); // Initial volume set to 50%
-  const [currentTime, setCurrentTime] = useState(0); // State to store current time
-  const [duration, setDuration] = useState(0); // State to store duration
-  const [isSeeking, setIsSeeking] = useState(false); // State to track if the user is seeking
+  const [volume, setVolume] = useState(50);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isSeeking, setIsSeeking] = useState(false);
 
   const currentPodcast = podcasts.find(
     (podcast) => podcast.audio.url === currentTrack
@@ -38,8 +38,7 @@ const AudioControl = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
-      audio.volume = volume / 100; // Set volume level when it changes
-
+      audio.volume = volume / 100;
       const handleTimeUpdate = () => {
         setCurrentTime(audio.currentTime);
         setDuration(audio.duration);
@@ -58,6 +57,12 @@ const AudioControl = () => {
 
     if (currentTrack && audio) {
       audio.src = currentTrack;
+
+      const savedTime = localStorage.getItem("audioCurrentTime");
+      if (savedTime !== null) {
+        setCurrentTime(parseFloat(savedTime));
+      }
+
       if (isPlaying) {
         const playPromise = audio.play();
         if (playPromise !== undefined) {
@@ -75,6 +80,10 @@ const AudioControl = () => {
       }
     }
   }, [isPlaying, currentTrack, audioRef]);
+
+  useEffect(() => {
+    localStorage.setItem("audioCurrentTime", currentTime);
+  }, [currentTime]);
 
   const handleNext = () => {
     const index = podcasts.findIndex(
@@ -164,13 +173,7 @@ const AudioControl = () => {
             />
           </div>
         </div>
-        {/* <div className="time-count">
-          <span
-            style={{ fontSize: "0.7rem", color: "#6b7280", float: "right" }}
-          >
-            {formatTime(currentTime)} / -{formatTime(duration - currentTime)}
-          </span>
-        </div> */}
+
         <div className="time-control">
           <span style={{ fontSize: "0.7rem", color: "#6b7280", float: "left" }}>
             {formatTime(currentTime)}
@@ -209,4 +212,5 @@ const formatTime = (time) => {
     seconds < 10 ? "0" : ""
   }${seconds}`;
 };
+
 export default AudioControl;
