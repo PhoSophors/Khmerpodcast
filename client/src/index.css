@@ -25,22 +25,33 @@
 /* ...rest of your CSS... */
 
 
-
-body.kh {
+body {
   font-family: 'NotoSansKhmer Condensed Regular', '', sans-serif;
 }
 
-body.en {
-  font-family: 'Roboto', 'NotoSansKhmer Condensed Regular', sans-serif;
-}
-
-h1.kh, span.kh, p.kh, label.kh, rules.kh, placeholder.kh{
+h1, label, rules, placeholder, a, button {
   font-family: 'NotoSansKhmer Condensed Semibold', 'Roboto Medium', sans-serif;
+  font-size: 1.2vw;
+  font-size: min(max(16px, 4vw), 22px);
 }
 
-h1.en, span.en, p.en, label.en, rules.en, placeholder.en{
+span {
   font-family: 'Roboto Medium', 'NotoSansKhmer Condensed Semibold', sans-serif;
+  font-size: 1.1rem;
 }
+h2 {
+  font-family: 'NotoSansKhmer Condensed Regular', 'Roboto Medium', sans-serif;
+  font-size: 1rem;
+}
+
+h3 {
+  font-family: 'NotoSansKhmer Condensed Regular', 'Roboto Medium', sans-serif;
+  font-size: 0.9rem;
+}
+h4 {
+  font-family: 'NotoSansKhmer Condensed Regular', 'Roboto Medium', sans-serif;
+  font-size: 0.8rem;
+} 
 
 
 :root {

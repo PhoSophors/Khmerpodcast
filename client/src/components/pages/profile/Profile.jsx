@@ -63,10 +63,10 @@ const Profile = () => {
                 </h1>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h1 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
+                  <h2 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
                     {user && user.email}
-                  </h1>
-                  <span
+                  </h2>
+                  <h2
                     className="text-gray-500 dark:text-gray-300  bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
@@ -74,14 +74,14 @@ const Profile = () => {
                     }}
                   >
                     Email *
-                  </span>
+                  </h2>
                 </div>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h1 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
+                  <h2 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
                     {user && user.role}
-                  </h1>
-                  <span
+                  </h2>
+                  <h2
                     className="text-gray-500  dark:text-gray-300  bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
@@ -89,7 +89,7 @@ const Profile = () => {
                     }}
                   >
                     Role *
-                  </span>
+                  </h2>
                 </div>
 
                 <Link to={`/edit-profile/${id}`}>

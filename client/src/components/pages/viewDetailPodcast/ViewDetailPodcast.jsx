@@ -51,15 +51,16 @@ const ViewDetailPodcast = () => {
         <Breadcrumb className="w-full back-btn-view-podcast p-3 rounded-xl">
           <Breadcrumb.Item
             onClick={handleCloseDetailPodcast}
-            className="cursor-pointer"
+            className="cursor-pointer text-sm"
           >
             <LeftOutlined
               style={{ fontWeight: "bold", color: `var(--gray-300)` }}
             />
-            <span className="dark:text-gray-300">Back</span>
+            <span className="dark:text-gray-300 text-sm">Back</span>
           </Breadcrumb.Item>
-          <Breadcrumb.Item className="dark:text-gray-300">
-            View Podcast
+          <Breadcrumb.Item className="dark:text-gray-300 text-sm">
+            <span className="text-sm">View Podcast</span>
+           
           </Breadcrumb.Item>
         </Breadcrumb>
 
@@ -105,9 +106,9 @@ const ViewDetailPodcast = () => {
                       maxHeight: "95px",
                     }}
                   >
-                    <div className=" mx-3 tracking-wide mt-5 play-and-more-btn-laptop text-xl text-indigo-500 font-semibold">
+                    <h1 className=" mx-3 tracking-wide mt-5 play-and-more-btn-laptop text-indigo-500 font-semibold">
                       {fileData.title}
-                    </div>
+                    </h1>
                   </div>
                 </div>
 
@@ -125,9 +126,9 @@ const ViewDetailPodcast = () => {
         </div>
 
         <div className="justify-flex-between play-and-more-btn-mobile gap-3 mt-5 items-center">
-          <div className="tracking-wide text-md text-start w-4/5 text-indigo-500 font-semibold">
+          <h1 className="tracking-wide text-md text-start w-4/5 text-indigo-500 font-semibold">
             {fileData.title}
-          </div>
+          </h1>
 
           <div className="flex  justify-end mt-2 items-center gap-3">
             <div>
@@ -140,11 +141,11 @@ const ViewDetailPodcast = () => {
         </div>
 
         <hr className="mt-5 mb-5 dark:bg-gray-600" />
-        <p className="mt-2 tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
+        <h2 className="mt-2 tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
           <Linkify componentDecorator={linkDecorator}>
             {fileData.description}
           </Linkify>
-        </p>
+        </h2>
 
         {/* Information about Podcast Upload */}
         <div className="mt-20 mb-20">
@@ -164,7 +165,7 @@ const ViewDetailPodcast = () => {
             </div>
 
             <div className="text-center">
-              <span className="font-semibold text-indigo-500">Upload Date</span>
+              <div className="font-semibold text-indigo-500">Upload Date</div>
               <div className="dark:text-gray-300">
                 {new Date(fileData.uploadDate).toLocaleDateString(undefined, {
                   year: "numeric",
@@ -176,12 +177,11 @@ const ViewDetailPodcast = () => {
           </div>
         </div>
 
-        {isLoggedIn && (
+        {/* {isLoggedIn && (
           <div className="additional-info">
             <h2>Additional Information</h2>
-            {/* Add any additional information here */}
           </div>
-        )}
+        )} */}
       </Card>
     </div>
   );

@@ -81,12 +81,12 @@ const CustomCard = ({ file, handleViewPodcast }) => {
           }
         >
           <div>
-            <div className="mt-1 tracking-wide truncate text-sm text-indigo-500 font-semibold">
+            <h3 className="mt-1 tracking-wide truncate text-indigo-500 font-semibold">
               {file.title}
-            </div>
-            <p className="mt-1 mb-0 truncate text-slate-500 dark:text-gray-300">
+            </h3>
+            <h3 className="mt-1 mb-0 truncate text-slate-500 dark:text-gray-300">
               {file.description}
-            </p>
+            </h3>
           </div>
         </Card>
       </div>

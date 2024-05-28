@@ -82,15 +82,15 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
                   maxHeight: "95px",
                 }}
               >
-                <div
+                <h1
                   onClick={handleViewPodcast}
-                  className="hover:underline  cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
+                  className="hover:underline  cursor-pointer tracking-wide text-indigo-500 font-semibold"
                 >
                   {file.title}
-                </div>
-                <p className="mt-2 text-slate-500 dark:text-gray-300">
+                </h1>
+                <h3 className="mt-2 text-slate-500 dark:text-gray-300">
                   {file.description}
-                </p>
+                </h3>
               </div>
             </div>
 

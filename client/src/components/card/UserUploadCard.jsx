@@ -75,18 +75,18 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   width: "100%",
-                  maxHeight: "95px",
+                  maxHeight: "85px",
                 }}
               >
-                <div
+                <h1
                   onClick={handleViewPodcast}
-                  className="hover:underline cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold"
+                  className="hover:underline cursor-pointer tracking-wide text-indigo-500 font-semibold"
                 >
                   {file.title}
-                </div>
-                <p className="mt-2 text-slate-500 dark:text-gray-300">
+                </h1>
+                <h3 className="mt-2 text-slate-500 dark:text-gray-300">
                   {file.description}
-                </p>
+                </h3>
               </div>
             </div>
 
