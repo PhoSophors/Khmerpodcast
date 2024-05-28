@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import LanguageSwitcher from "../languageSwitcher/LanguageSwitcher";
+import React, { useState } from "react";
 import Login from "../auth/login/Login";
 import SideMenu from "../sidemenu/SideMenu";
 import AudioControl from "../audio/AudioControl";
@@ -7,35 +6,19 @@ import { Drawer } from "antd";
 import { useUser } from "../../context/UserContext";
 import "./Header.css";
 import logo from "../assets/logo.jpg";
-import { Avatar, Dropdown, Menu, Alert, Spin, message, Modal } from "antd";
+import { Avatar, Menu, Alert, Spin, message } from "antd";
 import {
   MenuOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
-  CloseOutlined,
-  DownOutlined,
 } from "@ant-design/icons";
-import { getIcon } from "../sidemenu/iconUtils";
-import { useTranslation } from "react-i18next";
 
 const Header = ({ handleCollapse, onSelectMenuItem }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
   const [menuVisible, setMenuVisible] = useState(false);
-  const { user, isLoading, isLoggedIn, handleConfirmLogout } = useUser();
-  const [language, setLanguage] = useState(
-    localStorage.getItem("language") || "default"
-  );
-  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    const storedLanguage = localStorage.getItem("language");
-    if (storedLanguage) {
-      setLanguage(storedLanguage);
-    }
-  }, [language]);
+  const { user, isLoading, isLoggedIn } = useUser();
 
   const handleLoginModalCancel = () => {
     setLoginModalVisible(false);
@@ -56,25 +39,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
     onSelectMenuItem(e);
     handleMenuClick();
   };
-
-  const handleCancelLogout = () => {
-    setLogoutModalVisible(false);
-  };
-
-  const handleLogout = () => {
-    setLogoutModalVisible(true);
-  };
-
-  const menu = (
-    <Menu style={{ width: "250px" }} className="profile-dropdown-menu">
-      <Menu.Item>
-        <LanguageSwitcher />
-      </Menu.Item>
-      <Menu.Item onClick={handleLogout} icon={getIcon("/logout")}>
-        <span>{t("siderMenu.logout")}</span>
-      </Menu.Item>
-    </Menu>
-  );
 
   const mobileMenu = <Menu onClick={handleMenuItemClick} />;
 
@@ -159,27 +123,20 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             // Render a loading spinner or some other placeholder
             <Spin />
           ) : isLoggedIn ? (
-            // Render the user's profile dropdown if the user is logged in
-            <Dropdown overlay={menu} trigger={["click"]}>
-              <div className=" items-center flex">
-                <div className="username-header cursor-pointer uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
-                  {user && user.username.split(" ")[0]}
-                </div>
-                &nbsp;
-                <DownOutlined
-                  className="text-indigo-500"
-                  style={{ fontSize: "10px" }}
-                />
-                &nbsp;
-                <Avatar
-                  className="avatar"
-                  src={user && user.profileImage}
-                  style={{ cursor: "pointer", border: "1px solid #6366f1" }}
-                  size="large"
-                  icon={<UserOutlined />}
-                />
+            // Render the user's profile if the user is logged in
+            <div className=" items-center flex">
+              <div className="username-header cursor-pointer uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
+                {user && user.username.split(" ")[0]}
               </div>
-            </Dropdown>
+              &nbsp;
+              <Avatar
+                className="avatar"
+                src={user && user.profileImage}
+                style={{ cursor: "pointer", border: "1px solid #6366f1" }}
+                size="large"
+                icon={<UserOutlined />}
+              />
+            </div>
           ) : (
             // Render the login button if the user is not logged in
             <button
@@ -208,39 +165,6 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
           style={{ margin: "0 16px" }}
         />
       )}
-
-      {/* Logout confirmation modal */}
-      <Modal
-        visible={logoutModalVisible}
-        onCancel={handleCancelLogout}
-        footer={null}
-        centered
-        width={300}
-        closeIcon={
-          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
-        }
-      >
-        <div className="modal-logout mt-10 flex flex-col items-center">
-          <img src={logo} alt="" />
-          <h1 className="text-center text-xl text-indigo-500 font-semibold mb-4 mt-5">
-            Are you sure you want to logout your account?
-          </h1>
-
-          <button
-            onClick={handleConfirmLogout}
-            className="bg-indigo-600 w-32 hover:bg-red-500 text-white p-10 font-bold py-2 px-4 rounded-3xl mt-5"
-          >
-            Logout
-          </button>
-
-          <button
-            onClick={handleCancelLogout}
-            className="text-slate-600 hover:text-indigo-600 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
-          >
-            Cancel
-          </button>
-        </div>
-      </Modal>
     </header>
   );
 };

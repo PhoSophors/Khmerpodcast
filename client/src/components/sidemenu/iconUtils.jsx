@@ -1,4 +1,4 @@
-import logo from "../assets/logo.jpg";
+// import logo from "../assets/logo.jpg";
 import {
   HomeFilled,
   HomeOutlined,
@@ -17,6 +17,7 @@ import {
   LogoutOutlined,
   MoonOutlined,
   MoonFilled,
+  MenuOutlined,
 } from "@ant-design/icons";
 
 export const iconMapping = {
@@ -42,14 +43,15 @@ export const iconMapping = {
     default: <FileTextOutlined />,
   },
   "/logout": {
-    selected: <LogoutOutlined />,
-    default: <LogoutOutlined />,
+    selected:<LogoutOutlined />,
+    default: <LogoutOutlined />
   },
   "/theme": { selected: <MoonFilled />, default: <MoonOutlined /> },
   "/app-logo": {
     selected: <></>,
     default: <></>,
   },
+  "/more": { selected: <MenuOutlined />, default: <MenuOutlined /> },
 
   default: <HomeOutlined />,
 };

@@ -1,20 +1,39 @@
-import React, { useContext, useMemo } from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useContext, useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { Menu } from "antd";
+import { Menu, Dropdown, Modal } from "antd";
 import "./SideMenu.css";
 import logo from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
 import { useUser } from "../../context/UserContext";
 import ThemeContext from "../../context/ThemeContext";
 import { useLocation } from "react-router-dom";
+import LanguageSwitcher from "../languageSwitcher/LanguageSwitcher";
+import {
+  CloseOutlined,
+  LogoutOutlined,
+  MoonOutlined,
+  SunOutlined,
+} from "@ant-design/icons";
 
 const SideMenu = ({ collapsed }) => {
   const location = useLocation();
   const { t } = useTranslation();
-  const { user, isLoggedIn } = useUser();
+  const { user, isLoggedIn, handleConfirmLogout } = useUser();
   const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate(); // Initialize useNavigate
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+  const [language, setLanguage] = useState(
+    localStorage.getItem("language") || "default"
+  );
+
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem("language");
+    if (storedLanguage) {
+      setLanguage(storedLanguage);
+    }
+  }, [language]);
 
   const selectedMenuItem = useMemo(
     () => location.pathname,
@@ -26,8 +45,58 @@ const SideMenu = ({ collapsed }) => {
   };
 
   const handleMenuItemClick = (menuItem) => {
-    navigate(menuItem.key); // Use navigate to update the URL path
+    if (menuItem.key === "/dropdown") {
+      // Prevent default behavior to keep the dropdown open
+      menuItem.domEvent.preventDefault();
+    } else {
+      // Navigate to the selected menu item
+      navigate(menuItem.key);
+    }
   };
+
+  const handleCancelLogout = () => {
+    setLogoutModalVisible(false);
+  };
+
+  const handleLogout = () => {
+    setLogoutModalVisible(true);
+  };
+
+  const settingsMenu = (
+    <Menu style={{ width: "250px" }}>
+      <Menu.Item>
+        <LanguageSwitcher />
+      </Menu.Item>
+      <Menu.Item key="/theme" onClick={toggleTheme}>
+        <span>
+          {/* Switch appearance */}
+          {theme === "light" ? (
+            <>
+              <div className="flex gap-2">
+                <SunOutlined />
+                {t("siderMenu.darkTheme")}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex gap-2">
+                <MoonOutlined />
+                {t("siderMenu.whiteTheme")}
+              </div>
+            </>
+          )}
+        </span>
+      </Menu.Item>
+
+      <Menu.Item onClick={handleLogout}>
+        <div className="flex gap-2">
+          <LogoutOutlined />
+          <span>{t("siderMenu.logout")}</span>
+        </div>
+      </Menu.Item>
+      {/* Add more menu items here if needed */}
+    </Menu>
+  );
 
   return (
     <>
@@ -119,18 +188,49 @@ const SideMenu = ({ collapsed }) => {
           </>
         )}
 
-        <Menu.Item
-          onClick={toggleTheme}
-          key="/theme"
-          icon={getIcon("/theme", selectedMenuItem, theme)}
-        >
-          <span>
-            {theme === "light"
-              ? t("siderMenu.darkTheme")
-              : t("siderMenu.whiteTheme")}
-          </span>
+        <Menu.Item key="/dropdown" icon={getIcon("/more")}>
+          <Dropdown overlay={settingsMenu} trigger={["click"]}>
+            <a
+              className="ant-dropdown-link"
+              onClick={(e) => e.preventDefault()}
+            >
+              <span>{t("siderMenu.more")}</span>
+            </a>
+          </Dropdown>
         </Menu.Item>
       </Menu>
+
+      <Modal
+        visible={logoutModalVisible}
+        onCancel={handleCancelLogout}
+        footer={null}
+        centered
+        width={300}
+        closeIcon={
+          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
+        }
+      >
+        <div className="modal-logout mt-10 flex flex-col items-center">
+          <img src={logo} alt="" />
+          <h1 className="text-center text-xl text-indigo-500 font-semibold mb-4 mt-5">
+            Are you sure you want to logout your account?
+          </h1>
+
+          <button
+            onClick={handleConfirmLogout}
+            className="bg-indigo-600 w-32 hover:bg-red-500 text-white p-10 font-bold py-2 px-4 rounded-3xl mt-5"
+          >
+            Logout
+          </button>
+
+          <button
+            onClick={handleCancelLogout}
+            className="text-slate-600 hover:text-indigo-600 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
+          >
+            Cancel
+          </button>
+        </div>
+      </Modal>
     </>
   );
 };

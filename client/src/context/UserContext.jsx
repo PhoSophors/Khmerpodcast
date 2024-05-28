@@ -3,13 +3,14 @@ import axios from 'axios';
 import { api_url } from '../api/config';
 import Cookies from 'js-cookie';
 
+
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null); // Add currentUser state
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [userFiles, setUserFiles] = useState([]);
   const [userRole, setUserRole] = useState(null);
   const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
@@ -39,11 +40,11 @@ export const UserProvider = ({ children }) => {
 
           if (userData) {
             setUser(userData);
-            setCurrentUser(userData); // Set currentUser when user data is fetched
+            setCurrentUser(userData); // Set current user
             setIsLoggedIn(true);
           } else {
             setUser(null);
-            setCurrentUser(null); // Set currentUser to null if user data is not available
+            setCurrentUser(null); 
             setIsLoggedIn(false);
           }
 
@@ -74,7 +75,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, isLoading, isLoggedIn, userFiles, userRole, currentUser, handleConfirmLogout }} // Include currentUser in the context value
+      value={{ user, isLoading, isLoggedIn, userFiles, userRole, currentUser,  handleConfirmLogout }}
     >
       {children}
     </UserContext.Provider>

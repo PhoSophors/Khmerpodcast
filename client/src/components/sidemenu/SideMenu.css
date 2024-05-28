@@ -73,6 +73,24 @@
   display: none !important;
 }
 
+/* dropdown ================================ */
+:where(.css-dev-only-do-not-override-17seli4).ant-dropdown .ant-dropdown-menu, :where(.css-dev-only-do-not-override-17seli4).ant-dropdown-menu-submenu .ant-dropdown-menu {
+  background-color: var(--dropdown-bg);
+
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
+ :where(.css-dev-only-do-not-override-17seli4).ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item, 
+ :where(.css-dev-only-do-not-override-17seli4).ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title, 
+ :where(.css-dev-only-do-not-override-17seli4).ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title {
+  height: 40px;
+}
+:where(.css-dev-only-do-not-override-17seli4).ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content, :where(.css-dev-only-do-not-override-17seli4).ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-title-content {
+  flex: auto;
+  color: var(--text-color);
+}
+
+
 /* Styles for screens with a width of 768px or less */
 @media screen and (max-width: 768px) {
   .side-menu-container {

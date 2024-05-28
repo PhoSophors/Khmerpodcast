@@ -31,17 +31,25 @@ const MoreBtn = ({ file }) => {
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const { favorites, toggleFavorite } = useFavorites();
   const isFavorite = favorites.some((fav) => fav._id === file._id);
-  const { isLoggedIn, currentUser } = useUser(); // Assuming you have access to the current user
-  const isUploader = file.user === currentUser._id; // Assuming `file.user` contains the ID of the uploader
+  // Assuming you have access to the current user and their login status
+  const { isLoggedIn, currentUser } = useUser();
+  // Assuming `file.user` contains the ID of the uploader
+  const isUploader = file.user && currentUser && file.user === currentUser._id;
+  const [isEditing, setIsEditing] = useState(false);
+
+
+
 
   const handleToggleFavorite = () => {
     toggleFavorite(file._id, isFavorite);
   };
 
+  
   const handleToggleUpdateMode = () => {
-    setIsUpdateMode(!isUpdateMode);
+    setIsUpdateMode((prevMode) => !prevMode);
+    setIsEditing(true);
   };
-
+  
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -59,17 +67,17 @@ const MoreBtn = ({ file }) => {
 
   const shareMenu = (
     <Menu style={{ width: "250px" }}>
-      <Menu.Item onClick={showModal}>
+      <Menu.Item key="uniqueKey1" onClick={showModal}>
         <ShareAltOutlined />
         <span className="mx-2">Share</span>
       </Menu.Item>
-      <Menu.Item onClick={handleCopyLink}>
+      <Menu.Item key="uniqueKey2" onClick={handleCopyLink}>
         <LinkOutlined />
         <span className="mx-2">Copy Link</span>
       </Menu.Item>
 
       {isLoggedIn && (
-        <Menu.Item onClick={handleToggleFavorite}>
+        <Menu.Item key="uniqueKey3" onClick={handleToggleFavorite}>
           {isFavorite ? (
             <div style={{ display: "flex", alignItems: "center" }}>
               <svg
@@ -107,7 +115,7 @@ const MoreBtn = ({ file }) => {
       )}
 
       {isUploader && (
-        <Menu.Item onClick={handleToggleUpdateMode}>
+        <Menu.Item key="uniqueKey4" onClick={handleToggleUpdateMode}>
           <EditOutlined /> <span className="mx-2">Edit Podcast</span>
         </Menu.Item>
       )}
@@ -120,12 +128,26 @@ const MoreBtn = ({ file }) => {
 
   return (
     <div>
-      <div className="p-3 text-white bg-amber-400 h-8 w-8 flex justify-center items-center rounded-full">
-        <Dropdown overlay={shareMenu} trigger={["click"]}>
-          <MoreOutlined style={{ fontSize: "18px" }} />
-        </Dropdown>
-      </div>
+      {!isEditing && (
+        <div className="p-3 text-white bg-amber-400 h-8 w-8 flex justify-center items-center rounded-full">
+          <Dropdown overlay={shareMenu} trigger={["click"]}>
+            <MoreOutlined style={{ fontSize: "18px" }} />
+          </Dropdown>
+        </div>
+      )}
       <Modal
+        style={{ 
+          body: {
+            padding: "0",
+            overflow: "auto",
+            maxHeight: `calc(100vh - 200px)`,
+          }
+         }}
+        bodyStyle={{
+          padding: "0",
+          overflow: "auto",
+          maxHeight: `calc(100vh - 200px)`,
+        }}
         title="Share"
         visible={isModalVisible}
         onCancel={handleModalCancel}

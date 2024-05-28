@@ -62,7 +62,7 @@ const RightSection = ({ onPodcastSelected, file }) => {
   return (
     <div className="right-section md:p-0">
       <div className="content-container">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense >
           {content}
         </Suspense>
       </div>
