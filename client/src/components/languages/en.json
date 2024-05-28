@@ -12,6 +12,8 @@
     "allUsers": "Users",
     "fileManager": "Files",
     "logout": "Logout",
+    "khmer": "Khmer",
+    "english": "English",
     "whiteTheme": "White Theme", 
     "darkTheme": "Dark Theme"
   },
@@ -60,6 +62,18 @@
     "emailPlaceholder": "Enter your email to reset your password",
     "emailRequired": "Please input your email!",
     "sendOtp": "Send OTP"
+  },
+  "create": {
+    "welcomeTitle": "CREATE PODCAST",
+    "welcomeDescription": "Create an Podcast episode in a few simple steps. Fill in the details below and upload your audio file to get started.",
+    "audioSupport": "AUDIO SUPPORTED FILE TYPES",
+    "audioFormat": "Audio files: aac, mp3",
+    "imageSupport": "IMAGE SUPPORTED FILE TYPES",
+    "imageFormat": "Image files: jpg, jpeg",
+    "title": "Title",
+    "titlePlaceholder": "Enter your podcast title",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter your podcast description"
   },
   
   

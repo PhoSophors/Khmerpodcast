@@ -11,6 +11,8 @@
     "allUsers": "​គ្រប់​គ្រង​អ្នក​ប្រើ​",
     "fileManager": "​គ្រប់​គ្រង​ឯកសារ",
     "logout": "ចាកចេញ",
+    "khmer": "ភាសាខ្មែរ",
+    "english": "ភាសាអង់គ្លេស",
     "whiteTheme": "ផ្ទៃពណ៌ស", 
     "darkTheme": "ផ្ទៃពណ៌ខ្មៅ"
   },
@@ -59,8 +61,18 @@
     "emailRequired": "អុីម៉ែលត្រូវបានទាមទារ",
     "sendOtp": "បញ្ជូន"
   },
-  
-  
+  "create": {
+    "welcomeTitle": "បង្កើតផតខាស់",
+    "welcomeDescription": "បង្កើតវគ្គ Podcast ក្នុងជំហានសាមញ្ញមួយចំនួន។ បំពេញព័ត៌មានលម្អិតខាងក្រោម ហើយបង្ហោះឯកសារអូឌីយ៉ូរបស់អ្នក ដើម្បីចាប់ផ្តើម។",
+    "audioSupport": "ឯកសារអូឌីយ៉ូរដែលគាំទ្រ",
+    "audioFormat": "Audio format: aac, mp3",
+    "imageSupport": "ឯកសាររូបភាពដែលគាំទ្រ",
+    "imageFormat": "Image format: jpg, jpeg",
+    "title": "ចំណងជើង",
+    "titlePlaceholder": "បញ្ចូលចំណងជើងផតខាស់",
+    "description": "ការពិពណ៌នា",
+    "descriptionPlaceholder": "បញ្ចូលការពិពណ៌នា"
+  },
 
   "profile" : {
     "title": "គណនី",

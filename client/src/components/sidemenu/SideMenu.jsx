@@ -87,13 +87,14 @@ const SideMenu = ({ collapsed }) => {
           )}
         </span>
       </Menu.Item>
-
-      <Menu.Item onClick={handleLogout}>
-        <div className="flex gap-2">
-          <LogoutOutlined />
-          <span>{t("siderMenu.logout")}</span>
-        </div>
-      </Menu.Item>
+      {isLoggedIn && (
+        <Menu.Item onClick={handleLogout}>
+          <div className="flex gap-2">
+            <LogoutOutlined />
+            <span>{t("siderMenu.logout")}</span>
+          </div>
+        </Menu.Item>
+      )}
       {/* Add more menu items here if needed */}
     </Menu>
   );

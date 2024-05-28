@@ -6,6 +6,7 @@ import axios from "axios";
 import ImgCrop from "antd-img-crop";
 import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
+import { useTranslation } from "react-i18next";
 
 // =======================================================================
 const Create = () => {
@@ -25,6 +26,7 @@ const Create = () => {
     ? atob(Cookies.get("authToken"))
     : null;
   const id = Cookies.get("id") ? atob(Cookies.get("id")) : null;
+  const { t } = useTranslation();
 
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
@@ -157,10 +159,10 @@ const Create = () => {
           bodyStyle={{ padding: 0 }}
         >
           <div className="uppercase xl:text-start md:text-start text-ceter tracking-wide text-xl md:mt-3 mt-3 text-indigo-500 font-semibold">
-            Create Podcast
+            {t("create.welcomeTitle")}
           </div>
           <div className="tracking-wide text-start md:text-start text-ceter text-sm text-gray-500 dark:text-gray-300">
-            Create an Podcast episode in a few simple steps.
+            {t("create.welcomeDescription")}
           </div>
 
           <div className="upload-section mt-5">
@@ -168,10 +170,10 @@ const Create = () => {
               {/* set two colum */}
               <div className="w-full sm:w-1/2">
                 <div className="mt-5  text-start  font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-300">
-                  Audio Supported file types:
+                  {t("create.audioSupport")}
                 </div>
                 <div className="text-gray-500 text-start dark:text-gray-300">
-                  Audio files: aac, mp3
+                  {t("create.audioFormat")}
                 </div>
                 {/* upload audio */}
                 <Card className="mt-5 create-card-bg">
@@ -221,10 +223,10 @@ const Create = () => {
               {/* upload  thumbnail */}
               <div className="w-full sm:w-1/2 ">
                 <div className="mt-5 text-start  font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
-                  Thumnaill upported file types:
+                  {t("create.imageSupport")}
                 </div>
                 <div className="text-gray-500 dark:text-gray-300 text-start ">
-                  Thumnaill files: .jpeg, .jpg
+                  {t("create.imageFormat")}
                 </div>
                 <Card className="mt-5 items-center flex justify-center create-card-bg">
                   <ImgCrop>
@@ -265,13 +267,13 @@ const Create = () => {
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
                     <p className="font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
-                      Title *
+                     {t("create.title")} *
                     </p>
                     <Input.TextArea
                       className="create-textarea mt-5 caret-pink-500 dark:text-slate-100 "
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      placeholder="Input title"
+                      placeholder={t("create.titlePlaceholder")}
                       showCount
                       maxLength={200}
                       style={{ height: "200px" }}
@@ -279,13 +281,13 @@ const Create = () => {
                   </div>
                   <div className="w-full sm:w-3/5">
                     <p className="font-semibold text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
-                      Description *
+                      {t("create.description")} *
                     </p>
                     <Input.TextArea
                       className="create-textarea mt-5 caret-pink-500 dark:text-slate-100"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Input description"
+                      placeholder={t("create.descriptionPlaceholder")}
                       showCount
                       maxLength={800}
                       style={{ height: "200px" }}

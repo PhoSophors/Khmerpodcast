@@ -18,15 +18,16 @@ const LanguageSwitcher = () => {
     message.success(t("Language changed successfully"));
     window.location.reload();
     setModalVisible(false); // Close the language selection modal
+
+    document.body.className = languageCode;
   };
 
   // Define supported languages with flags
   const supportedLanguages = [
-    { code: "kh", name: " Khmer", flag: "🇰🇭" },
-    { code: "en", name: " English", flag: "🇺🇸" },
+    { code: "kh", name: t("siderMenu.khmer"), flag: "🇰🇭" },
+    { code: "en", name: t("siderMenu.english"), flag: "🇺🇸" },
     // Add more languages as needed
   ];
-
   return (
     <div>
       <div className="language-switcher" onClick={() => setModalVisible(true)}>

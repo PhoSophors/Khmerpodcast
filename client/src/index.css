@@ -1,19 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@100..900&display=swap');
+
+@font-face {
+  font-family: 'NotoSansKhmer Condensed Regular';
+  src: url('fonts/NotoSansKhmer_Condensed-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NotoSansKhmer Condensed Semibold';
+  src: url('fonts/NotoSansKhmer_Condensed-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Regular';
+  src: url('fonts/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Medium';
+  src: url('fonts/Roboto-Medium.ttf') format('truetype');
+}
+
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ...rest of your CSS... */
 
-body {
-  font-family: 'Noto Sans Khmer', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400; /* Example: Normal weight */
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+
+
+body.kh {
+  font-family: 'NotoSansKhmer Condensed Regular', '', sans-serif;
 }
 
+body.en {
+  font-family: 'Roboto', 'NotoSansKhmer Condensed Regular', sans-serif;
+}
+
+h1.kh, span.kh, p.kh, label.kh, rules.kh, placeholder.kh{
+  font-family: 'NotoSansKhmer Condensed Semibold', 'Roboto Medium', sans-serif;
+}
+
+h1.en, span.en, p.en, label.en, rules.en, placeholder.en{
+  font-family: 'Roboto Medium', 'NotoSansKhmer Condensed Semibold', sans-serif;
+}
 
 
 :root {
@@ -43,6 +70,7 @@ body {
 
   --slate-100: #f1f5f9;
   --gray-300: #d2d6dc;
+
   
   /* --indigo-500: #6366f1;
   --indigo-600: #4f46e5;
