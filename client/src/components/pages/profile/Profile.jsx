@@ -58,16 +58,16 @@ const Profile = () => {
                   </Spin>
                 </div>
 
-                <h1 className="text-2xl text-center text-gray-600 dark:text-gray-300  font-bold">
+                <h1 className="text-2xl  text-center text-gray-600 dark:text-gray-300  font-bold">
                   {user && user.username}
                 </h1>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h2 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
+                  <h2 className="text-gray-500 text-base  dark:text-gray-300 mt- mx-7 text-center text-lg">
                     {user && user.email}
                   </h2>
                   <h2
-                    className="text-gray-500 dark:text-gray-300  bg-profile-text-field absolute"
+                    className="text-gray-500 text-sm  dark:text-gray-300  bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
                       padding: "0 5px",
@@ -78,11 +78,11 @@ const Profile = () => {
                 </div>
 
                 <div className="mt-5 rounded-xl p-3 relative border w-full">
-                  <h2 className="text-gray-500  dark:text-gray-300 mt- mx-7 text-center text-lg">
+                  <h2 className="text-gray-500 text-base  dark:text-gray-300 mt- mx-7 text-center text-lg">
                     {user && user.role}
                   </h2>
                   <h2
-                    className="text-gray-500  dark:text-gray-300  bg-profile-text-field absolute"
+                    className="text-gray-500 text-sm  dark:text-gray-300  bg-profile-text-field absolute"
                     style={{
                       top: "-10px",
                       padding: "0 5px",

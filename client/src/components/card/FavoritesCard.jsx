@@ -84,11 +84,11 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
               >
                 <h1
                   onClick={handleViewPodcast}
-                  className="hover:underline  cursor-pointer tracking-wide text-indigo-500 font-semibold"
+                  className="hover:underline line-clamp-1 text-base cursor-pointer tracking-wide text-indigo-500 font-semibold"
                 >
                   {file.title}
                 </h1>
-                <h3 className="mt-2 text-slate-500 dark:text-gray-300">
+                <h3 className="mt-2 line-clamp-2 text-md text-slate-500 dark:text-gray-300">
                   {file.description}
                 </h3>
               </div>

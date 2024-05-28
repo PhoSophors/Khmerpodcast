@@ -106,7 +106,7 @@ const ViewDetailPodcast = () => {
                       maxHeight: "95px",
                     }}
                   >
-                    <h1 className=" mx-3 tracking-wide mt-5 play-and-more-btn-laptop text-indigo-500 font-semibold">
+                    <h1 className=" mx-3 text-2xl tracking-wide mt-5 play-and-more-btn-laptop text-indigo-500 font-semibold">
                       {fileData.title}
                     </h1>
                   </div>
@@ -126,7 +126,7 @@ const ViewDetailPodcast = () => {
         </div>
 
         <div className="justify-flex-between play-and-more-btn-mobile gap-3 mt-5 items-center">
-          <h1 className="tracking-wide text-md text-start w-4/5 text-indigo-500 font-semibold">
+          <h1 className="tracking-wide text-base text-start w-4/5 text-indigo-500 font-semibold">
             {fileData.title}
           </h1>
 
@@ -141,7 +141,7 @@ const ViewDetailPodcast = () => {
         </div>
 
         <hr className="mt-5 mb-5 dark:bg-gray-600" />
-        <h2 className="mt-2 tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
+        <h2 className="mt-2 text-base tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
           <Linkify componentDecorator={linkDecorator}>
             {fileData.description}
           </Linkify>
