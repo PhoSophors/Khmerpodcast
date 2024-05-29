@@ -37,8 +37,8 @@
   right: 0;
   position: absolute;
   display: block;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
   background-color: var(--sidemenu-mobile-bg) !important;
 }
 
@@ -48,9 +48,11 @@
 
 .ant-drawer-content-wrapper {
   width: 300px !important;
-  border-top-left-radius: 20px !important;
-  border-bottom-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  border: 1px solid red;
 }
+
 .title-drawer {
   display: flex;
   align-items: center;

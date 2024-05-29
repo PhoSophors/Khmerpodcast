@@ -15,7 +15,7 @@ const BackBtn = () => {
       className="p-3 cursor-pointer text-white bg-pink-600 h-8 w-auto flex justify-center items-center rounded-full"
       style={{ position: "absolute", top: "20px", left: "20px" }}
     >
-      <ArrowLeftOutlined /> <span className="mx-3">Back</span>
+      <ArrowLeftOutlined />
     </div>
   );
 };

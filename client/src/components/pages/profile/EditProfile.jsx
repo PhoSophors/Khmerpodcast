@@ -43,7 +43,7 @@ const EditProfile = () => {
 
   if (isLoading) {
     return (
-      <div className="p-10 text-center items-center spin-loading bg-indigo-600 ">
+      <div className="spin-loading bg-indigo-600 mt-10 ">
         <Spin />
       </div>
     );

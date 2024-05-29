@@ -52,8 +52,10 @@ const App = () => {
           <Route path="/profile" element={<PrivateRoute><MainSection /></PrivateRoute>} />
           <Route path="/setting" element={<PrivateRoute><MainSection /></PrivateRoute>} />
           <Route path="/update-podcast" element={<PrivateRoute><MainSection /></PrivateRoute>} />
-          <Route path="/edit-profile/:id" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
+
+          <Route path="/edit-profile/:id" element={<PrivateRoute> <EditProfile /></PrivateRoute>} />
           <Route path="/public-profile/:id" element={<PublicProfile />} />
+
         </Routes>
       )}
     </Router>

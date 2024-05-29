@@ -1,5 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
+import EditProfile from "../../components/pages/profile/EditProfile";
 
 const Favorith = lazy(() => import("../../components/pages/favorite/Favorith"));
 const HomePage = lazy(() => import("../../components/pages/homePage/HomePage"));
@@ -14,7 +15,7 @@ const UpdatePodcast = lazy(() => import("../../components/pages/create/UpdatePod
 const ViewDetailPodcast = lazy(() => import("../../components/pages/viewDetailPodcast/ViewDetailPodcast"));
 
 
-const RightSection = ({ onPodcastSelected, file }) => {
+const RightSection = ({ onPodcastSelected, onUpdateProfile,  file }) => {
   const location = useLocation();
   const [content, setContent] = useState(null);
 
@@ -53,11 +54,14 @@ const RightSection = ({ onPodcastSelected, file }) => {
       case "/update-podcast":
         setContent(<UpdatePodcast file={file} onPodcastSelected={onPodcastSelected} />);
         break;
+      case "/update-profile" :
+        setContent(<EditProfile onUpdateProfile={onUpdateProfile} /> )
+        break;
       default:
         setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
         break;
     }
-  }, [location.pathname, file, onPodcastSelected]);
+  }, [location.pathname, file, onPodcastSelected, onUpdateProfile]);
 
   return (
     <div className="right-section md:p-0">

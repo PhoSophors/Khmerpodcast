@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import { api_url } from '../api/config';
-import Cookies from 'js-cookie';
-
+import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { api_url } from "../api/config";
+import Cookies from "js-cookie";
 
 const UserContext = createContext();
 
@@ -13,12 +12,14 @@ export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userFiles, setUserFiles] = useState([]);
   const [userRole, setUserRole] = useState(null);
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
-  const id = Cookies.get('id') ? atob(Cookies.get('id')) : null;
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
+  const id = Cookies.get("id") ? atob(Cookies.get("id")) : null;
 
   const handleConfirmLogout = () => {
-    Cookies.remove('authToken');
-    Cookies.remove('id');
+    Cookies.remove("authToken");
+    Cookies.remove("id");
     window.location.reload();
   };
 
@@ -28,7 +29,7 @@ export const UserProvider = ({ children }) => {
 
       try {
         if (authToken) {
-          const decodedToken = JSON.parse(atob(authToken.split('.')[1]));
+          const decodedToken = JSON.parse(atob(authToken.split(".")[1]));
           setUserRole(decodedToken.role);
 
           const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
@@ -44,7 +45,7 @@ export const UserProvider = ({ children }) => {
             setIsLoggedIn(true);
           } else {
             setUser(null);
-            setCurrentUser(null); 
+            setCurrentUser(null);
             setIsLoggedIn(false);
           }
 
@@ -64,18 +65,31 @@ export const UserProvider = ({ children }) => {
           }
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData();
+    if (
+      window.performance.navigation.type ===
+      window.performance.navigation.TYPE_RELOAD
+    ) {
+      fetchData();
+    }
   }, [id, authToken]);
 
   return (
     <UserContext.Provider
-      value={{ user, isLoading, isLoggedIn, userFiles, userRole, currentUser, handleConfirmLogout }}
+      value={{
+        user,
+        isLoading,
+        isLoggedIn,
+        userFiles,
+        userRole,
+        currentUser,
+        handleConfirmLogout,
+      }}
     >
       {children}
     </UserContext.Provider>

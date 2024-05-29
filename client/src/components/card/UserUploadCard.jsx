@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Spin, Card } from "antd";
+import { Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import DeletePodcastBtn from "../Btn/DeletePodcastBtn";

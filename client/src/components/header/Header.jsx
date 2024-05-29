@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Login from "../auth/login/Login";
 import SideMenu from "../sidemenu/SideMenu";
@@ -97,7 +98,7 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
                 </div>
               </div>
             }
-            placement="right"
+            placement="left"
             closable={false}
             onClose={handleMenuClick}
             visible={menuVisible}

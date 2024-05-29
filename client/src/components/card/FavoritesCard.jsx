@@ -12,13 +12,6 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
     setIsLoading(false);
   };
 
-  const date = new Date(); // replace this with your date
-  const formattedDate = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <div
       className="w-full p-1 justify-flex-between"
@@ -97,7 +90,11 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
             <div className="flex items-center gap-10">
               <div className="flex items-center">
                 <div className="w-24 date-element text-end text-slate-500 dark:text-gray-300">
-                  {formattedDate}
+                  {new Date(file.uploadDate).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
                 </div>
               </div>
 

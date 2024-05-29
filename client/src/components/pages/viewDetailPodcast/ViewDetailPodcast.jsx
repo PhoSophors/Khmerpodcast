@@ -1,9 +1,9 @@
 import React from "react";
-import { Card, Spin, message, Breadcrumb, Avatar } from "antd";
+import { Card, Spin, message, Avatar } from "antd";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
-import { LeftOutlined, UserOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
 import Linkify from "react-linkify";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
@@ -12,13 +12,13 @@ import { useNavigate } from "react-router-dom";
 
 const ViewDetailPodcast = () => {
   const { id } = useParams();
-  const { isLoading: userLoading, isLoggedIn } = useUser(); // Use useUser hook for user-related data
+  const { isLoading: userLoading } = useUser(); // Use useUser hook for user-related data
   const { isLoading: fileLoading, fileData } = useFileData(id); // Use useFileData hook for file-related data
   const navigate = useNavigate();
 
   if (userLoading || fileLoading) {
     return (
-      <div className="p-10 mt-20 text-center spin-loading">
+      <div className="mt-20 spin-loading">
         <Spin />
       </div>
     );
@@ -48,21 +48,14 @@ const ViewDetailPodcast = () => {
   return (
     <div className="min-w-full">
       <Card className="view-podcast-card">
-        <Breadcrumb className="w-full back-btn-view-podcast p-3 rounded-xl">
-          <Breadcrumb.Item
+        <div className="p-2 back-btn-view-podcast w-full rounded-xl ">
+          <div
             onClick={handleCloseDetailPodcast}
-            className="cursor-pointer text-sm"
+            className="p-3 cursor-pointer text-white bg-pink-600 h-8 w-9 flex justify-center items-center rounded-full"
           >
-            <LeftOutlined
-              style={{ fontWeight: "bold", color: `var(--gray-300)` }}
-            />
-            <span className="dark:text-gray-300 text-sm">Back</span>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item className="dark:text-gray-300 text-sm">
-            <span className="text-sm">View Podcast</span>
-           
-          </Breadcrumb.Item>
-        </Breadcrumb>
+            <ArrowLeftOutlined />
+          </div>
+        </div>
 
         <div className="w-full container-view-podcast mt-5">
           <Card
@@ -140,7 +133,8 @@ const ViewDetailPodcast = () => {
           </div>
         </div>
 
-        <hr className="mt-5 mb-5 dark:bg-gray-600" />
+        <hr className="mt-5 mb-5" />
+
         <h2 className="mt-2 text-base tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
           <Linkify componentDecorator={linkDecorator}>
             {fileData.description}
@@ -149,7 +143,7 @@ const ViewDetailPodcast = () => {
 
         {/* Information about Podcast Upload */}
         <div className="mt-20 mb-20">
-          <span className="text-indigo-500 font-semibold">Information</span>
+          <div className="text-indigo-500 font-semibold">Information</div>
 
           <div className="flex justify-between mt-5">
             <div className="items-center flex gap-2">

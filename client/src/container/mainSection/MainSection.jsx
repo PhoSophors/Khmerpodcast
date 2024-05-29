@@ -6,44 +6,19 @@ import Header from "../../components/header/Header";
 import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import Footer from "../../components/footer/Footer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { api_url } from "../../api/config";
-import { message } from "antd";
 import SideMenu from "../../components/sidemenu/SideMenu";
+import { useFileData } from "../../services/useFileData";
 
 const { Content, Sider } = Layout;
 
 const MainSection = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [selectedPodcast, setSelectedPodcast] = useState(null);
   const { id } = useParams();
-
   const location = useLocation();
   const navigate = useNavigate();
+  const { fileData: selectedPodcast} = useFileData(id);
 
-  const selectedMenuItem = useMemo(() => location.pathname, [location.pathname]);
-
-  useEffect(() => {
-    const fetchPodcast = async () => {
-      if (id) {
-        try {
-          const response = await axios.get(`${api_url}/files/get-file/${id}`);
-          if (response.data) {
-            setSelectedPodcast(response.data);
-          } else {
-            message.error("Podcast not found");
-          }
-        } catch (error) {
-          message.error("Error fetching podcast");
-        }
-      } else {
-        setSelectedPodcast(null);
-      }
-    };
-
-    fetchPodcast();
-  }, [id]);
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -58,6 +33,11 @@ const MainSection = () => {
     };
   }, []);
 
+  const selectedMenuItem = useMemo(
+    () => location.pathname,
+    [location.pathname]
+  );
+
   const handleSelectMenuItem = (menuItem) => {
     navigate(menuItem.key);
   };
@@ -66,6 +46,7 @@ const MainSection = () => {
     setCollapsed((prevState) => !prevState);
   };
 
+  // Handle podcast selected
   const handlePodcastSelected = (file) => {
     navigate(`/watch-podcast/${file._id}`);
   };
@@ -73,6 +54,15 @@ const MainSection = () => {
   const handleCloseDetailPodcast = () => {
     navigate("/");
   };
+
+  // 
+  const handleUpdateProfile = () => {
+    navigate(`/update-profile/${id}`);
+  }
+  const handleCloseUpdateProfile = () => {
+    navigate("/");
+  }
+
 
   return (
     <Layout>
@@ -104,6 +94,7 @@ const MainSection = () => {
               <RightSection
                 selectedMenuItem={selectedMenuItem}
                 onPodcastSelected={handlePodcastSelected}
+                onUpdateProfile={handleUpdateProfile}
               />
             )}
           </div>

@@ -10,12 +10,12 @@ const PrivateRoute = ({ children }) => {
   const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
 
   if (!authToken) {
-    return <Navigate to="/register" state={{ from: location }} />;
+    return <Navigate to="/" state={{ from: location }} />;
   }
 
   const decodedToken = jwtDecode(authToken);
 
-  return (decodedToken.role === 'admin' || decodedToken.role === 'user') ? children : <Navigate to="/register" state={{ from: location }} />;
+  return (decodedToken.role === 'admin' || decodedToken.role === 'user') ? children : <Navigate to="/" state={{ from: location }} />;
 };
 
 export default PrivateRoute;

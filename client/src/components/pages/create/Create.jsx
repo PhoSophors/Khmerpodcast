@@ -266,9 +266,9 @@ const Create = () => {
               <Form variant="filled">
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
-                    <p className="font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                    <h2 className="font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                      {t("create.title")} *
-                    </p>
+                    </h2>
                     <Input.TextArea
                       className="create-textarea mt-5 caret-pink-500 dark:text-slate-100 "
                       value={title}

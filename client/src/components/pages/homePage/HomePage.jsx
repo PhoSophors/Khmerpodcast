@@ -48,8 +48,8 @@ const HomePage = () => {
       <div className="xl:p-3 gap-2 p-0 ">
         {/* Display loading spinner if loading state is true */}
         {loading || error ? (
-          <div className="spin-container">
-            <Spin size="large" />
+          <div className="spin-loading mt-20">
+            <Spin />
           </div>
         ) : (
           <>

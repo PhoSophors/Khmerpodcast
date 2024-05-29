@@ -1,19 +1,7 @@
 
 @font-face {
-  font-family: 'NotoSansKhmer Condensed Regular';
-  src: url('../public/fonts/NotoSansKhmer_Condensed-Regular.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'NotoSansKhmer Condensed Semibold';
-  src: url('../public/fonts/NotoSansKhmer_Condensed-SemiBold.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Roboto Regular';
-  src: url('../public/fonts/Roboto-Regular.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Roboto Medium';
-  src: url('../public/fonts/Roboto-Medium.ttf') format('truetype');
+  font-family: 'KhmerOS_battambang';
+  src: url('../public/fonts/KhmerOS_battambang.ttf') format('truetype');
 }
 
 
@@ -26,18 +14,23 @@
 
 
 body {
-  font-family: 'NotoSansKhmer Condensed Regular', '', sans-serif;
+  font-family: 'KhmerOS_battambang', sans-serif;
 }
 
-h1, label, rules, placeholder, a, button, span {
-  font-family: 'NotoSansKhmer Condensed Semibold', 'Roboto Medium', sans-serif;
+h1, span {
+  font-family: 'KhmerOS_battambang' sans-serif;
+  /* font-weight: bold; */
 }
 
-h2, h3, h4 {
-  font-family: 'NotoSansKhmer Condensed Regular', 'Roboto Medium', sans-serif;
-  letter-spacing: 1px;
+h2, h3, h4, label,textarea, rules, placeholder, button, a {
+  font-family: 'KhmerOS_battambang', sans-serif;
 }
 
+.spin-loading {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh -150px);
+}
 
 
 :root {

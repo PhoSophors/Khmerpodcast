@@ -62,41 +62,43 @@ const SideMenu = ({ collapsed }) => {
     setLogoutModalVisible(true);
   };
 
-  const settingsMenu = (
-    <Menu style={{ width: "250px" }}>
-      <Menu.Item>
-        <LanguageSwitcher />
-      </Menu.Item>
-      <Menu.Item key="/theme" onClick={toggleTheme}>
-        <span>
-          {/* Switch appearance */}
-          {theme === "light" ? (
-            <>
-              <div className="flex gap-2">
-                <SunOutlined />
-                {t("siderMenu.darkTheme")}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex gap-2">
-                <MoonOutlined />
-                {t("siderMenu.whiteTheme")}
-              </div>
-            </>
-          )}
-        </span>
-      </Menu.Item>
-      {isLoggedIn && (
-        <Menu.Item onClick={handleLogout}>
-          <div className="flex gap-2">
-            <LogoutOutlined />
-            <span>{t("siderMenu.logout")}</span>
-          </div>
+  const moreMenu = (
+    <div className="more-menu-container">
+      <Menu style={{ width: "250px" }}>
+        <Menu.Item>
+          <LanguageSwitcher />
         </Menu.Item>
-      )}
-      {/* Add more menu items here if needed */}
-    </Menu>
+        <Menu.Item key="/theme" onClick={toggleTheme}>
+          <span>
+            {/* Switch appearance */}
+            {theme === "light" ? (
+              <>
+                <div className="flex gap-2">
+                  <SunOutlined />
+                  {t("siderMenu.darkTheme")}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex gap-2">
+                  <MoonOutlined />
+                  {t("siderMenu.whiteTheme")}
+                </div>
+              </>
+            )}
+          </span>
+        </Menu.Item>
+        {isLoggedIn && (
+          <Menu.Item onClick={handleLogout}>
+            <div className="flex gap-2">
+              <LogoutOutlined />
+              <span>{t("siderMenu.logout")}</span>
+            </div>
+          </Menu.Item>
+        )}
+        {/* Add more menu items here if needed */}
+      </Menu>
+    </div>
   );
 
   return (
@@ -116,7 +118,7 @@ const SideMenu = ({ collapsed }) => {
           className="flex items-center md:p-4 cursor-pointer menu-item-wrapper"
         >
           <img src={logo} alt="logo" className="logo-app" />
-          {collapsed && (
+          {!collapsed && (
             <div className="flex flex-col">
               <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
                 Khmer
@@ -190,7 +192,7 @@ const SideMenu = ({ collapsed }) => {
         )}
 
         <Menu.Item key="/dropdown" icon={getIcon("/more")}>
-          <Dropdown overlay={settingsMenu} trigger={["click"]}>
+          <Dropdown overlay={moreMenu} trigger={["click"]}>
             <a
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}

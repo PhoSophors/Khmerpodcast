@@ -16,6 +16,14 @@ const Profile = () => {
   const id = user ? user._id : null;
   const navigate = useNavigate();
 
+  if (isLoading) {
+    return (
+      <div className="spin-loading">
+        <Spin />
+      </div>
+    );
+  }
+
   return (
     <div className="profile-container h-screen">
       {isViewPodcast && selectedPodcast ? (
@@ -107,11 +115,11 @@ const Profile = () => {
           <div className="col-span-2 w-full">
             <Card className="profile-card" bodyStyle={{ padding: 0 }}>
               {isLoading ? (
-                <div className="spin-container">
+                <div className="spin-loading ">
                   <Spin />
                 </div>
               ) : userFiles.length === 0 ? (
-                <div className="spin-container">
+                <div className="spin-loading">
                   <p className="font-semibold text-gray-500 dark:text-slate-100 uppercase top-0">
                     No Podcasts!
                   </p>

@@ -4,13 +4,22 @@ import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import "./Favorith.css";
 import { useFavorites } from "../../../services/useFavorites";
 import { useNavigate } from "react-router-dom";
+import { Spin } from "antd";
 
 const Favorith = () => {
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
-  const { favorites } = useFavorites();
+  const { favorites, isLoading } = useFavorites();
   const navigate = useNavigate();
 
+
+  if(isLoading) {
+    return (
+      <di className="spin-loading text-center mt-20">
+        <Spin />
+      </di>
+    )
+  }
 
   return (
     <div className="xl:p-5 sm:p-0">

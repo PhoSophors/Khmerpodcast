@@ -25,13 +25,6 @@
   z-index: 20 !important;
   background-color: var(--content-bg) !important;
 }
-.spin-loading {
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  height: 100vh;
-
-}
 
 @media screen and (max-width: 868px) {
   .play-and-more-btn-mobile {

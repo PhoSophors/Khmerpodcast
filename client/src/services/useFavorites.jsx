@@ -6,12 +6,14 @@ import Cookies from "js-cookie";
 
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const authToken = Cookies.get("authToken")
     ? atob(Cookies.get("authToken"))
     : null;
 
   useEffect(() => {
     const fetchFavorites = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`${api_url}/files/get-all-favorite`, {
           headers: {
@@ -28,6 +30,8 @@ export const useFavorites = () => {
           "Error fetching user favorites:",
           error.response?.data?.message || error.message
         );
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -37,6 +41,7 @@ export const useFavorites = () => {
   }, [authToken]);
 
   const toggleFavorite = async (fileId, isFavorite) => {
+    setIsLoading(true);
     try {
       if (!authToken) {
         message.error("Please login to add to favorites");
@@ -70,10 +75,13 @@ export const useFavorites = () => {
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const removePodcastFromFavorites = async (fileId) => {
+    setIsLoading(true);
     try {
       let response;
       response = await fetch(`${api_url}/files/remove-favorite/${fileId}`, {
@@ -92,7 +100,9 @@ export const useFavorites = () => {
     } catch (error) {
       console.error("Error removing podcast from favorites:", error);
       message.error("Error remove podcast in favorites");
+    } finally {
+      setIsLoading(false);
     }
   };
-  return { favorites, toggleFavorite, removePodcastFromFavorites };
+  return { favorites, isLoading, toggleFavorite, removePodcastFromFavorites};
 };
