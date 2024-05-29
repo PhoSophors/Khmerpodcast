@@ -8,6 +8,7 @@ import {
   LinkOutlined,
   MoreOutlined,
   EditOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 import {
   FacebookIcon,
@@ -37,19 +38,15 @@ const MoreBtn = ({ file }) => {
   const isUploader = file.user && currentUser && file.user === currentUser._id;
   const [isEditing, setIsEditing] = useState(false);
 
-
-
-
   const handleToggleFavorite = () => {
     toggleFavorite(file._id, isFavorite);
   };
 
-  
   const handleToggleUpdateMode = () => {
     setIsUpdateMode((prevMode) => !prevMode);
     setIsEditing(true);
   };
-  
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -59,7 +56,6 @@ const MoreBtn = ({ file }) => {
   };
 
   const shareUrl = `https://khmerpodcast.vercel.app/watch-podcast/${file._id}`;
-  // const shareUrl = `http://localhost:5173/watch-podcast/${file._id}`;
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     message.success("Link copied to clipboard");
@@ -136,13 +132,13 @@ const MoreBtn = ({ file }) => {
         </div>
       )}
       <Modal
-        style={{ 
+        style={{
           body: {
             padding: "0",
             overflow: "auto",
             maxHeight: `calc(100vh - 200px)`,
-          }
-         }}
+          },
+        }}
         bodyStyle={{
           padding: "0",
           overflow: "auto",
@@ -153,34 +149,37 @@ const MoreBtn = ({ file }) => {
         onCancel={handleModalCancel}
         footer={null}
         centered
+        closeIcon={
+          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
+        }
       >
-        <Card>
-          <div className="text-center gab-5">
-            <FacebookShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+        <Card className="mt-5">
+          <div className="text-center mb-5 mt-5 dark:text-gray-300 gab-5">
+            <FacebookShareButton url={shareUrl} style={{ margin: "0 5px 10px"}}>
               <FacebookIcon size={45} round />
               <span>Facebook</span>
             </FacebookShareButton>
-            <TwitterShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+            <TwitterShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
               <TwitterIcon size={45} round />
               <span>Twitter</span>
             </TwitterShareButton>
-            <LinkedinShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+            <LinkedinShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
               <LinkedinIcon size={45} round />
               <span>LinkedIn</span>
             </LinkedinShareButton>
-            <TelegramShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+            <TelegramShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
               <TelegramIcon size={45} round />
               <span>Telegram</span>
             </TelegramShareButton>
             <FacebookMessengerShareButton
               url={shareUrl}
               appId="521270401588372"
-              style={{ margin: "0 5px" }}
+              style={{ margin: "0 5px 10px" }}
             >
               <FacebookMessengerIcon size={45} round />
               <span>Messenger</span>
             </FacebookMessengerShareButton>
-            <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px" }}>
+            <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
               <WhatsappIcon size={45} round />
               <span>WhatsApp</span>
             </WhatsappShareButton>

@@ -1,13 +1,11 @@
-
 import React, { useState } from "react";
 import Login from "../auth/login/Login";
 import SideMenu from "../sidemenu/SideMenu";
 import AudioControl from "../audio/AudioControl";
-import { Drawer } from "antd";
 import { useUser } from "../../context/UserContext";
 import "./Header.css";
 import logo from "../assets/logo.jpg";
-import { Avatar, Menu, Alert, Spin, message } from "antd";
+import { Avatar, Menu, Alert, Spin, message, Drawer } from "antd";
 import {
   MenuOutlined,
   MenuUnfoldOutlined,

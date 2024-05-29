@@ -21,6 +21,7 @@ import {
   Button,
   DatePicker,
 } from "antd";
+import { Link } from "react-router-dom";
 
 // Define FileManager component
 const FileManager = () => {
@@ -170,7 +171,9 @@ const FileManager = () => {
                         {(currentPage - 1) * cardsPerPage + index + 1}
                       </td>
                       <td className="text-center">
-                        <Avatar size="large" src={file.image.url} />
+                        <Link to={`/watch-podcast/${file._id}`}>
+                          <Avatar size="large" src={file.image.url} />
+                        </Link>
                       </td>
                       <td className="dark:text-gray-300">
                         {file.title.substring(0, 30)}

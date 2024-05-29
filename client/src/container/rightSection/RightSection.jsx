@@ -8,14 +8,28 @@ const Setting = lazy(() => import("../../components/pages/setting/Setting"));
 const Profile = lazy(() => import("../../components/pages/profile/Profile"));
 const Search = lazy(() => import("../../components/pages/search/Search"));
 const Create = lazy(() => import("../../components/pages/create/Create"));
-const Dashboard = lazy(() => import("../../components/pages/admin/dashboard/Dashboard"));
+const Dashboard = lazy(() =>
+  import("../../components/pages/admin/dashboard/Dashboard")
+);
 const AllUser = lazy(() => import("../../components/pages/admin/user/AllUser"));
-const FileManager = lazy(() => import("../../components/pages/admin/user/FileManager"));
-const UpdatePodcast = lazy(() => import("../../components/pages/create/UpdatePodcast"));
-const ViewDetailPodcast = lazy(() => import("../../components/pages/viewDetailPodcast/ViewDetailPodcast"));
-const EditProfile = lazy(() => import("../../components/pages/profile/EditProfile"));
+const FileManager = lazy(() =>
+  import("../../components/pages/admin/user/FileManager")
+);
+const UpdatePodcast = lazy(() =>
+  import("../../components/pages/create/UpdatePodcast")
+);
+const ViewDetailPodcast = lazy(() =>
+  import("../../components/pages/viewDetailPodcast/ViewDetailPodcast")
+);
+const EditProfile = lazy(() =>
+  import("../../components/pages/profile/EditProfile")
+);
 
-const RightSection = ({ onPodcastSelected, onUpdateProfile, selectedPodcast }) => {
+const RightSection = ({
+  onPodcastSelected,
+  onUpdateProfile,
+  selectedPodcast,
+}) => {
   const location = useLocation();
   const [content, setContent] = useState(null);
   const { id } = useParams();
@@ -72,15 +86,17 @@ const RightSection = ({ onPodcastSelected, onUpdateProfile, selectedPodcast }) =
         setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
         break;
     }
-  }, [location.pathname, selectedPodcast, onPodcastSelected, onUpdateProfile, id]);
+  }, [
+    location.pathname,
+    selectedPodcast,
+    onPodcastSelected,
+    onUpdateProfile,
+    id,
+  ]);
 
   return (
     <div className="right-section md:p-0">
-      <div className="content-container">
-        <Suspense fallback={<div>Loading...</div>}>
-          {content}
-        </Suspense>
-      </div>
+      <div className="content-container">{content}</div>
     </div>
   );
 };

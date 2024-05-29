@@ -108,12 +108,15 @@ const UpdatePodcast = ({ file }) => {
   return (
     <div>
       <Modal
-        className="modal-container xl:min-w-[800px]"
+        className="modal-container xl:min-w-[800px]  md:min-w-[800px]"
         title="Update Podcast"
         visible={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
         centered
+        closeIcon={
+          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
+        }
         bodyStyle={{
           padding: "0",
           overflow: "auto",
@@ -130,7 +133,7 @@ const UpdatePodcast = ({ file }) => {
           }}
         >
           <Card className="mt-5 bg-slate-50">
-            <p className="font-semibold text-gray-500 uppercase tracking-wide">
+            <p className="font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
               Title *
             </p>
             <Form.Item name="title">
@@ -142,7 +145,7 @@ const UpdatePodcast = ({ file }) => {
               />
             </Form.Item>
 
-            <p className="font-semibold text-gray-500 uppercase tracking-wide">
+            <p className="font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
               Description *
             </p>
             <Form.Item name="description">

@@ -45,7 +45,7 @@
   padding: 0;
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--audio-icon);
+  background-color: var(--audio-icon) !important;
 }
 
 .volume-control input::-webkit-slider-thumb {
@@ -54,13 +54,13 @@
   width: 10px;
   height: 10px;
   border-radius: 20px;
-  background: var(--audio-icon);
+  background: var(--audio-icon) !important;
   cursor: pointer;
 }
 
 .volume-icon-style {
   font-size: 12px;
-  color: var(--audio-icon);
+  color: var(--audio-icon) !important;
 
 }
 
@@ -83,7 +83,7 @@
   padding: 0;
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--audio-icon);
+  background-color: var(--audio-icon) !important;
 }
 
 .time-control input::-webkit-slider-thumb {
@@ -92,7 +92,7 @@
   width: 10px;
   height: 10px;
   border-radius: 20px;
-  background: var(--audio-icon);
+  background: var(--audio-icon) !important;
   cursor: pointer;
 }
 

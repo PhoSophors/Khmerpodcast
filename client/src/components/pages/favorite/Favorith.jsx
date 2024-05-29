@@ -22,7 +22,7 @@ const Favorith = () => {
   }
 
   return (
-    <div className="xl:p-5 sm:p-0">
+    <div className="xl:p-5 sm:p-0 h-screen">
       {favorites.length === 0 ? (
         <div className="favorites">
           <svg

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, lazy, Suspense } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Layout } from "antd";
 import "./MainSection.css";
 import RightSection from "../rightSection/RightSection";
@@ -57,7 +57,7 @@ const MainSection = () => {
   };
 
   return (
-    <Layout>
+    <Layout className="mainSection-container">
       {!isMobileView && (
         <Sider collapsed={collapsed} breakpoint="md">
           <SideMenu

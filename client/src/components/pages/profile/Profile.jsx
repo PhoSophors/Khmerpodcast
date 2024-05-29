@@ -24,6 +24,7 @@ const Profile = () => {
     );
   }
 
+
   return (
     <div className="profile-container h-screen">
       {isViewPodcast && selectedPodcast ? (

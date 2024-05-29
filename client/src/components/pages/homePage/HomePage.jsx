@@ -5,7 +5,7 @@ import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import axios from "axios";
 import "./HomePage.css";
 import { api_url } from "../../../api/config";
-import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
+import { useNavigate } from 'react-router-dom'; 
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="xl:p-3 gap-2 p-0 ">
+      <div className="xl:p-3 gap-2 p-0 homepage">
         {/* Display loading spinner if loading state is true */}
         {loading || error ? (
           <div className="spin-loading mt-20">

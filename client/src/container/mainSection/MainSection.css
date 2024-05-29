@@ -23,11 +23,13 @@ body {
 @media screen and (max-width: 768px) {
   .content-containers {
     padding: 0;
-    height: auto;
-
+    /* height: auto; */
+    height: calc(100vh - 70px);
   }
   .content-card {
-    height: calc(100vh - 70px);
+    height: calc(100vh - 20vh);
+
+    overflow: auto;
     border-radius: 0;
   }
 }

@@ -31,6 +31,7 @@ const Login = ({ visible, onCancel }) => {
   return (
     <Modal
       visible={visible}
+      centered 
       maskClosable={true}
       footer={null}
       keyboard={true}

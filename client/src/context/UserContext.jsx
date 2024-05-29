@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUserData = async () => {
       setIsLoading(true);
 
       try {
@@ -70,7 +70,7 @@ export const UserProvider = ({ children }) => {
         setIsLoading(false);
       }
     };
-    fetchData();
+    fetchUserData();
   }, [id, authToken]);
 
   return (

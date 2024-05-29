@@ -64,7 +64,7 @@ const SideMenu = ({ collapsed }) => {
 
   const moreMenu = (
     <div className="more-menu-container">
-      <Menu style={{ width: "250px" }}>
+      <Menu style={{ width: "300px" }}>
         <Menu.Item>
           <LanguageSwitcher />
         </Menu.Item>
