@@ -109,7 +109,8 @@ const ForgotPassword = () => {
               </div>
 
               <Button
-                className="mt-5 bg-indigo-600 text-white w-36 h-12 rounded-full hover:none"
+                className="mt-10 w-36 h-12  bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-xl"
+                size="large"
                 onClick={handleForgotPassword}
                 loading={loading}
                 style={{ float: "right" }}

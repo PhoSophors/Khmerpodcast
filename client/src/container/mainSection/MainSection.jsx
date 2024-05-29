@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import { Layout } from "antd";
 import "./MainSection.css";
 import RightSection from "../rightSection/RightSection";
 import Header from "../../components/header/Header";
-import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
 import Footer from "../../components/footer/Footer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SideMenu from "../../components/sidemenu/SideMenu";
@@ -17,8 +16,7 @@ const MainSection = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { fileData: selectedPodcast} = useFileData(id);
-
+  const { fileData: selectedPodcast } = useFileData(id);
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -46,7 +44,6 @@ const MainSection = () => {
     setCollapsed((prevState) => !prevState);
   };
 
-  // Handle podcast selected
   const handlePodcastSelected = (file) => {
     navigate(`/watch-podcast/${file._id}`);
   };
@@ -55,14 +52,9 @@ const MainSection = () => {
     navigate("/");
   };
 
-  // 
   const handleUpdateProfile = () => {
     navigate(`/update-profile/${id}`);
-  }
-  const handleCloseUpdateProfile = () => {
-    navigate("/");
-  }
-
+  };
 
   return (
     <Layout>
@@ -85,9 +77,9 @@ const MainSection = () => {
 
           <div className="content-card">
             {id ? (
-              <ViewDetailPodcast
+              <RightSection
                 id={id}
-                file={selectedPodcast}
+                selectedPodcast={selectedPodcast}
                 onClose={handleCloseDetailPodcast}
               />
             ) : (

@@ -176,23 +176,23 @@ const Register = () => {
                 </Button>
               </Form.Item>
 
-              <h1 className="text-center mb-4">{t("register.or")}</h1>
+              <h1 className="text-center  dark:text-gray-300 mb-4">{t("register.or")}</h1>
 
               {/* <SigninWithGoogles /> */}
 
-              <h1 className="text-center mb-4 mt-5">
-                <span className="text-black ">
+              <h1 className="text-center  mb-4 mt-5 flex gap-2 justify-center">
+                <span className="text-black  dark:text-gray-300">
                   {t("register.haveAccount")}{" "}
                 </span>
                 <Link to="/">
-                  <span className="text-indigo-600  hover:underline  font-bold">
+                  <span className="text-indigo-600  dark:text-gray-300 hover:underline  font-bold">
                     {t("register.login")}{" "}
                   </span>
                 </Link>
               </h1>
 
               <hr className="mt-5" />
-              <p className="text-gray-600 mt-5 text-center">
+              <p className="text-gray-600  dark:text-gray-300 mt-5 text-center">
                 {t("register.termsAndConditions")}
               </p>
             </Form>

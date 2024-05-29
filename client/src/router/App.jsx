@@ -5,15 +5,15 @@ import { useUser } from "../context/UserContext";
 import AppLoading from "../components/apploading/AppLoading";
 import PrivateRoute from "./PrivateRoute";
 import GuestRoute from "./GuestRoute";
+// import MainSection from "../container/mainSection/MainSection";
+import Login from "../components/auth/login/Login";
+import Register from "../components/auth/register/Register";
+import Otp from "../components/auth/otp/Otp";
+import ForgotPassword from "../components/auth/forgotPassword/ForgotPassword";
 
 // Lazy load components
-const MainSection = lazy(() => import("../container/mainSection/MainSection"));
-const Login = lazy(() => import("../components/auth/login/Login"));
-const Register = lazy(() => import("../components/auth/register/Register"));
-const Otp = lazy(() => import("../components/auth/otp/Otp"));
-const ForgotPassword = lazy(() => import("../components/auth/forgotPassword/ForgotPassword"));
-const EditProfile = lazy(() => import("../components/pages/profile/EditProfile"));
 const PublicProfile = lazy(() => import("../components/pages/profile/PublicProfile"));
+const MainSection = lazy(() => import("../container/mainSection/MainSection"));
 
 const App = () => {
   const { isLoading, userRole } = useUser();
@@ -28,6 +28,7 @@ const App = () => {
           <Route path="/" element={<MainSection />} />
           <Route path="/search" element={<MainSection />} />
           <Route path="/watch-podcast/:id" element={<MainSection />} />
+          <Route path="/public-profile/:id" element={<PublicProfile />} />
 
           {/* Admin routes */}
           {userRole === "admin" ? (
@@ -52,9 +53,8 @@ const App = () => {
           <Route path="/profile" element={<PrivateRoute><MainSection /></PrivateRoute>} />
           <Route path="/setting" element={<PrivateRoute><MainSection /></PrivateRoute>} />
           <Route path="/update-podcast" element={<PrivateRoute><MainSection /></PrivateRoute>} />
+          <Route path="/update-profile/:id" element={<PrivateRoute> <MainSection /></PrivateRoute>} />
 
-          <Route path="/edit-profile/:id" element={<PrivateRoute> <EditProfile /></PrivateRoute>} />
-          <Route path="/public-profile/:id" element={<PublicProfile />} />
 
         </Routes>
       )}

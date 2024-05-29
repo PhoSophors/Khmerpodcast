@@ -17,21 +17,110 @@ body {
   font-family: 'KhmerOS_battambang', sans-serif;
 }
 
-h1, span {
+h1, span, div, h2, h3, h4, label,textarea, rules, placeholder, button, a, p, input, title {
   font-family: 'KhmerOS_battambang' sans-serif;
-  /* font-weight: bold; */
 }
 
-h2, h3, h4, label,textarea, rules, placeholder, button, a {
+input::placeholder, textarea::placeholder {
   font-family: 'KhmerOS_battambang', sans-serif;
 }
-
 .spin-loading {
   display: flex;
   justify-content: center;
   height: calc(100vh -150px);
 }
+.back-btn-view-podcast {
+  background-color: var(--back-btn-view-podcast);
+} 
 
+
+/* ============================================ */
+.ant-card {
+  background-color: var(--card-hover) ;
+  border-color: var(--border-color);
+}
+.ant-card-head-title {
+  color: var(--text-color) !important;
+}
+.ant-form-item-label  {
+  color: var(--text-color) !important;
+}
+.ant-input-affix-wrapper  {
+  background-color: var(--input-bg) !important;
+}
+.ant-input {
+  color: var(--text-color) !important;
+}
+
+.ant-input-textarea-affix-wrapper{
+  background-color: var(--card-hover) !important;
+}
+/* Firefox */
+.ant-input-affix-wrapper input::-moz-placeholder,
+.ant-input-textarea-affix-wrapper textarea::-moz-placeholder {
+  color: var(--placeholder-color-text-area) !important;
+}
+
+/* Chrome, Safari, Opera */
+.ant-input-affix-wrapper input::-webkit-input-placeholder,
+.ant-input-textarea-affix-wrapper textarea::-webkit-input-placeholder {
+  color: var(--placeholder-color-text-area) !important;
+}
+
+/* Internet Explorer */
+.ant-input-affix-wrapper input:-ms-input-placeholder,
+.ant-input-textarea-affix-wrapper textarea:-ms-input-placeholder {
+  color: var(--placeholder-color-text-area) !important;
+}
+
+.ant-input-data-count {
+  color: var(--text-color) !important;
+}
+
+/* Firefox */
+input::-moz-placeholder {
+  color: var(--placeholder-color) !important;
+}
+
+/* Chrome, Safari, Opera */
+input::-webkit-input-placeholder {
+  color: var(--placeholder-color) !important;
+}
+
+/* Internet Explorer */
+input:-ms-input-placeholder {
+  color: var(--placeholder-color) !important;
+}
+
+input, placeholder {
+  background-color:  var(--input-bg) !important;
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+label, title {
+  color: var(--text-color) !important;
+}
+
+/* ===================== ant modal ======================= */
+.ant-modal-content {
+  background-color: var(--content-bg) !important;
+}
+.ant-modal-title {
+  background-color: var(--content-bg) !important;
+  color: var(--text-color) !important;
+}
+.ant-modal-body {
+  background-color: var(--content-bg) !important;
+}
+
+.ant-modal-mask {
+  /* background-color: var(--loading-overlay) !important; */
+}
+
+.ant-picker {
+  background-color: var(--card-hover) !important;
+}
 
 :root {
   --bg-color: #4f46e5;
@@ -52,6 +141,10 @@ h2, h3, h4, label,textarea, rules, placeholder, button, a {
   --loading-overlay: rgb(236, 233, 233);
   --text-area-bg: #f1f5f9;
   --dropdown-bg: #fff;
+  --input-bg: #fff;
+
+  --placeholder-color: #9f9f9f;
+  --placeholder-color-text-area: #9f9f9f;
 
   --audio-icon: #4f46e5;
 
@@ -128,6 +221,9 @@ h2, h3, h4, label,textarea, rules, placeholder, button, a {
   --loading-overlay: #282828;
   --text-area-bg: #373737;
   --dropdown-bg: #373737;
+  --input-bg: #282828;
+
+  --placeholder-color-text-area: #b7babd;
 
 
   --sider-item-selected: #1C1C1C;

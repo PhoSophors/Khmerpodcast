@@ -215,7 +215,7 @@ const SideMenu = ({ collapsed }) => {
       >
         <div className="modal-logout mt-10 flex flex-col items-center">
           <img src={logo} alt="" />
-          <h1 className="text-center text-xl text-indigo-500 font-semibold mb-4 mt-5">
+          <h1 className="text-center text-xl text-indigo-500 dark:text-gray-300 font-semibold mb-4 mt-5">
             Are you sure you want to logout your account?
           </h1>
 
@@ -228,7 +228,7 @@ const SideMenu = ({ collapsed }) => {
 
           <button
             onClick={handleCancelLogout}
-            className="text-slate-600 hover:text-indigo-600 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
+            className="text-slate-600 hover:text-indigo-600 dark:text-gray-300 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
           >
             Cancel
           </button>

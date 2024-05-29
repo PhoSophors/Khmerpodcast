@@ -43,20 +43,24 @@
   }
 }
 
-/* edit profile */
-.saveBtn {
-  color: var(--gray-300);
-  border: none;
-  border-radius: 10px;
-  width: 100%;
-  cursor: pointer;
-  bottom: -10px;
+/* Update profile */
+.update-profile-container  {
+  height: calc(100vh - 150px);
 }
+.update-profile-card {
+  /* border: none !important; */
+  background-color: var(--card-hover) !important;
+  border-color:  var(--border-color) !important;
+}
+.uploadProgress {
+  background-color: var(--card-hover) !important;
+}
+
 @media screen and (max-width: 768px) {
-  .edit-profile-card {
+  .update-profile-card {
     height: 100vh !important;
     width: 100% !important;
-    min-height: 100vh !important;
+    min-height: calc(100vh - 140px) !important;
     border: none ;
     border-radius: 0;
   }

@@ -100,7 +100,7 @@ const Profile = () => {
                   </h2>
                 </div>
 
-                <Link to={`/edit-profile/${id}`}>
+                <Link to={`/update-profile/${id}`}>
                   <Button
                     className="mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-xl"
                     size="large"

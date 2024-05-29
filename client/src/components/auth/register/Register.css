@@ -2,7 +2,7 @@
 .main-register {
   justify-content: center;
   align-items: center;
-  background-color: #4f46e5 !important;
+  background-color: var(--bg-color) !important;
   height: 100vh;
   overflow: auto;
 }

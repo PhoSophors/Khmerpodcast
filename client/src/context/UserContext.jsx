@@ -70,13 +70,7 @@ export const UserProvider = ({ children }) => {
         setIsLoading(false);
       }
     };
-
-    if (
-      window.performance.navigation.type ===
-      window.performance.navigation.TYPE_RELOAD
-    ) {
-      fetchData();
-    }
+    fetchData();
   }, [id, authToken]);
 
   return (

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { message } from "antd";
+import { message, notification } from "antd";
 import { api_url } from "../api/config";
 import Cookies from "js-cookie";
 
@@ -26,10 +26,11 @@ export const useFavorites = () => {
           console.error("Unexpected response status:", response.status);
         }
       } catch (error) {
-        message.error(
-          "Error fetching user favorites:",
-          error.response?.data?.message || error.message
-        );
+        // notification.error({
+        //   message: "Error fetching user favorites:",
+        //   description: error.message
+        //   // error.response?.data?.message || error.message
+        // });
       } finally {
         setIsLoading(false);
       }

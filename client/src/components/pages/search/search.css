@@ -15,17 +15,8 @@
   border-radius: 15px;
   border: 0;
   background-color: var(--search-input-bg);
+  border: 1px solid var(--border-color) !important;
 }
-.search-input .ant-input::placeholder {
-  color: var(--text-color) !important;
-}
-
-.search-input:hover {
-  border: none;
-  /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15); */
-  background-color: var(--search-input-bg);
-}
-
 
 /* Media query for mobile screens */
 @media screen and (max-width: 768px) {

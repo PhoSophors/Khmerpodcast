@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../services/useAuth";
+import { CloseOutlined } from "@ant-design/icons";
 
 const Login = ({ visible, onCancel }) => {
   const navigate = useNavigate();
@@ -34,12 +35,15 @@ const Login = ({ visible, onCancel }) => {
       footer={null}
       keyboard={true}
       onCancel={handleCancel}
+      closeIcon={
+        <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
+      }
     >
       <div className="flex flex-col items-center p-4">
         <h1 className="text-center mb-4 mt-5">
-          <span className="title mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500">
+          <h1 className="title mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500">
             {t("login.title")}
-          </span>
+          </h1>
         </h1>
 
         <Form
@@ -72,7 +76,7 @@ const Login = ({ visible, onCancel }) => {
 
           <Form.Item style={{ marginTop: "-20px" }}>
             <Link to="/forgotPassword">
-              <h1 className="text-end hover:underline font-bold text-indigo-600 ">
+              <h1 className="text-end hover:underline font-bold text-indigo-600  dark:text-gray-300">
                 {t("login.forgotPassword")}
               </h1>
             </Link>
@@ -93,22 +97,22 @@ const Login = ({ visible, onCancel }) => {
             </Button>
           </Form.Item>
 
-          <h1 className="text-center mb-4">{t("login.or")}</h1>
+          <h1 className="text-center  dark:text-gray-300 mb-4">{t("login.or")}</h1>
 
           {/* <SigninWithGoogle /> */}
 
-          <h1 className="text-center mb-4 mt-5">
-            <span className="text-black ">{t("login.notHaveAccount")}</span>
+          <h1 className="text-center justify-center mb-4 mt-5 gap-2 flex">
+            <span className="text-gray-600 dark:text-gray-300">{t("login.notHaveAccount")}</span>
             <Link to="/register">
-              <span className="text-indigo-600 hover:underline  font-bold">
+              <span className="text-indigo-600  dark:text-gray-300 hover:underline  font-bold">
                 {t("login.signUp")}
               </span>
             </Link>
           </h1>
           <hr className="mt-5" />
-          <p className="text-gray-600 mt-5 text-center">
+          <h1 className="text-gray-600 dark:text-gray-300 mt-5 text-center">
             {t("login.discription")}
-          </p>
+          </h1>
         </Form>
       </div>
     </Modal>

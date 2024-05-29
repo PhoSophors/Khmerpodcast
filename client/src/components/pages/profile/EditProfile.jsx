@@ -43,7 +43,7 @@ const EditProfile = () => {
 
   if (isLoading) {
     return (
-      <div className="spin-loading bg-indigo-600 mt-10 ">
+      <div className="p-10 spin-loading ">
         <Spin />
       </div>
     );
@@ -124,77 +124,71 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="bg-indigo-600">
-      <div className="flex flex-col w-full items-center justify-center h-screen text-center">
-        <Card
-          title="Edit Profile"
-          className="p-2.5 h-4/6 edit-profile-card bg-slate-100"
-        >
-          <BackBtn />
-          <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
-            <Form.Item className="text-center flex justify-center">
-              <ImgCrop>
-                <Upload
-                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                  listType="picture-card"
-                  fileList={imageFileList}
-                  accept=".jpg, .jpeg"
-                  onChange={handleProfileImageChange}
-                  onPreview={handlePreview}
-                >
-                  {imageFileList.length === 0 && (
-                    <Avatar
-                      style={{ borderRadius: "10px" }}
-                      src={profileImage}
-                      size={100}
-                    />
-                  )}
-                </Upload>
-              </ImgCrop>
-              <Modal
-                visible={previewOpen}
-                title={previewTitle}
-                footer={null}
-                onCancel={handleCancelPreview}
+    <div className="update-profile-container flex flex-col w-full items-center justify-center  text-center">
+      <Card
+        title="Edit Profile"
+        className="p-2.5 h-4/6 update-profile-card bg-slate-100"
+      >
+        <BackBtn />
+        <Form layout="vertical" className="xl:w-96 md:w-96 min-w-full">
+          <Form.Item className="text-center flex justify-center">
+            <ImgCrop>
+              <Upload
+                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                listType="picture-card"
+                fileList={imageFileList}
+                accept=".jpg, .jpeg"
+                onChange={handleProfileImageChange}
+                onPreview={handlePreview}
               >
-                <img
-                  alt="preview"
-                  style={{ width: "100%" }}
-                  src={previewImage}
-                />
-              </Modal>
-            </Form.Item>
-            <Form.Item label="Username *">
-              <Input
-                value={username}
-                onChange={handleUsernameChange}
-                className="input-field"
-              />
-            </Form.Item>
+                {imageFileList.length === 0 && (
+                  <Avatar
+                    style={{ borderRadius: "10px" }}
+                    src={profileImage}
+                    size={100}
+                  />
+                )}
+              </Upload>
+            </ImgCrop>
+            <Modal
+              visible={previewOpen}
+              title={previewTitle}
+              footer={null}
+              onCancel={handleCancelPreview}
+            >
+              <img alt="preview" style={{ width: "100%" }} src={previewImage} />
+            </Modal>
+          </Form.Item>
+          <Form.Item label="Username *">
+            <Input
+              value={username}
+              onChange={handleUsernameChange}
+              className="input-field"
+            />
+          </Form.Item>
 
-            <div className="w-full mt-5 bg-slate-100 rounded-full">
-              <div
-                className="bg-indigo-500 text-xs font-medium text-slate-100 text-center p-0 leading-none rounded-full"
-                style={{ width: `${uploadProgress}%` }}
-              >
-                {" "}
-                {uploadProgress}%
-              </div>
+          <div className="w-full uploadProgress mt-5 rounded-full">
+            <div
+              className="bg-indigo-500 text-xs font-medium text-slate-100 text-center p-0 leading-none rounded-full"
+              style={{ width: `${uploadProgress}%` }}
+            >
+              {" "}
+              {uploadProgress}%
             </div>
+          </div>
 
-            <Form.Item>
-              <Button
-                onClick={() => handleUpdateProfile(true)}
-                className="saveBtn mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4"
-                size="large"
-                loading={isLoading} // Use loading state for the Button component
-              >
-                Save Changes
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
-      </div>
+          <Form.Item>
+            <Button
+              onClick={() => handleUpdateProfile(true)}
+              className="mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-xl"
+              size="large"
+              loading={isLoading} // Use loading state for the Button component
+            >
+              Save Changes
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </div>
   );
 };

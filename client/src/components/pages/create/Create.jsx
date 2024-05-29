@@ -158,23 +158,23 @@ const Create = () => {
           style={{ backgroundColor: "transparent", border: "none" }}
           bodyStyle={{ padding: 0 }}
         >
-          <div className="uppercase xl:text-start md:text-start text-ceter tracking-wide text-xl md:mt-3 mt-3 text-indigo-500 font-semibold">
+          <h1 className="uppercase xl:text-start md:text-start text-ceter text-2xl md:mt-3 mt-3 text-indigo-500 font-semibold">
             {t("create.welcomeTitle")}
-          </div>
-          <div className="tracking-wide text-start md:text-start text-ceter text-sm text-gray-500 dark:text-gray-300">
+          </h1>
+          <h1 className="tracking-wide mx-5 xl:mx-0 md:mx-0 text-base  xl:text-start md:text-start text-ceter text-gray-500 dark:text-gray-300">
             {t("create.welcomeDescription")}
-          </div>
+          </h1>
 
           <div className="upload-section mt-5">
             <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5">
               {/* set two colum */}
               <div className="w-full sm:w-1/2">
-                <div className="mt-5  text-start  font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-300">
+                <h1 className="mt-5  text-base text-start  font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-300">
                   {t("create.audioSupport")}
-                </div>
-                <div className="text-gray-500 text-start dark:text-gray-300">
+                </h1>
+                <h1 className="text-gray-500 text-base text-start dark:text-gray-300">
                   {t("create.audioFormat")}
-                </div>
+                </h1>
                 {/* upload audio */}
                 <Card className="mt-5 create-card-bg">
                   {fileList.length > 0 ? (
@@ -188,7 +188,7 @@ const Create = () => {
                               )}
                               type="audio/mpeg"
                             />
-                            Your browser does not support the audio element.
+                            <h1 className="text-base ">Your browser does not support the audio element</h1>
                           </audio>
                         </div>
                         <div className="flex items-center">
@@ -222,12 +222,12 @@ const Create = () => {
 
               {/* upload  thumbnail */}
               <div className="w-full sm:w-1/2 ">
-                <div className="mt-5 text-start  font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                <h1 className="mt-5  text-base  text-start  font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                   {t("create.imageSupport")}
-                </div>
-                <div className="text-gray-500 dark:text-gray-300 text-start ">
+                </h1>
+                <h1 className=" text-base  text-gray-500 dark:text-gray-300 text-start ">
                   {t("create.imageFormat")}
-                </div>
+                </h1>
                 <Card className="mt-5 items-center flex justify-center create-card-bg">
                   <ImgCrop>
                     <Upload
@@ -266,9 +266,9 @@ const Create = () => {
               <Form variant="filled">
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
-                    <h2 className="font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                    <h1 className=" text-base  font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                      {t("create.title")} *
-                    </h2>
+                    </h1>
                     <Input.TextArea
                       className="create-textarea mt-5 caret-pink-500 dark:text-slate-100 "
                       value={title}
@@ -280,9 +280,9 @@ const Create = () => {
                     />
                   </div>
                   <div className="w-full sm:w-3/5">
-                    <p className="font-semibold text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                    <h1 className=" text-base  font-semibold text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                       {t("create.description")} *
-                    </p>
+                    </h1>
                     <Input.TextArea
                       className="create-textarea mt-5 caret-pink-500 dark:text-slate-100"
                       value={description}

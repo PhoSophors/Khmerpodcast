@@ -3,18 +3,19 @@ import { Card, Spin, message, Avatar } from "antd";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
-import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
+import {  UserOutlined } from "@ant-design/icons";
 import Linkify from "react-linkify";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
 import { useFileData } from "../../../services/useFileData"; // Import the new useFileData hook
-import { useNavigate } from "react-router-dom";
+import BreadcrumbBtn from "../../Btn/BreadcrumbBtn";
+
 
 const ViewDetailPodcast = () => {
   const { id } = useParams();
   const { isLoading: userLoading } = useUser(); // Use useUser hook for user-related data
   const { isLoading: fileLoading, fileData } = useFileData(id); // Use useFileData hook for file-related data
-  const navigate = useNavigate();
+
 
   if (userLoading || fileLoading) {
     return (
@@ -29,9 +30,6 @@ const ViewDetailPodcast = () => {
     return <div className="p-10 text-center">File data not found</div>; // Display a message if fileData is not found
   }
 
-  const handleCloseDetailPodcast = () => {
-    navigate(-1);
-  };
 
   const linkDecorator = (href, text, key) => (
     <a
@@ -48,14 +46,7 @@ const ViewDetailPodcast = () => {
   return (
     <div className="min-w-full">
       <Card className="view-podcast-card">
-        <div className="p-2 back-btn-view-podcast w-full rounded-xl ">
-          <div
-            onClick={handleCloseDetailPodcast}
-            className="p-3 cursor-pointer text-white bg-pink-600 h-8 w-9 flex justify-center items-center rounded-full"
-          >
-            <ArrowLeftOutlined />
-          </div>
-        </div>
+        <BreadcrumbBtn />
 
         <div className="w-full container-view-podcast mt-5">
           <Card
@@ -135,7 +126,7 @@ const ViewDetailPodcast = () => {
 
         <hr className="mt-5 mb-5" />
 
-        <h2 className="mt-2 text-base tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
+        <h2 className="mt-2 xl:text-base md:text-base text-md tracking-wide text-slate-500 dark:text-gray-300 xl:w-6/12 md:w-6/12 w-full">
           <Linkify componentDecorator={linkDecorator}>
             {fileData.description}
           </Linkify>

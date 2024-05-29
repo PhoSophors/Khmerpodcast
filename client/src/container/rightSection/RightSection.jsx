@@ -1,7 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
-import { useLocation } from "react-router-dom";
-import EditProfile from "../../components/pages/profile/EditProfile";
+import { useLocation, useParams } from "react-router-dom";
 
+// Lazy load components
 const Favorith = lazy(() => import("../../components/pages/favorite/Favorith"));
 const HomePage = lazy(() => import("../../components/pages/homePage/HomePage"));
 const Setting = lazy(() => import("../../components/pages/setting/Setting"));
@@ -13,14 +13,15 @@ const AllUser = lazy(() => import("../../components/pages/admin/user/AllUser"));
 const FileManager = lazy(() => import("../../components/pages/admin/user/FileManager"));
 const UpdatePodcast = lazy(() => import("../../components/pages/create/UpdatePodcast"));
 const ViewDetailPodcast = lazy(() => import("../../components/pages/viewDetailPodcast/ViewDetailPodcast"));
+const EditProfile = lazy(() => import("../../components/pages/profile/EditProfile"));
 
-
-const RightSection = ({ onPodcastSelected, onUpdateProfile,  file }) => {
+const RightSection = ({ onPodcastSelected, onUpdateProfile, selectedPodcast }) => {
   const location = useLocation();
   const [content, setContent] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    switch ( location.pathname ) {
+    switch (location.pathname) {
       case "/":
         setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
         break;
@@ -48,25 +49,35 @@ const RightSection = ({ onPodcastSelected, onUpdateProfile,  file }) => {
       case "/all-user-upload":
         setContent(<FileManager />);
         break;
-      case `/watch-podcast/${file?._id}`:
-        setContent(<ViewDetailPodcast file={file} onPodcastSelected={onPodcastSelected} />);
+      case `/watch-podcast/${selectedPodcast?._id}`:
+        setContent(
+          <ViewDetailPodcast
+            file={selectedPodcast}
+            onPodcastSelected={onPodcastSelected}
+          />
+        );
         break;
       case "/update-podcast":
-        setContent(<UpdatePodcast file={file} onPodcastSelected={onPodcastSelected} />);
+        setContent(
+          <UpdatePodcast
+            file={selectedPodcast}
+            onPodcastSelected={onPodcastSelected}
+          />
+        );
         break;
-      case "/update-profile" :
-        setContent(<EditProfile onUpdateProfile={onUpdateProfile} /> )
+      case `/update-profile/${id}`:
+        setContent(<EditProfile onUpdateProfile={onUpdateProfile} />);
         break;
       default:
         setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
         break;
     }
-  }, [location.pathname, file, onPodcastSelected, onUpdateProfile]);
+  }, [location.pathname, selectedPodcast, onPodcastSelected, onUpdateProfile, id]);
 
   return (
     <div className="right-section md:p-0">
       <div className="content-container">
-        <Suspense >
+        <Suspense fallback={<div>Loading...</div>}>
           {content}
         </Suspense>
       </div>

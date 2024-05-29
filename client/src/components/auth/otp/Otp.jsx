@@ -70,7 +70,7 @@ const Otp = () => {
   };
 
   return (
-    <div className="bg-indigo-600">
+    <div style={{ backgroundColor: `var(--content-bg)` }}>
       <BackBtn />
 
       <div className="flex flex-col w-full xl-min-w-96 items-center justify-center h-screen text-center p-5">
@@ -78,10 +78,10 @@ const Otp = () => {
           <div className="mt-10">
             <SafetyOutlined style={{ fontSize: "100px", color: "#4f46e5" }} />
           </div>
-          <h1 className="mt-10">
+          <h1 className="mt-10  dark:text-gray-300">
             We have sent you an access code via email verification:
           </h1>
-          <h1 className="mb-10 font-bold">{email}</h1>
+          <h1 className="mb-10 font-bold  dark:text-gray-100">{email}</h1>
           <Row gutter={16}>
             {otpValues.map((value, index) => (
               <Col key={index} span={4}>

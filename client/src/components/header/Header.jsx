@@ -126,14 +126,14 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
           ) : isLoggedIn ? (
             // Render the user's profile if the user is logged in
             <div className=" items-center flex">
-              <div className="username-header cursor-pointer uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
+              <div className="username-header uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
                 {user && user.username.split(" ")[0]}
               </div>
               &nbsp;
               <Avatar
                 className="avatar"
                 src={user && user.profileImage}
-                style={{ cursor: "pointer", border: "1px solid #6366f1" }}
+                style={{ border: "1px solid #6366f1" }}
                 size="large"
                 icon={<UserOutlined />}
               />

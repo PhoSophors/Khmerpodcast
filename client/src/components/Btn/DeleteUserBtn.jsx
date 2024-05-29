@@ -72,15 +72,15 @@ const DeleteUserBtn = ({ user }) => {
             <h1 className="text-center text-xl text-red-500 font-semibold mb-4 mt-5">
               Are you sure you want to delete this user?
             </h1>
-            <h1 className="text-center  text-gray-500 ">
+            <h1 className="text-center dark:text-gray-300 text-gray-500 ">
               This Action{" "}
-              <span className="font-semibold  text-gray-600">CANNOT</span> be
+              <span className="font-semibold text-gray-600 dark:text-gray-100">CANNOT</span> be
               undone. This will permanently delete the user, and remove all
               collaborator ssositions.{" "}
             </h1>
-            <p className="text-center text-gray-800 mt-5">
+            <p className="text-center text-gray-800 dark:text-gray-300 mt-5">
               Enter the username of user{" "}
-              <span className="font-semibold text-gray-600">{filename}</span> to
+              <span className="font-semibold text-gray-600 dark:text-gray-100">{filename}</span> to
               continue:
             </p>
 
@@ -109,7 +109,7 @@ const DeleteUserBtn = ({ user }) => {
 
             <button
               onClick={() => setIsDeleteModalVisible(false)}
-              className="text-slate-600 hover:text-indigo-600 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
+              className="text-slate-600 hover:text-indigo-600 dark:text-gray-300 p-10 font-bold py-2 px-4 rounded-3xl mt-2"
             >
               Cancel
             </button>
