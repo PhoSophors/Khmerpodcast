@@ -3,19 +3,17 @@ import { Card, Spin, message, Avatar } from "antd";
 import PlayBtn from "../../Btn/PlayBtn";
 import MoreBtn from "../../Btn/MoreBtn";
 import "./viewpodcast.css";
-import {  UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import Linkify from "react-linkify";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
 import { useFileData } from "../../../services/useFileData"; // Import the new useFileData hook
 import BreadcrumbBtn from "../../Btn/BreadcrumbBtn";
-
 
 const ViewDetailPodcast = () => {
   const { id } = useParams();
   const { isLoading: userLoading } = useUser(); // Use useUser hook for user-related data
   const { isLoading: fileLoading, fileData } = useFileData(id); // Use useFileData hook for file-related data
-
 
   if (userLoading || fileLoading) {
     return (
@@ -137,17 +135,19 @@ const ViewDetailPodcast = () => {
           <div className="text-indigo-500 font-semibold">Information</div>
 
           <div className="flex justify-between mt-5">
-            <div className="items-center flex gap-2">
-              <Avatar
-                src={fileData.user.profileImage}
-                style={{ border: "1px solid #6366f1" }}
-                size="large"
-                icon={<UserOutlined />}
-              />
-              <span className="uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
-                {fileData.user.username}
-              </span>
-            </div>
+            <Link to={`/public-profile/${fileData.user._id}`}>
+              <div className="items-center flex gap-2 cursor-pointer">
+                <Avatar
+                  src={fileData.user.profileImage}
+                  style={{ border: "1px solid #6366f1" }}
+                  size="large"
+                  icon={<UserOutlined />}
+                />
+                <span className="uppercase capitalize cursor-pointer tracking-wide text-sm text-indigo-500 font-semibold">
+                  {fileData.user.username}
+                </span>
+              </div>
+            </Link>
 
             <div className="text-center">
               <div className="font-semibold text-indigo-500">Upload Date</div>

@@ -52,6 +52,10 @@ const MainSection = () => {
     navigate(`/update-profile/${id}`);
   };
 
+  const handleViewUserProfile = () => {
+    navigate(`/public-profile/${id}`);
+  };
+
   return (
     <Layout className="mainSection-container">
       {!isMobileView && (
@@ -73,12 +77,16 @@ const MainSection = () => {
 
           <div className="content-card">
             {id ? (
-              <RightSection id={id} selectedPodcast={selectedPodcast} />
+              <RightSection
+                id={id}
+                selectedPodcast={selectedPodcast}
+              />
             ) : (
               <RightSection
                 selectedMenuItem={selectedMenuItem}
                 onPodcastSelected={handlePodcastSelected}
                 onUpdateProfile={handleUpdateProfile}
+                onViewUserProfile={handleViewUserProfile}
               />
             )}
           </div>

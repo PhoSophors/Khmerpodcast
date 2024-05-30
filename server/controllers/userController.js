@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
+const File = require("../models/fileUploadModel");
 let tokenBlacklist = [];
 
 const s3Client = new S3Client({
@@ -86,6 +87,34 @@ const getUser = async (req, res) => {
   }
 };
 
+const getPublicProfile = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    // Fetch the user's files from the database
+    const files = await File.find({ user: id });
+
+    if (!files) {
+      return res.status(200).json({ user });
+    }
+
+    const publicProfile = {
+      username: user.username,
+      profileImage: user.profileImage,
+      role: user.role,
+      files,
+    };
+    res.status(200).json({ 
+      user: publicProfile, 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getUsersCount = async (req, res) => {
   try {
     const userCount = await User.countDocuments();
@@ -143,6 +172,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   updateUser,
   getUser,
+  getPublicProfile,
   getUsersCount,
   getAllUsers,
   deleteUser,

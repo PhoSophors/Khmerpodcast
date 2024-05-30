@@ -11,7 +11,7 @@ const HomePage = () => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 10;
-  const navigate = useNavigate(); // Get the navigate function
+  const navigate = useNavigate(); 
 
   const fetchFiles = async (page) => {
     setLoading(true);

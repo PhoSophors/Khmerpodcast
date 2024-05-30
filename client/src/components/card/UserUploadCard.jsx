@@ -4,10 +4,13 @@ import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import DeletePodcastBtn from "../Btn/DeletePodcastBtn";
 import "./card.css";
+import { useUser } from "../../context/UserContext";
 
 const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const { currentUser } = useUser();
+  const isUploader = file.user && currentUser && file.user === currentUser._id;
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -84,6 +87,7 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
                 >
                   {file.title}
                 </h1>
+
                 <h3 className="mt-2 line-clamp-2 text-slate-500 dark:text-gray-300">
                   {file.description}
                 </h3>
@@ -100,7 +104,7 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
                   })}
                 </div>
               </div>
-              <DeletePodcastBtn file={file} />
+              {isUploader && <DeletePodcastBtn file={file} />}
               <>
                 <MoreBtn file={file} userId={userId} />
               </>

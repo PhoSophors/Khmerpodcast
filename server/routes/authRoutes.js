@@ -44,6 +44,12 @@ router.get(
   checkRoleMiddleware(["user", "admin"]),
   userController.getUser
 );
+ /**  Public profile route ====================================== */
+router.get(
+  "/public-profile/:id",
+  userController.getPublicProfile
+);
+
 
 /**  admin routes ====================================== */
 // get user count

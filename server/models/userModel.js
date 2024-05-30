@@ -45,7 +45,6 @@ const userSchema = new Schema({
   authToken: String,
   createdAt: {
     type: Date,
-    // default: Date.now,
     default: () => {
       const date = new Date();
       return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;

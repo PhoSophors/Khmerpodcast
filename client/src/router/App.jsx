@@ -11,7 +11,6 @@ import Otp from "../components/auth/otp/Otp";
 import ForgotPassword from "../components/auth/forgotPassword/ForgotPassword";
 
 // Lazy load components
-const PublicProfile = lazy(() => import("../components/pages/profile/PublicProfile"));
 const MainSection = lazy(() => import("../container/mainSection/MainSection"));
 
 const App = () => {
@@ -27,7 +26,7 @@ const App = () => {
           <Route path="/" element={<MainSection />} />
           <Route path="/search" element={<MainSection />} />
           <Route path="/watch-podcast/:id" element={<MainSection />} />
-          <Route path="/public-profile/:id" element={<PublicProfile />} />
+          <Route path="/public-profile/:id" element={<MainSection />} />
 
           {/* Admin routes */}
           {userRole === "admin" ? (
