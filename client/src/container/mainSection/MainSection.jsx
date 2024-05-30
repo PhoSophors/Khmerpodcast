@@ -14,6 +14,7 @@ const MainSection = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const { id } = useParams();
+  const { publicUserId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { fileData: selectedPodcast } = useFileData(id);
@@ -53,7 +54,7 @@ const MainSection = () => {
   };
 
   const handleViewUserProfile = () => {
-    navigate(`/public-profile/${id}`);
+    navigate(`/public-profile/${publicUserId}`);
   };
 
   return (

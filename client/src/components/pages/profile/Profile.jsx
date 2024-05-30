@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Spin, message } from "antd";
+import { Card, Button, Spin } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
@@ -7,6 +7,7 @@ import "./Profile.css";
 import UserUploadCard from "../../card/UserUploadCard";
 import { useUser } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import ShareProfileBtn from "../../Btn/ShareProfileBtn";
 
 const Profile = () => {
   const { user, userFiles, isLoading } = useUser();
@@ -29,15 +30,9 @@ const Profile = () => {
     );
   }
 
-  const shareUrl = `https://khmerpodcast.vercel.app/public-profile/${id}`;
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(shareUrl);
-    message.success("Link copied to clipboard");
-  };
-
   return (
     <div className="profile-container h-screen">
-      <div className="flex grid xl:grid-cols-2 grid-cols-1 md:grid-cols-1 xl:flex xl:p-2 md:p-2 p-0 xl:gap-2 md:gap-2 gap-2">
+      <div className="flex grid xl:grid-cols-2 grid-cols-1 md:grid-cols-1 md:flex xl:p-2 md:p-2 p-0 xl:gap-2 md:gap-2 gap-2">
         <Card className="recent-upload-card">
           <div
             style={{
@@ -104,15 +99,10 @@ const Profile = () => {
                   Role *
                 </h2>
               </div>
-
-              <div
-                onClick={handleCopyLink}
-                className="mt-5 cursor-pointer rounded-xl p-3 relative border w-full"
-              >
-                <h2 className="text-gray-500 text-base  dark:text-gray-300 mt- mx-7 text-center text-lg">
-                  Share Profile
-                </h2>
-              </div>
+              
+              <>
+                <ShareProfileBtn  userId={id}/>
+              </>
 
               <Link to={`/update-profile/${id}`}>
                 <Button

@@ -15,7 +15,6 @@ import {
   TwitterIcon,
   LinkedinIcon,
   TelegramIcon,
-  FacebookMessengerIcon,
   WhatsappIcon,
 } from "react-share";
 import {
@@ -23,7 +22,6 @@ import {
   TwitterShareButton,
   LinkedinShareButton,
   TelegramShareButton,
-  FacebookMessengerShareButton,
   WhatsappShareButton,
 } from "react-share";
 
@@ -62,7 +60,7 @@ const MoreBtn = ({ file }) => {
   };
 
   const shareMenu = (
-    <Menu style={{ width: "250px" }}>
+    <Menu style={{ width: "250px", cursor: "pointer" }}>
       <Menu.Item key="uniqueKey1" onClick={showModal}>
         <ShareAltOutlined />
         <span className="mx-2">Share</span>
@@ -171,14 +169,6 @@ const MoreBtn = ({ file }) => {
               <TelegramIcon size={45} round />
               <span>Telegram</span>
             </TelegramShareButton>
-            <FacebookMessengerShareButton
-              url={shareUrl}
-              appId="521270401588372"
-              style={{ margin: "0 5px 10px" }}
-            >
-              <FacebookMessengerIcon size={45} round />
-              <span>Messenger</span>
-            </FacebookMessengerShareButton>
             <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
               <WhatsappIcon size={45} round />
               <span>WhatsApp</span>
