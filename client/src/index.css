@@ -102,6 +102,11 @@ label, title {
   color: var(--text-color) !important;
 }
 
+.ant-input-password-icon {
+  color: var(--text-color) !important;
+
+}
+
 /* ===================== ant modal ======================= */
 .ant-modal-content {
   background-color: var(--content-bg) !important;

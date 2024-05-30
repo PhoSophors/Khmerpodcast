@@ -121,7 +121,7 @@ const Profile = () => {
                 </div>
               ) : userFiles.length === 0 ? (
                 <div className="spin-loading">
-                  <p className="font-semibold text-gray-500 dark:text-slate-100 uppercase top-0">
+                  <p className="font-semibold mt-10 text-gray-500 dark:text-slate-100 uppercase top-0">
                     No Podcasts!
                   </p>
                 </div>

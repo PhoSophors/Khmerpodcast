@@ -12,9 +12,10 @@ export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userFiles, setUserFiles] = useState([]);
   const [userRole, setUserRole] = useState(null);
-  const authToken = Cookies.get("authToken")
-    ? atob(Cookies.get("authToken"))
-    : null;
+  // state for profile user
+  const [profileUser, setProfileUser] = useState(null);
+
+  const authToken = Cookies.get("authToken") ? atob(Cookies.get("authToken")) : null;
   const id = Cookies.get("id") ? atob(Cookies.get("id")) : null;
 
   const handleConfirmLogout = () => {
@@ -65,7 +66,11 @@ export const UserProvider = ({ children }) => {
           }
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        // notification.error({
+        //   message: "Error",
+        //   description: "Error fetching user data" + error.message,
+        // });
+        // console.error("Error fetching user data:", error);
       } finally {
         setIsLoading(false);
       }
@@ -73,15 +78,41 @@ export const UserProvider = ({ children }) => {
     fetchUserData();
   }, [id, authToken]);
 
+
+  // Get profile user
+  useEffect(() => {
+    const fetchProfileUserData = async () => {
+      setIsLoading(true);
+  
+      try {
+        const response = await axios.get(`${api_url}/user-data//${id}`);
+        const userData = response.data.user;
+  
+        if (userData) {
+          setProfileUser(userData); // Set profile user
+        } else {
+          setProfileUser(null);
+        }
+      } catch (error) {
+        console.error("Error fetching profile user data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    // Call the new function to fetch the profile user data
+    fetchProfileUserData();
+  }, [id]);
+
   return (
     <UserContext.Provider
       value={{
-        user,
-        isLoading,
-        isLoggedIn,
-        userFiles,
-        userRole,
-        currentUser,
+        user, // for user data
+        isLoading, // for loading
+        isLoggedIn, // for login and logout
+        userFiles, // for user files
+        userRole, // for role based access
+        currentUser, // for update podcast and profile
         handleConfirmLogout,
       }}
     >

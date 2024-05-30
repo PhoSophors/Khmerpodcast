@@ -3,8 +3,9 @@ import { Card } from "antd";
 import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
 import "./card.css";
+import { Link } from "react-router-dom";
 
-const FavoritesCard = ({ file, handleViewPodcast }) => {
+const FavoritesCard = ({ file }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -75,12 +76,11 @@ const FavoritesCard = ({ file, handleViewPodcast }) => {
                   maxHeight: "95px",
                 }}
               >
-                <h1
-                  onClick={handleViewPodcast}
-                  className="hover:underline line-clamp-1 text-base cursor-pointer tracking-wide text-indigo-500 font-semibold"
-                >
-                  {file.title}
-                </h1>
+                <Link to={`/watch-podcast/${file._id}`}>
+                  <h1 className="hover:underline line-clamp-1 text-base cursor-pointer tracking-wide text-indigo-500 font-semibold">
+                    {file.title}
+                  </h1>
+                </Link>
                 <h3 className="mt-2 line-clamp-2 text-md text-slate-500 dark:text-gray-300">
                   {file.description}
                 </h3>

@@ -48,10 +48,6 @@ const MainSection = () => {
     navigate(`/watch-podcast/${file._id}`);
   };
 
-  const handleCloseDetailPodcast = () => {
-    navigate("/");
-  };
-
   const handleUpdateProfile = () => {
     navigate(`/update-profile/${id}`);
   };
@@ -77,11 +73,7 @@ const MainSection = () => {
 
           <div className="content-card">
             {id ? (
-              <RightSection
-                id={id}
-                selectedPodcast={selectedPodcast}
-                onClose={handleCloseDetailPodcast}
-              />
+              <RightSection id={id} selectedPodcast={selectedPodcast} />
             ) : (
               <RightSection
                 selectedMenuItem={selectedMenuItem}

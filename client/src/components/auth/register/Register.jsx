@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 import "../login/Login.css";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 // import SigninWithGoogles from "../signinWithGoogle/SignInWithGoogle";
 import { useTranslation } from "react-i18next";
@@ -39,10 +39,6 @@ const Register = () => {
       setIsLoading(false); // Stop loading spinner
 
       if (response.status === 200) {
-        // Save the id to cookies
-        // Cookies.set("id", response.data.id);
-        const encodedId = btoa(response.data.id);
-        Cookies.set("id", encodedId, { expires: 365 * 100 });
 
         // Registration successful, navigate to /otp
         notification.success({
@@ -54,11 +50,17 @@ const Register = () => {
         // After successful registration, navigate to OTP verification page
         navigate("/otp", { state: { email: values.email } });
       } else {
-        message.error("Registration failed. Please try again later.");
+        notification.error({
+          message: "Registration failed.",
+          description: response.data.error,
+        });
       }
     } catch (error) {
       setIsLoading(false); // Stop loading spinner
-      message.error("Registration failed. Please try again later.");
+      notification.error({
+        message: "Registration failed.",
+        description: error.response.data.error,
+      });
     }
   };
 
@@ -176,7 +178,9 @@ const Register = () => {
                 </Button>
               </Form.Item>
 
-              <h1 className="text-center  dark:text-gray-300 mb-4">{t("register.or")}</h1>
+              <h1 className="text-center  dark:text-gray-300 mb-4">
+                {t("register.or")}
+              </h1>
 
               {/* <SigninWithGoogles /> */}
 

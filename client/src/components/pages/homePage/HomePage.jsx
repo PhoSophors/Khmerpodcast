@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Spin, notification } from "antd";
 import CustomCard from "../../card/CustomCard";
-import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import axios from "axios";
 import "./HomePage.css";
 import { api_url } from "../../../api/config";
@@ -12,8 +11,6 @@ const HomePage = () => {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 10;
-  const [isViewPodcast, setIsViewPodcast] = useState(false);
-  const [selectedPodcast, setSelectedPodcast] = useState(null);
   const navigate = useNavigate(); // Get the navigate function
 
   const fetchFiles = async (page) => {
@@ -54,36 +51,27 @@ const HomePage = () => {
         ) : (
           <>
             <div className="flex sm:p-0 md:p-0 flex-wrap justify-center items-center home-container">
-              {/* Map over the files array starting from startIndex and limit to cardsPerPage */}
-              {isViewPodcast ? (
-                <ViewDetailPodcast
-                  file={selectedPodcast}
-                  handleViewPodcast={() => setIsViewPodcast(false)}
+              {/* Map over the files array */}
+              {files.map((file, index) => (
+                <CustomCard
+                  key={file.id || index}
+                  file={file}
+                  handleViewPodcast={() => {
+                    navigate(`/watch-podcast/${file._id}`);
+                  }}
                 />
-              ) : (
-                files.map((file, index) => (
-                  <CustomCard
-                    key={file.id}
-                    file={file}
-                    handleViewPodcast={() => {
-                      setIsViewPodcast(false);
-                      setSelectedPodcast(file);
-                      navigate(`/watch-podcast/${file._id}`);
-                    }}
-                  />
-                ))
-              )}
+              ))}
             </div>
             {error && (
               <div className="mt-10">
-                <p className="text-center  text-red-500 font-semebold">
+                <p className="text-center text-base text-red-500 font-semebold">
                   Server Error..!
                 </p>
               </div>
             )}
           </>
         )}
-
+  
         <div className="dot">.</div>
       </div>
     </>

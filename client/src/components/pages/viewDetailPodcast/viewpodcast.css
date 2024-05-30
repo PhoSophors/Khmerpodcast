@@ -19,7 +19,7 @@
   overflow: hidden !important;
   border: none !important;
   padding: 0 !important;
-  z-index: 20 !important;
+  z-index: 1000 !important;
   background-color: var(--content-bg) !important;
 }
 

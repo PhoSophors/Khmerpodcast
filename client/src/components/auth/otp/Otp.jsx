@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
 import { Input, Row, Col, Card, Button, message, Spin } from "antd";
 import { SafetyOutlined } from "@ant-design/icons";
@@ -25,10 +25,10 @@ const Otp = () => {
 
       if (response.status === 200) {
         // OTP verified successfully, set the authToken cookie
-        const encodedToken = btoa(response.data.authToken);
-        const encodedId = btoa(response.data.id);
-        Cookies.set("authToken", encodedToken, { expires: 365 * 100 });
-        Cookies.set("id", encodedId, { expires: 365 * 100 });
+        // const encodedToken = btoa(response.data.authToken);
+        // const encodedId = btoa(response.data.id);
+        // Cookies.set("authToken", encodedToken, { expires: 365 * 100 });
+        // Cookies.set("id", encodedId, { expires: 365 * 100 });
 
 
         // Navigate to home page
@@ -70,7 +70,7 @@ const Otp = () => {
   };
 
   return (
-    <div style={{ backgroundColor: `var(--content-bg)` }}>
+    <div style={{ backgroundColor: `var(--bg-color)` }}>
       <BackBtn />
 
       <div className="flex flex-col w-full xl-min-w-96 items-center justify-center h-screen text-center p-5">

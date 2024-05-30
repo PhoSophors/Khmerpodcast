@@ -23,7 +23,6 @@
   .register-card {
     height: 100vh;
     overflow: auto;
-    background-color: var(--slate-50) !important;
     border: none;
     border-radius: 0 ;
   }
@@ -35,7 +34,6 @@
 @media (max-height: 100vh) {
   .register-form {
     overflow: auto;
-    background-color: var(--indigo-600) !important;
   }
 }
 @media  (max-width: 830px) {

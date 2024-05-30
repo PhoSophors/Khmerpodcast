@@ -12,7 +12,7 @@ body {
   position: relative;
   background-color: var(--content-bg);
   min-height: calc(100vh - 110px);
-  height: calc(100vh - 90px);
+  height: calc(100vh - 70px);
   overflow-y: auto; 
   padding: 3px;
   border-bottom-left-radius: 20px;
@@ -23,11 +23,8 @@ body {
 @media screen and (max-width: 768px) {
   .content-containers {
     padding: 0;
-    /* height: auto; */
-    height: calc(100vh - 70px);
   }
   .content-card {
-    height: calc(100vh - 20vh);
 
     overflow: auto;
     border-radius: 0;

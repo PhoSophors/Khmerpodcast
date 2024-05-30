@@ -5,7 +5,6 @@ import { useUser } from "../context/UserContext";
 import AppLoading from "../components/apploading/AppLoading";
 import PrivateRoute from "./PrivateRoute";
 import GuestRoute from "./GuestRoute";
-// import MainSection from "../container/mainSection/MainSection";
 import Login from "../components/auth/login/Login";
 import Register from "../components/auth/register/Register";
 import Otp from "../components/auth/otp/Otp";

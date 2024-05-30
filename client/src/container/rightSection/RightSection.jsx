@@ -64,26 +64,16 @@ const RightSection = ({
         setContent(<FileManager />);
         break;
       case `/watch-podcast/${selectedPodcast?._id}`:
-        setContent(
-          <ViewDetailPodcast
-            file={selectedPodcast}
-            onPodcastSelected={onPodcastSelected}
-          />
-        );
+        setContent(<ViewDetailPodcast onUpdatePodcast={onPodcastSelected} />);
         break;
       case "/update-podcast":
-        setContent(
-          <UpdatePodcast
-            file={selectedPodcast}
-            onPodcastSelected={onPodcastSelected}
-          />
+        setContent( <UpdatePodcast file={selectedPodcast} onPodcastSelected={onPodcastSelected} />
         );
         break;
       case `/update-profile/${id}`:
         setContent(<EditProfile onUpdateProfile={onUpdateProfile} />);
         break;
       default:
-        setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
         break;
     }
   }, [

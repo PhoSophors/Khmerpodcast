@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form, Input, Button, Alert, message } from "antd";
+import { Card, Form, Input, Button, Alert, message, notification } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../login/Login.css";
@@ -26,7 +26,10 @@ const ForgotPassword = () => {
       setCurrentStep(2);
       message.success("Please check your email for the OTP.");
     } catch (error) {
-      setError(error.response.data.error);
+      notification.error({
+        message: "Error sending OTP.",
+        description: error.response.data.error,
+      });
     } finally {
       setLoading(false);
     }
@@ -41,9 +44,16 @@ const ForgotPassword = () => {
         { withCredentials: true }
       );
       setCurrentStep(3);
-      message.success("OTP verified successfully. Please reset your password.");
+      notification.success({
+        message: "OTP verified successfully.",
+        description: "Please reset your password.",
+      });
     } catch (error) {
-      setError(error.response.data.error);
+      notification.error({
+        message: "Error verifying OTP.",
+        description: error.response.data.error,
+      });
+      // setError(error.response.data.error);
     } finally {
       setLoading(false);
     }
@@ -57,11 +67,16 @@ const ForgotPassword = () => {
         { email, newPassword },
         { withCredentials: true }
       );
-      message.success(
-        "Password reset successfully. Please login with your new password."
-      );
+      notification.success({
+        message: "Password reset successfully.",
+        description: "Please login with your new password.",
+      });
       navigate("/");
     } catch (error) {
+      notification.error({
+        message: "Error resetting password.",
+        description: error.response.data.error,
+      });
       setError(error.response.data.error);
     } finally {
       setLoading(false);
@@ -82,7 +97,7 @@ const ForgotPassword = () => {
                 <img src={logo} alt="logo" className="logo" />
               </div>
 
-              <p className="text-center mb-4">
+              <p className="text-center text-base dark:text-gray-300 mb-4">
                 {t("forgotPassword.description")}
               </p>
               <Form.Item
@@ -126,7 +141,7 @@ const ForgotPassword = () => {
                 <img src={logo} alt="logo" className="logo" />
               </div>
 
-              <p className="text-center mb-4">
+              <p className="text-center text-base dark:text-gray-300 mb-4">
                 Please enter the OTP sent to your email to verify your identity.
               </p>
               <Form.Item
@@ -163,7 +178,7 @@ const ForgotPassword = () => {
               <div className="flex justify-center items-center text-center mb-4">
                 <img src={logo} alt="logo" className="logo" />
               </div>
-              <p className="text-center mb-4">
+              <p className="text-center text-base dark:text-gray-300 mb-4">
                 Please enter your new password below. Make sure it's strong and
                 secure.
               </p>
