@@ -1,10 +1,11 @@
 import React, { useState} from "react";
-import FavoritesCard from "../../card/FavoritesCard";
+import UserUploadCard from "../../../components/card/UserUploadCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import "./Favorith.css";
 import { useFavorites } from "../../../services/useFavorites";
 import { useNavigate } from "react-router-dom";
 import { Spin } from "antd";
+
 
 const Favorith = () => {
   const [isViewPodcast, setIsViewPodcast] = useState(false);
@@ -52,7 +53,7 @@ const Favorith = () => {
             />
           ) : (
             favorites.map((file, index) => (
-              <FavoritesCard
+              <UserUploadCard
                 key={file.id}
                 file={file}
                 handleViewPodcast={() => {

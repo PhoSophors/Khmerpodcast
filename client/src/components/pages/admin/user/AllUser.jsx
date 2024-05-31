@@ -20,6 +20,7 @@ import {
   StepForwardFilled,
 } from "@ant-design/icons";
 import "../admin.css";
+import { Link } from "react-router-dom";
 
 const AllUser = () => {
   const [allUser, setAllUser] = useState([]);
@@ -155,14 +156,16 @@ const AllUser = () => {
                       <td className="text-center dark:text-gray-300">
                         {(currentPage - 1) * cardsPerPage + index + 1}
                       </td>
-                      <td className="text-center  dark:text-gray-300">
-                        <Avatar
-                          className="avatar"
-                          src={user && user.profileImage}
-                          size="large"
-                          icon={<UserOutlined />}
-                        />
-                      </td>
+                      <Link to={`/public-profile/${user._id}`}>
+                        <td className="text-center  dark:text-gray-300">
+                          <Avatar
+                            className="avatar"
+                            src={user && user.profileImage}
+                            size="large"
+                            icon={<UserOutlined />}
+                          />
+                        </td>
+                      </Link>
                       <td className=" dark:text-gray-300">{user.username}</td>
                       <td className=" dark:text-gray-300">{user.email}</td>
                       <td className="text-center  dark:text-gray-300">
@@ -233,7 +236,6 @@ const AllUser = () => {
           </Button>
         </div>
       </Card>
-      <div className="mt-20 xl:mt-0 md:mt-0 text-white">.</div>
     </div>
   );
 };

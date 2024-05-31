@@ -106,7 +106,6 @@ const ShareProfileBtn = ({ userId }) => {
                 renderAs="canvas"
                 size={170}
                 fgColor="#4f46e5"
-                bgColor="white"
               />
               <div
                 style={{
@@ -114,12 +113,13 @@ const ShareProfileBtn = ({ userId }) => {
                   top: "50%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
+                  backgroundColor: "white",
                 }}
               >
                 <img
                   src={logo}
                   alt="logo"
-                  style={{ width: "50px", height: "50px" }}
+                  style={{ width: "40px", height: "40px" }}
                 />
               </div>
             </div>
@@ -144,7 +144,7 @@ const ShareProfileBtn = ({ userId }) => {
         </Card>
 
         <Card className="mt-5" title="Share to socail media ">
-        <div className="text-center mb-5 mt-5 dark:text-gray-300 gap-auto justify-around flex flex-wrap sm:flex-row md:flex-row">
+          <div className="text-center mb-5 mt-5 dark:text-gray-300 gap-auto justify-around flex flex-wrap sm:flex-row md:flex-row">
             <FacebookShareButton
               url={shareUrl}
               className="flex flex-col items-center"

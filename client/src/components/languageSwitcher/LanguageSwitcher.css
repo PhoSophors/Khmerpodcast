@@ -5,6 +5,7 @@
 .language-menu {
   list-style-type: none;
   padding: 0;
+  color: var(--text-color);
 }
 
 .language-menu li {
@@ -15,12 +16,13 @@
 }
 
 .language-menu li:hover {
-  background-color: #f0f0f0;
+  background-color: var(--content-bg);
+  color: var(--text-color);
 }
 
 .language-menu li.selected {
-  color: #482ff7;
-  background-color: #f0f0f0;
+  color: var(--text-color);
+  background-color: var(--content-bg);
   font-weight: bold;
 }
 

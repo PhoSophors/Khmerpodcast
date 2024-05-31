@@ -63,7 +63,7 @@ const SideMenu = ({ collapsed }) => {
   };
 
   const moreMenu = (
-    <div className="more-menu-container">
+    <div>
       <Menu style={{ width: "300px" }}>
         <Menu.Item>
           <LanguageSwitcher />
@@ -121,14 +121,14 @@ const SideMenu = ({ collapsed }) => {
             src={logo1}
             alt="logo"
             className="logo-app"
-            style={{ borderRadius: "10px", width: "3vw" }}
+            style={{ borderRadius: "10px", maxWidth: "6vh" }}
           />
           {!collapsed && (
             <div className="flex flex-col">
               <span className="uppercase tracking-wide text-2xl text-white font-bold">
                 Khmer
               </span>
-              <span className="uppercase tracking-wide text-sm text-slate-200 font-semibold">
+              <span className="uppercase tracking-wide text-sm text-gray-300 font-semibold">
                 Podcast
               </span>
             </div>
@@ -219,7 +219,7 @@ const SideMenu = ({ collapsed }) => {
         }
       >
         <div className="modal-logout mt-10 flex flex-col items-center">
-          <img src={logo1} alt="" />
+          <img src={logo1} alt="" style={{ borderRadius: "20px" }} />
           <h1 className="text-center text-xl text-indigo-500 dark:text-gray-300 font-semibold mb-4 mt-5">
             Are you sure you want to logout your account?
           </h1>

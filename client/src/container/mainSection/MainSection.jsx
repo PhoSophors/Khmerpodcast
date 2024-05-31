@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Layout } from "antd";
 import "./MainSection.css";
-import RightSection from "../rightSection/RightSection";
+import ContentSection from "../contentSection/ContentSection";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -78,12 +78,12 @@ const MainSection = () => {
 
           <div className="content-card">
             {id ? (
-              <RightSection
+              <ContentSection
                 id={id}
                 selectedPodcast={selectedPodcast}
               />
             ) : (
-              <RightSection
+              <ContentSection
                 selectedMenuItem={selectedMenuItem}
                 onPodcastSelected={handlePodcastSelected}
                 onUpdateProfile={handleUpdateProfile}

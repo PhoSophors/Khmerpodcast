@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, message } from "antd";
-import { CheckOutlined, GlobalOutlined } from "@ant-design/icons"; // Import icons as needed
+import { CheckOutlined, CloseOutlined, GlobalOutlined } from "@ant-design/icons"; // Import icons as needed
 import "./LanguageSwitcher.css"; // Import CSS for styling
 import { Card } from "antd";
 import Cookies from "js-cookie";
@@ -49,8 +49,12 @@ const LanguageSwitcher = () => {
         visible={modalVisible}
         onCancel={() => setModalVisible(false)}
         footer={null}
+        centered
+        closeIcon={
+          <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
+        }
       >
-        <Card>
+        <Card className="mt-5">
           <ul className="language-menu">
             {supportedLanguages.map((language) => (
               <li

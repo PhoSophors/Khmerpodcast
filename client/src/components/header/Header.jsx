@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-const Header = ({ handleCollapse, onSelectMenuItem }) => {
+const Header = ({ onSelectMenuItem, handleCollapse }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
@@ -74,18 +74,24 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
               <MenuOutlined />
             </button>
           )}
+
           <Drawer
             className="drawer"
+            visible={menuVisible}
+            closeIcon={null}
             title={
               <div
                 onClick={handleAppClick}
                 className="title-drawer cursor-pointer gap-3"
               >
                 <img
-                  className=""
                   src={logo}
                   alt=""
-                  style={{ height: "13vw", borderRadius: "10px", border: "1px solid #6366f1"}}
+                  style={{
+                    height: "6vh",
+                    border: "1px solid #6366f1",
+                    borderRadius: "10px",
+                  }}
                 />
                 <div className=" flex flex-col ">
                   <span className="name-style tracking-wide text-2xl text-indigo-600 dark:text-slate-100 font-bold">
@@ -97,17 +103,8 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
                 </div>
               </div>
             }
-            placement="left"
-            closable={false}
-            onClose={handleMenuClick}
-            visible={menuVisible}
-            style={{
-              width: "300px",
-              backgroundColor: "#f8fafc",
-              height: "100%",
-            }}
           >
-            <SideMenu onSelectMenuItem={onSelectMenuItem} />
+            <SideMenu onSelectMenuItem={handleMenuItemClick} />
           </Drawer>
         </div>
       </div>

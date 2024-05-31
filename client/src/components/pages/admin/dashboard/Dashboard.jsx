@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { api_url } from "../../../../api/config";
 import "../admin.css";
+import { Link } from "react-router-dom";
 
 Chart.register(ArcElement);
 Chart.register(
@@ -126,9 +127,11 @@ const Dashboard = () => {
       <div className="flex grid xl:grid-cols-4 grid-cols-2 gap-2 sm:flex sm:gap-5 p-2">
         <Card title="Total Users" className="dashboard-card w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="p-3 flex justify-center bg-green-200 h text-gray-500 h-20 w-20 flex justify-center items-center rounded-full">
-              <FontAwesomeIcon icon={faUsers} style={{ fontSize: "40px" }} />
-            </div>
+            <Link to="/all-user">
+              <div className="p-3 flex justify-center bg-green-200 h text-gray-500 h-20 w-20 flex justify-center items-center rounded-full">
+                <FontAwesomeIcon icon={faUsers} style={{ fontSize: "40px" }} />
+              </div>
+            </Link>
             <h1 className="text-3xl font-semibold text-gray-600 dark:text-slate-100 ">
               {userCount}
             </h1>
@@ -145,9 +148,14 @@ const Dashboard = () => {
 
         <Card title="Total Podcasts" className="dashboard-card w-full md:w-1/2">
           <div className="flex items-center justify-between">
-            <div className="p-3 flex justify-center text-gray-500 bg-red-200  h-20 w-20 flex justify-center items-center rounded-full">
-              <FontAwesomeIcon icon={faPodcast} style={{ fontSize: "40px" }} />
-            </div>
+            <Link to="/all-user-upload">
+              <div className="p-3 flex justify-center text-gray-500 bg-red-200  h-20 w-20 flex justify-center items-center rounded-full">
+                <FontAwesomeIcon
+                  icon={faPodcast}
+                  style={{ fontSize: "40px" }}
+                />
+              </div>
+            </Link>
             {/* Any additional content you want to put on the right */}
             <h1 className="text-3xl font-semibold text-gray-600 dark:text-slate-100 ">
               {fileCount}

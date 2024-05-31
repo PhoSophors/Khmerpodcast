@@ -235,7 +235,6 @@ const FileManager = () => {
           </Button>
         </div>
       </Card>
-      <div className="mt-20 xl:mt-0 md:mt-0 text-white">.</div>
       {/* Delete Modal */}
     </div>
   );

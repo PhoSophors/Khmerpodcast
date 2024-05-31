@@ -16,26 +16,26 @@ const SearchForm = ({ handleSearchSubmit }) => {
   useEffect(() => {
     const fetchSearchResults = async () => {
       if (searchQuery.trim() === "") {
-        handleSearchSubmit([]); // Clear the search results if the query is empty
+        handleSearchSubmit({ podcasts: [], users: [] }); // Clear the search results if the query is empty
         return;
       }
 
       setLoading(true);
 
       try {
-        let response;
-        // Only search for podcasts
-        response = await axios.get(`${api_url}/search/podcasts`, {
-          params: {
-            search: searchQuery,
-          },
-        });
+        const [podcastResponse, userResponse] = await Promise.all([
+          axios.get(`${api_url}/search/podcasts`, {
+            params: { search: searchQuery },
+          }),
+          axios.get(`${api_url}/search/users`, {
+            params: { search: searchQuery },
+          }),
+        ]);
 
-        if (response.data) {
-          handleSearchSubmit(response.data); // Pass the results
-        } else {
-          message.error("Error fetching search results");
-        }
+        handleSearchSubmit({
+          podcasts: podcastResponse.data || [],
+          users: userResponse.data || [],
+        });
       } catch (error) {
         message.error("Error fetching search results");
       } finally {

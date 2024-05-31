@@ -11,12 +11,12 @@ import "./Profile.css";
 const PublicProfile = () => {
   const { id: publicUserId } = useParams();
   const { usePublicProfile } = useUser();
-  const { publicUserData, isPublicDataLoading } = usePublicProfile(publicUserId);
+  const { publicUserData } = usePublicProfile(publicUserId);
   const navigate = useNavigate();
 
-  if (isPublicDataLoading) {
+  if (!publicUserData) {
     return (
-      <div className="spin-loading">
+      <div className="spin-loading mt-20">
         <Spin />
       </div>
     );
@@ -29,6 +29,7 @@ const PublicProfile = () => {
       </div>
     );
   }
+
 
   return (
     <div className="profile-container h-screen">
@@ -83,7 +84,7 @@ const PublicProfile = () => {
                 </h2>
               </div>
               <>
-                <ShareProfileBtn userId={publicUserId}/>
+                <ShareProfileBtn userId={publicUserId} />
               </>
             </div>
           </div>
@@ -91,17 +92,25 @@ const PublicProfile = () => {
 
         <div className="col-span-2 w-full">
           <Card className="profile-card" bodyStyle={{ padding: 0 }}>
-            <div className="flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
-              {publicUserData.files.map((file, index) => (
-                <UserUploadCard
-                  key={file._id || index}
-                  file={file}
-                  handleViewPodcast={() => {
-                    navigate(`/watch-podcast/${file._id}`);
-                  }}
-                />
-              ))}
-            </div>
+            {publicUserData.files.length === 0 ? (
+              <div className="spin-loading">
+                <p className="font-semibold mt-10 text-gray-500 dark:text-slate-100 uppercase top-0">
+                  No Podcasts!
+                </p>
+              </div>
+            ) : (
+              <div className="flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
+                {publicUserData.files.map((file, index) => (
+                  <UserUploadCard
+                    key={file._id || index}
+                    file={file}
+                    handleViewPodcast={() => {
+                      navigate(`/watch-podcast/${file._id}`);
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </Card>
         </div>
       </div>

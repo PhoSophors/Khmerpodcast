@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Card } from "antd";
-import MoreBtn from "../Btn/MoreBtn";
 import PlayBtn from "../Btn/PlayBtn";
-import "./card.css";
-import { Link } from "react-router-dom";
 
-const FavoritesCard = ({ file }) => {
+const SearchPocastCard = ({ file, handleViewPodcast }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -15,7 +12,7 @@ const FavoritesCard = ({ file }) => {
 
   return (
     <div
-      className="w-full p-1 justify-flex-between"
+      className=" p-1 "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -23,6 +20,8 @@ const FavoritesCard = ({ file }) => {
         className="card-hover card-bg"
         style={{
           borderRadius: "20px",
+          minWidth: "100%",
+
         }}
         bodyStyle={{ padding: 0 }}
         cover={
@@ -42,7 +41,7 @@ const FavoritesCard = ({ file }) => {
               )}
               <div>
                 <img
-                  className="thumnaill-card object-cover"
+                  className="object-cover"
                   src={file.image.url}
                   alt={`.${file._id} hidden`}
                   onLoad={handleImageLoad}
@@ -58,12 +57,14 @@ const FavoritesCard = ({ file }) => {
                     className="play-icon"
                     style={{
                       position: "absolute",
-                      bottom: "40px",
-                      left: "40px",
+                      bottom: "37px",
+                      left: "37px",
                       zIndex: 2,
                     }}
                   >
-                    <PlayBtn file={file} />
+                    <>
+                      <PlayBtn file={file} />
+                    </>
                   </div>
                 )}
               </div>
@@ -73,34 +74,20 @@ const FavoritesCard = ({ file }) => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   width: "100%",
-                  maxHeight: "95px",
+                  maxHeight: "80px",
                 }}
               >
-                <Link to={`/watch-podcast/${file._id}`}>
-                  <h1 className="hover:underline line-clamp-1 text-base cursor-pointer tracking-wide text-indigo-500 font-semibold">
-                    {file.title}
-                  </h1>
-                </Link>
-                <h3 className="mt-2 line-clamp-2 text-md text-slate-500 dark:text-gray-300">
+                <h1
+                  onClick={handleViewPodcast}
+                  className="hover:underline line-clamp-1 cursor-pointer text-base tracking-wide text-indigo-500 font-semibold"
+                >
+                  {file.title}
+                </h1>
+
+                <h3 className="mt-2 line-clamp-2 text-slate-500 dark:text-gray-300">
                   {file.description}
                 </h3>
               </div>
-            </div>
-
-            <div className="flex items-center gap-10">
-              <div className="flex items-center">
-                <div className="w-24 date-element text-end text-slate-500 dark:text-gray-300">
-                  {new Date(file.uploadDate).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </div>
-              </div>
-
-              <>
-                <MoreBtn file={file} />
-              </>
             </div>
           </div>
         }
@@ -109,4 +96,4 @@ const FavoritesCard = ({ file }) => {
   );
 };
 
-export default FavoritesCard;
+export default SearchPocastCard;
