@@ -59,6 +59,9 @@ const SearchUserCard = ({ user }) => {
                     {user.username}
                   </h1>
                 </Link>
+                <h3 className="mt-2 line-clamp-2 text-slate-500 dark:text-gray-300">
+                  {user.bio}
+                </h3>
               </div>
             </div>
           </div>

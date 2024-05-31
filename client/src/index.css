@@ -53,7 +53,7 @@ input::placeholder, textarea::placeholder {
 }
 
 .ant-input-textarea-affix-wrapper{
-  background-color: var(--card-hover) !important;
+  background-color: var(--card-hover) ;
 }
 /* Firefox */
 .ant-input-affix-wrapper input::-moz-placeholder,
@@ -144,6 +144,26 @@ label, title {
   color: var(--text-color) !important;
 }
 
+/* ===================== Btn style ========================== */
+.button-style {
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  border-radius: 15px;
+  /* width: 150px; */
+  width: 100%;
+  height: 45px; 
+  line-height: 40px; 
+  text-align: center; 
+  background-color: var(--Btn-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
 :root {
   --bg-color: #4f46e5;
   --sidemenu-mobile-bg: #fff;
@@ -165,6 +185,7 @@ label, title {
   --text-area-bg: #f1f5f9;
   --dropdown-bg: #fff;
   --input-bg: #fff;
+  --Btn-bg: #f4f5f7;
 
   --placeholder-color: #9f9f9f;
   --placeholder-color-text-area: #9f9f9f;
@@ -247,6 +268,7 @@ label, title {
   --text-area-bg: #373737;
   --dropdown-bg: #373737;
   --input-bg: #282828;
+  --Btn-bg: #373737;
 
   --placeholder-color-text-area: #b7babd;
 

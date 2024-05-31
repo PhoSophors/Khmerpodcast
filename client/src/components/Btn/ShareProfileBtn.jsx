@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Card, Modal, message } from "antd";
+import { Card, Modal, message, Button } from "antd";
 import { useUser } from "../../context/UserContext";
 import QRCode from "qrcode.react";
 import logo from "../assets/logo.jpg";
@@ -22,6 +22,7 @@ import {
   CloseOutlined,
   LinkOutlined,
   DownloadOutlined,
+  ShareAltOutlined,
 } from "@ant-design/icons";
 
 const ShareProfileBtn = ({ userId }) => {
@@ -64,13 +65,11 @@ const ShareProfileBtn = ({ userId }) => {
 
   return (
     <>
-      <div
-        onClick={handleShowModalMode}
-        className="mt-5 cursor-pointer rounded-xl p-3 relative border w-full"
-      >
-        <h2 className="text-gray-500 text-base dark:text-gray-300 mt- mx-7 text-center text-lg">
+      <div onClick={handleShowModalMode} className="mt-5 gap-5 w-full">
+        <Button className="button-style ">
+          <ShareAltOutlined />
           Share Profile
-        </h2>
+        </Button>
       </div>
       <Modal
         className="modal-container w-auto"

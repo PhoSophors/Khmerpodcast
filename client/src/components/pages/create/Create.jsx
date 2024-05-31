@@ -188,7 +188,9 @@ const Create = () => {
                               )}
                               type="audio/mpeg"
                             />
-                            <h1 className="text-base ">Your browser does not support the audio element</h1>
+                            <h1 className="text-base ">
+                              Your browser does not support the audio element
+                            </h1>
                           </audio>
                         </div>
                         <div className="flex items-center">
@@ -267,7 +269,7 @@ const Create = () => {
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
                     <h1 className=" text-base  font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
-                     {t("create.title")} *
+                      {t("create.title")} *
                     </h1>
                     <Input.TextArea
                       className="create-textarea mt-5 caret-pink-500 dark:text-slate-100 "
@@ -305,19 +307,21 @@ const Create = () => {
               </Form>
             </Card>
 
-            <div className="w-full mt-5 bg-white rounded-full">
-              <div
-                className="text-xs bg-indigo-600 font-medium text-center p-0 leading-none rounded-full"
-                style={{ width: `${uploadProgress}%` }}
-              >
-                <span className="text-white ">{uploadProgress}%</span>
+            {loading && (
+              <div className="w-full mt-5 bg-white rounded-full">
+                <div
+                  className="text-xs bg-indigo-600 font-medium text-center p-0 leading-none rounded-full"
+                  style={{ width: `${uploadProgress}%` }}
+                >
+                  <span className="text-white ">{uploadProgress}%</span>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* upload button */}
-            <div className="mt-5 gap-5 mb-20">
+            <div className="mt-5 gap-5 mb-20  w-36">
               <Button
-                className="upload-button cursor-progress"
+                className="button-style  cursor-progress"
                 style={{ backgroundColor: "#4f46e5", color: "#ffffff" }}
                 onClick={handleUpload}
                 loading={loading}

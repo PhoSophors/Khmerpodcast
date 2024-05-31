@@ -1,6 +1,6 @@
 
 .create-card-bg {
-  background-color: var(--card-bg) !important;
+  background-color: var(--card-hover) !important;
   border-color: var(--border-color) !important;
 }
 .upload-progress  {
@@ -9,15 +9,5 @@
 }
 
 
-.upload-button {
-  display: flex; 
-  justify-content: center;
-  align-items: center; 
-  border-radius: 100px;
-  width: 150px;
-  height: 45px; 
-  line-height: 40px; 
-  text-align: center; 
-}
 
 /* update podcast =============================================== */

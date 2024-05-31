@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Spin } from "antd";
 import { Link } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
+import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import "./Profile.css";
 import UserUploadCard from "../../card/UserUploadCard";
@@ -70,6 +70,10 @@ const Profile = () => {
                 {user && user.username}
               </h1>
 
+              <h1 className="text-sm mt-3 max-w-60 text-center text-gray-600 dark:text-gray-300">
+                {user && user.bio}
+              </h1>
+
               <div className="mt-5 rounded-xl p-3 relative border ">
                 <h2 className="text-gray-500 text-base  dark:text-gray-300 mt- mx-7 text-center text-lg">
                   {user && user.email}
@@ -99,19 +103,19 @@ const Profile = () => {
                   Role *
                 </h2>
               </div>
-              
+
               <>
-                <ShareProfileBtn  userId={id}/>
+                <ShareProfileBtn userId={id} />
               </>
 
-              <Link to={`/update-profile/${id}`}>
-                <Button
-                  className="mt-10 w-full bg-indigo-600 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-xl"
-                  size="large"
-                >
-                  Edit profile
-                </Button>
-              </Link>
+              <div className="mt-5 gap-5 mb-20 w-full">
+                <Link to={`/update-profile/${id}`}>
+                  <Button className="button-style ">
+                    <EditOutlined />
+                    Update Profile
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </Card>

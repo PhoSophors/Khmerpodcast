@@ -30,7 +30,6 @@ const PublicProfile = () => {
     );
   }
 
-
   return (
     <div className="profile-container h-screen">
       <div className="flex grid xl:grid-cols-2 grid-cols-1 md:grid-cols-1 md:flex xl:p-2 md:p-2 p-0 xl:gap-2 md:gap-2 gap-2">
@@ -67,6 +66,10 @@ const PublicProfile = () => {
 
               <h1 className="text-2xl capitalize text-center text-gray-600 dark:text-gray-300 font-bold">
                 {publicUserData.username}
+              </h1>
+
+              <h1 className="text-sm mt-3 max-w-60 text-center text-gray-600 dark:text-gray-300">
+                {publicUserData && publicUserData.bio}
               </h1>
 
               <div className="mt-5 rounded-xl p-3 relative border min-w-72">

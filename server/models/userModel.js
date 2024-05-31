@@ -41,6 +41,10 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  bio: {
+    type: String,
+    required: false,
+  },
   emailVerificationToken: String,
   authToken: String,
   createdAt: {

@@ -49,9 +49,14 @@ const updateUser = async (req, res) => {
       }
 
       // Update the username if provided
-      const { username } = req.body;
+      const { username, bio } = req.body;
       if (username) {
         user.username = username;
+      }
+      
+      // Update the bio if provided
+      if (bio) {
+        user.bio = bio;
       }
 
       // If file upload was successful, update the user object with the S3 URL
@@ -103,12 +108,13 @@ const getPublicProfile = async (req, res) => {
 
     const publicProfile = {
       username: user.username,
+      bio: user.bio,
       profileImage: user.profileImage,
       role: user.role,
       files,
     };
-    res.status(200).json({ 
-      user: publicProfile, 
+    res.status(200).json({
+      user: publicProfile,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

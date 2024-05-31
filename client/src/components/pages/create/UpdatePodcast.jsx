@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { Modal, Form, Input, Button, message, Upload, Card } from "antd";
 import ImgCrop from "antd-img-crop";
 import "./create.css";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import { api_url } from "../../../api/config";
 
 const UpdatePodcast = ({ file }) => {
@@ -18,7 +18,9 @@ const UpdatePodcast = ({ file }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
 
   const handleUpdate = async (values) => {
     try {
@@ -39,7 +41,9 @@ const UpdatePodcast = ({ file }) => {
         },
         onUploadProgress: (progressEvent) => {
           // Calculate the upload progress
-          let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          let percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
           // Cap the progress at 99% until the server response is received
           percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
           setUploadProgress(percentCompleted); // Update the upload progress state
@@ -57,7 +61,7 @@ const UpdatePodcast = ({ file }) => {
       setLoading(false);
     }
   };
-  
+
   // Functions for  handle image Preview
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -103,7 +107,6 @@ const UpdatePodcast = ({ file }) => {
     }
     setAudioFile(info.fileList.length ? info.fileList[0] : null);
   };
-
 
   return (
     <div>
@@ -250,25 +253,28 @@ const UpdatePodcast = ({ file }) => {
             </Form.Item>
           </Card>
 
-          <div className="w-full mt-5 bg-white rounded-full ">
-            <div
-              className="bg-indigo-500 text-xs font-medium text-white text-center p-0 leading-none rounded-full"
-              style={{ width: `${uploadProgress}%`, height: "0.5rem" }}
-            >
-              {" "}
-              {uploadProgress}%
+          {loading && (
+            <div className="w-full mt-5 bg-white rounded-full ">
+              <div
+                className="bg-indigo-500 text-xs font-medium text-white text-center p-0 leading-none rounded-full"
+                style={{ width: `${uploadProgress}%`, height: "0.5rem" }}
+              >
+                {" "}
+                {uploadProgress}%
+              </div>
             </div>
-          </div>
+          )}
 
-          <Button
-            className="upload-button mt-10 mb-5 "
-            style={{ backgroundColor: "#f43f5e", color: "#ffffff" }}
-            loading={loading}
-            type="primary"
-            htmlType="submit"
-          >
-            Update
-          </Button>
+          <div className="mt-5 gap-5 mb-20  w-36">
+            <Button
+              className="button-style cursor-progress"
+              loading={loading}
+              htmlType="submit"
+            >
+              <CloudUploadOutlined />
+              Upload
+            </Button>
+          </div>
         </Form>
       </Modal>
     </div>
