@@ -1,7 +1,7 @@
 
 @font-face {
   font-family: 'KhmerOS_battambang';
-  src: url('../public/fonts/KhmerOS_battambang.ttf') format('truetype');
+  src: url('/fonts/KhmerOS_battambang.ttf') format('truetype');
 }
 
 

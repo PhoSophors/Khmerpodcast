@@ -1,5 +1,3 @@
-// PrivateRoute.js
-
 import React from "react";
 import { Navigate, useLocation } from 'react-router-dom';
 import Cookies from "js-cookie";
@@ -14,8 +12,14 @@ const PrivateRoute = ({ children }) => {
   }
 
   const decodedToken = jwtDecode(authToken);
+  const userRole = decodedToken.role;
 
-  return (decodedToken.role === 'admin' || decodedToken.role === 'user') ? children : <Navigate to="/" state={{ from: location }} />;
+  // Check if the user role is 'admin' or 'user'
+  if (userRole === 'admin' || userRole === 'user') {
+    return children;
+  } else {
+    return <Navigate to="/" state={{ from: location }} />;
+  }
 };
 
 export default PrivateRoute;

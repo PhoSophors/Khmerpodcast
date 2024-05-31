@@ -121,27 +121,24 @@ otpController.verifyOTP = async (req, res) => {
     // Change the emailVerified status to true
     user.emailVerified = true;
 
-    // Save the user
-    await user.save();
-
     // Sign the payload and create a JWT token
     const payload = {
       id: user._id,
       email: user.email,
       username: user.username,
+      role: user.role,
     };
 
+    // Generate a token
     const token = jwt.sign(payload, process.env.JWT_SECRET);
 
     // Save the authToken to the user
     user.authToken = token;
     await user.save(); // Save the user with the authToken
 
-    // Set the JWT token in an HTTPOnly cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-    });
+    // Save the token to the database
+    user.authToken = token;
+    await user.save();
 
     // If the OTPs match and the OTP has not expired, the verification is successful
     return res.status(200).json({

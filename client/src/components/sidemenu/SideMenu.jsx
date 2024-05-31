@@ -60,6 +60,7 @@ const SideMenu = ({ collapsed }) => {
 
   const handleLogout = () => {
     setLogoutModalVisible(true);
+    location.replace("/");
   };
 
   const moreMenu = (

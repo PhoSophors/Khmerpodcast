@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-let tokenBlacklist = [];
+let tokenBlacklist = []; // Consider using Redis or similar for a real app
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.header("Authorization");
@@ -15,6 +15,7 @@ const verifyToken = (req, res, next) => {
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
+    req.user.role = verified.role;
     next();
   } catch (error) {
     res.status(400).json({ error: "Invalid token" });

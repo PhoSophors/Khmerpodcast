@@ -143,21 +143,27 @@ const ShareProfileBtn = ({ userId }) => {
           </div>
         </Card>
 
-        <Card className="mt-5" title="Share to socail media">
-          <div className="text-center mb-5 mt-5 dark:text-gray-300 gap-5">
+        <Card className="mt-5" title="Share to socail media ">
+        <div className="text-center mb-5 mt-5 dark:text-gray-300 gap-auto justify-around flex flex-wrap sm:flex-row md:flex-row">
             <FacebookShareButton
               url={shareUrl}
+              className="flex flex-col items-center"
               style={{ margin: "0 5px 10px" }}
             >
               <FacebookIcon size={45} round />
               <span>Facebook</span>
             </FacebookShareButton>
-            <TwitterShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
+            <TwitterShareButton
+              url={shareUrl}
+              className="flex flex-col items-center"
+              style={{ margin: "0 5px 10px" }}
+            >
               <TwitterIcon size={45} round />
               <span>Twitter</span>
             </TwitterShareButton>
             <LinkedinShareButton
               url={shareUrl}
+              className="flex flex-col items-center"
               style={{ margin: "0 5px 10px" }}
             >
               <LinkedinIcon size={45} round />
@@ -165,6 +171,7 @@ const ShareProfileBtn = ({ userId }) => {
             </LinkedinShareButton>
             <TelegramShareButton
               url={shareUrl}
+              className="flex flex-col items-center"
               style={{ margin: "0 5px 10px" }}
             >
               <TelegramIcon size={45} round />
@@ -172,6 +179,7 @@ const ShareProfileBtn = ({ userId }) => {
             </TelegramShareButton>
             <WhatsappShareButton
               url={shareUrl}
+              className="flex flex-col items-center"
               style={{ margin: "0 5px 10px" }}
             >
               <WhatsappIcon size={45} round />

@@ -152,24 +152,44 @@ const MoreBtn = ({ file }) => {
         }
       >
         <Card className="mt-5">
-          <div className="text-center mb-5 mt-5 dark:text-gray-300 gab-5">
-            <FacebookShareButton url={shareUrl} style={{ margin: "0 5px 10px"}}>
+          <div className="text-center mb-5 mt-5 dark:text-gray-300 gap-auto justify-around flex flex-wrap sm:flex-row md:flex-row">
+            <FacebookShareButton
+              url={shareUrl}
+              className="flex flex-col items-center"
+              style={{ margin: "0 5px 10px" }}
+            >
               <FacebookIcon size={45} round />
               <span>Facebook</span>
             </FacebookShareButton>
-            <TwitterShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
+            <TwitterShareButton
+              className="flex flex-col items-center"
+              url={shareUrl}
+              style={{ margin: "0 5px 10px" }}
+            >
               <TwitterIcon size={45} round />
               <span>Twitter</span>
             </TwitterShareButton>
-            <LinkedinShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
+            <LinkedinShareButton
+              url={shareUrl}
+              className="flex flex-col items-center"
+              style={{ margin: "0 5px 10px" }}
+            >
               <LinkedinIcon size={45} round />
               <span>LinkedIn</span>
             </LinkedinShareButton>
-            <TelegramShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
+            <TelegramShareButton
+              url={shareUrl}
+              className="flex flex-col items-center"
+              style={{ margin: "0 5px 10px" }}
+            >
               <TelegramIcon size={45} round />
               <span>Telegram</span>
             </TelegramShareButton>
-            <WhatsappShareButton url={shareUrl} style={{ margin: "0 5px 10px" }}>
+            <WhatsappShareButton
+              url={shareUrl}
+              className="flex flex-col items-center"
+              style={{ margin: "0 5px 10px" }}
+            >
               <WhatsappIcon size={45} round />
               <span>WhatsApp</span>
             </WhatsappShareButton>

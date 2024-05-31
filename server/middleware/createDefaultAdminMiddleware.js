@@ -22,7 +22,6 @@ async function createDefaultAdmin() {
     // Hash the token
     const hash = crypto.createHash("sha256");
     hash.update(token);
-    const hashedAuthToken = hash.digest("hex");
 
     const admin = new User({
       username: "admin",
@@ -30,7 +29,7 @@ async function createDefaultAdmin() {
       password: hashedPassword,
       role: "admin",
       emailVerified: true,
-      authToken: hashedAuthToken, // Set the hashed authToken
+      authToken: token, // Set the hashed authToken
     });
 
     await admin.save();

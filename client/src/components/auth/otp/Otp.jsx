@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
-import { Input, Row, Col, Card, Button, message, Spin } from "antd";
+import { Input, Row, Col, Card, Button, message, Spin, notification } from "antd";
 import { SafetyOutlined } from "@ant-design/icons";
 import BackBtn from "../../Btn/BackBtn";
 
@@ -25,15 +25,19 @@ const Otp = () => {
 
       if (response.status === 200) {
         // OTP verified successfully, set the authToken cookie
-        // const encodedToken = btoa(response.data.authToken);
-        // const encodedId = btoa(response.data.id);
-        // Cookies.set("authToken", encodedToken, { expires: 365 * 100 });
-        // Cookies.set("id", encodedId, { expires: 365 * 100 });
+        const authToken = response.data.authToken;
+        const encodedToken = btoa(authToken);
+        const encodedId = btoa(response.data.id);
+        Cookies.set("authToken", encodedToken, { expires: 365 * 100 });
+        Cookies.set("id", encodedId, { expires: 365 * 100 });
 
-
-        // Navigate to home page
-        message.success("OTP verified successfully");
-        navigate("/");
+        // Redirect to the profile page
+        notification.success({
+          message: "OTP verified successfully!",
+          description: "You are now logged in. enjoy your time with us!",
+        });
+        navigate("/profile");
+        window.location.reload();
       } else {
         message.error("OTP verification failed. Please try again.");
       }

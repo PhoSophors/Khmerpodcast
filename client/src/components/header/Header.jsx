@@ -11,6 +11,7 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const Header = ({ handleCollapse, onSelectMenuItem }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
@@ -124,17 +125,22 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
           ) : isLoggedIn ? (
             // Render the user's profile if the user is logged in
             <div className=" items-center flex">
-              <div className="username-header uppercase capitalize tracking-wide text-sm text-indigo-500 font-semibold">
-                {user && user.username.split(" ")[0]}
-              </div>
+              <span className="username-header font-semibold uppercase  tracking-wide text-sm text-indigo-500 font-semibold">
+                {user &&
+                  (user.username.split(" ")[0].length > 5
+                    ? user.username.split(" ")[0].slice(0, 5) + "..."
+                    : user.username.split(" ")[0])}
+              </span>
               &nbsp;
-              <Avatar
-                className="avatar"
-                src={user && user.profileImage}
-                style={{ border: "1px solid #6366f1" }}
-                size="large"
-                icon={<UserOutlined />}
-              />
+              <Link to="/profile">
+                <Avatar
+                  className="avatar cursor-pointer"
+                  src={user && user.profileImage}
+                  style={{ border: "1px solid #6366f1" }}
+                  size="large"
+                  icon={<UserOutlined />}
+                />
+              </Link>
             </div>
           ) : (
             // Render the login button if the user is not logged in
