@@ -1,14 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate, useLocation } from "react-router-dom"; // Import useNavigate
 import { Menu, Dropdown, Modal } from "antd";
 import "./SideMenu.css";
-import logo from "../assets/logo.jpg";
+import logo1 from "../assets/logo.jpg";
 import { getIcon } from "./iconUtils";
 import { useUser } from "../../context/UserContext";
 import ThemeContext from "../../context/ThemeContext";
-import { useLocation } from "react-router-dom";
 import LanguageSwitcher from "../languageSwitcher/LanguageSwitcher";
 import {
   CloseOutlined,
@@ -116,12 +115,17 @@ const SideMenu = ({ collapsed }) => {
       >
         <div
           onClick={handleAppClick}
-          className="flex items-center md:p-4 cursor-pointer menu-item-wrapper"
+          className="flex items-center md:p-4 cursor-pointer menu-item-wrapper gap-3"
         >
-          <img src={logo} alt="logo" className="logo-app" />
+          <img
+            src={logo1}
+            alt="logo"
+            className="logo-app"
+            style={{ borderRadius: "10px", width: "3vw" }}
+          />
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="uppercase tracking-wide text-xl text-red-600 font-bold">
+              <span className="uppercase tracking-wide text-2xl text-white font-bold">
                 Khmer
               </span>
               <span className="uppercase tracking-wide text-sm text-slate-200 font-semibold">
@@ -215,7 +219,7 @@ const SideMenu = ({ collapsed }) => {
         }
       >
         <div className="modal-logout mt-10 flex flex-col items-center">
-          <img src={logo} alt="" />
+          <img src={logo1} alt="" />
           <h1 className="text-center text-xl text-indigo-500 dark:text-gray-300 font-semibold mb-4 mt-5">
             Are you sure you want to logout your account?
           </h1>

@@ -23,7 +23,7 @@
   top: 0;
   background-color: var(--bg-color);
   /* border: none; */
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 :where(.css-dev-only-do-not-override-17seli4).ant-menu .ant-menu-item .ant-menu-item-icon >*, :where(.css-dev-only-do-not-override-17seli4).ant-menu .ant-menu-submenu-title .ant-menu-item-icon >* {
@@ -87,6 +87,7 @@
     border-bottom-right-radius: 20px !important;
     background-color: var(--sidemenu-mobile-bg);
     overflow: auto;
+    padding-bottom: 0px;
   }
 
   .side-menu-container .ant-menu-item-selected {

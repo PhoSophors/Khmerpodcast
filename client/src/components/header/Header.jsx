@@ -79,16 +79,16 @@ const Header = ({ handleCollapse, onSelectMenuItem }) => {
             title={
               <div
                 onClick={handleAppClick}
-                className="title-drawer cursor-pointer"
+                className="title-drawer cursor-pointer gap-3"
               >
                 <img
                   className=""
                   src={logo}
                   alt=""
-                  style={{ height: "70px" }}
+                  style={{ height: "13vw", borderRadius: "10px", border: "1px solid #6366f1"}}
                 />
                 <div className=" flex flex-col ">
-                  <span className="name-style tracking-wide text-xl text-red-600 font-bold">
+                  <span className="name-style tracking-wide text-2xl text-indigo-600 dark:text-slate-100 font-bold">
                     Khmer
                   </span>
                   <span className="name-style  tracking-wide text-sm text-slate-700 dark:text-slate-100  font-semibold">

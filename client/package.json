@@ -22,6 +22,7 @@
     "path-browserify": "^1.0.1",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
+    "react-audio-player": "^0.17.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.5",
