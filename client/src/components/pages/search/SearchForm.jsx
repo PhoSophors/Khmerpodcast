@@ -11,6 +11,7 @@ const SearchForm = ({ handleSearchSubmit }) => {
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
+    setSearchQuery(event.target.value); // Assuming setSearchQuery is the function to set searchQuery
   };
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const SearchForm = ({ handleSearchSubmit }) => {
   }, [searchQuery, handleSearchSubmit]);
 
   return (
-    <form className="search-form">
+    <form className="search-form" onSubmit={(e) => e.preventDefault()}>
       <span>&nbsp;&nbsp;</span>
       <Input
         className="search-input"

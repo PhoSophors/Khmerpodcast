@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchForm from "./SearchForm";
 import SearchPodcastCard from "../../card/SearchPodcastCard";
 import SearchUserCard from "../../card/SearchUserCard";
@@ -12,9 +12,25 @@ const Search = () => {
   const [selectedPodcast, setSelectedPodcast] = useState(null);
   const navigate = useNavigate();
 
+  // Load search results from local storage when component mounts
+  useEffect(() => {
+    const storedResults = localStorage.getItem('searchResults');
+    if (storedResults) {
+      setSearchResults(JSON.parse(storedResults));
+    }
+    const storedSearchPerformed = localStorage.getItem('searchPerformed');
+    if (storedSearchPerformed) {
+      setSearchPerformed(JSON.parse(storedSearchPerformed));
+    }
+  }, []);
+
   const handleSearchSubmit = async (results) => {
     setSearchResults(results);
     setSearchPerformed(true);
+
+    // Store search results and searchPerformed in local storage
+    localStorage.setItem('searchResults', JSON.stringify(results));
+    localStorage.setItem('searchPerformed', 'true');
   };
 
   return (

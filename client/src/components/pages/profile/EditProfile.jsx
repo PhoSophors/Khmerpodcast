@@ -7,7 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { api_url } from "../../../api/config";
 import BackBtn from "../../Btn/BackBtn";
 import { useUser } from "../../../context/UserContext";
-import { CloudUploadOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  CameraFilled,
+  CloudUploadOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import {
   Form,
   Input,
@@ -165,6 +169,21 @@ const EditProfile = () => {
                 )}
               </Upload>
             </ImgCrop>
+            <div
+              className=" edit-image p-1 cursor-pointer text-white bg-slate-200 dark:bg-slate-300 h-7 w-7 flex justify-center items-center rounded-full"
+              style={{
+                position: "absolute",
+                bottom: -10,
+                right: -10,
+                fontSize: "18px",
+                color: "#000",
+                zIndex: 1000,
+                cursor: "pointer",
+              }}
+            >
+              <CameraFilled />
+            </div>
+
             <Modal
               visible={previewOpen}
               title={previewTitle}
