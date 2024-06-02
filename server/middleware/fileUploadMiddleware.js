@@ -1,5 +1,3 @@
-// middleware/fileUploadMiddleware.js
-
 const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
@@ -21,7 +19,7 @@ const upload2S3 = multer({
     bucket: process.env.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
       const fileExtension = path.extname(file.originalname);
-      const uniqueKey = `${Date.now().toString()}.${fileExtension}`;
+      const uniqueKey = `${Date.now().toString()}${fileExtension}`;
       cb(null, uniqueKey);
     },
     contentType: multerS3.AUTO_CONTENT_TYPE,

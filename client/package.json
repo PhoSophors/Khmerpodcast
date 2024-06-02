@@ -27,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.5",
     "react-linkify": "^1.0.0-alpha",
+    "react-lottie": "^1.2.4",
     "react-router-dom": "^6.23.0",
     "react-share": "^5.1.0"
   },

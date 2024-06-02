@@ -1,7 +1,15 @@
 import React from "react";
 import { Spin, Card } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
+import {
+  FacebookFilled,
+  GlobalOutlined,
+  InstagramFilled,
+  TikTokFilled,
+  TwitterOutlined,
+  UserOutlined,
+  YoutubeFilled,
+} from "@ant-design/icons";
 import { Avatar } from "antd";
 import UserUploadCard from "../../card/UserUploadCard";
 import ShareProfileBtn from "../../Btn/ShareProfileBtn";
@@ -71,6 +79,90 @@ const PublicProfile = () => {
               <h1 className="text-sm mt-3 max-w-60 text-center text-gray-600 dark:text-gray-300">
                 {publicUserData && publicUserData.bio}
               </h1>
+
+              {/* {user && user.twitter} */}
+              <div className="flex flex-row gap-3 mt-5">
+                {publicUserData &&
+                  publicUserData.facebook &&
+                  publicUserData.facebook !== "https://facebook.com/" && (
+                    <a
+                      href={publicUserData.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-blue-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <FacebookFilled />
+                      </h1>
+                    </a>
+                  )}
+                {publicUserData &&
+                  publicUserData.website &&
+                  publicUserData.website !== "https://" && (
+                    <a
+                      href={publicUserData.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-slate-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <GlobalOutlined />
+                      </h1>
+                    </a>
+                  )}
+
+                {publicUserData &&
+                  publicUserData.twitter &&
+                  publicUserData.twitter !== "https://twitter.com/" && (
+                    <a
+                      href={publicUserData.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-cyan-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <TwitterOutlined />
+                      </h1>
+                    </a>
+                  )}
+                {publicUserData &&
+                  publicUserData.instagram &&
+                  publicUserData.instagram !== "https://instagram.com/" && (
+                    <a
+                      href={publicUserData.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-pink-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <InstagramFilled />
+                      </h1>
+                    </a>
+                  )}
+
+                {publicUserData &&
+                  publicUserData.youtube &&
+                  publicUserData.youtube !== "https://youtube.com/user/" && (
+                    <a
+                      href={publicUserData.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <YoutubeFilled />
+                      </h1>
+                    </a>
+                  )}
+                {publicUserData &&
+                  publicUserData.tiktok &&
+                  publicUserData.tiktok !== "https://tiktok.com/@" && (
+                    <a
+                      href={publicUserData.tiktok}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-black h-8 w-8 flex justify-center items-center rounded-full">
+                        <TikTokFilled />
+                      </h1>
+                    </a>
+                  )}
+              </div>
 
               <div className="mt-5 rounded-xl p-3 relative border min-w-72">
                 <h2 className="text-gray-500 text-base dark:text-gray-300 mx-7 text-center text-lg">

@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
@@ -15,10 +15,19 @@ const MainSection = lazy(() => import("../container/mainSection/MainSection"));
 
 const App = () => {
   const { isLoading, userRole } = useUser();
+  const [showApp, setShowApp] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowApp(true);
+    }, 2000); // 4 seconds
+
+    return () => clearTimeout(timer); // cleanup on unmount
+  }, []);
 
   return (
     <Router>
-      {isLoading ? (
+      {isLoading || !showApp ? (
         <AppLoading />
       ) : (
         <Routes>

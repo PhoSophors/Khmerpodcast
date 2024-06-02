@@ -15,7 +15,7 @@
 
 body {
   font-family: 'KhmerOS_battambang', sans-serif;
-  background-color: var(--bg-color) !important;
+  /* background-color: var(--bg-color) !important; */
 }
 
 h1, span, div, h2, h3, h4, label,textarea, rules, placeholder, button, a, p, input, title {

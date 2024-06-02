@@ -17,6 +17,7 @@
   overflow: auto;
   background-color: var(--content-bg) !important;
   border-color:  var(--border-color) !important;
+  overflow: auto;
 }
 .bg-profile-text-field {
   background-color: var(--content-bg) !important;
@@ -34,7 +35,7 @@
     height: auto !important;
     min-height: auto !important;
     border: none ;
-    margin-bottom: 100px;
+    /* margin-bottom: 100px; */
   }
   .recent-upload-card{
     height: auto !important;

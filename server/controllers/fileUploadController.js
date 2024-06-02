@@ -6,14 +6,17 @@ const mongoose = require("mongoose");
 
 const uploadPodcast = async (req, res) => {
   try {
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).json({ message: "No files uploaded" });
-    }
-
+    if (!req.files || !req.files.audioFile) {
+      console.error("No audio file uploaded");
+      return res.status(400).json({ message: "No audio file uploaded" });
+    } 
+    
     const title = req.body.title;
     const description = req.body.description;
     const audioFile = req.files.audioFile[0];
     const imageFile = req.files.imageFile[0];
+
+    console.log("Uploaded files:", req.files);
 
     if (!title || !description || !audioFile || !imageFile) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -49,6 +52,8 @@ const uploadPodcast = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 
 // Function to get all files ================================================================
 const getAllFiles = async (req, res) => {

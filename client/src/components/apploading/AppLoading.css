@@ -1,13 +1,30 @@
-/* styles.css */
-.loading-spinner-container {
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+.loading-spinner {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: var(--bg-color);
+  /* background-color: #282828; */
+  background: rgb(153,155,161);
+  background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%);
 }
 
-.spinner {
-  font-size: 24px;
-  color: #fff; /* Ant Design primary color */
+.animation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-text {
+  font-weight: bold;
+  color: white;
+  font-family: "Caveat", cursive !important;
+  font-optical-sizing: auto !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .loading-text {
+    color: #d1d5db; /* dark:text-gray-300 equivalent */
+  }
 }

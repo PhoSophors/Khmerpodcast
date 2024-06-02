@@ -49,14 +49,47 @@ const updateUser = async (req, res) => {
       }
 
       // Update the username if provided
-      const { username, bio } = req.body;
+      const {
+        username,
+        bio,
+        twitter,
+        instagram,
+        youtube,
+        tiktok,
+        facebook,
+        website,
+      } = req.body;
+
       if (username) {
         user.username = username;
       }
-      
+
       // Update the bio if provided
       if (bio) {
         user.bio = bio;
+      }
+      if (facebook) {
+        user.facebook = facebook;
+      }
+      
+      if (website) {
+        user.website = website;
+      }
+
+      if (twitter) {
+        user.twitter = twitter;
+      }
+
+      if (instagram) {
+        user.instagram = instagram;
+      }
+
+      if (youtube) {
+        user.youtube = youtube;
+      }
+
+      if (tiktok) {
+        user.tiktok = tiktok;
       }
 
       // If file upload was successful, update the user object with the S3 URL
@@ -111,6 +144,12 @@ const getPublicProfile = async (req, res) => {
       bio: user.bio,
       profileImage: user.profileImage,
       role: user.role,
+      twitter: user.twitter,
+      instagram: user.instagram,
+      youtube: user.youtube,
+      tiktok: user.tiktok,
+      facebook: user.facebook,
+      website: user.website,
       files,
     };
     res.status(200).json({

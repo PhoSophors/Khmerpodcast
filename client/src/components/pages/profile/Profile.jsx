@@ -1,7 +1,16 @@
 import React from "react";
 import { Card, Button, Spin } from "antd";
 import { Link } from "react-router-dom";
-import { EditOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  FacebookFilled,
+  GlobalOutlined,
+  InstagramFilled,
+  TikTokOutlined,
+  TwitterOutlined,
+  UserOutlined,
+  YoutubeFilled,
+} from "@ant-design/icons";
 import { Avatar } from "antd";
 import "./Profile.css";
 import UserUploadCard from "../../card/UserUploadCard";
@@ -73,6 +82,88 @@ const Profile = () => {
               <h1 className="text-sm mt-3 max-w-60 text-center text-gray-600 dark:text-gray-300">
                 {user && user.bio}
               </h1>
+
+              {/* {user socail media} */}
+              <div className="flex flex-row gap-3 mt-5">
+                {user &&
+                  user.facebook &&
+                  user.facebook !== "https://facebook.com/" && (
+                    <a
+                      href={user.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-blue-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <FacebookFilled />
+                      </h1>
+                    </a>
+                  )}
+                {user && user.website && user.website !== "https://" && (
+                  <a
+                    href={user.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <h1 className="p-3 cursor-pointer text-white bg-slate-600 h-8 w-8 flex justify-center items-center rounded-full">
+                      <GlobalOutlined />
+                    </h1>
+                  </a>
+                )}
+
+                {user &&
+                  user.twitter &&
+                  user.twitter !== "https://twitter.com/" && (
+                    <a
+                      href={user.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-cyan-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <TwitterOutlined />
+                      </h1>
+                    </a>
+                  )}
+                {user &&
+                  user.instagram &&
+                  user.instagram !== "https://instagram.com/" && (
+                    <a
+                      href={user.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-pink-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <InstagramFilled />
+                      </h1>
+                    </a>
+                  )}
+
+                {user &&
+                  user.youtube &&
+                  user.youtube !== "https://youtube.com/user/" && (
+                    <a
+                      href={user.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-red-600 h-8 w-8 flex justify-center items-center rounded-full">
+                        <YoutubeFilled />
+                      </h1>
+                    </a>
+                  )}
+                {user &&
+                  user.tiktok &&
+                  user.tiktok !== "https://tiktok.com/@" && (
+                    <a
+                      href={user.tiktok}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <h1 className="p-3 cursor-pointer text-white bg-black h-8 w-8 flex justify-center items-center rounded-full">
+                        <TikTokOutlined />
+                      </h1>
+                    </a>
+                  )}
+              </div>
 
               <div className="mt-5 rounded-xl p-3 relative border ">
                 <h2 className="text-gray-500 text-base  dark:text-gray-300 mt- mx-7 text-center text-lg">
