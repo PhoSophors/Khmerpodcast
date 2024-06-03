@@ -199,7 +199,7 @@ const UpdatePodcast = ({ file }) => {
                     customRequest={() => {}}
                     fileList={fileList}
                     onChange={handleFileChange}
-                    accept=".aac, .mp3, .m4a"
+                    accept=".mp3"
                     showUploadList={false}
                   >
                     <div>{"+ Upload"}</div>
@@ -225,7 +225,7 @@ const UpdatePodcast = ({ file }) => {
                   onPreview={handlePreview}
                   fileList={imageFile ? [imageFile] : []}
                   maxCount={1}
-                  accept=".jpg, .jpeg"
+                  accept=".jpg"
                   onChange={(info) => {
                     if (info.fileList.length > 1) {
                       info.fileList = [info.fileList.pop()];

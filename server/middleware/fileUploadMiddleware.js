@@ -28,10 +28,8 @@ const upload2S3 = multer({
     },
   }),
 }).fields([
-  { name: "title" },
-  { name: "description" },
-  { name: "imageFile" },
-  { name: "audioFile" },
+  { name: "audioFile", maxCount: 1 },
+  { name: "imageFile", maxCount: 1 },
 ]);
 
 // Handle upload errors

@@ -15,9 +15,30 @@ router.post(
   "/upload",
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
-  upload2S3,
-  handleUploadError,
+  (req, res, next) => {
+    upload2S3(req, res, (err) => {
+      if (err) {
+        return handleUploadError(err, req, res);
+      }
+      next();
+    });
+  },
   fileUploadController.uploadPodcast
+);
+
+router.put(
+  "/update/:id",
+  verifyToken,
+  checkRoleMiddleware(["admin", "user"]),
+  (req, res, next) => {
+    upload2S3(req, res, (err) => {
+      if (err) {
+        return handleUploadError(err, req, res);
+      }
+      next();
+    });
+  },
+  fileUploadController.updateFile
 );
 
 router.post(
@@ -29,15 +50,6 @@ router.post(
     console.log("Uploaded files after upload2S3:", req.files);
     res.json({ message: "Upload successful (for testing)" });
   }
-);
-
-// PUT route to update a Podcast by ID
-router.put(
-  "/update/:id",
-  verifyToken,
-  checkRoleMiddleware(["admin", "user"]),
-  upload2S3,
-  fileUploadController.updateFile
 );
 
 // GET route to retrieve all Podcast

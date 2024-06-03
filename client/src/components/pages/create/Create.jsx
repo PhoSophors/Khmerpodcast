@@ -29,43 +29,9 @@ const Create = () => {
   const id = Cookies.get("id") ? atob(Cookies.get("id")) : null;
   const { t } = useTranslation();
 
-  // const handleFileChange = (info) => {
-  //   let fileList = [...info.fileList];
-  //   fileList = fileList.slice(-1);
-  //   setFileList(fileList);
-  // };
-
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
     fileList = fileList.slice(-1);
-
-    // Get the last file (the one just uploaded)
-    const file = fileList[fileList.length - 1];
-
-    // Create a FileReader to read the file
-    const reader = new FileReader();
-
-    // When the file is read, compress it
-    reader.onloadend = () => {
-      // Get the audio data from the file
-      const audioData = new Int16Array(reader.result);
-
-      // Create a new MP3 encoder
-      const mp3encoder = new lamejs.Mp3Encoder(1, 44100, 128); // 1 for mono, 44100 is the sample rate, 128 is the bit rate
-
-      // Encode the audio data to MP3
-      const mp3Data = mp3encoder.encodeBuffer(audioData);
-
-      // Create a Blob from the MP3 data
-      const blob = new Blob([new Uint8Array(mp3Data)]);
-
-      // Replace the original file with the compressed one
-      fileList[fileList.length - 1] = new File([blob], file.name);
-    };
-
-    // Read the file as an ArrayBuffer
-    reader.readAsArrayBuffer(file.originFileObj);
-
     setFileList(fileList);
   };
 
@@ -92,7 +58,7 @@ const Create = () => {
           let percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           );
-          percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
+          percentCompleted = percentCompleted >= 100 ? 91 : percentCompleted;
           setUploadProgress(percentCompleted); // Update the upload progress state
         },
         headers: {
@@ -245,7 +211,7 @@ const Create = () => {
                         customRequest={() => {}}
                         fileList={fileList}
                         onChange={handleFileChange}
-                        accept=".aac, .mp3, .ogg "
+                        accept=".mp3 "
                         showUploadList={false}
                       >
                         <div className="dark:text-gray-300">
@@ -272,7 +238,7 @@ const Create = () => {
                       action={null}
                       listType="picture-card"
                       fileList={imageFileList ? imageFileList : []}
-                      accept=".jpg, .jpeg"
+                      accept=".jpg"
                       onChange={handleChange}
                       onPreview={handlePreview}
                     >

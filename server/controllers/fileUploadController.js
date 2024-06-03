@@ -1,42 +1,86 @@
-// controller/ fileUploadController.js
-
 const User = require("../models/userModel");
 const File = require("../models/fileUploadModel");
-const mongoose = require("mongoose");
+const ffmpeg = require("fluent-ffmpeg");
+const sharp = require("sharp");
+const {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
+const stream = require("stream");
+const { promisify } = require("util");
 
+// Configure AWS S3 client
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+});
+
+const pipeline = promisify(stream.pipeline);
+
+
+// Function to upload a podcast ================================================================
 const uploadPodcast = async (req, res) => {
   try {
-    if (!req.files || !req.files.audioFile) {
-      console.error("No audio file uploaded");
-      return res.status(400).json({ message: "No audio file uploaded" });
-    } 
-    
+    if (!req.files || !req.files.audioFile || !req.files.imageFile) {
+      console.error("No audio or image file uploaded");
+      return res
+        .status(400)
+        .json({ message: "No audio or image file uploaded" });
+    }
+
     const title = req.body.title;
     const description = req.body.description;
     const audioFile = req.files.audioFile[0];
     const imageFile = req.files.imageFile[0];
 
-    console.log("Uploaded files:", req.files);
-
     if (!title || !description || !audioFile || !imageFile) {
       return res.status(400).json({ message: "Missing required fields" });
     }
+
+    // Download audio and image file from S3
+    const audioBuffer = await downloadFromS3(audioFile.key);
+    const imageBuffer = await downloadFromS3(imageFile.key);
+
+    // Compress audio and image files
+    const compressedAudioBuffer = await compressAudio(audioBuffer);
+    const compressedImageBuffer = await compressImage(imageBuffer);
+
+    // Delete original files from S3
+    await deleteFromS3(audioFile.key);
+    await deleteFromS3(imageFile.key);
+
+    // Upload the compressed files to S3 and get their URLs
+    const compressedAudioFileUrl = await uploadToS3(
+      compressedAudioBuffer,
+      "audio/mpeg",
+      ".mp3"
+    );
+    const compressedImageFileUrl = await uploadToS3(
+      compressedImageBuffer,
+      "image/jpeg",
+      ".jpg"
+    );
 
     const file = new File({
       title: title,
       description: description,
       user: req.user.id,
       audio: {
-        filename: audioFile.key,
-        url: audioFile.location,
-        size: audioFile.size,
-        mimetype: audioFile.mimetype,
+        filename: compressedAudioFileUrl.split("/").pop(),
+        url: compressedAudioFileUrl,
+        size: compressedAudioBuffer.length,
+        mimetype: "audio/mpeg",
       },
       image: {
-        filename: imageFile.key,
-        url: imageFile.location,
-        size: imageFile.size,
-        mimetype: imageFile.mimetype,
+        filename: compressedImageFileUrl.split("/").pop(),
+        url: compressedImageFileUrl,
+        size: compressedImageBuffer.length,
+        mimetype: "image/jpeg",
       },
     });
 
@@ -49,11 +93,172 @@ const uploadPodcast = async (req, res) => {
     });
   } catch (error) {
     console.error("Error uploading file:", error);
+    // Rollback by deleting original files from S3
+    if (audioBuffer) {
+      await deleteFromS3(audioFile.key);
+    }
+    if (imageBuffer) {
+      await deleteFromS3(imageFile.key);
+    }
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
 
+// Download file from S3
+const downloadFromS3 = async (key) => {
+  const command = new GetObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: key,
+  });
+
+  const response = await s3Client.send(command);
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    response.Body.on("data", (chunk) => chunks.push(chunk));
+    response.Body.on("end", () => resolve(Buffer.concat(chunks)));
+    response.Body.on("error", reject);
+  });
+};
+
+// Function to compress audio
+const compressAudio = async (audioBuffer) => {
+  return new Promise((resolve, reject) => {
+    const audioStream = new stream.PassThrough();
+    audioStream.end(audioBuffer);
+
+    const outputStream = new stream.PassThrough();
+    const chunks = [];
+    outputStream.on("data", (chunk) => chunks.push(chunk));
+    outputStream.on("end", () => resolve(Buffer.concat(chunks)));
+    outputStream.on("error", reject);
+
+    ffmpeg(audioStream)
+      .audioBitrate("64k")
+      .format("mp3")
+      .on("error", reject)
+      .pipe(outputStream);
+  });
+};
+
+// Function to compress image
+const compressImage = async (imageBuffer) => {
+  return sharp(imageBuffer)
+    .resize({ width: 800 })
+    .jpeg({ quality: 80 })
+    .toBuffer();
+};
+
+// Function to upload compressed files to S3
+const uploadToS3 = async (fileBuffer, mimeType, fileExtension) => {
+  const uniqueKey = `${Date.now().toString()}${fileExtension}`;
+
+  const uploadParams = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: uniqueKey,
+    Body: fileBuffer,
+    ContentType: mimeType,
+    ACL: "private",
+  };
+
+  await s3Client.send(new PutObjectCommand(uploadParams));
+  return `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uniqueKey}`;
+};
+
+// Function to delete file from S3
+const deleteFromS3 = async (key) => {
+  const command = new DeleteObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: key,
+  });
+
+  await s3Client.send(command);
+};
+
+// Function to update a file ================================================================
+const updateFile = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const { id } = req.params;
+
+    // set user id from token
+    const user = req.user.id;
+
+    // Find the file in the database
+    let file = await File.findById(id);
+
+    if (!file) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
+    // Check if the user is the uploader of the file
+    if (file.user.toString() !== user) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to update this podcast" });
+    }
+
+    // Update the file's properties
+    file.title = title || file.title;
+    file.description = description || file.description;
+
+    // Check if audio file is updated
+    if (req.files && req.files.audioFile) {
+      const { audioFile } = req.files;
+
+      // Delete the old audio file from S3
+      await deleteFromS3(file.audio.filename);
+
+      // Download audio file from S3
+      const audioBuffer = await downloadFromS3(audioFile[0].key);
+      // Compress audio
+      const compressedAudioBuffer = await compressAudio(audioBuffer);
+      // Upload compressed audio to S3
+      const compressedAudioFileUrl = await uploadToS3(
+        compressedAudioBuffer,
+        "audio/mpeg",
+        ".mp3"
+      );
+
+      file.audio.filename = compressedAudioFileUrl.split("/").pop();
+      file.audio.url = compressedAudioFileUrl;
+      file.audio.size = compressedAudioBuffer.length;
+      file.audio.mimetype = "audio/mpeg";
+    }
+
+    // Check if image file is updated
+    if (req.files && req.files.imageFile) {
+      const { imageFile } = req.files;
+
+      // Delete the old image file from S3
+      await deleteFromS3(file.image.filename);
+
+      // Download image file from S3
+      const imageBuffer = await downloadFromS3(imageFile[0].key);
+      // Compress image
+      const compressedImageBuffer = await compressImage(imageBuffer);
+      // Upload compressed image to S3
+      const compressedImageFileUrl = await uploadToS3(
+        compressedImageBuffer,
+        "image/jpeg",
+        ".jpg"
+      );
+
+      file.image.filename = compressedImageFileUrl.split("/").pop();
+      file.image.url = compressedImageFileUrl;
+      file.image.size = compressedImageBuffer.length;
+      file.image.mimetype = "image/jpeg";
+    }
+
+    // Save the updated file
+    const updatedFile = await file.save();
+
+    res.json({ message: "File updated successfully", file: updatedFile });
+  } catch (error) {
+    console.error("Error updating file:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 // Function to get all files ================================================================
 const getAllFiles = async (req, res) => {
@@ -102,65 +307,6 @@ const getFileCount = async (req, res) => {
   }
 };
 
-// Function to update a file ================================================================
-const updateFile = async (req, res) => {
-  try {
-    const { title, description } = req.body;
-    const { id } = req.params;
-
-    // set user id from token
-    const user = req.user.id;
-
-    // Find the file in the database
-    let file = await File.findById(id);
-
-    if (!file) {
-      return res.status(404).json({ message: "File not found" });
-    }
-
-    // Check if the user is the uploader of the file
-    if (file.user.toString() !== user) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to update this podacst" });
-    }
-
-    // Delete the old file from S3
-    // await deleteOldFileFromS3(file);
-
-    // Update the file's properties
-    file.title = title || file.title;
-    file.description = description || file.description;
-
-    // Check if audio file is updated
-    if (req.files && req.files.audioFile) {
-      const { audioFile } = req.files;
-      file.audio.filename = `audio_/${audioFile[0].key}`;
-      file.audio.url = audioFile[0].location;
-      file.audio.size = audioFile[0].size;
-      file.audio.mimetype = audioFile[0].mimetype;
-    }
-
-    // Check if image file is updated
-    if (req.files && req.files.imageFile) {
-      const { imageFile } = req.files;
-
-      file.image.filename = `image_/${imageFile[0].key}`;
-      file.image.url = imageFile[0].location;
-      file.image.size = imageFile[0].size;
-      file.image.mimetype = imageFile[0].mimetype;
-    }
-
-    // Save the updated file
-    const updatedFile = await file.save();
-
-    res.json({ message: "File updated successfully", file: updatedFile });
-  } catch (error) {
-    console.error("Error updating file:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
 // Function to delete a file ================================================================
 const deleteFile = async (req, res) => {
   try {
@@ -184,6 +330,10 @@ const deleteFile = async (req, res) => {
         .status(403)
         .json({ message: "You do not have permission to delete this file" });
     }
+
+    await deleteFromS3(file.audio.key);
+    await deleteFromS3(file.image.key);
+    
     // Remove the file from the database
     await File.deleteOne({ _id: id });
 

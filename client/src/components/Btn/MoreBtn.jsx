@@ -96,7 +96,7 @@ const MoreBtn = ({ file }) => {
                 viewBox="0 0 14 20"
               >
                 <path
-                  stroke="white"
+                  stroke="gray"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
