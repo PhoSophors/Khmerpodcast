@@ -9,7 +9,6 @@ const {
 } = require("../middleware/fileUploadMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
-// const compressAudio = require("../middleware/audioCompressionMiddleware");
 
 // POST route to handle Podcast uploads
 router.post(
@@ -17,7 +16,6 @@ router.post(
   verifyToken,
   checkRoleMiddleware(["admin", "user"]),
   upload2S3,
-  // compressAudio,
   handleUploadError,
   fileUploadController.uploadPodcast
 );

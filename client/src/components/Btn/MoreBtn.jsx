@@ -75,7 +75,7 @@ const MoreBtn = ({ file }) => {
           {isFavorite ? (
             <div style={{ display: "flex", alignItems: "center" }}>
               <svg
-                className="w-3.5 h-3.5 text-gray-500"
+                className="w-3.5 h-3.5 text-gray-500 dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -88,14 +88,15 @@ const MoreBtn = ({ file }) => {
           ) : (
             <div style={{ display: "flex", alignItems: "center" }}>
               <svg
-                className="w-3.5 h-3.5 dark:text-white"
+                className="w-3.5 h-3.5 text-gray-200 dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
+                
                 viewBox="0 0 14 20"
               >
                 <path
-                  stroke="black"
+                  stroke="white"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"

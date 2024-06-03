@@ -83,16 +83,7 @@ const EditProfile = () => {
     setUsername(e.target.value);
   };
   const handleBioChange = (e) => {
-    const inputValue = e.target.value;
-    const inputValurNull = "null";
-
-    if (inputValue === "" || inputValue === null || inputValue === undefined) {
-      setBio("");
-    } else if (!inputValue.startsWith(inputValurNull)) {
-      setBio("");
-    } else {
-      setBio(inputValue);
-    }
+    setBio(e.target.value);
   };
 
   const handleFacebookChange = (e) => {

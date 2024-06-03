@@ -7,6 +7,7 @@ import ImgCrop from "antd-img-crop";
 import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
 import { useTranslation } from "react-i18next";
+import lamejs from "lamejs";
 
 // =======================================================================
 const Create = () => {
@@ -28,10 +29,49 @@ const Create = () => {
   const id = Cookies.get("id") ? atob(Cookies.get("id")) : null;
   const { t } = useTranslation();
 
+  // const handleFileChange = (info) => {
+  //   let fileList = [...info.fileList];
+  //   fileList = fileList.slice(-1);
+  //   setFileList(fileList);
+  // };
+
   const handleFileChange = (info) => {
     let fileList = [...info.fileList];
     fileList = fileList.slice(-1);
+
+    // Get the last file (the one just uploaded)
+    const file = fileList[fileList.length - 1];
+
+    // Create a FileReader to read the file
+    const reader = new FileReader();
+
+    // When the file is read, compress it
+    reader.onloadend = () => {
+      // Get the audio data from the file
+      const audioData = new Int16Array(reader.result);
+
+      // Create a new MP3 encoder
+      const mp3encoder = new lamejs.Mp3Encoder(1, 44100, 128); // 1 for mono, 44100 is the sample rate, 128 is the bit rate
+
+      // Encode the audio data to MP3
+      const mp3Data = mp3encoder.encodeBuffer(audioData);
+
+      // Create a Blob from the MP3 data
+      const blob = new Blob([new Uint8Array(mp3Data)]);
+
+      // Replace the original file with the compressed one
+      fileList[fileList.length - 1] = new File([blob], file.name);
+    };
+
+    // Read the file as an ArrayBuffer
+    reader.readAsArrayBuffer(file.originFileObj);
+
     setFileList(fileList);
+  };
+
+  // Function to handle change audio file
+  const handleChangeAudio = () => {
+    setFileList([]);
   };
 
   //  Function to handle upload
@@ -40,7 +80,7 @@ const Create = () => {
       setLoading(true);
       const formData = new FormData();
       fileList.forEach((file) => {
-        formData.append("audioFile", file.originFileObj);
+        formData.append("audioFile", fileList[0].originFileObj);
       });
       formData.append("title", title); // Append title and description to the formData
       formData.append("description", description);
@@ -78,11 +118,6 @@ const Create = () => {
     setTimeout(() => {
       setNotification("");
     }, 3000);
-  };
-
-  // Function to handle change audio file
-  const handleChangeAudio = () => {
-    setFileList([]);
   };
 
   // Function to reset form fields

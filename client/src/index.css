@@ -15,7 +15,14 @@
 
 body {
   font-family: 'KhmerOS_battambang', sans-serif;
-  /* background-color: var(--bg-color) !important; */
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 
 h1, span, div, h2, h3, h4, label,textarea, rules, placeholder, button, a, p, input, title {
@@ -39,6 +46,7 @@ input::placeholder, textarea::placeholder {
 .ant-card {
   background-color: var(--card-hover) ;
   border-color: var(--border-color);
+  
 }
 .ant-card-head-title {
   color: var(--text-color) !important;
@@ -119,10 +127,16 @@ label, title {
 .ant-modal-body {
   background-color: var(--content-bg) !important;
 }
-/* 
+
 .ant-modal-mask {
-  background-color: var(--ant-modal-mask) !important;
-} */
+  background: rgb(153,155,161);
+  background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%);
+  /* -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px); */
+}
 
 .ant-picker {
   background-color: var(--card-hover) !important;
@@ -166,7 +180,8 @@ label, title {
 
 
 :root {
-  --bg-color: #4f46e5;
+  /* --bg-color: #4f46e5; */
+  --bg-color:  rgba(14,48,102,1) ;
   --sidemenu-mobile-bg: #fff;
   --content-bg: #fff;
   --header-bg: #fff;

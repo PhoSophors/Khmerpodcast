@@ -47,7 +47,7 @@ const FileManager = () => {
             },
           });
           if (Array.isArray(response.data)) {
-            setFiles(response.data);
+            setFiles(response.data.reverse());
           } else {
             setError(
               "Expected array but received: " + JSON.stringify(response.data)
@@ -156,6 +156,8 @@ const FileManager = () => {
                     <th className="text-center">Thumbnail *</th>
                     <th className="text-start">Title *</th>
                     <th className="text-start">Description *</th>
+                    <th className="text-center">Audio Size *</th>
+                    <th className="text-center">Thumbnail Size *</th>
                     <th className="text-center">Audio Types *</th>
                     <th className="text-center">Thumbnail Types *</th>
                     <th className="text-center">Upload Date *</th>
@@ -180,6 +182,12 @@ const FileManager = () => {
                       </td>
                       <td className="dark:text-gray-300">
                         {file.description.substring(0, 30)}
+                      </td>
+                      <td className="text-center dark:text-gray-300">
+                        {(file.audio.size / 1024 / 1024).toFixed(2)} MB
+                      </td>
+                      <td className="text-center dark:text-gray-300">
+                        {(file.image.size / 1024 / 1024).toFixed(2)} MB
                       </td>
                       <td className="text-center dark:text-gray-300">
                         {file.audio.mimetype}

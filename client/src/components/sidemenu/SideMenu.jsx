@@ -16,7 +16,7 @@ import {
   SunOutlined,
 } from "@ant-design/icons";
 
-const SideMenu = ({ collapsed }) => {
+const SideMenu = ({ collapsed, setCollapsed }) => {
   const location = useLocation();
   const { t } = useTranslation();
   const { user, isLoggedIn, handleConfirmLogout } = useUser();
@@ -50,6 +50,9 @@ const SideMenu = ({ collapsed }) => {
     } else {
       // Navigate to the selected menu item
       navigate(menuItem.key);
+      // if (!collapsed) {
+      //   setCollapsed(true);
+      // }
     }
   };
 
@@ -115,7 +118,7 @@ const SideMenu = ({ collapsed }) => {
       >
         <div
           onClick={handleAppClick}
-          className="flex items-center md:p-4 cursor-pointer menu-item-wrapper gap-3"
+          className="flex items-center justify-center md:p-4 cursor-pointer menu-item-wrapper gap-3"
         >
           <img
             src={logo1}

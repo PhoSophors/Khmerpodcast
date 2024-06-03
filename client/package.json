@@ -18,6 +18,7 @@
     "i18next": "^23.9.0",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
+    "lamejs": "^1.2.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "qrcode.react": "^3.1.0",
