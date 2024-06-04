@@ -13,7 +13,6 @@ const searchPodcasts = async (req, res) => {
         .json({ message: "Search query parameter is required" });
     }
 
-
     // Split the search string into words and create a regular expression that matches any part of the words
     const searchWords = search.split(" ").map((word) => `.*${word}.*`);
     const searchRegex = new RegExp(searchWords.join("|"), "i");
@@ -24,7 +23,6 @@ const searchPodcasts = async (req, res) => {
         { description: { $regex: searchRegex } },
       ],
     });
-
 
     res.json(podcasts);
   } catch (err) {
@@ -42,7 +40,6 @@ const searchUsers = async (req, res) => {
         .status(400)
         .json({ message: "Search query parameter is required" });
     }
-
 
     // Split the search string into words and create a regular expression that matches any part of the words
     const searchWords = search.split(" ").map((word) => `.*${word}.*`);

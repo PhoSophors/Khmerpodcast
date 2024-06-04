@@ -71,7 +71,7 @@ const updateUser = async (req, res) => {
       if (facebook) {
         user.facebook = facebook;
       }
-      
+
       if (website) {
         user.website = website;
       }

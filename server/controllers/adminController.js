@@ -1,18 +1,10 @@
 // controllers/getStorageInfo.js
 
-const { S3Client, ListObjectsCommand } = require("@aws-sdk/client-s3");
-
-// Create an S3 client
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY
-  }
-});
+const { ListObjectsCommand } = require("@aws-sdk/client-s3");
+const { s3Client } = require("../config/s3Helpers");
 
 // Function to fetch storage information
-const getStorageInfoFromS3 = async () => {
+const getPodcastStorageInfoFromS3 = async () => {
   try {
     // Send a request to list objects in the bucket
     const command = new ListObjectsCommand({
@@ -33,4 +25,4 @@ const getStorageInfoFromS3 = async () => {
   }
 };
 
-module.exports = { getStorageInfoFromS3 };
+module.exports = { getPodcastStorageInfoFromS3 };
