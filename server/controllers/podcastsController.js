@@ -11,12 +11,11 @@ const {
 
 // Function to upload a Podcast ================================================================
 const uploadPodcast = async (req, res) => {
+  let audioFileKey, imageFileKey, compressedAudioFileUrl, compressedImageFileUrl;
   try {
     if (!req.files || !req.files.audioFile || !req.files.imageFile) {
       console.error("No audio or image file uploaded");
-      return res
-        .status(400)
-        .json({ message: "No audio or image file uploaded" });
+      return res.status(400).json({ message: "No audio or image file uploaded" });
     }
 
     const title = req.body.title;
@@ -28,6 +27,10 @@ const uploadPodcast = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    // Track the original files' keys
+    audioFileKey = audioFile.key;
+    imageFileKey = imageFile.key;
+
     // Download audio and image file from S3
     const audioBuffer = await downloadFromS3(audioFile.key);
     const imageBuffer = await downloadFromS3(imageFile.key);
@@ -36,62 +39,80 @@ const uploadPodcast = async (req, res) => {
     const compressedAudioBuffer = await compressAudio(audioBuffer);
     const compressedImageBuffer = await compressImage(imageBuffer);
 
-    // Delete original files from S3
-    await deleteFromS3(audioFile.key);
-    await deleteFromS3(imageFile.key);
+    try {
+      // Delete original files from S3
+      await deleteFromS3(audioFile.key);
+      await deleteFromS3(imageFile.key);
 
-    // Upload the compressed files to S3 and get their URLs
-    const compressedAudioFileUrl = await uploadCompressToS3(
-      compressedAudioBuffer,
-      "audio/mpeg",
-      ".mp3"
-    );
-    const compressedImageFileUrl = await uploadCompressToS3(
-      compressedImageBuffer,
-      "image/jpeg",
-      ".jpg"
-    );
+      // Upload the compressed files to S3 and get their URLs
+      compressedAudioFileUrl = await uploadCompressToS3(
+        compressedAudioBuffer,
+        "audio/mpeg",
+        ".mp3"
+      );
+      compressedImageFileUrl = await uploadCompressToS3(
+        compressedImageBuffer,
+        "image/jpeg",
+        ".jpg"
+      );
 
-    const file = new File({
-      title: title,
-      description: description,
-      user: req.user.id,
-      audio: {
-        filename: compressedAudioFileUrl.split("/").pop(),
-        url: compressedAudioFileUrl,
-        size: compressedAudioBuffer.length,
-        mimetype: "audio/mpeg",
-      },
-      image: {
-        filename: compressedImageFileUrl.split("/").pop(),
-        url: compressedImageFileUrl,
-        size: compressedImageBuffer.length,
-        mimetype: "image/jpeg",
-      },
-    });
+      const file = new File({
+        title: title,
+        description: description,
+        user: req.user.id,
+        audio: {
+          filename: compressedAudioFileUrl.split("/").pop(),
+          url: compressedAudioFileUrl,
+          size: compressedAudioBuffer.length,
+          mimetype: "audio/mpeg",
+        },
+        image: {
+          filename: compressedImageFileUrl.split("/").pop(),
+          url: compressedImageFileUrl,
+          size: compressedImageBuffer.length,
+          mimetype: "image/jpeg",
+        },
+      });
 
-    const savedFile = await file.save();
+      const savedFile = await file.save();
 
-    res.status(201).json({
-      message: "File uploaded successfully",
-      fileId: file._id,
-      file: savedFile,
-    });
+      res.status(201).json({
+        message: "File uploaded successfully",
+        fileId: file._id,
+        file: savedFile,
+      });
+    } catch (error) {
+      console.error("Error uploading compressed files to S3:", error);
+
+      // Delete compressed files from S3 if they exist
+      if (compressedAudioFileUrl) {
+        await deleteFromS3(compressedAudioFileUrl.split('/').pop());
+      }
+      if (compressedImageFileUrl) {
+        await deleteFromS3(compressedImageFileUrl.split('/').pop());
+      }
+
+      return res.status(500).json({ message: "Error during compression or upload" });
+    }
   } catch (error) {
     console.error("Error uploading file:", error);
-    // Rollback by deleting original files from S3
-    if (audioBuffer) {
-      await deleteFromS3(audioFile.key);
+
+    // Rollback by deleting original files from S3 if they exist
+    if (audioFileKey) {
+      await deleteFromS3(audioFileKey);
     }
-    if (imageBuffer) {
-      await deleteFromS3(imageFile.key);
+    if (imageFileKey) {
+      await deleteFromS3(imageFileKey);
     }
+
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
 // Function to update a Podcast ================================================================
 const updatePodcast = async (req, res) => {
+  let oldAudioKey, oldImageKey, newAudioKey, newImageKey, compressedAudioFileUrl, compressedImageFileUrl;
+  
   try {
     const { title, description } = req.body;
     const { id } = req.params;
@@ -113,6 +134,16 @@ const updatePodcast = async (req, res) => {
         .json({ message: "You are not authorized to update this podcast" });
     }
 
+    // Track the old files' keys
+    oldAudioKey = file.audio.url.replace(
+      `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+      ""
+    );
+    oldImageKey = file.image.url.replace(
+      `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+      ""
+    );
+
     // Update the file's properties
     file.title = title || file.title;
     file.description = description || file.description;
@@ -121,22 +152,23 @@ const updatePodcast = async (req, res) => {
     if (req.files && req.files.audioFile) {
       const { audioFile } = req.files;
 
-      // Delete the old audio file from S3
-      await deleteFromS3(file.audio.filename);
+      // Track the new audio file key
+      newAudioKey = audioFile[0].key;
 
-      // Download audio file from S3
+      // Download new audio file from S3
       const audioBuffer = await downloadFromS3(audioFile[0].key);
 
       // Compress audio
       const compressedAudioBuffer = await compressAudio(audioBuffer);
 
-      // Upload compressed audio to S3 again
-      const compressedAudioFileUrl = await uploadCompressToS3(
+      // Upload compressed audio to S3
+      compressedAudioFileUrl = await uploadCompressToS3(
         compressedAudioBuffer,
         "audio/mpeg",
         ".mp3"
       );
 
+      // Update file object with new audio data
       file.audio.filename = compressedAudioFileUrl.split("/").pop();
       file.audio.url = compressedAudioFileUrl;
       file.audio.size = compressedAudioBuffer.length;
@@ -147,22 +179,23 @@ const updatePodcast = async (req, res) => {
     if (req.files && req.files.imageFile) {
       const { imageFile } = req.files;
 
-      // Delete the old image file from S3
-      await deleteFromS3(file.image.filename);
+      // Track the new image file key
+      newImageKey = imageFile[0].key;
 
-      // Download image file from S3
+      // Download new image file from S3
       const imageBuffer = await downloadFromS3(imageFile[0].key);
 
       // Compress image
       const compressedImageBuffer = await compressImage(imageBuffer);
 
-      // Upload compressed image to S3 again
-      const compressedImageFileUrl = await uploadCompressToS3(
+      // Upload compressed new image to S3
+      compressedImageFileUrl = await uploadCompressToS3(
         compressedImageBuffer,
         "image/jpeg",
         ".jpg"
       );
 
+      // Update file object with new image data
       file.image.filename = compressedImageFileUrl.split("/").pop();
       file.image.url = compressedImageFileUrl;
       file.image.size = compressedImageBuffer.length;
@@ -172,12 +205,40 @@ const updatePodcast = async (req, res) => {
     // Save the updated file
     const updatedFile = await file.save();
 
+    // If update is successful, delete the old files and new uncompressed files from S3
+    if (newAudioKey) {
+      await deleteFromS3(oldAudioKey);
+      await deleteFromS3(newAudioKey); // Delete the original new audio file
+    }
+    if (newImageKey) {
+      await deleteFromS3(oldImageKey);
+      await deleteFromS3(newImageKey); // Delete the original new image file
+    }
+
     res.json({ message: "File updated successfully", file: updatedFile });
   } catch (error) {
     console.error("Error updating file:", error);
+
+    // Rollback: delete new compressed files if they exist
+    if (compressedAudioFileUrl) {
+      await deleteFromS3(compressedAudioFileUrl.split('/').pop());
+    }
+    if (compressedImageFileUrl) {
+      await deleteFromS3(compressedImageFileUrl.split('/').pop());
+    }
+
+    // Delete the new uncompressed files if they were uploaded
+    if (newAudioKey) {
+      await deleteFromS3(newAudioKey);
+    }
+    if (newImageKey) {
+      await deleteFromS3(newImageKey);
+    }
+
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 // Function to get all Podcast ================================================================
 const getAllPodcast = async (req, res) => {
@@ -199,18 +260,15 @@ const getAllPodcast = async (req, res) => {
 // Function to get a random file
 const getRandomFilesHomePage = async (req, res) => {
   try {
+    // Fetch the total count of files
     const count = await File.countDocuments();
-    let file;
+    
+    // Fetch all files in random order using aggregation with $sample
+    const randomFiles = await File.aggregate([{ $sample: { size: count } }]);
 
-    // Retry until a unique file is found
-    while (!file) {
-      const random = Math.floor(Math.random() * count);
-      file = await File.findOne().skip(random);
-    }
-
-    res.status(200).json(file);
+    res.status(200).json(randomFiles);
   } catch (error) {
-    console.error("Error fetching random file:", error);
+    console.error("Error fetching random files:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -250,8 +308,19 @@ const deletePodcast = async (req, res) => {
         .json({ message: "You do not have permission to delete this file" });
     }
 
-    // await deleteFromS3(file.audio.key);
-    // await deleteFromS3(file.image.key);
+    // Extract keys for audio and image files
+    const audioKey = file.audio.url.replace(
+      `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+      ""
+    );
+    const imageKey = file.image.url.replace(
+      `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+      ""
+    );
+
+    // Delete audio and image files from S3
+    await deleteFromS3(audioKey);
+    await deleteFromS3(imageKey);
 
     // Remove the file from the database
     await File.deleteOne({ _id: id });

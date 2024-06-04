@@ -1,17 +1,10 @@
 const User = require("../models/userModel");
-const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 const File = require("../models/fileUploadModel");
+const { s3Client } = require("../config/s3Helpers");
+const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
 let tokenBlacklist = [];
-
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION_PROFILE,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-  },
-});
 
 // Multer configuration for handling file uploads
 const upload = multer({
@@ -30,8 +23,27 @@ const upload = multer({
   }),
 }).single("profileImage");
 
+const deleteFromS3 = async (key) => {
+  const deleteParams = {
+    Bucket: process.env.AWS_BUCKET_NAME_PROFILE,
+    Key: key,
+  };
+
+  await s3Client.send(new DeleteObjectCommand(deleteParams));
+};
+
 const updateUser = async (req, res) => {
   const { id } = req.params;
+  const {
+    username,
+    bio,
+    twitter,
+    instagram,
+    youtube,
+    tiktok,
+    facebook,
+    website,
+  } = req.body;
 
   try {
     let user = await User.findById(id);
@@ -47,18 +59,6 @@ const updateUser = async (req, res) => {
           .status(500)
           .json({ error: `Error uploading image: ${err.message}` });
       }
-
-      // Update the username if provided
-      const {
-        username,
-        bio,
-        twitter,
-        instagram,
-        youtube,
-        tiktok,
-        facebook,
-        website,
-      } = req.body;
 
       if (username) {
         user.username = username;
@@ -92,8 +92,18 @@ const updateUser = async (req, res) => {
         user.tiktok = tiktok;
       }
 
-      // If file upload was successful, update the user object with the S3 URL
+      // If file upload was successful, delete the old image from S3 and update the user object with the new S3 URL
       if (req.file) {
+        // Get the key of the old image from the File document
+        const oldImageKey = user.profileImage.replace(
+          `https://${process.env.AWS_BUCKET_NAME_PROFILE}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+          ""
+        );
+
+        // Delete the old image from S3
+        await deleteFromS3(oldImageKey);
+
+        // Update the user object with the new S3 URL
         user.profileImage = req.file.location;
       }
 

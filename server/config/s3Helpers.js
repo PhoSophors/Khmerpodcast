@@ -85,14 +85,19 @@ const uploadCompressToS3 = async (fileBuffer, mimeType, fileExtension) => {
 };
 
 // Function to delete file from S3
-const deleteFromS3 = async (key) => {
-  const command = new DeleteObjectCommand({
+async function deleteFromS3(key) {
+  const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: key,
-  });
+    Key: key
+  };
 
-  await s3Client.send(command);
-};
+  try {
+    await s3Client.send(new DeleteObjectCommand(params));
+    console.log(`File deleted successfully ${key}`);
+  } catch (error) {
+    console.error(`Failed to delete file ${key}: `, error);
+  }
+}
 
 module.exports = {
   s3Client,

@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-const fileUploadRoutes = require("./routes/podcastRoutes");
+const podcastRoutes = require("./routes/podcastRoutes");
 const favoritesRoutes = require("./routes/favoritesRoutes");
 const searchRoutes = require("./routes/searchRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -73,7 +73,7 @@ createDefaultAdmin().then(() => {
 });
 
 // Set up routes
-app.use("/files", fileUploadRoutes);
+app.use("/files", podcastRoutes);
 app.use("/favorites", favoritesRoutes);
 app.use("/auths", authRoutes);
 app.use("/users", userRoutes);
