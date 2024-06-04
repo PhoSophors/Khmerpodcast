@@ -183,17 +183,26 @@ const FileManager = () => {
                       <td className="dark:text-gray-300">
                         {file.description.substring(0, 30)}
                       </td>
-                      <td className="text-center dark:text-gray-300">
-                        {(file.audio.size / 1024 / 1024).toFixed(2)} MB
+
+                      <td className="text-center text-gray-300 ">
+                        <div className="bg-blue-500 p-2 rounded-xl">
+                          {(file.audio.size / 1024 / 1024).toFixed(2)} MB
+                        </div>
                       </td>
-                      <td className="text-center dark:text-gray-300">
-                        {(file.image.size / 1024 / 1024).toFixed(2)} MB
+                      <td className="text-center text-gray-300">
+                        <div className="bg-rose-500 p-2 rounded-xl">
+                          {(file.image.size / 1024 / 1024).toFixed(2)} MB
+                        </div>
                       </td>
-                      <td className="text-center dark:text-gray-300">
-                        {file.audio.mimetype}
+                      <td className="text-center text-gray-300">
+                        <div className="bg-pink-500 p-2 rounded-xl">
+                          {file.audio.mimetype}
+                        </div>
                       </td>
-                      <td className="text-center dark:text-gray-300">
-                        {file.image.mimetype}
+                      <td className="text-center  text-gray-300">
+                        <div className="bg-red-500 p-2 rounded-xl">
+                          {file.image.mimetype}
+                        </div>
                       </td>
                       <td className="text-center dark:text-gray-300">
                         {new Date(file.uploadDate).toLocaleDateString(

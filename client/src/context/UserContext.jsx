@@ -88,7 +88,7 @@ export const UserProvider = ({ children }) => {
 
         try {
           const response = await axios.get(
-            `${api_url}/auths/public-profile/${publicUserId}`
+            `${api_url}/users/public-profile/${publicUserId}`
           );
           const userData = response.data.user;
 

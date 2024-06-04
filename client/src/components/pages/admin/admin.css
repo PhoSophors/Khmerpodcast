@@ -3,7 +3,16 @@
 .dashboard-card {
   background-color: var(--card-bg) !important;
   border-color: var(--border-color) !important;
+  border-radius: 30px !important;
 }
+
+.dashboard-card:hover {
+  /* background-color: var(--card-hover) !important; */
+  border-color: antiquewhite !important;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
 .all-user-card {
   background-color: var(--card-bg) !important;
   border-color: var(--border-color) !important;

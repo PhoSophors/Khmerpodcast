@@ -37,6 +37,7 @@ input::placeholder, textarea::placeholder {
   justify-content: center;
   height: calc(100vh -150px);
 }
+
 .back-btn-view-podcast {
   background-color: var(--back-btn-view-podcast);
 } 
@@ -131,11 +132,6 @@ label, title {
 .ant-modal-mask {
   background: rgb(153,155,161);
   background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%);
-  /* -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px); */
 }
 
 .ant-picker {
@@ -209,7 +205,7 @@ label, title {
 
   --audio-icon: #6b7280;
   --white: #fff;
-  --sider-item-selected: #1f1e1e35;
+  --sider-item-selected: #817e7e35;
   --slate-100: #f1f5f9;
   --gray-300: #d2d6dc;
 

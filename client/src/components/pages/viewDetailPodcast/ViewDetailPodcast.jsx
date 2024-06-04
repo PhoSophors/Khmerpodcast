@@ -12,8 +12,8 @@ import BreadcrumbBtn from "../../Btn/BreadcrumbBtn";
 
 const ViewDetailPodcast = () => {
   const { id } = useParams();
-  const { isLoading: userLoading } = useUser(); // Use useUser hook for user-related data
-  const { isLoading: fileLoading, fileData } = useFileData(id); // Use useFileData hook for file-related data
+  const { isLoading: userLoading, currentUser } = useUser();
+  const { isLoading: fileLoading, fileData } = useFileData(id);
 
   if (userLoading || fileLoading) {
     return (
@@ -27,7 +27,6 @@ const ViewDetailPodcast = () => {
     message.error("File data not found");
     return <div className="p-10 text-center">File data not found</div>; // Display a message if fileData is not found
   }
-
 
   const linkDecorator = (href, text, key) => (
     <a
@@ -161,12 +160,6 @@ const ViewDetailPodcast = () => {
             </div>
           </div>
         </div>
-
-        {/* {isLoggedIn && (
-          <div className="additional-info">
-            <h2>Additional Information</h2>
-          </div>
-        )} */}
       </Card>
     </div>
   );

@@ -1,20 +1,35 @@
 // routes/searchRoutes.js
 
 const express = require("express");
-const { getPodcastStorageInfoFromS3 } = require("../controllers/adminController");
+const { getPodcastStorageInfoFromS3, getUserProfileStorageFromS3 } = require("../controllers/adminController");
 const userController = require("../controllers/userController");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 const verifyToken = require("../middleware/authenticateToken");
 const router = express.Router();
 
 router.get(
-  "/storage-info",
+  "/podcast-storage-info",
   verifyToken,
   checkRoleMiddleware("admin"),
 
   async (req, res, next) => {
     try {
       const storageInfo = await getPodcastStorageInfoFromS3();
+      res.json(storageInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/profile-storage-info",
+  verifyToken,
+  checkRoleMiddleware("admin"),
+
+  async (req, res, next) => {
+    try {
+      const storageInfo = await getUserProfileStorageFromS3();
       res.json(storageInfo);
     } catch (error) {
       next(error);
