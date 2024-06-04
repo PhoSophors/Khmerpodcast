@@ -35,32 +35,20 @@ const TotalProfileStorage = () => {
       text: "Profile Storage Breakdown",
     },
     scales: {
-      xAxes: [
-        {
-          stacked: true,
-          ticks: {
-            beginAtZero: true,
-          },
-          scaleLabel: {
-            display: true,
-            labelString: "Content Category",
-          },
+      x: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Content Category",
         },
-      ],
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-          scaleLabel: {
-            display: true,
-            labelString: "Usage (GB)",
-          },
+      },
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Storage Usage (MB)",
         },
-      ],
-    },
-    legend: {
-      display: true, // Show legend
+      },
     },
   };
 

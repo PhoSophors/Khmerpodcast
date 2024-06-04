@@ -58,7 +58,7 @@ const Create = () => {
           let percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           );
-          percentCompleted = percentCompleted >= 100 ? 91 : percentCompleted;
+          percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
           setUploadProgress(percentCompleted); // Update the upload progress state
         },
         headers: {

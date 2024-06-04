@@ -67,7 +67,7 @@ const TotalCloudStorage = () => {
 
   return (
     <>
-      <Card title="Cloud Storage" className="dashboard-card col-span-2 w-full">
+      <Card title="Cloud Storage" className="dashboard-card w-full">
         <div className="p-4  h-18 w-18  flex justify-center text-gray-500 bg-red-200 flex justify-center items-center rounded-xl">
           <CloudFilled style={{ fontSize: "3rem" }} />
         </div>

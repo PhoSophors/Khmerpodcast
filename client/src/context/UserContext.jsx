@@ -63,7 +63,7 @@ export const UserProvider = ({ children }) => {
           );
 
           if (filesResponse.data && filesResponse.data.length > 0) {
-            setUserFiles(filesResponse.data);
+            setUserFiles(filesResponse.data.reverse());
           } else {
             setUserFiles([]);
           }

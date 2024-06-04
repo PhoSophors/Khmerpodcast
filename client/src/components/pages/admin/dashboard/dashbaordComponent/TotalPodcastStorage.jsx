@@ -45,7 +45,7 @@ const TotalPodcastStorage = () => {
           },
         },
       ],
-      yAxes: [
+      y: [
         {
           ticks: {
             beginAtZero: true,

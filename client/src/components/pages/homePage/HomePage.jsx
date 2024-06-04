@@ -18,7 +18,7 @@ const HomePage = () => {
 
     try {
       const response = await axios.get(
-        `${api_url}/files/get-all-file?page=${page}&limit=${cardsPerPage}`
+        `${api_url}/files/get-random-file?page=${page}&limit=${cardsPerPage}`
       );
       let files = response.data.reverse();
 
