@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
           setUserRole(decodedToken.role);
 
 
-          const response = await axios.get(`${api_url}/auths/user-data/${id}`, {
+          const response = await axios.get(`${api_url}/users/user-data/${id}`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },

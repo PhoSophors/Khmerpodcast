@@ -51,7 +51,7 @@ const Dashboard = () => {
       try {
         if (authToken) {
           // Fetch user count
-          const userResponse = await axios.get(`${api_url}/auths/users`, {
+          const userResponse = await axios.get(`${api_url}/admin/users-count`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },

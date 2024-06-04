@@ -22,7 +22,7 @@ const DeleteUserBtn = ({ user }) => {
     }
     try {
       const response = await axios.delete(
-        `${api_url}/auths/delete/user/${deleteUserId}`,
+        `${api_url}/admin/delete/user/${deleteUserId}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,

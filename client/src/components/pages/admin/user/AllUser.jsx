@@ -39,7 +39,7 @@ const AllUser = () => {
       setLoading(true);
       try {
         if (authToken) {
-          const response = await axios.get(`${api_url}/auths/users/all`, {
+          const response = await axios.get(`${api_url}/admin/all-users`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },

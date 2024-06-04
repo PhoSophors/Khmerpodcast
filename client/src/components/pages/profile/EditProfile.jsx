@@ -215,7 +215,7 @@ const EditProfile = () => {
       }
 
       const response = await axios.put(
-        `${api_url}/auths/user/update/${id}`,
+        `${api_url}/users/user/update/${id}`,
         formData,
         {
           headers: {

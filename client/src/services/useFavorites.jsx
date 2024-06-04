@@ -15,7 +15,7 @@ export const useFavorites = () => {
     const fetchFavorites = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`${api_url}/files/get-all-favorite`, {
+        const response = await axios.get(`${api_url}/favorites/get-all-favorite`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -49,8 +49,8 @@ export const useFavorites = () => {
         return;
       }
       const url = isFavorite
-        ? `${api_url}/files/remove-favorite/${fileId}`
-        : `${api_url}/files/add-favorite/${fileId}`;
+        ? `${api_url}/favorites/remove-favorite/${fileId}`
+        : `${api_url}/favorites/add-favorite/${fileId}`;
       const response = await axios.post(
         url,
         {},
@@ -85,7 +85,7 @@ export const useFavorites = () => {
     setIsLoading(true);
     try {
       let response;
-      response = await fetch(`${api_url}/files/remove-favorite/${fileId}`, {
+      response = await fetch(`${api_url}/favorites/remove-favorite/${fileId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
