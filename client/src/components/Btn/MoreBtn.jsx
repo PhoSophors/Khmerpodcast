@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Card, Modal, message, Menu, Dropdown } from "antd";
 import UpdatePodcast from "../pages/create/UpdatePodcast";
 import { useUser } from "../../context/UserContext";
 import { useFavorites } from "../../services/useFavorites";
+import QRCode from "qrcode.react";
+import logo from "../assets/logo.jpg";
+import html2canvas from "html2canvas";
 import {
   ShareAltOutlined,
   LinkOutlined,
   MoreOutlined,
   EditOutlined,
   CloseOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import {
   FacebookIcon,
@@ -35,6 +39,7 @@ const MoreBtn = ({ file }) => {
   // Assuming `file.user` contains the ID of the uploader
   const isUploader = file.user && currentUser && file.user === currentUser._id;
   const [isEditing, setIsEditing] = useState(false);
+  const qrCodeRef = useRef(null);
 
   const handleToggleFavorite = () => {
     toggleFavorite(file._id, isFavorite);
@@ -57,6 +62,27 @@ const MoreBtn = ({ file }) => {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     message.success("Link copied to clipboard");
+  };
+
+  //
+  const handleDownloadQRCode = () => {
+    const qrCodeDiv = qrCodeRef.current;
+    if (!qrCodeDiv) {
+      console.error("Cannot find QR code div");
+      return;
+    }
+    html2canvas(qrCodeDiv).then((canvas) => {
+      const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      // downloadLink.download = `${id}_khmerPodcast_QR.png`;
+      downloadLink.download = `KhmerPodcast_User_Profile_QR.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
   };
 
   const shareMenu = (
@@ -92,7 +118,6 @@ const MoreBtn = ({ file }) => {
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                
                 viewBox="0 0 14 20"
               >
                 <path
@@ -143,7 +168,7 @@ const MoreBtn = ({ file }) => {
           overflow: "auto",
           maxHeight: `calc(100vh - 200px)`,
         }}
-        title="Share"
+        title="Share Podcast"
         visible={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
@@ -152,6 +177,60 @@ const MoreBtn = ({ file }) => {
           <CloseOutlined className="text-white bg-indigo-600 hover:bg-red-500 rounded-full p-3" />
         }
       >
+        <Card className="mt-5 bg-slate-50 flex justify-center">
+          <div
+            ref={qrCodeRef}
+            style={{
+              width: "200px",
+              height: "200px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div className="relative p-5  bg-white rounded-xl">
+              <QRCode
+                value={shareUrl}
+                renderAs="canvas"
+                size={170}
+                fgColor="red"
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  backgroundColor: "white",
+                }}
+              >
+                <img
+                  src={logo}
+                  alt="logo"
+                  style={{ width: "40px", height: "40px" }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="text-center flex flex-row mt-3 justify-center gap-5 mt-5">
+            <div className="flex flex-col items-center">
+              <DownloadOutlined
+                onClick={handleDownloadQRCode}
+                className="text-white cursor-pointer bg-red-500 hover:bg-red-500 rounded-full p-3"
+              />
+              <span className="dark:text-gray-300">Download</span>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <LinkOutlined
+                onClick={handleCopyLink}
+                className="text-white cursor-pointer bg-red-500 hover:bg-red-500 rounded-full p-3"
+              />
+              <span className="dark:text-gray-300">Copy Link</span>
+            </div>
+          </div>
+        </Card>
+
         <Card className="mt-5">
           <div className="text-center mb-5 mt-5 dark:text-gray-300 gap-auto justify-around flex flex-wrap sm:flex-row md:flex-row">
             <FacebookShareButton

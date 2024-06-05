@@ -7,7 +7,6 @@ import ImgCrop from "antd-img-crop";
 import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
 import { useTranslation } from "react-i18next";
-import lamejs from "lamejs";
 
 // =======================================================================
 const Create = () => {
@@ -92,6 +91,7 @@ const Create = () => {
     setDescription("");
     setFileList([]);
     setImageFileList([]);
+    setUploadProgress(0);
   };
 
   // Function to handle successful upload
@@ -177,11 +177,11 @@ const Create = () => {
                   {t("create.audioFormat")}
                 </h1>
                 {/* upload audio */}
-                <Card className="mt-5 create-card-bg">
+                <Card className="mt-5 create-audio-thumnaill-card">
                   {fileList.length > 0 ? (
                     <div className="audio-preview">
-                      <div className="flex items-center">
-                        <div className="flex items-center">
+                      <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center">
                           <audio controls>
                             <source
                               src={URL.createObjectURL(
@@ -189,7 +189,7 @@ const Create = () => {
                               )}
                               type="audio/mpeg"
                             />
-                            <h1 className="text-base ">
+                            <h1 className="text-base text-gray-300">
                               Your browser does not support the audio element
                             </h1>
                           </audio>
@@ -207,6 +207,7 @@ const Create = () => {
                   ) : (
                     <div className="upload-container">
                       <Upload
+                        className="upload-audio"
                         listType="picture-card"
                         customRequest={() => {}}
                         fileList={fileList}
@@ -214,8 +215,14 @@ const Create = () => {
                         accept=".mp3 "
                         showUploadList={false}
                       >
-                        <div className="dark:text-gray-300">
-                          {"Upload Audio"}
+                        <div className="dark:text-gray-300 flex flex-col items-center justify-center">
+                          <CloudUploadOutlined
+                            style={{
+                              fontSize: "50px",
+                              color: `var(--gray-300)`,
+                            }}
+                          />
+                          {"Upload Thumnaill"}
                         </div>
                       </Upload>
                     </div>
@@ -231,10 +238,10 @@ const Create = () => {
                 <h1 className=" text-base  text-gray-500 dark:text-gray-300 text-start ">
                   {t("create.imageFormat")}
                 </h1>
-                <Card className="mt-5 items-center flex justify-center create-card-bg">
+                <Card className="create-audio-thumnaill-card mt-5 items-center flex justify-center">
                   <ImgCrop>
                     <Upload
-                      // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      className="upload-image"
                       action={null}
                       listType="picture-card"
                       fileList={imageFileList ? imageFileList : []}
@@ -242,10 +249,17 @@ const Create = () => {
                       onChange={handleChange}
                       onPreview={handlePreview}
                     >
-                      {imageFileList.length === 0 && ""}
-                      <div className="dark:text-gray-300">
-                        {"Upload Thumnaill"}
-                      </div>
+                      {imageFileList.length === 0 && (
+                        <div className="dark:text-gray-300 flex flex-col items-center justify-center">
+                          <CloudUploadOutlined
+                            style={{
+                              fontSize: "50px",
+                              color: `var(--gray-300)`,
+                            }}
+                          />
+                          {"Upload Thumnaill"}
+                        </div>
+                      )}
                     </Upload>
                   </ImgCrop>
                   <Modal
@@ -300,10 +314,10 @@ const Create = () => {
                 <Button
                   onClick={handleReset}
                   style={{ float: "right" }}
-                  className="mt-10"
+                  className="mt-10 dark:bg-gray-800"
                   disabled={!title && !description}
                 >
-                  <span className="dark:text-slate-100">Reset</span>
+                  <span className="dark:text-gray-300">Reset</span>
                 </Button>
               </Form>
             </Card>

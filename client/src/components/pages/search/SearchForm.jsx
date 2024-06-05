@@ -50,7 +50,7 @@ const SearchForm = ({ handleSearchSubmit }) => {
   }, [searchQuery, handleSearchSubmit]);
 
   return (
-    <form className="search-form" onSubmit={(e) => e.preventDefault()}>
+    <form className="search-form mt-5" onSubmit={(e) => e.preventDefault()}>
       <span>&nbsp;&nbsp;</span>
       <Input
         className="search-input"

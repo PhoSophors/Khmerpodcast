@@ -4,14 +4,9 @@
   src: url('/fonts/KhmerOS_battambang.ttf') format('truetype');
 }
 
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* ...rest of your CSS... */
-
 
 body {
   font-family: 'KhmerOS_battambang', sans-serif;
@@ -32,6 +27,77 @@ h1, span, div, h2, h3, h4, label,textarea, rules, placeholder, button, a, p, inp
 input::placeholder, textarea::placeholder {
   font-family: 'KhmerOS_battambang', sans-serif;
 }
+
+/* root ======================================= */
+:root {
+  /* --bg-color: #4f46e5; */
+  --bg-color:  rgba(14,48,102,1) ;
+  --sidemenu-mobile-bg: #fff;
+  --content-bg: #fff;
+  --header-bg: #fff;
+  --card-bg: #fff;
+  --text-color: #374151;
+  --forgot-password-bg: #4f46e5;
+  --forgot-password-card: #f1f5f9 ;
+  --back-btn-view-podcast: #f8fafc; 
+  --card-hover: #f4f5f7;
+  --border-color: #e2e8f0;
+  --sidemenu-border-color: #4040409b;
+  --input-bg: #fff;
+  --input-focus: #4f46e5;
+  --search-input-bg: #f1f5f9;
+  --avatar-bg: #9f9f9f;
+  --loading-overlay: rgb(236, 233, 233);
+  --text-area-bg: #f1f5f9;
+  --dropdown-bg: #fff;
+  --Btn-bg: #f4f5f7;
+
+  --placeholder-color: #9f9f9f;
+  --placeholder-color-text-area: #9f9f9f;
+  /* --ant-modal-mask : #232630dc; */
+
+  --audio-icon: #6b7280;
+  --white: #fff;
+  --sider-item-selected: #817e7e35;
+  --slate-100: #f1f5f9;
+  --gray-300: #d2d6dc;
+}
+
+/* dark ======================================= */
+.dark {
+  --bg-color: #282828;
+  --sidemenu-mobile-bg: #282828;
+  --content-bg: #1C1C1C;;
+  --header-bg: #1C1C1C;;
+  --card-bg: #282828;
+  --text-color: #f1f5f9;
+  --forgot-password-bg: #282828;
+  --forgot-password-card: #1C1C1C ;
+  --back-btn-view-podcast: #282828; 
+  --card-hover: #373737;;
+  --border-color: #282828;
+  --sidemenu-border-color: #e2e8f089;
+  --audio-icon: #d2d6dc;
+  --input-bg: #282828;
+  --input-focus: #4f46e5;
+  --search-input-bg: #282828;
+  --avatar-bg: #9f9f9f;
+  --loading-overlay: #282828;
+  --text-area-bg: #373737;
+  --dropdown-bg: #373737;
+  --input-bg: #282828;
+  --Btn-bg: #373737;
+
+  --placeholder-color-text-area: #b7babd;
+  --sider-item-selected: #1C1C1C;
+}
+
+/* ant input  */
+
+:where(.css-dev-only-do-not-override-j9bb5n).ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select:not(.ant-upload-disabled):hover, :where(.css-dev-only-do-not-override-j9bb5n).ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload.ant-upload-select:not(.ant-upload-disabled):hover {
+  border-color: #4f46e5;
+}
+
 .spin-loading {
   display: flex;
   justify-content: center;
@@ -172,73 +238,4 @@ label, title {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-
-:root {
-  /* --bg-color: #4f46e5; */
-  --bg-color:  rgba(14,48,102,1) ;
-  --sidemenu-mobile-bg: #fff;
-  --content-bg: #fff;
-  --header-bg: #fff;
-  --card-bg: #fff;
-  --text-color: #374151;
-  --forgot-password-bg: #4f46e5;
-  --forgot-password-card: #f1f5f9 ;
-  --back-btn-view-podcast: #f8fafc; 
-  --card-hover: #f4f5f7;
-  --border-color: #e2e8f0;
-  --sidemenu-border-color: #4040409b;
-  --input-bg: #fff;
-  --input-focus: #4f46e5;
-  --search-input-bg: #f1f5f9;
-  --avatar-bg: #9f9f9f;
-  --loading-overlay: rgb(236, 233, 233);
-  --text-area-bg: #f1f5f9;
-  --dropdown-bg: #fff;
-  --input-bg: #fff;
-  --Btn-bg: #f4f5f7;
-
-  --placeholder-color: #9f9f9f;
-  --placeholder-color-text-area: #9f9f9f;
-  /* --ant-modal-mask : #232630dc; */
-
-  --audio-icon: #6b7280;
-  --white: #fff;
-  --sider-item-selected: #817e7e35;
-  --slate-100: #f1f5f9;
-  --gray-300: #d2d6dc;
-
-  
-  
-}
-
-.dark {
-  --bg-color: #282828;
-  --sidemenu-mobile-bg: #282828;
-  --content-bg: #1C1C1C;;
-  --header-bg: #1C1C1C;;
-  --card-bg: #282828;
-  --text-color: #f1f5f9;
-  --forgot-password-bg: #282828;
-  --forgot-password-card: #1C1C1C ;
-  --back-btn-view-podcast: #282828; 
-  --card-hover: #373737;;
-  --border-color: #282828;
-  --sidemenu-border-color: #e2e8f089;
-  --audio-icon: #d2d6dc;
-  --input-bg: #282828;
-  --input-focus: #4f46e5;
-  --search-input-bg: #282828;
-  --avatar-bg: #9f9f9f;
-  --loading-overlay: #282828;
-  --text-area-bg: #373737;
-  --dropdown-bg: #373737;
-  --input-bg: #282828;
-  --Btn-bg: #373737;
-
-  --placeholder-color-text-area: #b7babd;
-
-
-  --sider-item-selected: #1C1C1C;
 }

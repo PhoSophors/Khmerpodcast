@@ -41,7 +41,7 @@ const Search = () => {
           handleViewPodcast={() => setIsViewPodcast(false)}
         />
       ) : (
-        <div className="xl:p-5 p-0">
+        <div className=" p-0">
           <SearchForm handleSearchSubmit={handleSearchSubmit} />
 
           <div className="search-results mt-5 flex flex-wrap justify-center items-center">

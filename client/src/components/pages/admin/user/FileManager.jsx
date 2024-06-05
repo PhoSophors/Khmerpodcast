@@ -118,9 +118,9 @@ const FileManager = () => {
         {/* Search Input */}
         <Space direction="vertical" style={{ width: "100%" }}>
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
-            <div className="w-full sm:w-1/2">
+            <div className="search-form  w-full sm:w-1/2">
               <Input
-                className="xl:w-96 w-full"
+                className="search-input xl:w-96 w-full"
                 placeholder="Search files"
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleSearch(e.target.value)}

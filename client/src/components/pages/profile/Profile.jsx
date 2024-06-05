@@ -25,7 +25,7 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div className="spin-loading">
+      <div className="spin-loading mt-20">
         <Spin />
       </div>
     );
@@ -33,7 +33,7 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div className="spin-loading">
+      <div className="spin-loading mt-20">
         <Spin />
       </div>
     );
