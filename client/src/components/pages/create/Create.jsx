@@ -222,7 +222,7 @@ const Create = () => {
                               color: `var(--gray-300)`,
                             }}
                           />
-                          {"Upload Thumnaill"}
+                          {"Upload Audio"}
                         </div>
                       </Upload>
                     </div>

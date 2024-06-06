@@ -1,45 +1,59 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect } from "react";
 import { useAudio } from "../../context/AudioContext";
+import { Link } from "react-router-dom";
 import "./audioControl.css";
 import {
-  StepBackwardFilled,
-  StepForwardOutlined,
   PlayCircleFilled,
   PauseCircleFilled,
+  FastForwardFilled,
+  FastBackwardFilled,
 } from "@ant-design/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faVolumeLow } from "@fortawesome/free-solid-svg-icons";
 import { message } from "antd";
 
 const AudioControl = () => {
   const {
     isPlaying,
-    currentTrack,
     setIsPlaying,
-    setCurrentTrack,
-    podcasts,
-    setCurrentPodcastIndex,
+    currentTime,
+    setCurrentTime,
+    duration,
+    setDuration,
+    isSeeking,
+    setIsSeeking,
+    currentId,
+    currentAudio,
     audioRef,
+    currentImage,
+    currentTitle,
+    currentDescription,
+    handleSetCurrentTime,
   } = useAudio();
-
-  const [volume, setVolume] = useState(50);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isSeeking, setIsSeeking] = useState(false);
-
-  const currentPodcast = podcasts.find(
-    (podcast) => podcast.audio.url === currentTrack
-  );
 
   const toggleAudio = () => {
     setIsPlaying(!isPlaying);
   };
 
+  const handleFastForward = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      const newTime = Math.min(audio.currentTime + 30, audio.duration);
+      audio.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
+  const handleRewind = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      const newTime = Math.max(audio.currentTime - 30, 0);
+      audio.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
-      audio.volume = volume / 100;
       const handleTimeUpdate = () => {
         setCurrentTime(audio.currentTime);
         setDuration(audio.duration);
@@ -51,17 +65,18 @@ const AudioControl = () => {
         audio.removeEventListener("timeupdate", handleTimeUpdate);
       };
     }
-  }, [volume, audioRef]);
+  }, [audioRef, setCurrentTime, setDuration]);
 
   useEffect(() => {
     const audio = audioRef.current;
 
-    if (currentTrack && audio) {
-      audio.src = currentTrack;
+    if (currentAudio && audio) {
+      audio.src = currentAudio;
 
-      const savedTime = localStorage.getItem("audioCurrentTime");
+      const savedTime = localStorage.getItem("currentTime");
+
       if (savedTime !== null) {
-        setCurrentTime(parseFloat(savedTime));
+        audio.currentTime = parseFloat(savedTime);
       }
 
       if (isPlaying) {
@@ -80,35 +95,11 @@ const AudioControl = () => {
         audio.pause();
       }
     }
-  }, [isPlaying, currentTrack, audioRef]);
+  }, [currentAudio, isPlaying]);
 
   useEffect(() => {
     localStorage.setItem("audioCurrentTime", currentTime);
   }, [currentTime]);
-
-  const handleNext = () => {
-    const index = podcasts.findIndex(
-      (podcast) => podcast.audio.url === currentTrack
-    );
-    if (index < podcasts.length - 1) {
-      setCurrentPodcastIndex(index + 1);
-      setCurrentTrack(podcasts[index + 1].audio.url);
-    }
-  };
-
-  const handlePrevious = () => {
-    const index = podcasts.findIndex(
-      (podcast) => podcast.audio.url === currentTrack
-    );
-    if (index > 0) {
-      setCurrentPodcastIndex(index - 1);
-      setCurrentTrack(podcasts[index - 1].audio.url);
-    }
-  };
-
-  const handleVolumeChange = (e) => {
-    setVolume(e.target.value);
-  };
 
   const handleSeek = (e) => {
     const newTime = e.target.value;
@@ -124,75 +115,89 @@ const AudioControl = () => {
     setIsSeeking(false);
   };
 
+  if (!currentAudio) {
+    return null;
+  }
+
+  const calculateDuration = (text) => {
+    const baseDuration = 10;
+    const baseLength = 5;
+    return (text.length / baseLength) * baseDuration;
+  };
+
   return (
     <div className="audio-container mt-3">
       <div className="xl:w-96 md:w-96 w-96 items-center justify-center">
         <div className="play-back-container">
+          <div className="image-control gap-3 mt-5">
+            <div>
+              <Link to={`/watch-podcast/${currentId}`}>
+                {currentImage && <img src={currentImage} alt="Current track" />}
+              </Link>
+            </div>
+
+            <div className="flex flex-col">
+              <div className=" w-52">
+                <span className=" line-clamp-1 mt-1 font-semibold dark:text-gray-300">
+                  {currentTitle}
+                </span>
+              </div>
+              <div className="marquee w-52 line-clamp-1">
+                <span
+                  className=" marquee-text text-gray-400"
+                  style={{
+                    animationDuration: `${calculateDuration(currentTitle)}s`,
+                  }}
+                >
+                  {currentDescription}
+                </span>
+              </div>
+            </div>
+          </div>
+
           <div className="play-back-btn gap-5">
-            <StepBackwardFilled
-              onClick={handlePrevious}
-              style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
+            <FastBackwardFilled
+              onClick={handleRewind}
+              style={{ fontSize: "1.6rem", color: `var(--audio-icon)` }}
             />
             {isPlaying ? (
               <PauseCircleFilled
                 onClick={toggleAudio}
-                style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
+                style={{ fontSize: "1.6rem", color: `var(--audio-icon)` }}
               />
             ) : (
               <PlayCircleFilled
                 onClick={toggleAudio}
-                style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
+                style={{ fontSize: "1.6rem", color: `var(--audio-icon)` }}
               />
             )}
-            <StepForwardOutlined
-              onClick={handleNext}
-              style={{ fontSize: "2rem", color: `var(--audio-icon)` }}
-            />
-          </div>
-          <div className="image-control">
-            {currentPodcast && currentPodcast.image && (
-              <img
-                src={currentPodcast.image.url}
-                alt={currentPodcast.title}
-                className="thumbnail"
-              />
-            )}
-          </div>
-          <div className="volume-control gap-1">
-            <FontAwesomeIcon icon={faVolumeLow} className="volume-icon-style" />
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={volume}
-              onChange={handleVolumeChange}
-              style={{ width: "100px" }}
-            />
-            <FontAwesomeIcon
-              icon={faVolumeHigh}
-              className="volume-icon-style"
+            <FastForwardFilled
+              onClick={handleFastForward}
+              style={{ fontSize: "1.6rem", color: `var(--audio-icon)` }}
             />
           </div>
         </div>
 
-        <div className="time-control">
-          <span style={{ fontSize: "0.7rem", color: "#6b7280", float: "left" }}>
-            {formatTime(currentTime)}
-          </span>
-          <input
-            type="range"
-            min="0"
-            max={duration}
-            value={isSeeking ? currentTime : currentTime}
-            onChange={handleSeek}
-            onMouseDown={handleSeekStart}
-            onMouseUp={handleSeekEnd}
-          />
-          <span
-            style={{ fontSize: "0.7rem", color: "#6b7280", float: "right" }}
-          >
-            -{formatTime(duration - currentTime)}
-          </span>
+        <div>
+          <div className="text-end"  style={{ userSelect: "none" }}>
+            <span style={{ fontSize: "0.7rem", color: "#6b7280" }}>
+              {formatTime(currentTime)}
+            </span>
+            <span style={{ fontSize: "0.7rem", color: "#6b7280" }}>
+              /-{formatTime(duration - currentTime)}
+            </span>
+          </div>
+          <div className="time-control">
+            <input
+              type="range"
+              min="0"
+              max={duration}
+              value={isSeeking ? currentTime : currentTime}
+              onChange={handleSeek}
+              onMouseDown={handleSeekStart}
+              onMouseUp={handleSeekEnd}
+            />
+          </div>
         </div>
       </div>
     </div>

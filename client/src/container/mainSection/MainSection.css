@@ -11,7 +11,7 @@ body {
 .content-card {
   position: relative;
   background-color: var(--content-bg);
-  height: calc(100vh - 90px);
+  height: calc(100vh - 70px);
   overflow-y: auto; 
   padding: 3px;
   border-bottom-left-radius: 20px;

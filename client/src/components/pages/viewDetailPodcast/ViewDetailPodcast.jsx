@@ -12,7 +12,7 @@ import BreadcrumbBtn from "../../Btn/BreadcrumbBtn";
 
 const ViewDetailPodcast = () => {
   const { id } = useParams();
-  const { isLoading: userLoading, currentUser } = useUser();
+  const { isLoading: userLoading } = useUser();
   const { isLoading: fileLoading, fileData } = useFileData(id);
 
   if (userLoading || fileLoading) {

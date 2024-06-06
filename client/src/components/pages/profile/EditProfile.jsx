@@ -329,7 +329,7 @@ const EditProfile = () => {
                 onChange={handleBioChange}
                 showCount
                 maxLength={101}
-                style={{ height: "100px", resize: "none" }}
+                style={{ height: "100px", resize: "none", borderRadius: "10px"}}
               />
               <span className="text-sm text-slate-500 dark:text-gray-400 text-start flex">
                 Brief description for your profile.

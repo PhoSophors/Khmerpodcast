@@ -6,6 +6,7 @@ import ImgCrop from "antd-img-crop";
 import "./create.css";
 import { CloseOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import { api_url } from "../../../api/config";
+import { useTranslation } from "react-i18next";
 
 const UpdatePodcast = ({ file }) => {
   const [isModalVisible, setIsModalVisible] = useState(true);
@@ -21,6 +22,7 @@ const UpdatePodcast = ({ file }) => {
   const authToken = Cookies.get("authToken")
     ? atob(Cookies.get("authToken"))
     : null;
+  const { t } = useTranslation();
 
   const handleUpdate = async (values) => {
     try {
@@ -161,97 +163,140 @@ const UpdatePodcast = ({ file }) => {
             </Form.Item>
           </Card>
 
-          <Card title="Audio File" className="mt-5 bg-slate-50">
-            <Form.Item
-              name="audioFile"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {fileList.length > 0 ? (
-                <div className="audio-preview">
-                  <div className="flex items-center">
-                    <div className="flex items-center">
-                      <audio controls>
-                        <source
-                          src={URL.createObjectURL(fileList[0].originFileObj)}
-                          type="audio/mpeg"
-                        />
-                        Your browser does not support the audio element.
-                      </audio>
-                    </div>
-                    <div className="flex items-center">
-                      <Button
-                        className="replace-button ml-2"
-                        icon={<CloseOutlined />}
-                        onClick={handleChangeAudio}
-                      ></Button>
-                    </div>
-                  </div>
-                  <p className="file-name mt-5 ml-2">{fileList[0].name}</p>
-                </div>
-              ) : (
-                <div className="upload-container">
-                  <Upload
-                    listType="picture-card"
-                    customRequest={() => {}}
-                    fileList={fileList}
-                    onChange={handleFileChange}
-                    accept=".mp3"
-                    showUploadList={false}
-                  >
-                    <div>{"+ Upload"}</div>
-                  </Upload>
-                </div>
-              )}
-            </Form.Item>
-          </Card>
-
-          <Card title="Thumnaill File" className="mt-5 bg-slate-50">
-            <Form.Item
-              name="imageFile"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ImgCrop>
-                <Upload
-                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                  listType="picture-card"
-                  onPreview={handlePreview}
-                  fileList={imageFile ? [imageFile] : []}
-                  maxCount={1}
-                  accept=".jpg"
-                  onChange={(info) => {
-                    if (info.fileList.length > 1) {
-                      info.fileList = [info.fileList.pop()];
-                    }
-                    setImageFile(
-                      info.fileList.length ? info.fileList[0] : null
-                    );
+          <div className="upload-section mt-5">
+            <div className="audio-update-container">
+              <h1 className="mt-5  text-base text-start  font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-300">
+                {t("create.audioSupport")}
+              </h1>
+              <h1 className="text-gray-500 text-base text-start dark:text-gray-300">
+                {t("create.audioFormat")}
+              </h1>
+              <Card className="create-audio-thumnaill-card mt-5 bg-slate-50">
+                <Form.Item
+                  name="audioFile"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <div>{"+ Upload "}</div>
-                </Upload>
-              </ImgCrop>
-              <Modal
-                open={previewOpen}
-                title={previewTitle}
-                footer={null}
-                onCancel={handleCancel}
+                  {fileList.length > 0 ? (
+                    <div className="audio-preview">
+                      <div className="flex items-center">
+                        <div className="flex items-center">
+                          <audio controls>
+                            <source
+                              src={URL.createObjectURL(
+                                fileList[0].originFileObj
+                              )}
+                              type="audio/mpeg"
+                            />
+                            Your browser does not support the audio element.
+                          </audio>
+                        </div>
+                        <div className="flex items-center">
+                          <Button
+                            className="replace-button ml-2"
+                            icon={<CloseOutlined />}
+                            onClick={handleChangeAudio}
+                          ></Button>
+                        </div>
+                      </div>
+                      <p className="file-name mt-5 ml-2">{fileList[0].name}</p>
+                    </div>
+                  ) : (
+                    <div className="upload-container">
+                      <Upload
+                        className="upload-audio mt-6"
+                        listType="picture-card"
+                        customRequest={() => {}}
+                        fileList={fileList}
+                        onChange={handleFileChange}
+                        accept=".mp3"
+                        showUploadList={false}
+                      >
+                        <div className="dark:text-gray-300 flex flex-col items-center justify-center">
+                          <CloudUploadOutlined
+                            style={{
+                              fontSize: "50px",
+                              color: `var(--gray-300)`,
+                            }}
+                          />
+                          {"Upload Audio"}
+                        </div>
+                      </Upload>
+                    </div>
+                  )}
+                </Form.Item>
+              </Card>
+            </div>
+
+            <div className="thumnaill-update-container">
+              <h1 className="mt-5  text-base  text-start  font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                {t("create.imageSupport")}
+              </h1>
+              <h1 className=" text-base  text-gray-500 dark:text-gray-300 text-start ">
+                {t("create.imageFormat")}
+              </h1>
+              <Card
+                // title="Thumnaill File"
+                className="create-audio-thumnaill-card mt-5 bg-slate-50"
               >
-                <img
-                  alt="example"
-                  style={{ width: "100%" }}
-                  src={previewImage}
-                />
-              </Modal>
-            </Form.Item>
-          </Card>
+                <Form.Item
+                  name="imageFile"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ImgCrop>
+                    <Upload
+                      className="upload-image mt-6"
+                      action={null}
+                      listType="picture-card"
+                      onPreview={handlePreview}
+                      fileList={imageFile ? [imageFile] : []}
+                      maxCount={1}
+                      accept=".jpg"
+                      onChange={(info) => {
+                        if (info.fileList.length > 1) {
+                          info.fileList = [info.fileList.pop()];
+                        }
+                        setImageFile(
+                          info.fileList.length ? info.fileList[0] : null
+                        );
+                      }}
+                    >
+                      {(!imageFile || imageFile.length === 0) && (
+                        <div className="dark:text-gray-300 flex flex-col items-center justify-center">
+                          <CloudUploadOutlined
+                            style={{
+                              fontSize: "50px",
+                              color: `var(--gray-300)`,
+                            }}
+                          />
+                          {"Upload Thumnaill"}
+                        </div>
+                      )}
+                    </Upload>
+                  </ImgCrop>
+                  <Modal
+                    open={previewOpen}
+                    title={previewTitle}
+                    footer={null}
+                    onCancel={handleCancel}
+                  >
+                    <img
+                      alt="example"
+                      style={{ width: "100%" }}
+                      src={previewImage}
+                    />
+                  </Modal>
+                </Form.Item>
+              </Card>
+            </div>
+          </div>
 
           {loading && (
             <div className="w-full mt-5 bg-white rounded-full ">
