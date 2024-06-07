@@ -11,8 +11,9 @@ const DeleteUserBtn = ({ user }) => {
   const [confirmDelete, setConfirmDelete] = useState("");
   const [username, setUsername] = useState("");
   const filename = username.split(" ")[0];
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
-
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
 
   // Function to handle delete podcast
   const handleDeleteUser = async () => {
@@ -30,9 +31,6 @@ const DeleteUserBtn = ({ user }) => {
         }
       );
       if (response.status === 200) {
-        if (response.data.deleteToken) {
-          Cookies.remove("authToken"); // Remove the token from cookies
-        }
         message.success("User deleted successfully");
         setIsDeleteModalVisible(false);
       }
@@ -40,7 +38,6 @@ const DeleteUserBtn = ({ user }) => {
       message.error("Error deleting user");
     }
   };
-  
 
   return (
     <div>
@@ -74,14 +71,18 @@ const DeleteUserBtn = ({ user }) => {
             </h1>
             <h1 className="text-center dark:text-gray-300 text-gray-500 ">
               This Action{" "}
-              <span className="font-semibold text-gray-600 dark:text-gray-100">CANNOT</span> be
-              undone. This will permanently delete the user, and remove all
+              <span className="font-semibold text-gray-600 dark:text-gray-100">
+                CANNOT
+              </span>{" "}
+              be undone. This will permanently delete the user, and remove all
               collaborator ssositions.{" "}
             </h1>
             <p className="text-center text-gray-800 dark:text-gray-300 mt-5">
               Enter the username of user{" "}
-              <span className="font-semibold text-gray-600 dark:text-gray-100">{filename}</span> to
-              continue:
+              <span className="font-semibold text-gray-600 dark:text-gray-100">
+                {filename}
+              </span>{" "}
+              to continue:
             </p>
 
             <Input

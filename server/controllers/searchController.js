@@ -1,6 +1,6 @@
 // controller/searchContrller.js
 
-const File = require("../models/fileUploadModel");
+const File = require("../models/podcastModel");
 const User = require("../models/userModel");
 
 const searchPodcasts = async (req, res) => {

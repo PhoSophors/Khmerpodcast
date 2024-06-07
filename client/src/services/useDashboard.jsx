@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { api_url } from "../api/config";
 
 const useDashboard = (selectedDate) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [userCount, setUserCount] = useState(0);
   const [fileCount, setFileCount] = useState(0);
   const [podcastStorageInfo, setPodcastStorageInfo] = useState({
@@ -22,6 +23,7 @@ const useDashboard = (selectedDate) => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
+        setIsLoading(true);
         if (authToken) {
           // Fetch user count
           const userResponse = await axios.get(`${api_url}/admin/users-count`, {
@@ -49,7 +51,7 @@ const useDashboard = (selectedDate) => {
               },
             }
           );
-          setPodcastStorageInfo(podcastStorage.data); 
+          setPodcastStorageInfo(podcastStorage.data);
 
           const profileStorage = await axios.get(
             `${api_url}/admin/profile-storage-info`,
@@ -63,13 +65,15 @@ const useDashboard = (selectedDate) => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchDashboardData();
   }, [selectedDate, authToken]);
 
-  return { userCount, fileCount, podcastStorageInfo, profileStorageInfo };
+  return { userCount, fileCount, podcastStorageInfo, profileStorageInfo, isLoading };
 };
 
 export default useDashboard;

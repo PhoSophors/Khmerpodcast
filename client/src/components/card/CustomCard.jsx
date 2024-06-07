@@ -31,11 +31,11 @@ const CustomCard = ({ file, handleViewPodcast }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative">
-        {/* {loading && (
+        {loading && (
           <div className="custom-card-loading-overlay animate-pulse ">
             Loading Spinner or other content can go here
           </div>
-        )} */}
+        )}
 
         <Card
           className="card-bg custom-card"

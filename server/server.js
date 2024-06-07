@@ -1,19 +1,23 @@
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables
+// Import dependencies
 const express = require("express");
 const session = require("express-session");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const crypto = require("crypto");
+// Import middleware
+const authenticateToken = require("./middleware/authenticateToken");
+const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
+// Import routes
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const podcastRoutes = require("./routes/podcastRoutes");
 const favoritesRoutes = require("./routes/favoritesRoutes");
 const searchRoutes = require("./routes/searchRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const authenticateToken = require("./middleware/authenticateToken");
-const createDefaultAdmin = require("./middleware/createDefaultAdminMiddleware");
-const crypto = require("crypto");
+const podcastViewRoutes = require("./routes/podcastViewsRoutes");
 
 // Allowed origins for CORS
 const allowedOrigins = [
@@ -79,6 +83,7 @@ app.use("/auths", authRoutes);
 app.use("/users", userRoutes);
 app.use("/search", searchRoutes);
 app.use("/admin", adminRoutes);
+app.use("/podcasts-count-view", podcastViewRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

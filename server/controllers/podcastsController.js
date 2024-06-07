@@ -1,6 +1,6 @@
 // controller/podcastsController.js
 
-const File = require("../models/fileUploadModel");
+const File = require("../models/podcastModel");
 const {
   downloadFromS3,
   compressAudio,
@@ -11,11 +11,16 @@ const {
 
 // Function to upload a Podcast ================================================================
 const uploadPodcast = async (req, res) => {
-  let audioFileKey, imageFileKey, compressedAudioFileUrl, compressedImageFileUrl;
+  let audioFileKey,
+    imageFileKey,
+    compressedAudioFileUrl,
+    compressedImageFileUrl;
   try {
     if (!req.files || !req.files.audioFile || !req.files.imageFile) {
       console.error("No audio or image file uploaded");
-      return res.status(400).json({ message: "No audio or image file uploaded" });
+      return res
+        .status(400)
+        .json({ message: "No audio or image file uploaded" });
     }
 
     const title = req.body.title;
@@ -86,13 +91,15 @@ const uploadPodcast = async (req, res) => {
 
       // Delete compressed files from S3 if they exist
       if (compressedAudioFileUrl) {
-        await deleteFromS3(compressedAudioFileUrl.split('/').pop());
+        await deleteFromS3(compressedAudioFileUrl.split("/").pop());
       }
       if (compressedImageFileUrl) {
-        await deleteFromS3(compressedImageFileUrl.split('/').pop());
+        await deleteFromS3(compressedImageFileUrl.split("/").pop());
       }
 
-      return res.status(500).json({ message: "Error during compression or upload" });
+      return res
+        .status(500)
+        .json({ message: "Error during compression or upload" });
     }
   } catch (error) {
     console.error("Error uploading file:", error);
@@ -111,8 +118,13 @@ const uploadPodcast = async (req, res) => {
 
 // Function to update a Podcast ================================================================
 const updatePodcast = async (req, res) => {
-  let oldAudioKey, oldImageKey, newAudioKey, newImageKey, compressedAudioFileUrl, compressedImageFileUrl;
-  
+  let oldAudioKey,
+    oldImageKey,
+    newAudioKey,
+    newImageKey,
+    compressedAudioFileUrl,
+    compressedImageFileUrl;
+
   try {
     const { title, description } = req.body;
     const { id } = req.params;
@@ -221,10 +233,10 @@ const updatePodcast = async (req, res) => {
 
     // Rollback: delete new compressed files if they exist
     if (compressedAudioFileUrl) {
-      await deleteFromS3(compressedAudioFileUrl.split('/').pop());
+      await deleteFromS3(compressedAudioFileUrl.split("/").pop());
     }
     if (compressedImageFileUrl) {
-      await deleteFromS3(compressedImageFileUrl.split('/').pop());
+      await deleteFromS3(compressedImageFileUrl.split("/").pop());
     }
 
     // Delete the new uncompressed files if they were uploaded
@@ -238,7 +250,6 @@ const updatePodcast = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 // Function to get all Podcast ================================================================
 const getAllPodcast = async (req, res) => {
@@ -262,7 +273,7 @@ const getRandomFilesHomePage = async (req, res) => {
   try {
     // Fetch the total count of files
     const count = await File.countDocuments();
-    
+
     // Fetch all files in random order using aggregation with $sample
     const randomFiles = await File.aggregate([{ $sample: { size: count } }]);
 

@@ -1,3 +1,5 @@
+// verify register otp and send otp to user email
+
 const nodemailer = require("nodemailer");
 const EmailOTP = require("../models/otpModel");
 const User = require("../models/userModel");

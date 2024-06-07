@@ -1,30 +1,18 @@
-import React, { useEffect, useState, lazy } from "react";
+import React, { useMemo } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import PublicProfile from "../../components/pages/profile/PublicProfile";
-
-// Lazy load components
-const Favorith = lazy(() => import("../../components/pages/favorite/Favorith"));
-const HomePage = lazy(() => import("../../components/pages/homePage/HomePage"));
-const Setting = lazy(() => import("../../components/pages/setting/Setting"));
-const Profile = lazy(() => import("../../components/pages/profile/Profile"));
-const Search = lazy(() => import("../../components/pages/search/Search"));
-const Create = lazy(() => import("../../components/pages/create/Create"));
-const Dashboard = lazy(() =>
-  import("../../components/pages/admin/dashboard/Dashboard")
-);
-const AllUser = lazy(() => import("../../components/pages/admin/user/AllUser"));
-const FileManager = lazy(() =>
-  import("../../components/pages/admin/user/FileManager")
-);
-const UpdatePodcast = lazy(() =>
-  import("../../components/pages/create/UpdatePodcast")
-);
-const ViewDetailPodcast = lazy(() =>
-  import("../../components/pages/viewDetailPodcast/ViewDetailPodcast")
-);
-const EditProfile = lazy(() =>
-  import("../../components/pages/profile/EditProfile")
-);
+import HomePage from "../../components/pages/homePage/HomePage";
+import Search from "../../components/pages/search/Search";
+import Favorith from "../../components/pages/favorite/Favorith";
+import Create from "../../components/pages/create/Create";
+import Profile from "../../components/pages/profile/Profile";
+import Setting from "../../components/pages/setting/Setting";
+import Dashboard from "../../components/pages/admin/dashboard/Dashboard";
+import AllUser from "../../components/pages/admin/user/AllUser";
+import FileManager from "../../components/pages/admin/user/FileManager";
+import UpdatePodcast from "../../components/pages/create/UpdatePodcast";
+import ViewDetailPodcast from "../../components/pages/viewDetailPodcast/ViewDetailPodcast";
+import EditProfile from "../../components/pages/profile/EditProfile";
 
 const RightSection = ({
   onPodcastSelected,
@@ -32,72 +20,53 @@ const RightSection = ({
   selectedPodcast,
 }) => {
   const location = useLocation();
-  const [content, setContent] = useState(null);
   const { id } = useParams();
 
-  useEffect(() => {
+  const content = useMemo(() => {
     if (location.pathname.startsWith("/watch-podcast/")) {
-      setContent(<ViewDetailPodcast onUpdatePodcast={onPodcastSelected} />);
+      return <ViewDetailPodcast onUpdatePodcast={onPodcastSelected} />;
     } 
     else if (location.pathname.startsWith("/update-profile/")) {
-      setContent(<EditProfile onUpdateProfile={onUpdateProfile} />);
+      return <EditProfile onUpdateProfile={onUpdateProfile} />;
     } else if (location.pathname.startsWith("/public-profile/")) {
-      setContent(<PublicProfile onPodcastSelected={onPodcastSelected} />);
+      return <PublicProfile onPodcastSelected={onPodcastSelected} />;
     }
     else {
       switch (location.pathname) {
         case "/":
-          setContent(<HomePage onPodcastSelected={onPodcastSelected} />);
-          break;
+          return <HomePage onPodcastSelected={onPodcastSelected} />;
         case "/search":
-          setContent(<Search onPodcastSelected={onPodcastSelected} />);
-          break;
+          return <Search onPodcastSelected={onPodcastSelected} />;
         case "/favorite":
-          setContent(<Favorith onPodcastSelected={onPodcastSelected} />);
-          break;
+          return <Favorith onPodcastSelected={onPodcastSelected} />;
         case "/create":
-          setContent(<Create />);
-          break;
+          return <Create />;
         case "/profile":
-          setContent(<Profile onPodcastSelected={onPodcastSelected} />);
-          break;
+          return <Profile onPodcastSelected={onPodcastSelected} />;
         case "/setting":
-          setContent(<Setting />);
-          break;
+          return <Setting />;
         case "/dashboard":
-          setContent(<Dashboard />);
-          break;
+          return <Dashboard />;
         case "/all-user":
-          setContent(<AllUser />);
-          break;
+          return <AllUser />;
         case "/all-user-upload":
-          setContent(<FileManager />);
-          break;
+          return <FileManager />;
         case `/watch-podcast/${selectedPodcast?._id}`:
-          setContent(<ViewDetailPodcast onUpdatePodcast={onPodcastSelected} />);
-          break;
+          return <ViewDetailPodcast onUpdatePodcast={onPodcastSelected} />;
         case "/update-podcast":
-          setContent(
+          return (
             <UpdatePodcast
               file={selectedPodcast}
               onPodcastSelected={onPodcastSelected}
             />
           );
-          break;
         case `/update-profile/${id}`:
-          setContent(<EditProfile onUpdateProfile={onUpdateProfile} />);
-          break;
+          return <EditProfile onUpdateProfile={onUpdateProfile} />;
         default:
-          break;
+          return null;
       }
     }
-  }, [
-    location.pathname,
-    selectedPodcast,
-    onPodcastSelected,
-    onUpdateProfile,
-    id,
-  ]);
+  }, [location.pathname, selectedPodcast, onPodcastSelected, onUpdateProfile, id]);
 
   return (
     <div className="right-section md:p-0">

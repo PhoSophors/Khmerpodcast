@@ -17,11 +17,13 @@ import UserUploadCard from "../../card/UserUploadCard";
 import { useUser } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ShareProfileBtn from "../../Btn/ShareProfileBtn";
+import useView from "../../../services/useView";
 
 const Profile = () => {
   const { user, userFiles, isLoading } = useUser();
   const id = user ? user._id : null;
   const navigate = useNavigate();
+  const { incrementViewCount } = useView();
 
   if (isLoading) {
     return (
@@ -31,13 +33,6 @@ const Profile = () => {
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="spin-loading mt-20">
-        <Spin />
-      </div>
-    );
-  }
 
   return (
     <div className="profile-container h-screen">
@@ -214,7 +209,7 @@ const Profile = () => {
         <div className="col-span-2 w-full">
           <Card className="profile-card" bodyStyle={{ padding: 0 }}>
             {isLoading ? (
-              <div className="spin-loading ">
+              <div className="spin-loading mt-20">
                 <Spin />
               </div>
             ) : userFiles.length === 0 ? (
@@ -229,8 +224,9 @@ const Profile = () => {
                   <UserUploadCard
                     key={file.id}
                     file={file}
-                    handleViewPodcast={() => {
+                    handleViewPodcast={async () => {
                       navigate(`/watch-podcast/${file._id}`);
+                      await incrementViewCount(file._id);
                     }}
                   />
                 ))}

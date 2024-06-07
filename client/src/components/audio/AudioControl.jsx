@@ -129,31 +129,31 @@ const AudioControl = () => {
     <div className="audio-container mt-3">
       <div className="xl:w-96 md:w-96 w-96 items-center justify-center">
         <div className="play-back-container">
-          <div className="image-control gap-3 mt-5">
-            <div>
-              <Link to={`/watch-podcast/${currentId}`}>
+          <Link to={`/watch-podcast/${currentId}`}>
+            <div className="image-control gap-3 mt-5">
+              <div>
                 {currentImage && <img src={currentImage} alt="Current track" />}
-              </Link>
-            </div>
+              </div>
 
-            <div className="flex flex-col">
-              <div className=" w-52">
-                <span className=" line-clamp-1 mt-1 font-semibold dark:text-gray-300">
-                  {currentTitle}
-                </span>
-              </div>
-              <div className="marquee w-52 line-clamp-1">
-                <span
-                  className=" marquee-text text-gray-400"
-                  style={{
-                    animationDuration: `${calculateDuration(currentTitle)}s`,
-                  }}
-                >
-                  {currentDescription}
-                </span>
+              <div className="flex flex-col">
+                <div className=" w-52">
+                  <span className=" line-clamp-1 mt-1 font-semibold dark:text-gray-300">
+                    {currentTitle}
+                  </span>
+                </div>
+                <div className="marquee w-52 line-clamp-1">
+                  <span
+                    className=" marquee-text text-gray-400"
+                    style={{
+                      animationDuration: `${calculateDuration(currentTitle)}s`,
+                    }}
+                  >
+                    {currentDescription}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
 
           <div className="play-back-btn gap-5">
             <FastBackwardFilled
@@ -179,7 +179,7 @@ const AudioControl = () => {
         </div>
 
         <div>
-          <div className="text-end"  style={{ userSelect: "none" }}>
+          <div className="text-end" style={{ userSelect: "none" }}>
             <span style={{ fontSize: "0.7rem", color: "#6b7280" }}>
               {formatTime(currentTime)}
             </span>

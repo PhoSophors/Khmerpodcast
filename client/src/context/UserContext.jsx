@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
 
       try {
         if (authToken) {

@@ -16,7 +16,7 @@ import {
   SunOutlined,
 } from "@ant-design/icons";
 
-const SideMenu = ({ collapsed, setCollapsed }) => {
+const SideMenu = ({ collapsed }) => {
   const location = useLocation();
   const { t } = useTranslation();
   const { user, isLoggedIn, handleConfirmLogout } = useUser();
@@ -40,7 +40,7 @@ const SideMenu = ({ collapsed, setCollapsed }) => {
   );
 
   const handleAppClick = () => {
-    window.location.reload();
+    navigate("/");
   };
 
   const handleMenuItemClick = (menuItem) => {

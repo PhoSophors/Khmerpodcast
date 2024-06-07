@@ -159,6 +159,11 @@ const ViewDetailPodcast = () => {
               </div>
             </div>
           </div>
+          <div className="font-semibold text-indigo-500 mt-5 flex">
+            <h1>
+              {fileData.viewCount} View and {fileData.playCount} Play
+            </h1>
+          </div>
         </div>
       </Card>
     </div>

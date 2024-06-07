@@ -4,14 +4,16 @@ import CustomCard from "../../card/CustomCard";
 import axios from "axios";
 import "./HomePage.css";
 import { api_url } from "../../../api/config";
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from "react-router-dom";
+import useView from "../../../services/useView";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(false);
   const cardsPerPage = 10;
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { incrementViewCount } = useView();
 
   const fetchFiles = async (page) => {
     setLoading(true);
@@ -38,8 +40,6 @@ const HomePage = () => {
     fetchFiles(0);
   }, []);
 
-
-
   return (
     <>
       <div className="xl:p-3 gap-2 p-0 homepage">
@@ -56,8 +56,10 @@ const HomePage = () => {
                 <CustomCard
                   key={file.id || index}
                   file={file}
-                  handleViewPodcast={() => {
+                  handleViewPodcast={async () => {
+                    // Navigate to the podcast
                     navigate(`/watch-podcast/${file._id}`);
+                    await incrementViewCount(file._id);
                   }}
                 />
               ))}
@@ -71,7 +73,7 @@ const HomePage = () => {
             )}
           </>
         )}
-  
+
         <div className="dot">.</div>
       </div>
     </>

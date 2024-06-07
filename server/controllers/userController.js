@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const File = require("../models/fileUploadModel");
+const File = require("../models/podcastModel");
 const { s3Client } = require("../config/s3Helpers");
 const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
 let tokenBlacklist = [];
@@ -208,16 +208,9 @@ const deleteUser = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Remove the user's token from the blacklist
-    const userToken = req.headers.authorization.split(" ")[1];
-    const tokenIndex = tokenBlacklist.indexOf(userToken);
-    if (tokenIndex !== -1) {
-      tokenBlacklist.splice(tokenIndex, 1);
-    }
-
     res
       .status(200)
-      .json({ message: "User deleted successfully", deleteToken: true });
+      .json({ message: "User deleted successfully", user: deletedUser});
   } catch (error) {
     console.error("Error deleting user:", error); // Log the error to the console
     res.status(500).json({ error: error.message }); // Return the specific error message

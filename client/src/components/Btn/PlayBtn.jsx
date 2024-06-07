@@ -2,6 +2,7 @@
 import React from "react";
 import { useAudio } from "../../context/AudioContext";
 import { PlayCircleFilled, PauseCircleFilled } from "@ant-design/icons";
+import useView from "../../services/useView";
 
 const PlayBtn = ({ file }) => {
   const {
@@ -15,7 +16,9 @@ const PlayBtn = ({ file }) => {
     setCurrentDescription,
   } = useAudio();
 
-  const toggleAudio = () => {
+  const { incrementPlayCount } = useView();
+
+  const toggleAudio = async () => {
     if (isPlaying && currentAudio === file.audio.url) {
       // If currently playing the same audio, just pause
       setIsPlaying(false);
@@ -27,9 +30,11 @@ const PlayBtn = ({ file }) => {
       setCurrentTitle(file.title);
       setCurrentDescription(file.description);
       setIsPlaying(true);
+
+      await incrementPlayCount(file._id);
     }
   };
-  
+
   return (
     <div>
       {isPlaying && currentAudio === file.audio.url ? (

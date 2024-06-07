@@ -1,25 +1,25 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import UserUploadCard from "../../../components/card/UserUploadCard";
 import ViewDetailPodcast from "../viewDetailPodcast/ViewDetailPodcast";
 import "./Favorith.css";
 import { useFavorites } from "../../../services/useFavorites";
 import { useNavigate } from "react-router-dom";
 import { Spin } from "antd";
-
+import useView from "../../../services/useView";
 
 const Favorith = () => {
   const [isViewPodcast, setIsViewPodcast] = useState(false);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
   const { favorites, isLoading } = useFavorites();
   const navigate = useNavigate();
+  const { incrementViewCount } = useView();
 
-
-  if(isLoading) {
+  if (isLoading) {
     return (
       <di className="spin-loading text-center mt-20">
         <Spin />
       </di>
-    )
+    );
   }
 
   return (
@@ -52,14 +52,19 @@ const Favorith = () => {
               handleViewPodcast={() => setIsViewPodcast(false)}
             />
           ) : (
+            // ...
+
             favorites.map((file, index) => (
               <UserUploadCard
                 key={file.id}
                 file={file}
-                handleViewPodcast={() => {
+                handleViewPodcast={async () => {
                   setIsViewPodcast(true);
                   setSelectedPodcast(file);
                   navigate(`/watch-podcast/${file._id}`);
+
+                  // Increment the view count
+                  await incrementViewCount(file._id);
                 }}
               />
             ))
