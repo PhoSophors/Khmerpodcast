@@ -3,7 +3,7 @@ import axios from "axios";
 import { api_url } from "../api/config";
 import Cookies from "js-cookie";
 import { message } from "antd";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const UserContext = createContext();
 
@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userFiles, setUserFiles] = useState([]);
   const [userRole, setUserRole] = useState(null);
-  
+
   const authToken = Cookies.get("authToken")
     ? atob(Cookies.get("authToken"))
     : null;
@@ -28,13 +28,12 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      // setIsLoading(true);
+      setIsLoading(true);
 
       try {
         if (authToken) {
           const decodedToken = jwtDecode(authToken);
           setUserRole(decodedToken.role);
-
 
           const response = await axios.get(`${api_url}/users/user-data/${id}`, {
             headers: {

@@ -109,11 +109,9 @@ const SideMenu = ({ collapsed }) => {
       <Menu
         className="side-menu-container"
         mode="inline"
-        selectedKeys={
-          selectedMenuItem.includes("/admin")
-            ? [selectedMenuItem, "/admin"]
-            : [selectedMenuItem]
-        }
+        selectedKeys={[selectedMenuItem]}
+        defaultSelectedKeys={[selectedMenuItem]}
+        defaultOpenKeys={[selectedMenuItem]}
         onClick={handleMenuItemClick}
       >
         <div

@@ -15,12 +15,14 @@ import UserUploadCard from "../../card/UserUploadCard";
 import ShareProfileBtn from "../../Btn/ShareProfileBtn";
 import { useUser } from "../../../context/UserContext";
 import "./Profile.css";
+import useView from "../../../services/useView";
 
 const PublicProfile = () => {
   const { id: publicUserId } = useParams();
   const { usePublicProfile } = useUser();
   const { publicUserData } = usePublicProfile(publicUserId);
   const navigate = useNavigate();
+  const { incrementViewCount } = useView();
 
   if (!publicUserData) {
     return (
@@ -199,8 +201,9 @@ const PublicProfile = () => {
                   <UserUploadCard
                     key={file._id || index}
                     file={file}
-                    handleViewPodcast={() => {
+                    handleViewPodcast={ async () => {
                       navigate(`/watch-podcast/${file._id}`);
+                      await incrementViewCount(file._id);
                     }}
                   />
                 ))}

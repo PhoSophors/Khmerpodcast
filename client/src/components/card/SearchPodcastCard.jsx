@@ -21,7 +21,6 @@ const SearchPocastCard = ({ file, handleViewPodcast }) => {
         style={{
           borderRadius: "20px",
           minWidth: "100%",
-
         }}
         bodyStyle={{ padding: 0 }}
         cover={
@@ -74,7 +73,7 @@ const SearchPocastCard = ({ file, handleViewPodcast }) => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   width: "100%",
-                  maxHeight: "80px",
+                  maxHeight: "90px",
                 }}
               >
                 <h1
@@ -84,8 +83,11 @@ const SearchPocastCard = ({ file, handleViewPodcast }) => {
                   {file.title}
                 </h1>
 
-                <h3 className="mt-2 line-clamp-2 text-slate-500 dark:text-gray-300">
+                <h3 className="mt-1 line-clamp-2 text-slate-500 dark:text-gray-300">
                   {file.description}
+                </h3>
+                <h3 className=" line-clamp-1 text-slate-400 dark:text-gray-400">
+                  {file.viewCount} views and {file.playCount} plays
                 </h3>
               </div>
             </div>

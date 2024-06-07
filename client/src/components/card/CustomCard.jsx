@@ -32,9 +32,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
     >
       <div className="relative">
         {loading && (
-          <div className="custom-card-loading-overlay animate-pulse ">
-            Loading Spinner or other content can go here
-          </div>
+          <div className="custom-card-loading-overlay animate-pulse " />
         )}
 
         <Card
