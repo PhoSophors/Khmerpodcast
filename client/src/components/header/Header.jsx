@@ -11,7 +11,7 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ onSelectMenuItem, handleCollapse }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
@@ -19,6 +19,7 @@ const Header = ({ onSelectMenuItem, handleCollapse }) => {
   const isMobileDevice = window.matchMedia("(max-width: 768px)").matches;
   const [menuVisible, setMenuVisible] = useState(false);
   const { user, isLoading, isLoggedIn } = useUser();
+const navigate = useNavigate();
 
   const handleLoginModalCancel = () => {
     setLoginModalVisible(false);
@@ -47,7 +48,7 @@ const Header = ({ onSelectMenuItem, handleCollapse }) => {
   };
 
   const handleAppClick = () => {
-    window.location.reload();
+    navigate("/");
   };
 
   return (

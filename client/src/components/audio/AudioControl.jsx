@@ -26,7 +26,6 @@ const AudioControl = () => {
     currentImage,
     currentTitle,
     currentDescription,
-    handleSetCurrentTime,
   } = useAudio();
 
   const toggleAudio = () => {
@@ -95,7 +94,7 @@ const AudioControl = () => {
         audio.pause();
       }
     }
-  }, [currentAudio, isPlaying]);
+  }, [currentAudio, isPlaying, audioRef]);
 
   useEffect(() => {
     localStorage.setItem("audioCurrentTime", currentTime);

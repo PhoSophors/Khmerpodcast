@@ -30,7 +30,6 @@ const App = () => {
       {isLoading || !showApp ? (
         <AppLoading />
       ) : (
-        <Suspense fallback={<AppLoading />}>
           <Routes>
             {/* Main layout routes */}
             <Route path="/" element={<MainSection />} />
@@ -52,7 +51,7 @@ const App = () => {
             {/* Auth routes */}
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-            <Route path="/otp" element={<GuestRoute><Otp /></GuestRoute>} />
+            <Route path="/otp" element={<GuestRoute><Otp /></GuestRoute>} /> 
             <Route path="/forgotPassword" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
 
             {/* Protected routes */}
@@ -61,9 +60,8 @@ const App = () => {
             <Route path="/profile" element={<PrivateRoute><MainSection /></PrivateRoute>} />
             <Route path="/setting" element={<PrivateRoute><MainSection /></PrivateRoute>} />
             <Route path="/update-podcast" element={<PrivateRoute><MainSection /></PrivateRoute>} />
-            <Route path="/update-profile/:id" element={<PrivateRoute><MainSection /></PrivateRoute>} />
+            <Route path="/update-profile/:id" element={<PrivateRoute> <MainSection /></PrivateRoute>} />
           </Routes>
-        </Suspense>
       )}
     </Router>
   );

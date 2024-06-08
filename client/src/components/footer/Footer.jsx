@@ -6,6 +6,7 @@ import "./Footer.css";
 const Footer = () => {
   const { currentAudio } = useAudio();
 
+  // Check if there is no audio playing not show the footer
   if(!currentAudio) return null;
   
   return (

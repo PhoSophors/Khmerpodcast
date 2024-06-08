@@ -16,7 +16,7 @@ router.get(
 
 // update user
 router.put(
-  "/user/update/:id",
+  "/user-update/:id",
   verifyToken,
   checkRoleMiddleware(["user", "admin"]),
   userController.updateUser

@@ -6,12 +6,15 @@ import "./search.css";
 import { api_url } from "../../../api/config";
 
 const SearchForm = ({ handleSearchSubmit }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(
+    localStorage.getItem("searchQuery") || ""
+  );
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
-    setSearchQuery(event.target.value); // Assuming setSearchQuery is the function to set searchQuery
+    // Store the search query in local storage
+    localStorage.setItem("searchQuery", event.target.value);
   };
 
   useEffect(() => {
