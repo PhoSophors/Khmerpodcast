@@ -3,7 +3,16 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { api_url } from "../../../api/config";
-import { Input, Row, Col, Card, Button, message, Spin, notification } from "antd";
+import {
+  Input,
+  Row,
+  Col,
+  Card,
+  Button,
+  message,
+  Spin,
+  notification,
+} from "antd";
 import { SafetyOutlined } from "@ant-design/icons";
 import BackBtn from "../../Btn/BackBtn";
 
@@ -41,6 +50,11 @@ const Otp = () => {
       } else {
         message.error("OTP verification failed. Please try again.");
       }
+    } catch (error) {
+      notification.error({
+        message: "OTP verification failed!",
+        description: error.response.data.error,
+      });
     } finally {
       setIsLoading(false);
     }

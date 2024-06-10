@@ -20,7 +20,7 @@ import ShareProfileBtn from "../../Btn/ShareProfileBtn";
 import useView from "../../../services/useView";
 
 const Profile = () => {
-  const { user, userFiles, isLoading } = useUser();
+  const { user,  userFiles, isLoading} = useUser();
   const id = user ? user._id : null;
   const navigate = useNavigate();
   const { incrementViewCount } = useView();

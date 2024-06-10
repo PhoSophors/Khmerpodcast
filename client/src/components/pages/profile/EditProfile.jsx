@@ -223,12 +223,11 @@ const EditProfile = () => {
             Authorization: `Bearer ${authToken}`,
           },
           onUploadProgress: (progressEvent) => {
-            // Calculate the upload progress
             let percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
             percentCompleted = percentCompleted >= 100 ? 99 : percentCompleted;
-            setUploadProgress(percentCompleted); // Update the upload progress state
+            setUploadProgress(percentCompleted);
           },
         }
       );

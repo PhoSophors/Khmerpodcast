@@ -45,10 +45,8 @@ const SideMenu = ({ collapsed }) => {
 
   const handleMenuItemClick = (menuItem) => {
     if (menuItem.key === "/dropdown") {
-      // Prevent default behavior to keep the dropdown open
       menuItem.domEvent.preventDefault();
     } else {
-      // Navigate to the selected menu item
       navigate(menuItem.key);
     }
   };

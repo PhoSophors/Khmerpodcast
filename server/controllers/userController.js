@@ -1,10 +1,9 @@
 const User = require("../models/userModel");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
 const File = require("../models/podcastModel");
+const multerS3 = require("multer-s3");
+const multer = require("multer");
 const { s3Client } = require("../config/s3Helpers");
 const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
-let tokenBlacklist = [];
 
 // Multer configuration for handling file uploads
 const upload = multer({
@@ -34,32 +33,44 @@ const deleteFromS3 = async (key) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const {
-    username,
-    bio,
-    twitter,
-    instagram,
-    youtube,
-    tiktok,
-    facebook,
-    website,
-  } = req.body;
 
   try {
-    let user = await User.findById(id);
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Handle file upload using multers
     upload(req, res, async (err) => {
+      const {
+        username,
+        bio,
+        twitter,
+        instagram,
+        youtube,
+        tiktok,
+        facebook,
+        website,
+      } = req.body;
+
       if (err) {
         return res
           .status(500)
           .json({ error: `Error uploading image: ${err.message}` });
       }
 
+      if (req.file) {
+        if (user.profileImage) {
+          const oldImageKey = user.profileImage.replace(
+            `https://${process.env.AWS_BUCKET_NAME_PROFILE}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+            ""
+          );
+          await deleteFromS3(oldImageKey);
+        }
+        user.profileImage = req.file.location;
+      }
+
+      // Update other fields only if they are provided in the request
       if (username) user.username = username;
       if (bio) user.bio = bio;
       if (facebook) user.facebook = facebook;
@@ -69,22 +80,6 @@ const updateUser = async (req, res) => {
       if (youtube) user.youtube = youtube;
       if (tiktok) user.tiktok = tiktok;
 
-      // If file upload was successful, delete the old image from S3 and update the user object with the new S3 URL
-      if (req.file) {
-        // Get the key of the old image from the File document
-        const oldImageKey = user.profileImage.replace(
-          `https://${process.env.AWS_BUCKET_NAME_PROFILE}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
-          ""
-        );
-
-        // Delete the old image from S3
-        await deleteFromS3(oldImageKey);
-
-        // Update the user object with the new S3 URL
-        user.profileImage = req.file.location;
-      }
-
-      // Save the updated user object
       try {
         await user.save();
         res.status(200).json({ user });
@@ -181,9 +176,23 @@ const deleteUser = async (req, res) => {
     }
 
     const deletedUser = await User.findByIdAndDelete(id);
+
+    // Check if the user was found and deleted
     if (!deletedUser) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    // Delete the user's profile image from S3
+    if (deletedUser.profileImage) {
+      const key = deletedUser.profileImage.replace(
+        `https://${process.env.AWS_BUCKET_NAME_PROFILE}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
+        ""
+      );
+      await deleteFromS3(key);
+    }
+
+    // Delete all files uploaded by the user from the database
+    await File.deleteMany({ user: id });
 
     res
       .status(200)

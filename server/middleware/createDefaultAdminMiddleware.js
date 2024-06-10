@@ -15,9 +15,7 @@ async function createDefaultAdmin() {
       email: process.env.ADMIN_EMAIL,
       role: "admin",
     };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "30d",
-    });
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
 
     // Hash the token
     const hash = crypto.createHash("sha256");

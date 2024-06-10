@@ -66,8 +66,6 @@ export const UserProvider = ({ children }) => {
             setUserFiles([]);
           }
         }
-      } catch (error) {
-        // console.error("Failed to fetch user data:", error);
       } finally {
         setIsLoading(false);
       }
@@ -96,8 +94,6 @@ export const UserProvider = ({ children }) => {
             setPublicUserData(null);
             message.error("User not found");
           }
-        } catch (error) {
-          console.error("Failed to fetch public user data:", error);
         } finally {
           setIsPublicDataLoading(false);
         }

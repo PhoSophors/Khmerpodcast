@@ -138,7 +138,7 @@ const ForgotPassword = () => {
           {currentStep === 2 && (
             <>
               <div className="flex justify-center items-center text-center mb-4">
-                <img src={logo} alt="logo" className="logo" />
+                <img src={logo} alt="logo" className="logo"  style={{ borderRadius: "20px"}}/>
               </div>
 
               <p className="text-center text-base dark:text-gray-300 mb-4">
@@ -176,7 +176,7 @@ const ForgotPassword = () => {
           {currentStep === 3 && (
             <>
               <div className="flex justify-center items-center text-center mb-4">
-                <img src={logo} alt="logo" className="logo" />
+                <img src={logo} alt="logo" className="logo" style={{ borderRadius: "20px" }}/>
               </div>
               <p className="text-center text-base dark:text-gray-300 mb-4">
                 Please enter your new password below. Make sure it's strong and

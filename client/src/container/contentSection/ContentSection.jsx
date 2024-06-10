@@ -54,12 +54,7 @@ const RightSection = ({
         case `/watch-podcast/${selectedPodcast?._id}`:
           return <ViewDetailPodcast onUpdatePodcast={onPodcastSelected} />;
         case "/update-podcast":
-          return (
-            <UpdatePodcast
-              file={selectedPodcast}
-              onPodcastSelected={onPodcastSelected}
-            />
-          );
+          return ( <UpdatePodcast file={selectedPodcast} onPodcastSelected={onPodcastSelected} /> );
         case `/update-profile/${id}`:
           return <EditProfile onUpdateProfile={onUpdateProfile} />;
         default:

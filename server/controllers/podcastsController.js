@@ -343,7 +343,7 @@ const deletePodcast = async (req, res) => {
   }
 };
 
-// Function to get details of a file by ID ================================================================
+// Function to get details of a file by ID =====================================================
 const getFileById = async (req, res) => {
   try {
     const file = await File.findById(req.params.id).populate("user");
@@ -357,7 +357,7 @@ const getFileById = async (req, res) => {
   }
 };
 
-// Function to get files by user ID that user upload ================================================================
+// Function to get files by user ID that user upload =============================================
 const getFilesByUserId = async (req, res) => {
   try {
     const { id } = req.params; // ID of the user
