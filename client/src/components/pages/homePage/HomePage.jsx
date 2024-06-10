@@ -10,7 +10,7 @@ import useView from "../../../services/useView";
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null); // Change to store error message
   const cardsPerPage = 10;
   const navigate = useNavigate();
   const { incrementViewCount } = useView();
@@ -25,13 +25,14 @@ const HomePage = () => {
       let files = response.data.reverse();
 
       setFiles(files);
-      setError(false);
-      setLoading(false);
-    } catch (error) {
+      setError(null); // Clear error on success
+    } catch (err) {
       notification.error({
         message: "Error fetching Podcasts.",
         description: "Please wait a minute and try again.",
       });
+      setError(err); // Store the error message
+    } finally {
       setLoading(false);
     }
   };
@@ -41,42 +42,36 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
-      <div className="xl:p-3 gap-2 p-0 homepage">
-        {/* Display loading spinner if loading state is true */}
-        {loading || error ? (
-          <div className="spin-loading mt-20">
-            <Spin />
+    <div className="xl:p-3 gap-2 p-0 homepage">
+      {loading ? (
+        <div className="spin-loading mt-20">
+          <Spin />
+        </div>
+      ) : (
+        <>
+          <div className="flex sm:p-0 md:p-0 flex-wrap justify-center items-center home-container">
+            {files.map((file, index) => (
+              <CustomCard
+                key={file.id || index}
+                file={file}
+                handleViewPodcast={async () => {
+                  navigate(`/watch-podcast/${file._id}`);
+                  await incrementViewCount(file._id);
+                }}
+              />
+            ))}
           </div>
-        ) : (
-          <>
-            <div className="flex sm:p-0 md:p-0 flex-wrap justify-center items-center home-container">
-              {/* Map over the files array */}
-              {files.map((file, index) => (
-                <CustomCard
-                  key={file.id || index}
-                  file={file}
-                  handleViewPodcast={async () => {
-                    // Navigate to the podcast
-                    navigate(`/watch-podcast/${file._id}`);
-                    await incrementViewCount(file._id);
-                  }}
-                />
-              ))}
+          {error && (
+            <div className="mt-10">
+              <p className="text-center text-base text-red-500 font-semibold flex flex-col">
+                <Spin />
+                <div className="mt-10">{error.message || "Server Error..!"}</div>
+              </p>
             </div>
-            {error && (
-              <div className="mt-10">
-                <p className="text-center text-base text-red-500 font-semebold">
-                  Server Error..!
-                </p>
-              </div>
-            )}
-          </>
-        )}
-
-        <div className="dot">.</div>
-      </div>
-    </>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

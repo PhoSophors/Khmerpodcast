@@ -137,8 +137,8 @@ const FileManager = () => {
 
           {/* Loading/Error/No files message */}
           {loading ? (
-            <div className="spin-container">
-              <Spin size="large" />
+            <div className="flex justify-center mt-20 mb-20">
+              <Spin />
             </div>
           ) : error ? (
             <Alert message={error} type="error" />

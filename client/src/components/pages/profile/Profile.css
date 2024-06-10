@@ -69,7 +69,7 @@
   width: 100%;
   font-weight: 600;
 }
-
+/* 
 .profile-image-upload.ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select {
   width: 150px;
   height: 150px;
@@ -94,7 +94,7 @@
   border: 1px dashed #d9d9d9;
   cursor: pointer;
   transition: border-color 0.3s;
-}
+} */
 
 @media screen and (max-width: 768px) {
   .update-profile-card {

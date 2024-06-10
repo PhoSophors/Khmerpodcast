@@ -33,7 +33,6 @@ const Profile = () => {
     );
   }
 
-
   return (
     <div className="profile-container h-screen">
       <div className="flex grid xl:grid-cols-2 grid-cols-1 md:grid-cols-1 md:flex xl:p-2 md:p-2 p-0 xl:gap-2 md:gap-2 gap-2">

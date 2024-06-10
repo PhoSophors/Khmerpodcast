@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
 import "./MainSection.css";
 import ContentSection from "../contentSection/ContentSection";
@@ -13,8 +13,7 @@ const { Content, Sider } = Layout;
 const MainSection = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const { id } = useParams();
-  const { publicUserId } = useParams();
+  const { id, publicUserId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { fileData: selectedPodcast } = useFileData(id);
@@ -31,11 +30,6 @@ const MainSection = () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
-
-  const selectedMenuItem = useMemo(
-    () => location.pathname,
-    [location.pathname]
-  );
 
   const handleSelectMenuItem = (menuItem) => {
     navigate(menuItem.key);
@@ -57,14 +51,26 @@ const MainSection = () => {
     navigate(`/public-profile/${publicUserId}`);
   };
 
+  const renderContentSection = () => {
+    if (id) {
+      return <ContentSection id={id} selectedPodcast={selectedPodcast} />;
+    } else {
+      return (
+        <ContentSection
+          selectedMenuItem={location.pathname}
+          onPodcastSelected={handlePodcastSelected}
+          onUpdateProfile={handleUpdateProfile}
+          onViewUserProfile={handleViewUserProfile}
+        />
+      );
+    }
+  };
+
   return (
     <Layout className="mainSection-container">
       {!isMobileView && (
         <Sider collapsed={collapsed} breakpoint="md">
-          <SideMenu
-            collapsed={collapsed}
-            onSelectMenuItem={handleSelectMenuItem}
-          />
+          <SideMenu collapsed={collapsed} onSelectMenuItem={handleSelectMenuItem} />
         </Sider>
       )}
       <Layout>
@@ -75,21 +81,8 @@ const MainSection = () => {
             menuOpen={!isMobileView || !collapsed}
             collapsed={collapsed}
           />
-
           <div className="content-card">
-            {id ? (
-              <ContentSection
-                id={id}
-                selectedPodcast={selectedPodcast}
-              />
-            ) : (
-              <ContentSection
-                selectedMenuItem={selectedMenuItem}
-                onPodcastSelected={handlePodcastSelected}
-                onUpdateProfile={handleUpdateProfile}
-                onViewUserProfile={handleViewUserProfile}
-              />
-            )}
+            {renderContentSection()}
           </div>
           <Footer />
         </Content>

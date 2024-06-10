@@ -201,13 +201,14 @@ const MoreBtn = ({ file }) => {
                   top: "50%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
-                  backgroundColor: "white",
+                  border: "2px solid red",
+                  borderRadius: "50%",
                 }}
               >
                 <img
                   src={logo}
                   alt="logo"
-                  style={{ width: "40px", height: "40px" }}
+                  style={{ width: "40px", height: "40px", borderRadius: "50%" }}
                 />
               </div>
             </div>

@@ -29,7 +29,6 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       setIsLoading(true);
-
       try {
         if (authToken) {
           const decodedToken = jwtDecode(authToken);

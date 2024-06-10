@@ -1,7 +1,0 @@
-svg {
-  filter: url(#gradient);
-}
-
-svg > path {
-  fill: url(#gradient);
-}

@@ -50,9 +50,6 @@ const SideMenu = ({ collapsed }) => {
     } else {
       // Navigate to the selected menu item
       navigate(menuItem.key);
-      // if (!collapsed) {
-      //   setCollapsed(true);
-      // }
     }
   };
 

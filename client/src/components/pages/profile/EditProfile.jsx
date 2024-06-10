@@ -215,7 +215,7 @@ const EditProfile = () => {
       }
 
       const response = await axios.put(
-        `${api_url}/users/user/update/${id}`,
+        `${api_url}/users/user-update/${id}`,
         formData,
         {
           headers: {
@@ -262,7 +262,7 @@ const EditProfile = () => {
               <ImgCrop>
                 <Upload
                   className="profile-image-upload"
-                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                  action={null}
                   listType="picture-card"
                   fileList={imageFileList}
                   accept=".jpg, .jpeg"

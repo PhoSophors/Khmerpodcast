@@ -60,37 +60,14 @@ const updateUser = async (req, res) => {
           .json({ error: `Error uploading image: ${err.message}` });
       }
 
-      if (username) {
-        user.username = username;
-      }
-
-      // Update the bio if provided
-      if (bio) {
-        user.bio = bio;
-      }
-      if (facebook) {
-        user.facebook = facebook;
-      }
-
-      if (website) {
-        user.website = website;
-      }
-
-      if (twitter) {
-        user.twitter = twitter;
-      }
-
-      if (instagram) {
-        user.instagram = instagram;
-      }
-
-      if (youtube) {
-        user.youtube = youtube;
-      }
-
-      if (tiktok) {
-        user.tiktok = tiktok;
-      }
+      if (username) user.username = username;
+      if (bio) user.bio = bio;
+      if (facebook) user.facebook = facebook;
+      if (website) user.website = website;
+      if (twitter) user.twitter = twitter;
+      if (instagram) user.instagram = instagram;
+      if (youtube) user.youtube = youtube;
+      if (tiktok) user.tiktok = tiktok;
 
       // If file upload was successful, delete the old image from S3 and update the user object with the new S3 URL
       if (req.file) {
