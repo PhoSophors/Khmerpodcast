@@ -31,8 +31,8 @@ input::placeholder, textarea::placeholder {
 
 /* root ======================================= */
 :root {
-  /* --bg-color: #4f46e5; */
-  --bg-color:  rgba(14,48,102,1) ;
+  --bg-color: #3b82f6;
+  /* --bg-color:  rgba(14,48,102,1) ; */
   --sidemenu-mobile-bg: #fff;
   --content-bg: #fff;
   --header-bg: #fff;
@@ -196,10 +196,10 @@ label, title {
   background-color: var(--content-bg) !important;
 }
 
-.ant-modal-mask {
+/* .ant-modal-mask {
   background: rgb(153,155,161);
   background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%);
-}
+} */
 
 .ant-picker {
   background-color: var(--card-hover) !important;

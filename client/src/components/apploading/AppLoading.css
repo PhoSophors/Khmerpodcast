@@ -6,8 +6,8 @@
   align-items: center;
   height: 100vh;
   overflow: hidden !important ;
-  background: rgb(153,155,161);
-  background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%);
+  /* background: rgb(153,155,161);
+  background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%); */
 }
 
 .animation-container {
