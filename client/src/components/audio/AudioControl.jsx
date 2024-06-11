@@ -131,7 +131,13 @@ const AudioControl = () => {
           <Link to={`/watch-podcast/${currentId}`}>
             <div className="image-control gap-3 mt-5">
               <div>
-                {currentImage && <img src={currentImage} alt="Current track" />}
+                {currentImage && (
+                  <img
+                    src={currentImage}
+                    alt="Current track"
+                    style={{ boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}
+                  />
+                )}
               </div>
 
               <div className="flex flex-col">

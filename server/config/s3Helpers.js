@@ -68,6 +68,29 @@ const compressImage = async (imageBuffer) => {
     .toBuffer();
 };
 
+// set image mime type and extension
+const getImageMimeTypeAndExtension = (mimetype) => {
+  let imageMimeType;
+  let imageExtension;
+
+  switch (mimetype) {
+    case "image/png":
+      imageMimeType = "image/png";
+      imageExtension = ".png";
+      break;
+    case "image/gif":
+      imageMimeType = "image/gif";
+      imageExtension = ".gif";
+      break;
+    default:
+      imageMimeType = "image/jpeg";
+      imageExtension = ".jpg";
+  }
+
+  return { imageMimeType, imageExtension };
+};
+
+
 // Function to upload compressed files to S3
 const uploadCompressToS3 = async (fileBuffer, mimeType, fileExtension) => {
   const uniqueKey = `${Date.now().toString()}${fileExtension}`;
@@ -106,4 +129,5 @@ module.exports = {
   compressImage,
   uploadCompressToS3,
   deleteFromS3,
+  getImageMimeTypeAndExtension,
 };

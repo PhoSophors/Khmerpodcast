@@ -45,7 +45,11 @@ const CustomCard = ({ file, handleViewPodcast }) => {
                 alt={`.${file?._id}`}
                 src={file?.image?.url}
                 onLoad={handleImageLoad}
-                style={{ borderRadius: "14px", boxSizing: "border-box" }}
+                style={{
+                  borderRadius: "14px",
+                  boxSizing: "border-box",
+                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                }}
               />
               {(isMobile || isHovered) && (
                 <div className="flex grid sm:grid-cols-2 sm:flex sm:gap-5">

@@ -258,7 +258,7 @@ const UpdatePodcast = ({ file }) => {
                       onPreview={handlePreview}
                       fileList={imageFile ? [imageFile] : []}
                       maxCount={1}
-                      accept=".jpg"
+                      accept=".jpg, .jpeg, .png, .webp, .gif"
                       onChange={(info) => {
                         if (info.fileList.length > 1) {
                           info.fileList = [info.fileList.pop()];
@@ -276,7 +276,7 @@ const UpdatePodcast = ({ file }) => {
                               color: `var(--gray-300)`,
                             }}
                           />
-                          {"Upload Thumnaill"}
+                          {"Upload Thumbnail"}
                         </div>
                       )}
                     </Upload>

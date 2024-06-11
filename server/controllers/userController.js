@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const File = require("../models/podcastModel");
 const multerS3 = require("multer-s3");
 const multer = require("multer");
-const { s3Client } = require("../config/s3Helpers");
+const { s3Client, compressImage } = require("../config/s3Helpers");
 const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
 
 // Multer configuration for handling file uploads

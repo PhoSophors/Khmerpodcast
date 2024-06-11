@@ -1,7 +1,8 @@
 
 @font-face {
   font-family: 'KhmerOS_battambang';
-  src: url('./components/assets/fonts/KhmerOS_battambang.ttf') format('truetype');
+  src: local("KhmerOS_battambang"), 
+  url(../public/KhmerOS_battambang.ttf) format(truetype);
 }
 
 @tailwind base;

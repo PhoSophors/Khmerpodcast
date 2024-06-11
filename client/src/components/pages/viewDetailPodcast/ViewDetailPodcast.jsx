@@ -75,6 +75,7 @@ const ViewDetailPodcast = () => {
                         minWidth: "15vw",
                         maxHeight: "15vw",
                         justifyContent: "center",
+                        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
                       }}
                     />
                   </div>

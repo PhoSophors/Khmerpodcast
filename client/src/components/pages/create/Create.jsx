@@ -245,7 +245,7 @@ const Create = () => {
                       action={null}
                       listType="picture-card"
                       fileList={imageFileList ? imageFileList : []}
-                      accept=".jpg"
+                      accept=".jpg, .jpeg, .png, .webp, .gif"
                       onChange={handleChange}
                       onPreview={handlePreview}
                     >
@@ -257,7 +257,7 @@ const Create = () => {
                               color: `var(--gray-300)`,
                             }}
                           />
-                          {"Upload Thumnaill"}
+                          {"Upload Thumbnail"}
                         </div>
                       )}
                     </Upload>

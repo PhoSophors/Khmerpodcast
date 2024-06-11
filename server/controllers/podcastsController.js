@@ -7,6 +7,7 @@ const {
   compressImage,
   uploadCompressToS3,
   deleteFromS3,
+  getImageMimeTypeAndExtension,
 } = require("../config/s3Helpers");
 
 // Function to upload a Podcast ================================================================
@@ -44,6 +45,11 @@ const uploadPodcast = async (req, res) => {
     const compressedAudioBuffer = await compressAudio(audioBuffer);
     const compressedImageBuffer = await compressImage(imageBuffer);
 
+    // Get the MIME type and extension for the image file
+    const { imageMimeType, imageExtension } = getImageMimeTypeAndExtension(
+      imageFile.mimetype
+    );
+
     try {
       // Delete original files from S3
       await deleteFromS3(audioFile.key);
@@ -57,8 +63,8 @@ const uploadPodcast = async (req, res) => {
       );
       compressedImageFileUrl = await uploadCompressToS3(
         compressedImageBuffer,
-        "image/jpeg",
-        ".jpg"
+        imageMimeType,
+        imageExtension
       );
 
       const file = new File({
@@ -75,7 +81,7 @@ const uploadPodcast = async (req, res) => {
           filename: compressedImageFileUrl.split("/").pop(),
           url: compressedImageFileUrl,
           size: compressedImageBuffer.length,
-          mimetype: "image/jpeg",
+          mimetype: imageMimeType,
         },
       });
 
@@ -191,6 +197,11 @@ const updatePodcast = async (req, res) => {
     if (req.files && req.files.imageFile) {
       const { imageFile } = req.files;
 
+      // Get the MIME type and extension for the image file
+      const { imageMimeType, imageExtension } = getImageMimeTypeAndExtension(
+        imageFile.mimetype
+      );
+
       // Track the new image file key
       newImageKey = imageFile[0].key;
 
@@ -203,15 +214,15 @@ const updatePodcast = async (req, res) => {
       // Upload compressed new image to S3
       compressedImageFileUrl = await uploadCompressToS3(
         compressedImageBuffer,
-        "image/jpeg",
-        ".jpg"
+        imageMimeType,
+        imageExtension
       );
 
       // Update file object with new image data
       file.image.filename = compressedImageFileUrl.split("/").pop();
       file.image.url = compressedImageFileUrl;
       file.image.size = compressedImageBuffer.length;
-      file.image.mimetype = "image/jpeg";
+      file.image.mimetype = imageMimeType;
     }
 
     // Save the updated file

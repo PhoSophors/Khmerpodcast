@@ -67,7 +67,7 @@
     "audioSupport": "ឯកសារអូឌីយ៉ូរដែលគាំទ្រ",
     "audioFormat": "Audio format: mp3",
     "imageSupport": "ឯកសាររូបភាពដែលគាំទ្រ",
-    "imageFormat": "Image format: jpg",
+    "imageFormat": "Thumbnail format: jpg, jpeg, png, webp, gif",
     "title": "ចំណងជើង",
     "titlePlaceholder": "បញ្ចូលចំណងជើងផតខាស់",
     "description": "ការពិពណ៌នា",
