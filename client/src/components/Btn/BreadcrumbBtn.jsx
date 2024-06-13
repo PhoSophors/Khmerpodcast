@@ -13,7 +13,7 @@ const BreadcrumbBtn = () => {
     <div className="p-2 back-btn-view-podcast w-full rounded-xl ">
       <div
         onClick={handleCloseDetailPodcast}
-        className="p-3 cursor-pointer text-white bg-pink-600 h-8 w-9 flex justify-center items-center rounded-full"
+        className="p-3 cursor-pointer text-white bg-indigo-600 h-8 w-9 flex justify-center items-center rounded-full"
       >
         <ArrowLeftOutlined />
       </div>

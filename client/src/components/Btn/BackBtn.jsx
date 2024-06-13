@@ -12,7 +12,7 @@ const BackBtn = () => {
   return (
     <div
     onClick={goBack}
-      className="p-3 cursor-pointer text-white bg-pink-600 h-8 w-auto flex justify-center items-center rounded-full"
+      className="p-3 cursor-pointer text-white bg-indigo-600 h-8 w-auto flex justify-center items-center rounded-full"
       style={{ position: "absolute", top: "20px", left: "20px" }}
     >
       <ArrowLeftOutlined />

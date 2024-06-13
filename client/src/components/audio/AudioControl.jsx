@@ -168,12 +168,12 @@ const AudioControl = () => {
             {isPlaying ? (
               <PauseCircleFilled
                 onClick={toggleAudio}
-                style={{ fontSize: "1.6rem", color: `var(--audio-icon)` }}
+                style={{ fontSize: "1.6rem", color: `var(--audio-icon)`}}
               />
             ) : (
               <PlayCircleFilled
                 onClick={toggleAudio}
-                style={{ fontSize: "1.6rem", color: `var(--audio-icon)` }}
+                style={{ fontSize: "1.6rem", color: `var(--audio-icon)`}}
               />
             )}
             <FastForwardFilled

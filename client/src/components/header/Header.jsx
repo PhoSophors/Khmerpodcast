@@ -123,12 +123,12 @@ const navigate = useNavigate();
           ) : isLoggedIn ? (
             // Render the user's profile if the user is logged in
             <div className=" items-center flex">
-              <span className="username-header font-semibold uppercase  tracking-wide text-sm text-indigo-500 font-semibold">
+              {/* <span className="username-header font-semibold uppercase  tracking-wide text-sm text-indigo-500 font-semibold">
                 {user &&
                   (user.username.split(" ")[0].length > 5
                     ? user.username.split(" ")[0].slice(0, 5) + "..."
                     : user.username.split(" ")[0])}
-              </span>
+              </span> */}
               &nbsp;
               <Link to="/profile">
                 <Avatar

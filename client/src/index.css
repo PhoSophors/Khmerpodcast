@@ -31,7 +31,7 @@ input::placeholder, textarea::placeholder {
 
 /* root ======================================= */
 :root {
-  --bg-color: #3b82f6;
+  --bg-color: #4f46e5;
   /* --bg-color:  rgba(14,48,102,1) ; */
   --sidemenu-mobile-bg: #fff;
   --content-bg: #fff;
@@ -57,9 +57,10 @@ input::placeholder, textarea::placeholder {
   --placeholder-color-text-area: #9f9f9f;
   /* --ant-modal-mask : #232630dc; */
 
-  --audio-icon: #6b7280;
+  /* --audio-icon: #6b7280; */
+  --audio-icon: #4f46e5;
   --white: #fff;
-  --sider-item-selected: #817e7e35;
+  --sider-item-selected: #33313135;
   --slate-100: #f1f5f9;
   --gray-300: #d2d6dc;
 }
