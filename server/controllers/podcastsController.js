@@ -58,7 +58,7 @@ const uploadPodcast = async (req, res) => {
       // Upload the compressed files to S3 and get their URLs
       compressedAudioFileUrl = await uploadCompressToS3(
         compressedAudioBuffer,
-        "audio/mpeg",
+        "mpeg",
         ".mp3"
       );
       compressedImageFileUrl = await uploadCompressToS3(
@@ -71,11 +71,12 @@ const uploadPodcast = async (req, res) => {
         title: title,
         description: description,
         user: req.user.id,
+        verifyPodcast: false,
         audio: {
           filename: compressedAudioFileUrl.split("/").pop(),
           url: compressedAudioFileUrl,
           size: compressedAudioBuffer.length,
-          mimetype: "audio/mpeg",
+          mimetype: "mpeg",
         },
         image: {
           filename: compressedImageFileUrl.split("/").pop(),
@@ -165,6 +166,7 @@ const updatePodcast = async (req, res) => {
     // Update the file's properties
     file.title = title || file.title;
     file.description = description || file.description;
+    file.verifyPodcast = false;
 
     // Check if audio file is updated
     if (req.files && req.files.audioFile) {
@@ -288,7 +290,10 @@ const getRandomFilesHomePage = async (req, res) => {
     // Fetch all files in random order using aggregation with $sample
     const randomFiles = await File.aggregate([{ $sample: { size: count } }]);
 
-    res.status(200).json(randomFiles);
+    // filter out files that verifyPodcast === false
+    const verifiedFiles = randomFiles.filter((file) => file.verifyPodcast === true);
+
+    res.status(200).json(verifiedFiles);
   } catch (error) {
     console.error("Error fetching random files:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -361,12 +366,36 @@ const getFileById = async (req, res) => {
     if (!file) {
       return res.status(404).json({ message: "File not found" });
     }
+    
+  // Check if the file is verified or if the user is the uploader or an admin
+  // if (!file.verifyPodcast && req.user.id !== file.user.id && req.user.role !== 'admin') {
+  //   return res.status(403).json({ message: "Access denied. File not verified." });
+  // }
 
     res.json(file);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Admin verify podcast
+const verifyPodcastByAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const file = await
+      File.findByIdAndUpdate(id);
+    if (!file) {
+      return res.status(404).json({ message: "File not found" });
+    }
+    file.verifyPodcast = true;
+    await file.save();
+
+    res.json(file);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 
 // Function to get files by user ID that user upload =============================================
 const getFilesByUserId = async (req, res) => {
@@ -400,4 +429,5 @@ module.exports = {
   getFileCount,
   getFilesByUserId,
   getRandomFilesHomePage,
+  verifyPodcastByAdmin,
 };

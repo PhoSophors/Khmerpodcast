@@ -2,7 +2,7 @@
   background-color: var(--card-bg);
   border-radius: 20px;
   margin: 2px;
-  border-color: var(--border-color) !important;
+  /* border-color: var(--border-color) !important; */
 }
 
 .card-hover:hover {

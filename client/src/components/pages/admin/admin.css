@@ -113,3 +113,13 @@
   background-color: var(--card-hover) !important;
   border: 1px solid var(--border-color) !important;
 } */
+
+.ant-select-selector {
+  background-color: var(--card-hover) !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+}
+.not-verified .ant-select-selector {
+  background-color: #dc2626 !important;
+  color: #d1d5db !important;
+}

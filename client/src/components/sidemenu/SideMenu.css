@@ -45,7 +45,6 @@
 
 .side-menu-container .ant-menu-item {
   color: var(--gray-300) !important;
-  /* border: 0.01px solid gray !important; */
 }
 
 .side-menu-container .ant-menu-item:hover {
@@ -54,7 +53,6 @@
 
 .ant-menu-submenu-title {
   color: var(--gray-300) !important;
-  /* border: 0.01px solid gray !important; */
 
 }
 

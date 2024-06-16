@@ -2,7 +2,7 @@
 @font-face {
   font-family: 'KhmerOS_battambang';
   src: local("KhmerOS_battambang"), 
-  url(../public/KhmerOS_battambang.ttf) format(truetype);
+  url(/KhmerOS_battambang.ttf) format(truetype);
 }
 
 @tailwind base;
@@ -34,7 +34,8 @@ input::placeholder, textarea::placeholder {
   --bg-color: #4f46e5;
   /* --bg-color:  rgba(14,48,102,1) ; */
   --sidemenu-mobile-bg: #fff;
-  --content-bg: #fff;
+  /* --content-bg: #fff; */
+  --content-bg: #f3f4f6;
   --header-bg: #fff;
   --card-bg: #fff;
   --text-color: #374151;
@@ -52,6 +53,7 @@ input::placeholder, textarea::placeholder {
   --text-area-bg: #f1f5f9;
   --dropdown-bg: #fff;
   --Btn-bg: #f4f5f7;
+  --header-bg: #fff;
 
   --placeholder-color: #9f9f9f;
   --placeholder-color-text-area: #9f9f9f;
@@ -77,7 +79,7 @@ input::placeholder, textarea::placeholder {
   --forgot-password-card: #1C1C1C ;
   --back-btn-view-podcast: #282828; 
   --card-hover: #373737;;
-  --border-color: #282828;
+  --border-color: #373737;
   --sidemenu-border-color: #e2e8f089;
   --audio-icon: #d2d6dc;
   --input-bg: #282828;
@@ -89,6 +91,7 @@ input::placeholder, textarea::placeholder {
   --dropdown-bg: #373737;
   --input-bg: #282828;
   --Btn-bg: #373737;
+  --header-bg: #1C1C1C;
 
   --placeholder-color-text-area: #b7babd;
   --sider-item-selected: #1C1C1C;

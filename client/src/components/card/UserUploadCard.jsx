@@ -93,12 +93,12 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
                 </h3>
 
                 <h3 className="mt-1 line-clamp-1 text-slate-400 dark:text-gray-400">
-                  {file.viewCount} views and {file.playCount} plays 
+                  {file.viewCount} views and {file.playCount} plays
                 </h3>
               </div>
             </div>
 
-            <div className="flex items-center xl:gap-10 md:gap-10 gap-2">
+            <div className="flex items-center xl:gap-15 md:gap-5 gap-2">
               <div className="items-center">
                 <div className="w-24 date-element text-end text-slate-500 dark:text-gray-300">
                   {new Date(file.uploadDate).toLocaleDateString(undefined, {
@@ -108,9 +108,15 @@ const UserUploadCard = ({ file, handleViewPodcast, userId }) => {
                   })}
                 </div>
               </div>
+              {!file.verifyPodcast && (
+                <h3 className="mt-1 line-clamp-1 bg-orange-500 p-2 rounded-xl text-slate-100">
+                  Pending
+                </h3>
+              )}
+
               {isUploader && <DeletePodcastBtn file={file} />}
               <>
-                <MoreBtn file={file} userId={userId} />
+                {file.verifyPodcast && <MoreBtn file={file} userId={userId} />}
               </>
             </div>
           </div>

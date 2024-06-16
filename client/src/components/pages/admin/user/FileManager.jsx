@@ -19,7 +19,8 @@ import {
   Space,
   Input,
   Button,
-  DatePicker,
+  Select,
+  // DatePicker,
 } from "antd";
 import { Link } from "react-router-dom";
 
@@ -31,10 +32,15 @@ const FileManager = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [dateRange, setDateRange] = useState([]);
+  const [verifyPodcastLoading, setVerifyPodcastLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 15;
 
-  const authToken = Cookies.get("authToken");
+  // const authToken = Cookies.get("authToken");
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
+
   useEffect(() => {
     // Fetch files function
     const fetchFiles = async () => {
@@ -66,17 +72,35 @@ const FileManager = () => {
     fetchFiles();
   }, [authToken]);
 
+  const verifyPodcast = async (id, isVerified) => {
+    try {
+      setVerifyPodcastLoading(true);
+      const response = await axios.patch(
+        `${api_url}/files/verify-podcast-by-admin/${id}`,
+        { verifyPodcast: isVerified },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      if (response.data) {
+        setFiles((prevFiles) =>
+          prevFiles.map((file) =>
+            file._id === id ? { ...file, verifyPodcast: isVerified } : file
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error verifying podcast:", error);
+    } finally {
+      setVerifyPodcastLoading(false);
+    }
+  };
+
   // Function to handle search
   const handleSearch = (value) => {
     setSearchQuery(value);
-  };
-
-  const handleDateRangeChange = (dates) => {
-    if (dates && dates.length === 2) {
-      setDateRange(dates.map((date) => date.format("YYYY-MM-DD")));
-    } else {
-      setDateRange([]);
-    }
   };
 
   const filteredFiles = files.filter((file) => {
@@ -126,12 +150,25 @@ const FileManager = () => {
                 onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
+
             <div className="w-full sm:w-1/2 text-end">
-              <DatePicker.RangePicker
-                className="xl:w-96 w-full mb-3"
-                format="YYYY-MM-DD"
-                onChange={handleDateRangeChange}
-              />
+              <Button
+                onClick={handlePrevious}
+                disabled={currentPage === 1}
+                size={5}
+                icon={<StepBackwardFilled />}
+              >
+                <span className="dark:text-gray-300">Previous</span>
+              </Button>
+              &nbsp;
+              <Button
+                onClick={handleNext}
+                disabled={currentPage * cardsPerPage >= filteredFiles.length}
+                size={5}
+                icon={<StepForwardFilled />}
+              >
+                <span className="dark:text-gray-300">Next</span>
+              </Button>
             </div>
           </div>
 
@@ -156,6 +193,7 @@ const FileManager = () => {
                     <th className="text-center">Thumbnail *</th>
                     <th className="text-start">Title *</th>
                     <th className="text-start">Description *</th>
+                    <th className="text-start">Verify</th>
                     <th className="text-center">Audio Size *</th>
                     <th className="text-center">Thumbnail Size *</th>
                     <th className="text-center">Audio Types *</th>
@@ -178,29 +216,63 @@ const FileManager = () => {
                         </Link>
                       </td>
                       <td className="dark:text-gray-300">
-                        {file.title.substring(0, 30)}
+                        {file.title.substring(0, 10)}
                       </td>
                       <td className="dark:text-gray-300">
-                        {file.description.substring(0, 30)}
+                        {file.description.substring(0, 10)}
+                      </td>
+                      <td>
+                        <Select
+                          className={
+                            file.verifyPodcast ? "verified" : "not-verified"
+                          }
+                          defaultValue={
+                            file.verifyPodcast ? "Verified" : "Not Verified"
+                          }
+                          style={{ width: 120 }}
+                          onChange={(value) =>
+                            verifyPodcast(file._id, value === "Verified")
+                          }
+                          notFoundContent={verifyPodcastLoading ? <Spin size="small" /> : null}
+                        >
+                          <Select.Option value="Verified">
+                            Verified
+                          </Select.Option>
+                          <Select.Option value="Not Verified">
+                            Not Verified
+                          </Select.Option>
+                        </Select>
                       </td>
 
-                      <td className="text-center text-gray-300 ">
-                        <div className="bg-blue-500 p-2 rounded-xl">
+                      <td className="text-center  text-gray-700 dark:text-gray-300">
+                        <div
+                          className="bg-slate-100 dark:bg-black p-2 rounded-xl"
+                          style={{ backgroundColor: `var(--content-bg)` }}
+                        >
                           {(file.audio.size / 1024 / 1024).toFixed(2)} MB
                         </div>
                       </td>
-                      <td className="text-center text-gray-300">
-                        <div className="bg-rose-500 p-2 rounded-xl">
+                      <td className="text-center  text-gray-700 dark:text-gray-300">
+                        <div
+                          className="bg-slate-100 dark:bg-black p-2 rounded-xl"
+                          style={{ backgroundColor: `var(--content-bg)` }}
+                        >
                           {(file.image.size / 1024 / 1024).toFixed(2)} MB
                         </div>
                       </td>
-                      <td className="text-center text-gray-300">
-                        <div className="bg-pink-500 p-2 rounded-xl">
+                      <td className="text-center  text-gray-700 dark:text-gray-300">
+                        <div
+                          className="bg-slate-100 dark:bg-black p-2 rounded-xl"
+                          style={{ backgroundColor: `var(--content-bg)` }}
+                        >
                           {file.audio.mimetype}
                         </div>
                       </td>
-                      <td className="text-center  text-gray-300">
-                        <div className="bg-red-500 p-2 rounded-xl">
+                      <td className="text-center  text-gray-700 dark:text-gray-300">
+                        <div
+                          className="bg-slate-100 dark:bg-black p-2 rounded-xl"
+                          style={{ backgroundColor: `var(--content-bg)` }}
+                        >
                           {file.image.mimetype}
                         </div>
                       </td>
@@ -229,28 +301,6 @@ const FileManager = () => {
             </div>
           )}
         </Space>
-
-        {/* Pagination buttons */}
-        <div className="w-full flex justify-center mt-4 gap-5">
-          <Button
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-            type="dashed"
-            size={5}
-            icon={<StepBackwardFilled />}
-          >
-            <span className="dark:text-gray-300">Previous</span>
-          </Button>
-          <Button
-            onClick={handleNext}
-            disabled={currentPage * cardsPerPage >= filteredFiles.length}
-            type="dashed"
-            size={5}
-            icon={<StepForwardFilled />}
-          >
-            <span className="dark:text-gray-300">Next</span>
-          </Button>
-        </div>
       </Card>
       {/* Delete Modal */}
     </div>

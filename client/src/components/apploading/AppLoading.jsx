@@ -17,6 +17,7 @@ const AppLoading = () => {
     <div className="loading-spinner">
       <div className="animation-container">
         <Lottie options={defaultOptions} height={400} width={400} />
+        <div className="loading-text ">Loading...</div>
       </div>
     </div>
   );

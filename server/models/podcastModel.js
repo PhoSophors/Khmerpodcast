@@ -60,6 +60,10 @@ const podcastSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    verifyPodcast: {
+      type: Boolean,
+      default: false,
+    },
     uploadDate: {
       type: Date,
       default: Date.now,

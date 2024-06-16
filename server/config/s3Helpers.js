@@ -75,19 +75,19 @@ const getImageMimeTypeAndExtension = (mimetype) => {
 
   switch (mimetype) {
     case "image/png":
-      imageMimeType = "image/png";
+      imageMimeType = "png";
       imageExtension = ".png";
       break;
     case "image/webp":
-      imageMimeType = "image/webp";
+      imageMimeType = "webp";
       imageExtension = ".webp";
       break;
     case "image/gif":
-      imageMimeType = "image/gif";
+      imageMimeType = "gif";
       imageExtension = ".gif";
       break;
     default:
-      imageMimeType = "image/jpeg";
+      imageMimeType = "jpeg";
       imageExtension = ".jpg";
   }
 

@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const File = require("../models/podcastModel");
+const mongoose = require('mongoose');
 
 // Function to add podcast to playlist ================================================================
 const addPodcastToFavorites = async (req, res) => {

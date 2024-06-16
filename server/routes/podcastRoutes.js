@@ -71,7 +71,13 @@ router.get(
   podcastsController.getFilesByUserId
 );
 
-// 
+// verify podcast 
+router.patch (
+  "/verify-podcast-by-admin/:id",
+  verifyToken,
+  checkRoleMiddleware("admin"),
+  podcastsController.verifyPodcastByAdmin
+)
 
 
 module.exports = router;

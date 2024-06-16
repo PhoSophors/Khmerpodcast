@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
 .loading-spinner {
   display: flex;
@@ -6,8 +5,7 @@
   align-items: center;
   height: 100vh;
   overflow: hidden !important ;
-  /* background: rgb(153,155,161);
-  background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%); */
+  background-color: var(--content-bg);
 }
 
 .animation-container {
@@ -18,9 +16,8 @@
 
 .loading-text {
   font-weight: bold;
+  font-size: 2rem;
   color: white;
-  font-family: "Caveat", cursive !important;
-  font-optical-sizing: auto !important;
 }
 
 @media (prefers-color-scheme: dark) {

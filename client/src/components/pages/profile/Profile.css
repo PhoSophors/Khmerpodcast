@@ -16,7 +16,7 @@
 .profile-card {
   height: calc(100vh - 110px);
   min-height: calc(100vh - 110px) !important;
-  background-color: var(--content-bg) !important;
+  background-color: var(--card-bg) !important;
   border-color:  var(--border-color) !important;
   overflow: auto;
 }
@@ -24,12 +24,12 @@
 .recent-upload-card {
   height: calc(100vh - 110px);
   min-height: calc(100vh - 110px) !important;
-  background-color: var(--content-bg) !important;
+  background-color: var(--card-bg) !important;
   border-color:  var(--border-color) !important;
 }
 
 .bg-profile-text-field {
-  background-color: var(--content-bg) !important;
+  background-color: var(--card-bg) !important;
 }
 
 @media screen and (max-width: 768px) {

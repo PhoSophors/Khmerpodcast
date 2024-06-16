@@ -6,6 +6,7 @@ const User = require("../models/userModel");
 const searchPodcasts = async (req, res) => {
   try {
     const { search } = req.query;
+    const { use } = req;
 
     if (!search) {
       return res
@@ -17,12 +18,19 @@ const searchPodcasts = async (req, res) => {
     const searchWords = search.split(" ").map((word) => `.*${word}.*`);
     const searchRegex = new RegExp(searchWords.join("|"), "i");
 
-    const podcasts = await File.find({
+    let query = {
       $or: [
         { title: { $regex: searchRegex } },
         { description: { $regex: searchRegex } },
       ],
-    });
+    };
+
+    // If the user is not an admin, only return podcasts that have been verified
+    if (req.user !== "admin") {
+      query.verifyPodcast = true;
+    }
+
+    const podcasts = await File.find(query);
 
     res.json(podcasts);
   } catch (err) {
