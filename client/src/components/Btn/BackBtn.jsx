@@ -11,11 +11,13 @@ const BackBtn = () => {
 
   return (
     <div
-    onClick={goBack}
-      className="p-3 cursor-pointer text-white bg-indigo-600 h-8 w-auto flex justify-center items-center rounded-full"
+      className="p-2 back-btn-view-podcast w-12 rounded-xl  cursor-pointer"
+      onClick={goBack}
       style={{ position: "absolute", top: "20px", left: "20px" }}
     >
-      <ArrowLeftOutlined />
+      <div className="p-3 cursor-pointer text-white bg-indigo-600 h-8 w-8 flex justify-center items-center rounded-xl">
+        <ArrowLeftOutlined />
+      </div>
     </div>
   );
 };

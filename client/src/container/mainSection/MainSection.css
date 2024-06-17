@@ -13,9 +13,9 @@ body {
   background-color: var(--content-bg);
   height: calc(100vh - 90px);
   overflow-y: auto; 
-  padding: 3px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+
 }
 
 /* set mobile screen pasdding 0 for content container */

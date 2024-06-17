@@ -246,11 +246,8 @@ const EditProfile = () => {
   };
 
   return (
-    <div className=" flex flex-col w-full items-center justify-center  text-center">
-      <Card
-        className="p-2.5 min-w-full  flex justify-center"
-        style={{ border: "none" }}
-      >
+    <div className="xl:p-2 md:p-2 p-0 flex flex-col w-full items-center justify-center  text-center">
+      <Card className="update-profile-card p-2.5 min-w-full  flex justify-center">
         <BackBtn />
         <span className="xl:text-4xl md:text-4xl text-2xl mt-10 dark:text-gray-300 font-semibold mb-10 flex justify-center">
           Profile settings
@@ -328,7 +325,11 @@ const EditProfile = () => {
                 onChange={handleBioChange}
                 showCount
                 maxLength={101}
-                style={{ height: "100px", resize: "none", borderRadius: "10px"}}
+                style={{
+                  height: "100px",
+                  resize: "none",
+                  borderRadius: "10px",
+                }}
               />
               <span className="text-sm text-slate-500 dark:text-gray-400 text-start flex">
                 Brief description for your profile.
@@ -416,7 +417,7 @@ const EditProfile = () => {
             <Form.Item>
               <Button
                 onClick={() => handleUpdateProfile(true)}
-                className="update-profile-btn mt-5"
+                className="update-profile-btn mt-5 mb-20"
                 size="large"
                 loading={isLoading}
               >

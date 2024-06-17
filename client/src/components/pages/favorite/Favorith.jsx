@@ -23,7 +23,7 @@ const Favorith = () => {
   }
 
   return (
-    <div className="xl:p-5 sm:p-0 h-screen">
+    <div className="xl:p-2 sm:p-0 h-screen">
       {favorites.length === 0 ? (
         <div className="favorites">
           <svg
@@ -52,8 +52,6 @@ const Favorith = () => {
               handleViewPodcast={() => setIsViewPodcast(false)}
             />
           ) : (
-            // ...
-
             favorites.map((file, index) => (
               <UserUploadCard
                 key={file.id}

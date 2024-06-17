@@ -3,22 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { api_url } from "../../../../api/config";
 import DeleteUserBtn from "../../../Btn/DeleteUserBtn";
-import {
-  Spin,
-  Alert,
-  Card,
-  Avatar,
-  Input,
-  Space,
-  DatePicker,
-  Button,
-} from "antd";
-import {
-  UserOutlined,
-  SearchOutlined,
-  StepBackwardFilled,
-  StepForwardFilled,
-} from "@ant-design/icons";
+import { Spin, Alert, Card, Avatar, Input, Space, Pagination } from "antd";
+import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import "../admin.css";
 import { Link } from "react-router-dom";
 
@@ -27,7 +13,6 @@ const AllUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [dateRange, setDateRange] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 15;
   const authToken = Cookies.get("authToken")
@@ -66,24 +51,10 @@ const AllUser = () => {
     setSearchQuery(value);
   };
 
-  const handleDateRangeChange = (dates) => {
-    if (dates && dates.length === 2) {
-      setDateRange(dates.map((date) => date.format("YYYY-MM-DD")));
-    } else {
-      setDateRange([]);
-    }
-  };
-
   const filteredUsers = allUser.filter((user) => {
-    const userCreatedDate = new Date(user.createdAt);
-    const startDate = dateRange[0] ? new Date(dateRange[0]) : null;
-    const endDate = dateRange[1] ? new Date(dateRange[1]) : null;
-
     return (
-      (!startDate || userCreatedDate >= startDate) &&
-      (!endDate || userCreatedDate <= endDate) &&
-      (user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchQuery.toLowerCase()))
+      user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
@@ -92,20 +63,16 @@ const AllUser = () => {
     currentPage * cardsPerPage
   );
 
-  const handleNext = () => {
-    if (currentPage * cardsPerPage < filteredUsers.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  // Function to handle page change
+  const handlePageChange = (page, pageSize) => {
+    // Update the current page
+    setCurrentPage(page);
+    // Update the number of items per page (if necessary)
+    cardsPerPage(pageSize);
   };
 
   return (
-    <div className="xl:p-5 md:p-5 p-0 ">
+    <div className="xl:p-2 md:p-2 p-0 ">
       <Card title="All Users" className="w-full all-user-card">
         <Space direction="vertical" style={{ width: "100%" }}>
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
@@ -117,11 +84,14 @@ const AllUser = () => {
                 onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-1/2 text-end">
-              <DatePicker.RangePicker
-                className="xl:w-96 w-full mb-3"
-                format="YYYY-MM-DD"
-                onChange={handleDateRangeChange}
+            <div className="w-full sm:w-1/2 text-end flex justify-end">
+              <Pagination
+                className="text-white w-aut0 bg-gray-200/30 backdrop-blur-sm p-2 rounded-lg"
+                current={currentPage}
+                pageSize={cardsPerPage} // number of items per page
+                total={filteredUsers.length} // total number of items
+                onChange={handlePageChange} // function to handle page change
+                showSizeChanger={false}
               />
             </div>
           </div>
@@ -213,28 +183,6 @@ const AllUser = () => {
             </div>
           )}
         </Space>
-
-        {/* Pagination buttons */}
-        <div className="w-full flex justify-center mt-4 gap-5">
-          <Button
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-            type="dashed"
-            size={5}
-            icon={<StepBackwardFilled />}
-          >
-            <span className="dark:text-gray-300">Previous</span>
-          </Button>
-          <Button
-            onClick={handleNext}
-            disabled={currentPage * cardsPerPage >= filteredUsers.length}
-            type="dashed"
-            size={5}
-            icon={<StepForwardFilled />}
-          >
-            <span className="dark:text-gray-300">Next</span>
-          </Button>
-        </div>
       </Card>
     </div>
   );

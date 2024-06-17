@@ -3,13 +3,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--card-bg) !important;
   color: var(--text-color) !important;
   height: 200px;
   overflow: hidden;
 }
 .create-card-bg {
-
-  background-color: var(--card-hover) !important;
+  background-color: var(--card-bg) !important;
   border-color: var(--border-color) !important;
   color: var(--text-color) !important;
 
@@ -23,7 +23,7 @@
 .upload-audio.ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select, :where(.css-dev-only-do-not-override-j9bb5n).ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload.ant-upload-selec{
   width: 200px;
   height: 150px;
-  background-color: var(--input-bg) !important;
+  background-color: var(--card-hover) !important;
   text-align: center;
   vertical-align: top;
   border: 1px dashed #d9d9d9;
@@ -35,7 +35,7 @@
 .upload-image.ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select {
   width: 200px;
   height: 150px;
-  background-color: var(--input-bg) !important;
+  background-color: var(--card-hover) !important;
   text-align: center;
   vertical-align: top;
   border: 1px dashed #d9d9d9;

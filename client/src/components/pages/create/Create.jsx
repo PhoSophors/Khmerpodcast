@@ -152,7 +152,7 @@ const Create = () => {
   };
 
   return (
-    <div className="mx-auto flex xl:p-8">
+    <div className="mx-auto flex xl:p-3 md:p-2 ">
       <div className="w-full p-2">
         <Card
           className=" text-center"

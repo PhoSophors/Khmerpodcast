@@ -36,7 +36,7 @@ const CustomCard = ({ file, handleViewPodcast }) => {
         )}
 
         <Card
-          className="card-bg custom-card"
+          className="card-bg custom-card "
           cover={
             <div className="relative">
               <img

@@ -55,7 +55,7 @@ const navigate = useNavigate();
     <header className="header-container ">
       <div
         onClick={handleMenuClick}
-        className="header-toggle-bg backdrop-blur-sm bg-white/30  p-1 cursor-pointer h-full flex justify-center items-center rounded-full"
+        className="header-toggle-bg  p-1 cursor-pointer h-full flex justify-center items-center rounded-full"
       >
         <div
           onClick={handleCollapse}

@@ -17,7 +17,6 @@
 .loading-text {
   font-weight: bold;
   font-size: 2rem;
-  color: white;
 }
 
 @media (prefers-color-scheme: dark) {

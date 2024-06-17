@@ -14,16 +14,16 @@
 }
 
 .profile-card {
-  height: calc(100vh - 110px);
-  min-height: calc(100vh - 110px) !important;
+  height: calc(100vh - 105px);
+  min-height: calc(100vh - 105px) !important;
   background-color: var(--card-bg) !important;
   border-color:  var(--border-color) !important;
   overflow: auto;
 }
 
 .recent-upload-card {
-  height: calc(100vh - 110px);
-  min-height: calc(100vh - 110px) !important;
+  height: calc(100vh - 105px);
+  min-height: calc(100vh - 105px) !important;
   background-color: var(--card-bg) !important;
   border-color:  var(--border-color) !important;
 }
@@ -50,9 +50,11 @@
   height: calc(100vh - 150px);
 }
 .update-profile-card {
-  /* border: none !important; */
-  background-color: var(--card-hover) !important;
+  height: calc(100vh - 105px);
+  min-height: calc(100vh - 105px) !important;
+  background-color: var(--card-bg) !important;
   border-color:  var(--border-color) !important;
+  overflow: auto;
 }
 .uploadProgress {
   background-color: var(--card-hover) !important;

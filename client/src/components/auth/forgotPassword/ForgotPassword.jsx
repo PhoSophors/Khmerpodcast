@@ -87,7 +87,7 @@ const ForgotPassword = () => {
     <div className="forgotpassword-container flex justify-center text-center items-center h-screen ">
       <Card
         title={t("forgotPassword.title")}
-        className="forgot-password-card xl:w-1/3 md:w-1/2 w-1/2 p-2"
+        className="forgot-password-card xl:w-1/3 md:w-1/2 w-1/2 p-5"
       >
         <BackBtn />
         <Form layout="vertical">

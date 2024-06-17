@@ -137,13 +137,13 @@ const UpdatePodcast = ({ file }) => {
             description: file.description,
           }}
         >
-          <Card className="mt-5 bg-slate-50">
+          <Card className="mt-5 bg-slate-50 create-card-bg">
             <p className="font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
               Title *
             </p>
             <Form.Item name="title">
               <Input.TextArea
-                className="bg-slate-50"
+                className="create-textarea mt-5 caret-pink-500 dark:text-slate-100"
                 showCount
                 maxLength={200}
                 style={{ height: "100px" }}
@@ -155,10 +155,10 @@ const UpdatePodcast = ({ file }) => {
             </p>
             <Form.Item name="description">
               <Input.TextArea
-                className="bg-slate-50"
+                className="create-textarea mt-5 caret-pink-500 dark:text-slate-100"
                 showCount
                 maxLength={800}
-                style={{ height: "150px" }}
+                style={{ height: "200px" }}
               />
             </Form.Item>
           </Card>

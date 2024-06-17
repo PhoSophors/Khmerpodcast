@@ -7,8 +7,6 @@ import MoreBtn from "../../../Btn/MoreBtn";
 import { api_url } from "../../../../api/config";
 import DeletePodcastBtn from "../../../Btn/DeletePodcastBtn";
 import {
-  StepBackwardFilled,
-  StepForwardFilled,
   SearchOutlined,
 } from "@ant-design/icons";
 import {
@@ -18,7 +16,7 @@ import {
   Avatar,
   Space,
   Input,
-  Button,
+  Pagination,
   Select,
   // DatePicker,
 } from "antd";
@@ -31,7 +29,7 @@ const FileManager = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [dateRange, setDateRange] = useState([]);
+  // const [dateRange, setDateRange] = useState([]);
   const [verifyPodcastLoading, setVerifyPodcastLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 15;
@@ -104,13 +102,7 @@ const FileManager = () => {
   };
 
   const filteredFiles = files.filter((file) => {
-    const userCreatedDate = new Date(file.createdAt);
-    const startDate = dateRange[0] ? new Date(dateRange[0]) : null;
-    const endDate = dateRange[1] ? new Date(dateRange[1]) : null;
-
     return (
-      (!startDate || userCreatedDate >= startDate) &&
-      (!endDate || userCreatedDate <= endDate) &&
       (file.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         file.description.toLowerCase().includes(searchQuery.toLowerCase()))
     );
@@ -121,22 +113,17 @@ const FileManager = () => {
     currentPage * cardsPerPage
   );
 
-  // Function to handle next page
-  const handleNext = () => {
-    if (currentPage * cardsPerPage < filteredFiles.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
 
-  // Function to handle previous page
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  // Function to handle page change
+  const handlePageChange = (page, pageSize) => {
+    // Update the current page
+    setCurrentPage(page);
+    // Update the number of items per page (if necessary)
+    cardsPerPage(pageSize);
   };
 
   return (
-    <div className="xl:p-5 md:p-5 p-0 ">
+    <div className="xl:p-2 md:p-2 p-0 ">
       {/* File Manager Card */}
       <Card title="File Manager" className="w-full file-manager-container">
         {/* Search Input */}
@@ -144,31 +131,22 @@ const FileManager = () => {
           <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-3">
             <div className="w-full sm:w-1/2">
               <Input
-                className="search-input xl:w-96 w-full"
+                className="search-input  xl:w-96 w-full"
                 placeholder="Search files"
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
 
-            <div className="w-full sm:w-1/2 text-end">
-              <Button
-                onClick={handlePrevious}
-                disabled={currentPage === 1}
-                size={5}
-                icon={<StepBackwardFilled />}
-              >
-                <span className="dark:text-gray-300">Previous</span>
-              </Button>
-              &nbsp;
-              <Button
-                onClick={handleNext}
-                disabled={currentPage * cardsPerPage >= filteredFiles.length}
-                size={5}
-                icon={<StepForwardFilled />}
-              >
-                <span className="dark:text-gray-300">Next</span>
-              </Button>
+            <div className="w-full sm:w-1/2 text-end flex justify-end">
+              <Pagination
+                className="text-white w-aut0 bg-gray-200/30 backdrop-blur-sm p-2 rounded-lg"
+                current={currentPage}
+                pageSize={cardsPerPage} // number of items per page
+                total={filteredFiles.length} // total number of items
+                onChange={handlePageChange} // function to handle page change
+                showSizeChanger={false}
+              />
             </div>
           </div>
 
@@ -233,7 +211,9 @@ const FileManager = () => {
                           onChange={(value) =>
                             verifyPodcast(file._id, value === "Verified")
                           }
-                          notFoundContent={verifyPodcastLoading ? <Spin size="small" /> : null}
+                          notFoundContent={
+                            verifyPodcastLoading ? <Spin size="small" /> : null
+                          }
                         >
                           <Select.Option value="Verified">
                             Verified

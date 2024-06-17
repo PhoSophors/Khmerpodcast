@@ -197,16 +197,18 @@ const PublicProfile = () => {
               </div>
             ) : (
               <div className="flex sm:p-0 md:p-0 xl:p-0 xl:p-5 flex-wrap justify-center items-center">
-                {publicUserData.files.map((file, index) => (
-                  <UserUploadCard
-                    key={file._id || index}
-                    file={file}
-                    handleViewPodcast={ async () => {
-                      navigate(`/watch-podcast/${file._id}`);
-                      await incrementViewCount(file._id);
-                    }}
-                  />
-                ))}
+                {publicUserData.files.map((file, index) =>
+                  file.verifyPodcast ? (
+                    <UserUploadCard
+                      key={file._id || index}
+                      file={file}
+                      handleViewPodcast={async () => {
+                        navigate(`/watch-podcast/${file._id}`);
+                        await incrementViewCount(file._id);
+                      }}
+                    />
+                  ) : null
+                )}
               </div>
             )}
           </Card>

@@ -55,6 +55,8 @@ input::placeholder, textarea::placeholder {
   --Btn-bg: #f4f5f7;
   --header-bg: #fff;
 
+  --create-input-bg: #f1f5f9;
+
   --placeholder-color: #9f9f9f;
   --placeholder-color-text-area: #9f9f9f;
   /* --ant-modal-mask : #232630dc; */
@@ -89,9 +91,10 @@ input::placeholder, textarea::placeholder {
   --loading-overlay: #282828;
   --text-area-bg: #373737;
   --dropdown-bg: #373737;
-  --input-bg: #282828;
   --Btn-bg: #373737;
   --header-bg: #1C1C1C;
+  
+  --create-input-bg: #373737;
 
   --placeholder-color-text-area: #b7babd;
   --sider-item-selected: #1C1C1C;
@@ -134,7 +137,8 @@ input::placeholder, textarea::placeholder {
 }
 
 .ant-input-textarea-affix-wrapper{
-  background-color: var(--card-hover) ;
+  background-color: var(--card-hover) !important;
+  /* background-color: var(--input-bg) !important; */
 }
 /* Firefox */
 .ant-input-affix-wrapper input::-moz-placeholder,
