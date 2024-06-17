@@ -159,21 +159,21 @@ const Create = () => {
           style={{ backgroundColor: "transparent", border: "none" }}
           bodyStyle={{ padding: 0 }}
         >
-          <h1 className="uppercase xl:text-start md:text-start text-ceter text-2xl md:mt-3 mt-3 text-indigo-500 font-semibold">
+          <h2 className="uppercase xl:text-start md:text-start text-ceter text-2xl md:mt-3 mt-3 text-indigo-500 font-semibold">
             {t("create.welcomeTitle")}
-          </h1>
-          <h1 className="tracking-wide mx-5 xl:mx-0 md:mx-0 text-base  xl:text-start md:text-start text-ceter text-gray-500 dark:text-gray-300">
+          </h2>
+          <h2 className="tracking-wide mx-5 xl:mx-0 md:mx-0 text-lg  xl:text-start md:text-start text-ceter text-gray-500 dark:text-gray-300">
             {t("create.welcomeDescription")}
-          </h1>
+          </h2>
 
           <div className="upload-section mt-5">
             <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5">
               {/* set two colum */}
               <div className="w-full sm:w-1/2">
-                <h1 className="mt-5  text-base text-start  font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-300">
+                <h1 className="mt-5  text-md text-start  font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-300">
                   {t("create.audioSupport")}
                 </h1>
-                <h1 className="text-gray-500 text-base text-start dark:text-gray-300">
+                <h1 className="text-gray-500 text-md text-start dark:text-gray-300">
                   {t("create.audioFormat")}
                 </h1>
                 {/* upload audio */}
@@ -189,7 +189,7 @@ const Create = () => {
                               )}
                               type="audio/mpeg"
                             />
-                            <h1 className="text-base text-gray-300">
+                            <h1 className="text-mx text-gray-300">
                               Your browser does not support the audio element
                             </h1>
                           </audio>
@@ -232,10 +232,10 @@ const Create = () => {
 
               {/* upload  thumbnail */}
               <div className="w-full sm:w-1/2 ">
-                <h1 className="mt-5  text-base  text-start  font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                <h1 className="mt-5  text-md  text-start  font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                   {t("create.imageSupport")}
                 </h1>
-                <h1 className=" text-base  text-gray-500 dark:text-gray-300 text-start ">
+                <h1 className=" text-md  text-gray-500 dark:text-gray-300 text-start ">
                   {t("create.imageFormat")}
                 </h1>
                 <Card className="create-audio-thumnaill-card mt-5 items-center flex justify-center">
@@ -283,7 +283,7 @@ const Create = () => {
               <Form variant="filled">
                 <div className="flex grid xl:grid-cols-2 sm:flex sm:gap-5 gap-5">
                   <div className="w-full sm:w-2/5 ">
-                    <h1 className=" text-base  font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                    <h1 className=" text-md  font-semibold  text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                       {t("create.title")} *
                     </h1>
                     <Input.TextArea
@@ -297,7 +297,7 @@ const Create = () => {
                     />
                   </div>
                   <div className="w-full sm:w-3/5">
-                    <h1 className=" text-base  font-semibold text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
+                    <h1 className=" text-md  font-semibold text-start text-gray-500 dark:text-gray-300 uppercase tracking-wide">
                       {t("create.description")} *
                     </h1>
                     <Input.TextArea

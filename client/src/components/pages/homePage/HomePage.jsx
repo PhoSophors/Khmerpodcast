@@ -10,28 +10,30 @@ import useView from "../../../services/useView";
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
-  const [error, setError] = useState(null); // Change to store error message
-  const cardsPerPage = 10;
+  const [error, setError] = useState(null); 
   const navigate = useNavigate();
   const { incrementViewCount } = useView();
 
-  const fetchFiles = async (page) => {
+  const fetchFiles = async () => {
     setLoading(true);
 
     try {
-      const response = await axios.get(
-        `${api_url}/files/get-random-file?page=${page}&limit=${cardsPerPage}`
-      );
+      const response = await axios.get(`${api_url}/files/get-random-file`);
       let files = response.data.reverse();
 
+      for (let i = files.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [files[i], files[j]] = [files[j], files[i]];
+      }
+
       setFiles(files);
-      setError(null); // Clear error on success
+      setError(null);
     } catch (err) {
       notification.error({
         message: "Error fetching Podcasts.",
         description: "Please wait a minute and try again.",
       });
-      setError(err); // Store the error message
+      setError(err);
     } finally {
       setLoading(false);
     }
@@ -64,8 +66,9 @@ const HomePage = () => {
           {error && (
             <div className="mt-10">
               <p className="text-center text-base text-red-500 font-semibold flex flex-col">
-                <Spin />
-                <div className="mt-10">{error.message || "Server Error..!"}</div>
+                <div className="mt-10">
+                  {error.message || "Server Error..!"}
+                </div>
               </p>
             </div>
           )}

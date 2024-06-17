@@ -282,20 +282,36 @@ const getAllPodcast = async (req, res) => {
 };
 
 // Function to get a random file
+// const getRandomFilesHomePage = async (req, res) => {
+//   try {
+//     // Fetch the total count of files
+//     const count = await File.countDocuments();
+
+//     // Fetch all files in random order using aggregation with $sample
+//     const randomFiles = await File.aggregate([{ $sample: { size: count } }]);
+
+//     // filter out files that verifyPodcast === false
+//     const verifiedFiles = randomFiles.filter((file) => file.verifyPodcast === true);
+
+//     res.status(200).json(verifiedFiles);
+//   } catch (error) {
+//     console.error("Error fetching random files:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+// Function to get all files
 const getRandomFilesHomePage = async (req, res) => {
   try {
-    // Fetch the total count of files
-    const count = await File.countDocuments();
-
-    // Fetch all files in random order using aggregation with $sample
-    const randomFiles = await File.aggregate([{ $sample: { size: count } }]);
+    // Fetch all files
+    const allFiles = await File.find();
 
     // filter out files that verifyPodcast === false
-    const verifiedFiles = randomFiles.filter((file) => file.verifyPodcast === true);
+    const verifiedFiles = allFiles.filter((file) => file.verifyPodcast === true);
 
     res.status(200).json(verifiedFiles);
   } catch (error) {
-    console.error("Error fetching random files:", error);
+    console.error("Error fetching all files:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

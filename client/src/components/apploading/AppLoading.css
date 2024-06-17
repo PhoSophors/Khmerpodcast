@@ -16,7 +16,10 @@
 
 .loading-text {
   font-weight: bold;
-  margin-top: -70px;
+  /* margin-top: -70px; */
+  bottom: 50px;
+  position: absolute;
+
 
   line-height: 1.1;
   text-transform: uppercase;
