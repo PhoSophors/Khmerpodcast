@@ -4,6 +4,7 @@ import axios from "axios";
 import { message, Input, Modal } from "antd";
 import { CloseOutlined, DeleteFilled } from "@ant-design/icons";
 import { api_url } from "../../api/config";
+import { useTranslation } from "react-i18next";
 
 const DeleteUserBtn = ({ user }) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -14,6 +15,7 @@ const DeleteUserBtn = ({ user }) => {
   const authToken = Cookies.get("authToken")
     ? atob(Cookies.get("authToken"))
     : null;
+  const { t } = useTranslation();
 
   // Function to handle delete podcast
   const handleDeleteUser = async () => {
@@ -54,7 +56,7 @@ const DeleteUserBtn = ({ user }) => {
       <>
         <Modal
           className="xl:min-w-96"
-          title="Are you sure?"
+          title={t("deleteUserModal.title")}
           visible={isDeleteModalVisible}
           onCancel={() => setIsDeleteModalVisible(false)}
           footer={null}
@@ -67,22 +69,26 @@ const DeleteUserBtn = ({ user }) => {
           <div className="modal-logout mt-10 flex flex-col items-center">
             <DeleteFilled style={{ color: "red", fontSize: "70px" }} />
             <h1 className="text-center text-xl text-red-500 font-semibold mb-4 mt-5">
-              Are you sure you want to delete this user?
+              {/* Are you sure you want to delete this user? */}
+              {t("deleteUserModal.subTitle")}
             </h1>
             <h1 className="text-center dark:text-gray-300 text-gray-500 ">
-              This Action{" "}
+              {/* This Action{" "}
               <span className="font-semibold text-gray-600 dark:text-gray-100">
                 CANNOT
               </span>{" "}
               be undone. This will permanently delete the user, and remove all
-              collaborator ssositions.{" "}
+              collaborator ssositions.{" "} */}
+              {t("deleteUserModal.description")}
             </h1>
             <p className="text-center text-gray-800 dark:text-gray-300 mt-5">
-              Enter the username of user{" "}
+              {/* Enter the username of user{" "} */}
+              {t("deleteUserModal.confirmTitle")}{" "}
               <span className="font-semibold text-gray-600 dark:text-gray-100">
                 {filename}
               </span>{" "}
-              to continue:
+              {/* to continue: */}
+              {t("deleteUserModal.confirmsubTitle")}{" "}
             </p>
 
             <Input

@@ -85,5 +85,29 @@
   "banner": {
     "title": "Listion to trending Khmer Podcasts all the time",
     "description" : "Welcome to our Khmer Podcast! Immerse yourself in the world of Khmer language podcasts, where you can discover trending shows anytime, anywhere. Stay connected to Cambodian culture and language through our curated selection of podcasts covering a wide range of topics. Start listening now and explore the richness of Khmer podcasting!"
+  },
+
+  "moreBtn": {
+    "share": "Share",
+    "copyLink": "Copy Link",
+    "addFavorite": "Add to favorite",
+    "removeFavorite": "Remove from favorite",
+    "updatePodcast": "Update Podcast"
+  },
+
+  "deleteModal": {
+    "title": "Are you sure?",
+    "subTitle": "Are you sure you want to delete this podcast?",
+    "description": "This Action CANNOT be undone. This will permanently delete the Podcast file.",
+    "confirmTitle": "Enter the title of podcast name",
+    "confirmsubTitle": "to continue:"
+  },
+
+  "deleteUserModal": {
+    "title": "Are you sure?",
+    "subTitle": "Are you sure you want to delete this user?",
+    "description": "This Action CANNOT be undone. This will permanently delete the user, and remove all collaborator ssositions.",
+    "confirmTitle": "Enter the username of user",
+    "confirmsubTitle": "to continue:"
   }
 }

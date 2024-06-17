@@ -113,7 +113,6 @@ body {
 .ant-card {
   background-color: var(--card-hover) ;
   border-color: var(--border-color);
-  
 }
 .ant-card-head-title {
   color: var(--text-color) !important;
@@ -130,7 +129,6 @@ body {
 
 .ant-input-textarea-affix-wrapper{
   background-color: var(--card-hover) !important;
-  /* background-color: var(--input-bg) !important; */
 }
 /* Firefox */
 .ant-input-affix-wrapper input::-moz-placeholder,
@@ -186,20 +184,20 @@ label, title {
 
 /* ===================== ant modal ======================= */
 .ant-modal-content {
-  background-color: var(--content-bg) !important;
+  background-color: var(--header-bg) !important;
 }
 .ant-modal-title {
-  background-color: var(--content-bg) !important;
+  background-color: var(--header-bg) !important;
   color: var(--text-color) !important;
 }
 .ant-modal-body {
-  background-color: var(--content-bg) !important;
+  background-color: var(--header-bg) !important;
 }
 
-/* .ant-modal-mask {
-  background: rgb(153,155,161);
-  background: radial-gradient(circle, rgba(153,155,161,1) 0%, rgba(14,48,102,1) 100%);
-} */
+.ant-modal-mask {
+  background: white;
+  backdrop-filter: blur(5px);
+}
 
 .ant-picker {
   background-color: var(--card-hover) !important;

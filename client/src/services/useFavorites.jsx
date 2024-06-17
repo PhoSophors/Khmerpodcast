@@ -102,6 +102,7 @@ export const useFavorites = () => {
           prevFavorites.filter((favorite) => favorite._id !== fileId)
         );
         message.success("Podcast removed from favorites");
+        window.location.reload();
       } else {
         throw new Error("Failed to remove podcast from favorites");
       }

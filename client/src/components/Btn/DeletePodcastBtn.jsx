@@ -4,6 +4,7 @@ import axios from "axios";
 import { message, Input, Modal } from "antd";
 import { CloseOutlined, DeleteFilled } from "@ant-design/icons";
 import { api_url } from "../../api/config";
+import { useTranslation } from "react-i18next";
 
 const DeletePodcastBtn = ({ file }) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -11,8 +12,10 @@ const DeletePodcastBtn = ({ file }) => {
   const [confirmDelete, setConfirmDelete] = useState("");
   const [title, setTitle] = useState("");
   const filename = title.split(" ")[0];
-  const authToken = Cookies.get('authToken') ? atob(Cookies.get('authToken')) : null;
-
+  const authToken = Cookies.get("authToken")
+    ? atob(Cookies.get("authToken"))
+    : null;
+  const { t } = useTranslation();
 
   // Function to handle delete podcast
   const handleDeletePodcast = async () => {
@@ -53,7 +56,7 @@ const DeletePodcastBtn = ({ file }) => {
       <>
         <Modal
           className="xl:min-w-96"
-          title="Are you sure?"
+          title={t("deleteModal.title")}
           visible={isDeleteModalVisible}
           onCancel={() => setIsDeleteModalVisible(false)}
           footer={null}
@@ -66,17 +69,23 @@ const DeletePodcastBtn = ({ file }) => {
           <div className="modal-logout mt-10 flex flex-col items-center">
             <DeleteFilled style={{ color: "red", fontSize: "70px" }} />
             <h1 className="text-center text-xl text-red-500 font-semibold mb-4 mt-5">
-              Are you sure you want to delete this podcast?
+              {/* Are you sure you want to delete this podcast? */}
+              {t("deleteModal.subTitle")}
             </h1>
             <h1 className="text-center  text-gray-500 dark:text-gray-300">
-              This Action{" "}
+              {/* This Action{" "}
               <span className="font-semibold  text-gray-600 dark:text-gray-100">CANNOT</span> be
-              undone. This will permanently delete the Podcast file.{" "}
+              undone. This will permanently delete the Podcast file.{" "} */}
+              {t("deleteModal.description")}
             </h1>
             <p className="text-center text-gray-800 dark:text-gray-300 mt-5">
-              Enter the title of podcast name{" "}
-              <span className="font-semibold text-gray-600 dark:text-gray-100">{filename}</span> to
-              continue:
+              {/* Enter the title of podcast name{" "} */}
+              {t("deleteModal.confirmTitle")} {" "}
+              <span className="font-semibold text-gray-600 dark:text-gray-100">
+                {filename}
+              </span>{" "}
+              {/* to continue: */}
+              {t("deleteModal.confirmsubTitle")}
             </p>
 
             <Input

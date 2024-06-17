@@ -235,6 +235,7 @@ const EditProfile = () => {
       if (response.status === 200) {
         message.success("Profile updated successfully");
         navigate(`/profile`);
+        window.location.reload();
       } else {
         message.error("Failed to update profile. Please try again later.");
       }

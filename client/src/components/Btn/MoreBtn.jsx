@@ -6,6 +6,7 @@ import { useFavorites } from "../../services/useFavorites";
 import QRCode from "qrcode.react";
 import logo from "../assets/logo.jpg";
 import html2canvas from "html2canvas";
+import { useTranslation } from "react-i18next";
 import {
   ShareAltOutlined,
   LinkOutlined,
@@ -40,6 +41,7 @@ const MoreBtn = ({ file }) => {
   const isUploader = file.user && currentUser && file.user === currentUser._id;
   const [isEditing, setIsEditing] = useState(false);
   const qrCodeRef = useRef(null);
+  const { t } = useTranslation();
 
   const handleToggleFavorite = () => {
     toggleFavorite(file._id, isFavorite);
@@ -89,11 +91,11 @@ const MoreBtn = ({ file }) => {
     <Menu style={{ width: "250px", cursor: "pointer" }}>
       <Menu.Item key="uniqueKey1" onClick={showModal}>
         <ShareAltOutlined />
-        <span className="mx-2">Share</span>
+        <span className="mx-2">{t("moreBtn.share")}</span>
       </Menu.Item>
       <Menu.Item key="uniqueKey2" onClick={handleCopyLink}>
         <LinkOutlined />
-        <span className="mx-2">Copy Link</span>
+        <span className="mx-2"> {t("moreBtn.copyLink")}</span>
       </Menu.Item>
 
       {isLoggedIn && (
@@ -109,7 +111,7 @@ const MoreBtn = ({ file }) => {
               >
                 <path d="M13 20a1 1 0 0 1-.64-.231L7 15.3l-5.36 4.469A1 1 0 0 1 0 19V2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v17a1 1 0 0 1-1 1Z" />
               </svg>
-              <span className="mx-2">Remove from Favorites</span>
+              <span className="mx-2"> {t("moreBtn.removeFavorite")}</span>
             </div>
           ) : (
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -128,7 +130,7 @@ const MoreBtn = ({ file }) => {
                   d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"
                 />
               </svg>
-              <span className="mx-2">Add to favorites</span>
+              <span className="mx-2">{t("moreBtn.addFavorite")}</span>
             </div>
           )}
         </Menu.Item>
@@ -136,7 +138,7 @@ const MoreBtn = ({ file }) => {
 
       {isUploader && (
         <Menu.Item key="uniqueKey4" onClick={handleToggleUpdateMode}>
-          <EditOutlined /> <span className="mx-2">Edit Podcast</span>
+          <EditOutlined /> <span className="mx-2">{t("moreBtn.updatePodcast")}</span>
         </Menu.Item>
       )}
     </Menu>
