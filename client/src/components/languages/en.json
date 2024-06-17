@@ -65,7 +65,7 @@
   },
   "create": {
     "welcomeTitle": "CREATE PODCAST",
-    "welcomeDescription": "Create an Podcast episode in a few simple steps. Fill in the details below and upload your audio file to get started.",
+    "welcomeDescription": "Create a Podcast in a few simple steps. Fill in the details below and post your podcast to share with your listeners.",
     "audioSupport": "AUDIO SUPPORTED FILE TYPES",
     "audioFormat": "Audio format: mp3",
     "imageSupport": "THUMBNAIL SUPPORTED FILE TYPES",

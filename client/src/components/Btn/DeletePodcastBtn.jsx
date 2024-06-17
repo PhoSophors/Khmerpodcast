@@ -71,8 +71,7 @@ const DeletePodcastBtn = ({ file }) => {
             <h1 className="text-center  text-gray-500 dark:text-gray-300">
               This Action{" "}
               <span className="font-semibold  text-gray-600 dark:text-gray-100">CANNOT</span> be
-              undone. This will permanently delete the Podcast file, and remove
-              all collaborator ssositions.{" "}
+              undone. This will permanently delete the Podcast file.{" "}
             </h1>
             <p className="text-center text-gray-800 dark:text-gray-300 mt-5">
               Enter the title of podcast name{" "}
