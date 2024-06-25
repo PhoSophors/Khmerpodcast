@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'KhmerOS_battambang';
-  src: url('/KhmerOS_battambang.ttf') format('truetype');
+  src: url('../public/KhmerOS_battambang.ttf') format('truetype');
 }
 
 @tailwind base;
@@ -19,10 +19,14 @@ body {
   overflow: hidden;
 }
 
+* {
+  font-family: 'KhmerOS_battambang', sans-serif;
+}
 
 
 /* root ======================================= */
 :root {
+  font-family: 'KhmerOS_battambang', sans-serif;
   --bg-color: #4f46e5;
   /* --bg-color:  rgba(14,48,102,1) ; */
   --sidemenu-mobile-bg: #fff;
@@ -237,4 +241,6 @@ label, title {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+
 }
+
